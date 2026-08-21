@@ -8,8 +8,9 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Bars3Icon, XMarkIcon, PhoneIcon } from '@heroicons/react/24/outline'
-import { siteConfig, getWhatsAppUrl } from '@/data/siteConfig'
+import { siteConfig } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
+import { useSettings } from '@/context/SettingsContext'
 
 const navLinks = [
   { href: '/',          label: 'الرئيسية' },
@@ -23,6 +24,7 @@ const navLinks = [
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const { settings, getCallUrl, getWhatsAppUrl } = useSettings()
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 16)
@@ -105,13 +107,13 @@ export default function Header() {
             {/* ── Desktop Actions ── */}
             <div className="hidden lg:flex items-center gap-2">
               <a
-                href={siteConfig.contact.callUrl}
+                href={getCallUrl()}
                 className="btn-ghost text-sm flex items-center gap-1.5"
                 aria-label="اتصل بنا"
                 onClick={() => analytics.clickCall('header')}
               >
                 <PhoneIcon className="w-4 h-4" aria-hidden="true" />
-                {siteConfig.contact.phone}
+                {settings.phone}
               </a>
               <Link
                 href="/booking"
@@ -124,7 +126,7 @@ export default function Header() {
             {/* ── Mobile: Call + Menu toggle ── */}
             <div className="flex lg:hidden items-center gap-2">
               <a
-                href={siteConfig.contact.callUrl}
+                href={getCallUrl()}
                 className="flex items-center justify-center w-10 h-10 rounded-xl bg-gold-50 text-gold-600"
                 aria-label="اتصل بنا"
                 onClick={() => analytics.clickCall('header_mobile')}
@@ -224,7 +226,7 @@ export default function Header() {
                 واتساب
               </a>
               <a
-                href={siteConfig.contact.callUrl}
+                href={getCallUrl()}
                 className="btn-call w-full text-sm"
                 onClick={() => analytics.clickCall('mobile_menu')}
               >

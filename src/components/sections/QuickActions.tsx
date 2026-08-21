@@ -10,8 +10,8 @@ import {
   PhoneIcon,
   ListBulletIcon,
 } from '@heroicons/react/24/solid'
-import { siteConfig, getWhatsAppUrl } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
+import { useSettings } from '@/context/SettingsContext'
 
 const WhatsAppIcon = () => (
   <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -19,59 +19,61 @@ const WhatsAppIcon = () => (
   </svg>
 )
 
-const actions = [
-  {
-    id: 'book',
-    label: 'احجز الآن',
-    sublabel: 'حجز سريع',
-    icon: CalendarDaysIcon,
-    bgClass: 'bg-gradient-to-br from-navy-700 to-navy-900',
-    textClass: 'text-white',
-    sublabelClass: 'text-white/60',
-    type: 'link' as const,
-    href: '/booking',
-    onClick: () => analytics.startBooking('quick_action', 'general'),
-  },
-  {
-    id: 'whatsapp',
-    label: 'واتساب',
-    sublabel: 'تواصل مباشر',
-    iconComponent: WhatsAppIcon,
-    bgClass: 'bg-gradient-to-br from-[#25D366] to-[#1a9e4e]',
-    textClass: 'text-white',
-    sublabelClass: 'text-white/60',
-    type: 'external' as const,
-    href: getWhatsAppUrl(),
-    onClick: () => analytics.clickWhatsApp('quick_actions'),
-  },
-  {
-    id: 'call',
-    label: 'اتصل بنا',
-    sublabel: siteConfig.contact.phone,
-    icon: PhoneIcon,
-    bgClass: 'bg-gradient-to-br from-gold-500 to-gold-600',
-    textClass: 'text-white',
-    sublabelClass: 'text-white/70',
-    type: 'tel' as const,
-    href: siteConfig.contact.callUrl,
-    onClick: () => analytics.clickCall('quick_actions'),
-  },
-  {
-    id: 'services',
-    label: 'خدماتنا',
-    sublabel: '15 خدمة متاحة',
-    icon: ListBulletIcon,
-    bgClass: 'bg-white',
-    textClass: 'text-navy-700',
-    sublabelClass: 'text-medical-muted',
-    borderClass: 'border border-medical-border',
-    type: 'link' as const,
-    href: '/services',
-    onClick: undefined,
-  },
-] as const
-
 export default function QuickActions() {
+  const { settings, getCallUrl, getWhatsAppUrl } = useSettings()
+
+  const actions = [
+    {
+      id: 'book',
+      label: 'احجز الآن',
+      sublabel: 'حجز سريع',
+      icon: CalendarDaysIcon,
+      bgClass: 'bg-gradient-to-br from-navy-700 to-navy-900',
+      textClass: 'text-white',
+      sublabelClass: 'text-white/60',
+      type: 'link' as const,
+      href: '/booking',
+      onClick: () => analytics.startBooking('quick_action', 'general'),
+    },
+    {
+      id: 'whatsapp',
+      label: 'واتساب',
+      sublabel: 'تواصل مباشر',
+      iconComponent: WhatsAppIcon,
+      bgClass: 'bg-gradient-to-br from-[#25D366] to-[#1a9e4e]',
+      textClass: 'text-white',
+      sublabelClass: 'text-white/60',
+      type: 'external' as const,
+      href: getWhatsAppUrl(),
+      onClick: () => analytics.clickWhatsApp('quick_actions'),
+    },
+    {
+      id: 'call',
+      label: 'اتصل بنا',
+      sublabel: settings.phone,
+      icon: PhoneIcon,
+      bgClass: 'bg-gradient-to-br from-gold-500 to-gold-600',
+      textClass: 'text-white',
+      sublabelClass: 'text-white/70',
+      type: 'tel' as const,
+      href: getCallUrl(),
+      onClick: () => analytics.clickCall('quick_actions'),
+    },
+    {
+      id: 'services',
+      label: 'خدماتنا',
+      sublabel: '15 خدمة متاحة',
+      icon: ListBulletIcon,
+      bgClass: 'bg-white',
+      textClass: 'text-navy-700',
+      sublabelClass: 'text-medical-muted',
+      borderClass: 'border border-medical-border',
+      type: 'link' as const,
+      href: '/services',
+      onClick: undefined,
+    },
+  ]
+
   return (
     <section
       className="bg-white border-b border-medical-border"
@@ -146,7 +148,7 @@ export default function QuickActions() {
             }
 
             return (
-              <a
+              <Link
                 key={action.id}
                 href={action.href}
                 className={baseClasses}
@@ -154,7 +156,7 @@ export default function QuickActions() {
                 aria-label={action.label}
               >
                 {content}
-              </a>
+              </Link>
             )
           })}
         </div>

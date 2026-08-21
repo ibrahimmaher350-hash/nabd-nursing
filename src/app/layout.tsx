@@ -154,6 +154,7 @@ const websiteSchema = {
 }
 
 import NotificationPrompt from '@/components/ui/NotificationPrompt'
+import { SettingsProvider } from '@/context/SettingsContext'
 
 // ── Root Layout ───────────────────────────────────────────────
 export default function RootLayout({
@@ -220,8 +221,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="font-cairo antialiased">
-        {children}
-        <NotificationPrompt />
+        <SettingsProvider>
+          {children}
+          <NotificationPrompt />
+        </SettingsProvider>
       </body>
     </html>
   )

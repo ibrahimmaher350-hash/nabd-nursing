@@ -8,12 +8,13 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { PhoneIcon, CalendarDaysIcon } from '@heroicons/react/24/solid'
-import { siteConfig, getWhatsAppUrl } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
+import { useSettings } from '@/context/SettingsContext'
 
 export default function FloatingActions() {
   const [isVisible, setIsVisible] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
+  const { getCallUrl, getWhatsAppUrl } = useSettings()
 
   // Show FAB after scrolling 200px
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function FloatingActions() {
 
           {/* Call */}
           <a
-            href={siteConfig.contact.callUrl}
+            href={getCallUrl()}
             className="flex items-center gap-2.5 bg-gold-500 text-white font-bold rounded-2xl px-4 py-3 shadow-gold text-sm transition-all hover:bg-gold-600 active:scale-95"
             aria-label="اتصل بنا الآن"
             onClick={() => analytics.clickCall('fab')}

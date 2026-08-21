@@ -1,46 +1,24 @@
 'use client'
 /**
- * app/admin/settings/page.tsx — إعدادات النظام ولوحة التحكم
+ * app/admin/settings/page.tsx — إعدادات النظام ولوحة التحكم الحية
  */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Cog6ToothIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
-import { siteConfig } from '@/data/siteConfig'
-
-interface SettingsFormData {
-  businessName: string
-  tagline: string
-  phone: string
-  whatsapp: string
-  facebookUrl: string
-  facebookGroupUrl: string
-  bloggerUrl: string
-  googleBusinessUrl: string
-  serviceAreas: string
-  bookingEnabled: boolean
-  maintenanceMode: boolean
-  pricingNote: string
-}
+import { Cog6ToothIcon, CheckCircleIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
+import { useSettings, type SiteSettings } from '@/context/SettingsContext'
 
 export default function AdminSettingsPage() {
-  const [formData, setFormData] = useState<SettingsFormData>({
-    businessName: siteConfig.brand.name,
-    tagline: siteConfig.brand.tagline,
-    phone: siteConfig.contact.phone,
-    whatsapp: siteConfig.contact.whatsapp,
-    facebookUrl: siteConfig.social.facebook,
-    facebookGroupUrl: siteConfig.social.facebookGroup,
-    bloggerUrl: siteConfig.social.blogger,
-    googleBusinessUrl: siteConfig.social.googleBusiness,
-    serviceAreas: siteConfig.location.serviceAreas.join('، '),
-    bookingEnabled: true,
-    maintenanceMode: false,
-    pricingNote: siteConfig.booking.pricingNote,
-  })
+  const { settings, saveSettings, loading } = useSettings()
 
+  const [formData, setFormData] = useState<SiteSettings>(settings)
   const [saved, setSaved] = useState(false)
   const [saving, setSaving] = useState(false)
+
+  // Sync state when settings load from API/localStorage
+  useEffect(() => {
+    setFormData(settings)
+  }, [settings])
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -48,10 +26,11 @@ export default function AdminSettingsPage() {
     setSaved(false)
 
     try {
-      // Simulate/perform Firestore settings update
-      await new Promise((r) => setTimeout(r, 600))
-      setSaved(true)
-      setTimeout(() => setSaved(false), 3000)
+      const ok = await saveSettings(formData)
+      if (ok !== false) {
+        setSaved(true)
+        setTimeout(() => setSaved(false), 4000)
+      }
     } finally {
       setSaving(false)
     }
@@ -59,14 +38,23 @@ export default function AdminSettingsPage() {
 
   return (
     <div className="min-h-screen bg-navy-950 text-white p-6" dir="rtl">
-      <div className="flex items-center gap-3 mb-6">
-        <Link href="/admin" className="text-white/50 hover:text-white text-sm">
-          ← العودة للوحة التحكم
-        </Link>
-        <h1 className="text-xl font-bold flex items-center gap-2">
-          <Cog6ToothIcon className="w-6 h-6 text-gold-400" />
-          إعدادات المنصة (Site Settings)
-        </h1>
+      <div className="flex items-center justify-between gap-3 mb-6">
+        <div className="flex items-center gap-3">
+          <Link href="/admin" className="text-white/50 hover:text-white text-sm">
+            ← العودة للوحة التحكم
+          </Link>
+          <h1 className="text-xl font-bold flex items-center gap-2">
+            <Cog6ToothIcon className="w-6 h-6 text-gold-400" />
+            إعدادات المنصة (Site Settings)
+          </h1>
+        </div>
+
+        {loading && (
+          <span className="text-xs text-white/50 flex items-center gap-1.5">
+            <ArrowPathIcon className="w-4 h-4 animate-spin text-gold-400" />
+            جلب البيانات...
+          </span>
+        )}
       </div>
 
       <form onSubmit={handleSave} className="max-w-3xl space-y-6">
@@ -215,7 +203,6 @@ export default function AdminSettingsPage() {
               onChange={(e) => setFormData({ ...formData, serviceAreas: e.target.value })}
               className="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-gold-400 focus:outline-none"
             />
-            <p className="text-xs text-white/40 mt-1">تتيح معمارية النظام التوسع في مدن ومحافظات إضافية مستقبلاً بسهولة.</p>
           </div>
 
           <div>
@@ -257,7 +244,7 @@ export default function AdminSettingsPage() {
         {saved && (
           <div className="p-4 bg-emerald-900/40 border border-emerald-500/30 rounded-xl flex items-center gap-3 text-emerald-300 text-sm">
             <CheckCircleIcon className="w-5 h-5 shrink-0" />
-            <span>تم حفظ الإعدادات بنجاح في قاعدة البيانات!</span>
+            <span>تم حفظ وتحديث الإعدادات بنجاح في النظام!</span>
           </div>
         )}
 

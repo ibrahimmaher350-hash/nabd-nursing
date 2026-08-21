@@ -6,8 +6,8 @@
 import Link from 'next/link'
 import { PhoneIcon } from '@heroicons/react/24/solid'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
-import { siteConfig, getWhatsAppUrl } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
+import { useSettings } from '@/context/SettingsContext'
 
 // Pulse/heartbeat SVG illustration
 function MedicalIllustration() {
@@ -63,6 +63,8 @@ function MedicalIllustration() {
 }
 
 export default function HeroSection() {
+  const { getWhatsAppUrl } = useSettings()
+
   return (
     <section
       className="relative bg-gradient-primary overflow-hidden"

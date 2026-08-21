@@ -7,8 +7,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { PhoneIcon } from '@heroicons/react/24/solid'
-import { siteConfig, getWhatsAppUrl } from '@/data/siteConfig'
+import { siteConfig } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
+import { useSettings } from '@/context/SettingsContext'
 
 const footerLinks = {
   main: [
@@ -59,6 +60,7 @@ const BlogIcon = () => (
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const { settings, getCallUrl, getWhatsAppUrl } = useSettings()
 
   return (
     <footer
@@ -83,7 +85,7 @@ export default function Footer() {
                 />
               </div>
               <div>
-                <p className="font-extrabold text-lg leading-tight">نبض للتمريض المنزلي</p>
+                <p className="font-extrabold text-lg leading-tight">{settings.businessName || 'نبض للتمريض المنزلي'}</p>
                 <p className="text-white/60 text-sm">{siteConfig.location.addressDisplay}</p>
               </div>
             </div>
@@ -91,7 +93,7 @@ export default function Footer() {
               {siteConfig.brand.description}
             </p>
             <p className="text-gold-300 text-sm font-semibold italic">
-              {siteConfig.brand.tagline}
+              {settings.tagline || siteConfig.brand.tagline}
             </p>
           </div>
 
@@ -135,12 +137,12 @@ export default function Footer() {
 
             {/* Phone */}
             <a
-              href={siteConfig.contact.callUrl}
+              href={getCallUrl()}
               className="flex items-center gap-2.5 text-white/80 hover:text-gold-300 text-sm mb-3 transition-colors"
               onClick={() => analytics.clickCall('footer')}
             >
               <PhoneIcon className="w-4 h-4 text-gold-400 shrink-0" aria-hidden="true" />
-              {siteConfig.contact.phone}
+              {settings.phone}
             </a>
 
             {/* WhatsApp */}
@@ -162,7 +164,7 @@ export default function Footer() {
               </p>
               <div className="flex items-center gap-2 flex-wrap">
                 <a
-                  href={siteConfig.social.facebook}
+                  href={settings.facebookUrl || siteConfig.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
@@ -174,7 +176,7 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href={siteConfig.social.facebookGroup}
+                  href={settings.facebookGroupUrl || siteConfig.social.facebookGroup}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
@@ -186,11 +188,11 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href={siteConfig.social.blogger}
+                  href={settings.bloggerUrl || siteConfig.social.blogger}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
-                  aria-label="المدونة الصحية"
+                  aria-label="مدونة نبض الصحية"
                   onClick={() => analytics.blogClick()}
                 >
                   <BlogIcon />

@@ -4,10 +4,12 @@
  */
 import Link from 'next/link'
 import { PhoneIcon } from '@heroicons/react/24/solid'
-import { siteConfig, getWhatsAppUrl } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
+import { useSettings } from '@/context/SettingsContext'
 
 export default function FinalCTA() {
+  const { settings, getCallUrl, getWhatsAppUrl } = useSettings()
+
   return (
     <section
       className="bg-gradient-primary"
@@ -17,15 +19,15 @@ export default function FinalCTA() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-6">
           <span className="w-2 h-2 rounded-full bg-gold-400 animate-pulse-slow" aria-hidden="true" />
-          <span className="text-white/90 text-sm font-medium">نبض للتمريض المنزلي — دمياط</span>
+          <span className="text-white/90 text-sm font-medium">{settings.businessName || 'نبض للتمريض المنزلي'} — دمياط</span>
         </div>
 
         <h2 id="final-cta-heading" className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
           محتاج خدمة تمريض في البيت؟
         </h2>
         <p className="text-white/75 text-base sm:text-lg max-w-xl mx-auto mb-8">
-          نبض للتمريض المنزلي جاهز لاستقبال طلبك.{' '}
-          <span className="text-gold-300 font-semibold">رعاية تبدأ من بيتك.</span>
+          {settings.businessName || 'نبض للتمريض المنزلي'} جاهز لاستقبال طلبك.{' '}
+          <span className="text-gold-300 font-semibold">{settings.tagline || 'رعاية تبدأ من بيتك.'}</span>
         </p>
 
         {/* Buttons */}
@@ -52,7 +54,7 @@ export default function FinalCTA() {
           </a>
 
           <a
-            href={siteConfig.contact.callUrl}
+            href={getCallUrl()}
             className="inline-flex items-center justify-center gap-2 border-2 border-white/30 text-white font-bold rounded-2xl px-8 py-4 text-base w-full sm:w-auto hover:bg-white/10 transition-colors"
             onClick={() => analytics.clickCall('final_cta')}
           >
