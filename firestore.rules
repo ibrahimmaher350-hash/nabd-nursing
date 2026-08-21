@@ -1,0 +1,100 @@
+/**
+ * Firestore Security Rules — نبض للتمريض المنزلي
+ */
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper Functions ──────────────────────────────────────
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/admin_users/$(request.auth.uid));
+    }
+
+    // ── Bookings ──────────────────────────────────────────────
+    // Anyone can CREATE a booking (website form)
+    // Only admins can READ all bookings or UPDATE status
+    match /bookings/{bookingId} {
+      allow create: if
+        // Required fields present
+        request.resource.data.keys().hasAll([
+          'bookingId', 'serviceId', 'serviceName',
+          'customerName', 'customerPhone',
+          'governorate', 'city', 'address',
+          'preferredDate', 'preferredTime',
+          'status', 'source', 'createdAt', 'updatedAt'
+        ]) &&
+        // Status must be pending on creation
+        request.resource.data.status == 'pending' &&
+        // Source must be website
+        request.resource.data.source == 'website' &&
+        // No sensitive medical data fields
+        !request.resource.data.keys().hasAny(['diagnosis', 'medicalRecords']) &&
+        // Phone validation (basic length check)
+        request.resource.data.customerPhone.size() == 11;
+
+      // Customers can read their own booking by ID (not implemented yet — future)
+      allow read: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if false; // Never delete bookings
+    }
+
+    // ── Admin Users ───────────────────────────────────────────
+    match /admin_users/{userId} {
+      allow read: if isAdmin() && request.auth.uid == userId;
+      allow write: if false; // Managed via Firebase Console only
+    }
+
+    // ── Settings ──────────────────────────────────────────────
+    match /settings/{setting} {
+      allow read: if true;  // Public settings (working hours, areas, etc.)
+      allow write: if isAdmin();
+    }
+
+    // ── Notifications ────────────────────────────────────────
+    match /notifications/{notifId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if false;
+    }
+
+    // ── Contact Requests ─────────────────────────────────────
+    match /contact_requests/{reqId} {
+      allow create: if
+        request.resource.data.keys().hasAll(['name', 'phone', 'message']) &&
+        request.resource.data.message.size() <= 1000;
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    // ── Blog Posts (Firestore) ────────────────────────────────
+    match /blog_posts/{postId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ── Analytics Events ─────────────────────────────────────
+    match /analytics_events/{eventId} {
+      allow create: if true; // Client-side logging
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    // ── Services (future) ────────────────────────────────────
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ── Deny everything else ─────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

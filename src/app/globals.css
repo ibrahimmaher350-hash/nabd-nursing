@@ -1,0 +1,273 @@
+/* globals.css — نبض للتمريض المنزلي */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ─────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --navy-primary: #1B2B6B;
+    --navy-dark: #0B122E;
+    --gold-primary: #F59E0B;
+    --gold-dark: #D97706;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white text-medical-text antialiased;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  /* Focus styles for accessibility */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-gold-500 rounded-lg;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* Typography scale */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-cairo font-bold leading-tight;
+  }
+
+  h1 { @apply text-3xl sm:text-4xl lg:text-5xl; }
+  h2 { @apply text-2xl sm:text-3xl lg:text-4xl; }
+  h3 { @apply text-xl sm:text-2xl; }
+  h4 { @apply text-lg sm:text-xl; }
+
+  p { @apply leading-relaxed; }
+
+  /* Smooth scrolling offset for sticky header */
+  [id] { scroll-margin-top: 80px; }
+}
+
+/* ─── Components ───────────────────────────────────────────── */
+@layer components {
+  /* Section wrapper */
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+
+  /* Section heading */
+  .section-title {
+    @apply text-2xl sm:text-3xl font-extrabold text-navy-700 text-center;
+  }
+
+  .section-subtitle {
+    @apply text-medical-muted text-center mt-3 text-base sm:text-lg max-w-2xl mx-auto;
+  }
+
+  /* Premium card */
+  .nabd-card {
+    @apply bg-white rounded-2xl shadow-card border border-medical-border
+           transition-all duration-300 hover:shadow-card-md hover:-translate-y-0.5;
+  }
+
+  /* Service icon container */
+  .service-icon {
+    @apply w-14 h-14 rounded-2xl bg-navy-50 flex items-center justify-center
+           text-2xl shrink-0;
+  }
+
+  /* CTA primary button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-gradient-to-l from-navy-600 to-navy-700
+           text-white font-bold rounded-2xl
+           px-6 py-3.5 text-base
+           shadow-cta transition-all duration-200
+           hover:shadow-card-lg hover:scale-[1.02]
+           active:scale-[0.98]
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400;
+    min-height: 52px;
+  }
+
+  /* CTA secondary button */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           border-2 border-navy-600 text-navy-600 font-bold rounded-2xl
+           px-6 py-3 text-base bg-transparent
+           transition-all duration-200
+           hover:bg-navy-50
+           active:scale-[0.98]
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-400;
+    min-height: 52px;
+  }
+
+  /* WhatsApp button */
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2
+           bg-[#25D366] text-white font-bold rounded-2xl
+           px-6 py-3.5 text-base
+           shadow-lg transition-all duration-200
+           hover:bg-[#1ebe5d] hover:scale-[1.02]
+           active:scale-[0.98];
+    min-height: 52px;
+  }
+
+  /* Call button */
+  .btn-call {
+    @apply inline-flex items-center justify-center gap-2
+           bg-gold-500 text-white font-bold rounded-2xl
+           px-6 py-3.5 text-base
+           shadow-gold transition-all duration-200
+           hover:bg-gold-600 hover:scale-[1.02]
+           active:scale-[0.98];
+    min-height: 52px;
+  }
+
+  /* Ghost button */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           text-navy-600 font-semibold rounded-xl
+           px-4 py-2.5 text-sm
+           hover:bg-navy-50 transition-colors duration-200;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-1
+           text-xs font-semibold rounded-full;
+  }
+
+  .badge-navy {
+    @apply badge bg-navy-100 text-navy-700;
+  }
+
+  .badge-gold {
+    @apply badge bg-gold-100 text-gold-700;
+  }
+
+  .badge-success {
+    @apply badge bg-emerald-100 text-emerald-700;
+  }
+
+  /* Input base */
+  .nabd-input {
+    @apply w-full px-4 py-3 rounded-xl border border-medical-border
+           bg-white text-medical-text text-base font-cairo
+           placeholder:text-medical-muted
+           focus:outline-none focus:ring-2 focus:ring-navy-400 focus:border-transparent
+           transition-shadow duration-200;
+    min-height: 52px;
+    direction: rtl;
+  }
+
+  /* Label */
+  .nabd-label {
+    @apply block text-sm font-semibold text-navy-700 mb-1.5;
+  }
+
+  /* Error text */
+  .nabd-error {
+    @apply text-medical-danger text-sm mt-1 flex items-center gap-1;
+  }
+
+  /* Skeleton */
+  .skeleton {
+    @apply bg-medical-border rounded-lg animate-pulse;
+  }
+
+  /* Floating action button base */
+  .fab {
+    @apply flex items-center justify-center
+           w-14 h-14 rounded-full shadow-card-lg
+           transition-all duration-200
+           hover:scale-110 active:scale-95;
+  }
+
+  /* Emergency notice */
+  .emergency-notice {
+    @apply bg-red-50 border border-red-200 rounded-xl p-4
+           text-red-700 text-sm flex items-start gap-3;
+  }
+
+  /* Medical disclaimer */
+  .medical-disclaimer {
+    @apply bg-navy-50 border border-navy-200 rounded-xl p-4
+           text-navy-600 text-sm;
+  }
+}
+
+/* ─── Utilities ─────────────────────────────────────────────── */
+@layer utilities {
+  /* RTL-aware text alignment */
+  .text-start { text-align: start; }
+  .text-end   { text-align: end; }
+
+  /* Gradient text */
+  .text-gradient-navy {
+    @apply bg-gradient-to-l from-navy-500 to-navy-800 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-l from-gold-500 to-gold-600 bg-clip-text text-transparent;
+  }
+
+  /* Glass effect */
+  .glass {
+    backdrop-filter: blur(12px) saturate(1.8);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .glass-dark {
+    backdrop-filter: blur(12px) saturate(1.5);
+    background: rgba(27, 43, 107, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Safe area padding (iPhone notch) */
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+  .pt-safe { padding-top: env(safe-area-inset-top); }
+
+  /* Pulse dot (notification indicator) */
+  .pulse-dot {
+    @apply w-2.5 h-2.5 rounded-full bg-gold-500 animate-pulse-slow;
+  }
+
+  /* Scrollbar hide */
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* ─── Custom scrollbar (desktop) ──────────────────────────── */
+@media (min-width: 1024px) {
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-medical-gray; }
+  ::-webkit-scrollbar-thumb { @apply bg-navy-300 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-navy-500; }
+}
+
+/* ─── Print ─────────────────────────────────────────────────── */
+@media print {
+  .no-print { display: none !important; }
+}
