@@ -83,6 +83,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+
+  // Search Engine Verifications (Google Search Console, Bing, Yandex)
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || undefined,
+    other: {
+      'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || '',
+    },
+  },
 }
 
 // ── Viewport ─────────────────────────────────────────────────
@@ -195,6 +204,15 @@ export default function RootLayout({
               }}
             />
           </>
+        )}
+
+        {/* Google AdSense */}
+        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}`}
+            crossOrigin="anonymous"
+          />
         )}
 
         {/* Preconnect for performance */}

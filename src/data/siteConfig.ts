@@ -68,6 +68,9 @@ export const siteConfig = {
       'سحب عينات من المنزل',
       'رعاية ما بعد العمليات في المنزل',
     ],
+    googleSiteVerification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || null,
+    bingSiteVerification: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || null,
+    adsenseId: process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || null, // e.g. ca-pub-XXXXXXXXXXXXXXXX
   },
 
   // ─── Booking ─────────────────────────────────────────────
