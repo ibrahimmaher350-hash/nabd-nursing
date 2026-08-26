@@ -12,6 +12,26 @@ import { siteConfig } from '@/data/siteConfig'
 // File path for local persistent storage fallback
 const SETTINGS_FILE = path.join(process.cwd(), 'src', 'data', 'dynamicSettings.json')
 
+// Helper to detect corrupted Arabic strings (e.g. "??? ?????")
+function isCorrupted(value: unknown): boolean {
+  if (typeof value !== 'string') return false
+  return /^[\?]+(\s*[\?]+)*$/.test(value.trim()) && value.trim().length > 0
+}
+
+// Helper to sanitize settings — replace any corrupted field with default
+function sanitizeSettings(incoming: Record<string, unknown>, defaults: Record<string, unknown>): Record<string, unknown> {
+  const out: Record<string, unknown> = { ...defaults }
+  for (const key of Object.keys(incoming)) {
+    const val = incoming[key]
+    if (isCorrupted(val)) {
+      console.warn(`[Settings API] Corrupted value for "${key}", keeping default`)
+    } else {
+      out[key] = val
+    }
+  }
+  return out
+}
+
 // Helper to read local settings file safely
 function getLocalSettings() {
   try {
@@ -25,14 +45,15 @@ function getLocalSettings() {
   return null
 }
 
-// Helper to save local settings file safely
+// Helper to save local settings file safely (always UTF-8)
 function saveLocalSettings(settings: Record<string, unknown>) {
   try {
     const dir = path.dirname(SETTINGS_FILE)
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true })
     }
-    fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2), 'utf-8')
+    // JSON.stringify produces UTF-8 safe output; write with explicit utf-8
+    fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2), { encoding: 'utf-8' })
     return true
   } catch (err) {
     console.warn('[Settings API] Error saving local file:', err)
@@ -114,9 +135,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'بيانات غير صالحة' }, { status: 400 })
     }
 
+    const defaults = getDefaultSettings()
+    // Sanitize: reject any corrupted (???) values and keep defaults instead
+    const sanitizedBody = sanitizeSettings(body as Record<string, unknown>, defaults as Record<string, unknown>)
+
     const updatedSettings = {
-      ...getDefaultSettings(),
-      ...body,
+      ...defaults,
+      ...sanitizedBody,
       updatedAt: new Date().toISOString(),
     }
 

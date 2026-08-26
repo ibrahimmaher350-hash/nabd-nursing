@@ -56,20 +56,40 @@ const SettingsContext = createContext<SettingsContextType>({
 const STORAGE_KEY = 'nabd_site_settings'
 const EVENT_KEY = 'nabd_settings_updated'
 
+/**
+ * Validates that settings don't contain corrupted data (e.g. "???" from encoding bugs).
+ * Returns true only if Arabic fields look valid.
+ */
+function isValidSettings(s: Partial<SiteSettings>): boolean {
+  if (!s || typeof s !== 'object') return false
+  // A corrupted businessName will be "??? ??????? ???????" — reject if it only has ? chars
+  const name = s.businessName ?? ''
+  if (name && /^[\?]+(\s+[\?]+)*$/.test(name.trim())) return false
+  return true
+}
+
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = useState<SiteSettings>(defaultSettings)
   const [loading, setLoading] = useState(true)
 
   // Load from localStorage on mount, then sync with API
   useEffect(() => {
-    // 1. Quick initial load from localStorage
+    // 1. Quick initial load from localStorage (only if valid)
     try {
       const cached = localStorage.getItem(STORAGE_KEY)
       if (cached) {
-        setSettings({ ...defaultSettings, ...JSON.parse(cached) })
+        const parsed = JSON.parse(cached)
+        if (isValidSettings(parsed)) {
+          setSettings({ ...defaultSettings, ...parsed })
+        } else {
+          // Clear corrupted cache silently
+          localStorage.removeItem(STORAGE_KEY)
+          console.warn('[Settings] Cleared corrupted settings from localStorage')
+        }
       }
     } catch (e) {
       console.warn('Error reading cached settings:', e)
+      localStorage.removeItem(STORAGE_KEY)
     }
 
     // 2. Fetch fresh from API
@@ -78,10 +98,14 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         const res = await fetch('/api/settings', { cache: 'no-store' })
         if (res.ok) {
           const json = await res.json()
-          if (json.settings) {
+          if (json.settings && isValidSettings(json.settings)) {
             const merged = { ...defaultSettings, ...json.settings }
             setSettings(merged)
             localStorage.setItem(STORAGE_KEY, JSON.stringify(merged))
+          } else if (json.settings) {
+            // API returned corrupted data — use defaults, don't cache
+            console.warn('[Settings] API returned invalid settings, using defaults')
+            setSettings(defaultSettings)
           }
         }
       } catch (err) {
@@ -98,7 +122,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       try {
         const cached = localStorage.getItem(STORAGE_KEY)
         if (cached) {
-          setSettings({ ...defaultSettings, ...JSON.parse(cached) })
+          const parsed = JSON.parse(cached)
+          if (isValidSettings(parsed)) {
+            setSettings({ ...defaultSettings, ...parsed })
+          }
         }
       } catch (e) {
         console.warn(e)
