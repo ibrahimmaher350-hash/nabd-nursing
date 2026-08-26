@@ -4,15 +4,14 @@
  */
 
 import Link from 'next/link'
-import { PhoneIcon } from '@heroicons/react/24/solid'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import { analytics } from '@/lib/analytics'
 import { useSettings } from '@/context/SettingsContext'
 
-// Pulse/heartbeat SVG illustration
+// Pulse/heartbeat SVG illustration — shown only on desktop
 function MedicalIllustration() {
   return (
-    <div className="relative flex items-center justify-center w-full h-72 sm:h-80 lg:h-full min-h-64 rounded-3xl overflow-hidden bg-gradient-to-br from-navy-800 to-navy-950 border border-white/10">
+    <div className="relative flex items-center justify-center w-full h-80 lg:h-full min-h-72 rounded-3xl overflow-hidden bg-gradient-to-br from-navy-800 to-navy-950 border border-white/10">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <svg viewBox="0 0 400 400" className="w-full h-full" aria-hidden="true">
@@ -72,39 +71,40 @@ export default function HeroSection() {
     >
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5" aria-hidden="true">
-        <div className="absolute top-0 end-0 w-96 h-96 rounded-full bg-gold-400 blur-3xl" />
-        <div className="absolute bottom-0 start-0 w-64 h-64 rounded-full bg-navy-300 blur-2xl" />
+        <div className="absolute top-0 end-0 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-gold-400 blur-3xl" />
+        <div className="absolute bottom-0 start-0 w-48 sm:w-64 h-48 sm:h-64 rounded-full bg-navy-300 blur-2xl" />
       </div>
 
       <div className="section-container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 py-14 sm:py-20 lg:py-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 py-10 sm:py-16 lg:py-24 items-center">
 
-          {/* ── Text Content ── */}
-          <div className="order-2 lg:order-1 text-center lg:text-start">
+          {/* ── Text Content (always first on mobile) ── */}
+          <div className="text-center lg:text-start">
+
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-6">
-              <span className="w-2 h-2 rounded-full bg-gold-400 animate-pulse-slow" aria-hidden="true" />
-              <span className="text-white/90 text-sm font-medium">
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-4 sm:mb-6">
+              <span className="w-2 h-2 rounded-full bg-gold-400 animate-pulse-slow shrink-0" aria-hidden="true" />
+              <span className="text-white/90 text-xs sm:text-sm font-medium">
                 خدمات تمريضية منزلية — دمياط
               </span>
             </div>
 
             {/* H1 */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4">
+            <h1 className="!text-2xl sm:!text-3xl lg:!text-5xl font-extrabold text-white leading-tight mb-3 sm:mb-4">
               الرعاية التمريضية اللي محتاجها…{' '}
               <span className="text-gold-300">لحد باب بيتك</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-white/75 text-base sm:text-lg leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0">
+            <p className="text-white/75 text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8 max-w-lg mx-auto lg:mx-0">
               خدمات تمريض ورعاية منزلية باهتمام، أمان، ومهنية داخل دمياط.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 mb-6">
+            <div className="flex flex-col xs:flex-row items-stretch xs:items-center justify-center lg:justify-start gap-3 mb-5 sm:mb-6">
               <Link
                 href="/booking"
-                className="btn-primary w-full sm:w-auto px-8 py-4 text-base"
+                className="btn-primary w-full xs:w-auto px-6 sm:px-8 py-3 sm:py-4"
                 onClick={() => analytics.startBooking('general', 'general')}
               >
                 احجز خدمة الآن
@@ -114,7 +114,7 @@ export default function HeroSection() {
                 href={getWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-whatsapp w-full sm:w-auto px-8 py-4 text-base"
+                className="btn-whatsapp w-full xs:w-auto px-6 sm:px-8 py-3 sm:py-4"
                 onClick={() => analytics.clickWhatsApp('hero')}
               >
                 <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -125,7 +125,7 @@ export default function HeroSection() {
             </div>
 
             {/* Emergency notice */}
-            <div className="flex items-start gap-2 bg-red-900/30 border border-red-400/30 rounded-xl p-3 max-w-lg mx-auto lg:mx-0">
+            <div className="flex items-start gap-2 bg-red-900/30 border border-red-400/30 rounded-xl p-3 max-w-lg mx-auto lg:mx-0 text-start">
               <ExclamationTriangleIcon
                 className="w-4 h-4 text-red-400 shrink-0 mt-0.5"
                 aria-hidden="true"
@@ -136,7 +136,7 @@ export default function HeroSection() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-3 mt-8 max-w-lg mx-auto lg:mx-0">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-6 sm:mt-8 max-w-sm sm:max-w-lg mx-auto lg:mx-0">
               {[
                 { value: '15+', label: 'خدمة تمريضية' },
                 { value: 'دمياط', label: 'منطقة الخدمة' },
@@ -144,17 +144,17 @@ export default function HeroSection() {
               ].map((stat) => (
                 <div
                   key={stat.value}
-                  className="bg-white/10 border border-white/15 rounded-2xl p-3 text-center"
+                  className="bg-white/10 border border-white/15 rounded-xl sm:rounded-2xl p-2 sm:p-3 text-center"
                 >
-                  <p className="text-gold-300 font-extrabold text-lg leading-tight">{stat.value}</p>
+                  <p className="text-gold-300 font-extrabold text-sm sm:text-lg leading-tight">{stat.value}</p>
                   <p className="text-white/60 text-xs mt-0.5 leading-tight">{stat.label}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* ── Visual ── */}
-          <div className="order-1 lg:order-2">
+          {/* ── Visual — Hidden on mobile, shown on desktop only ── */}
+          <div className="hidden lg:block">
             <MedicalIllustration />
           </div>
         </div>

@@ -53,7 +53,7 @@ export default function HowItWorks() {
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 mb-10">
           {steps.map((step, index) => (
             <div key={step.number} className="relative flex flex-col items-center text-center gap-3">
               {/* Connector line (desktop only) */}

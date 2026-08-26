@@ -1,5 +1,5 @@
 /* globals.css — نبض للتمريض المنزلي */
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
+/* NOTE: Cairo font is loaded via next/font in layout.tsx — no @import needed */
 
 @tailwind base;
 @tailwind components;
@@ -14,22 +14,37 @@
     --gold-dark: #D97706;
   }
 
-  * {
+  *, *::before, *::after {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
   }
 
   html {
-    font-family: 'Cairo', sans-serif;
+    font-family: var(--font-cairo), 'Cairo', sans-serif;
     direction: rtl;
     scroll-behavior: smooth;
-    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
 
   body {
     @apply bg-white text-medical-text antialiased;
+    font-family: var(--font-cairo), 'Cairo', sans-serif;
     min-height: 100dvh;
     overflow-x: hidden;
+    max-width: 100vw;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Faster touch response on interactive elements */
+  button, a, [role="button"] {
+    touch-action: manipulation;
+  }
+
+  /* Prevent images from overflowing */
+  img, svg {
+    max-width: 100%;
   }
 
   /* Focus styles for accessibility */
@@ -54,10 +69,10 @@
     @apply font-cairo font-bold leading-tight;
   }
 
-  h1 { @apply text-3xl sm:text-4xl lg:text-5xl; }
-  h2 { @apply text-2xl sm:text-3xl lg:text-4xl; }
-  h3 { @apply text-xl sm:text-2xl; }
-  h4 { @apply text-lg sm:text-xl; }
+  h1 { @apply text-2xl sm:text-3xl lg:text-5xl; }
+  h2 { @apply text-xl sm:text-2xl lg:text-4xl; }
+  h3 { @apply text-lg sm:text-xl; }
+  h4 { @apply text-base sm:text-lg; }
 
   p { @apply leading-relaxed; }
 
@@ -73,16 +88,16 @@
   }
 
   .section-padding {
-    @apply py-12 sm:py-16 lg:py-20;
+    @apply py-10 sm:py-14 lg:py-20;
   }
 
   /* Section heading */
   .section-title {
-    @apply text-2xl sm:text-3xl font-extrabold text-navy-700 text-center;
+    @apply text-xl sm:text-2xl lg:text-3xl font-extrabold text-navy-700 text-center;
   }
 
   .section-subtitle {
-    @apply text-medical-muted text-center mt-3 text-base sm:text-lg max-w-2xl mx-auto;
+    @apply text-medical-muted text-center mt-2 text-sm sm:text-base max-w-2xl mx-auto;
   }
 
   /* Premium card */
@@ -93,7 +108,7 @@
 
   /* Service icon container */
   .service-icon {
-    @apply w-14 h-14 rounded-2xl bg-navy-50 flex items-center justify-center
+    @apply w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-navy-50 flex items-center justify-center
            text-2xl shrink-0;
   }
 
@@ -102,46 +117,46 @@
     @apply inline-flex items-center justify-center gap-2
            bg-gradient-to-l from-navy-600 to-navy-700
            text-white font-bold rounded-2xl
-           px-6 py-3.5 text-base
+           px-5 py-3 text-sm sm:text-base
            shadow-cta transition-all duration-200
            hover:shadow-card-lg hover:scale-[1.02]
            active:scale-[0.98]
            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400;
-    min-height: 52px;
+    min-height: 48px;
   }
 
   /* CTA secondary button */
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2
            border-2 border-navy-600 text-navy-600 font-bold rounded-2xl
-           px-6 py-3 text-base bg-transparent
+           px-5 py-2.5 text-sm sm:text-base bg-transparent
            transition-all duration-200
            hover:bg-navy-50
            active:scale-[0.98]
            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-400;
-    min-height: 52px;
+    min-height: 48px;
   }
 
   /* WhatsApp button */
   .btn-whatsapp {
     @apply inline-flex items-center justify-center gap-2
            bg-[#25D366] text-white font-bold rounded-2xl
-           px-6 py-3.5 text-base
+           px-5 py-3 text-sm sm:text-base
            shadow-lg transition-all duration-200
            hover:bg-[#1ebe5d] hover:scale-[1.02]
            active:scale-[0.98];
-    min-height: 52px;
+    min-height: 48px;
   }
 
   /* Call button */
   .btn-call {
     @apply inline-flex items-center justify-center gap-2
            bg-gold-500 text-white font-bold rounded-2xl
-           px-6 py-3.5 text-base
+           px-5 py-3 text-sm sm:text-base
            shadow-gold transition-all duration-200
            hover:bg-gold-600 hover:scale-[1.02]
            active:scale-[0.98];
-    min-height: 52px;
+    min-height: 48px;
   }
 
   /* Ghost button */
@@ -245,9 +260,9 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  /* Safe area padding (iPhone notch) */
-  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
-  .pt-safe { padding-top: env(safe-area-inset-top); }
+  /* Safe area padding (iPhone notch / Dynamic Island) */
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
 
   /* Pulse dot (notification indicator) */
   .pulse-dot {

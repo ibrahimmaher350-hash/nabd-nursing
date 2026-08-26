@@ -27,7 +27,11 @@ export default function FloatingActions() {
 
   return (
     <div
-      className="fixed bottom-6 start-4 z-40 flex flex-col items-start gap-3 no-print"
+      className="fixed z-40 flex flex-col items-start gap-3 no-print"
+      style={{
+        bottom: 'max(1.5rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem))',
+        insetInlineStart: '1rem',
+      }}
       role="complementary"
       aria-label="أزرار التواصل السريع"
     >

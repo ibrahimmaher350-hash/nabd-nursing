@@ -99,18 +99,18 @@ export default function QuickActions() {
                 </div>
 
                 {/* Label */}
-                <span className={`font-bold text-sm sm:text-base leading-tight ${action.textClass}`}>
+                <span className={`font-bold text-sm leading-tight ${action.textClass}`}>
                   {action.label}
                 </span>
-                <span className={`text-xs mt-0.5 leading-tight ${action.sublabelClass}`}>
+                <span className={`text-xs mt-0.5 leading-tight truncate max-w-full ${action.sublabelClass}`}>
                   {action.sublabel}
                 </span>
               </>
             )
 
             const baseClasses = `
-              flex flex-col items-center justify-center text-center
-              rounded-2xl p-4 min-h-[88px] sm:min-h-[96px]
+              flex flex-col items-center justify-center text-center overflow-hidden
+              rounded-2xl p-3 min-h-[80px]
               transition-all duration-200 active:scale-95 cursor-pointer
               shadow-card hover:shadow-card-md
               ${'borderClass' in action ? action.borderClass ?? '' : ''}

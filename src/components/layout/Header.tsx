@@ -32,12 +32,22 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close menu on route change / resize
+  // Close menu on resize to desktop
   useEffect(() => {
     const onResize = () => { if (window.innerWidth >= 1024) setIsMenuOpen(false) }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
+
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [isMenuOpen])
 
   const closeMenu = () => setIsMenuOpen(false)
 
@@ -52,35 +62,36 @@ export default function Header() {
         role="banner"
       >
         <div className="section-container">
-          <div className="flex items-center justify-between h-16 sm:h-18">
+          <div className="flex items-center justify-between h-16">
 
             {/* ── Logo ── */}
             <Link
               href="/"
-              className="flex items-center gap-2.5 shrink-0"
+              className="flex items-center gap-2 shrink-0 min-w-0"
               aria-label={`${siteConfig.brand.name} — الصفحة الرئيسية`}
               onClick={closeMenu}
             >
-              <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden shadow-md">
+              <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-md shrink-0">
                 <Image
                   src="/logo.jpg"
                   alt={siteConfig.brand.logoAlt}
                   fill
                   className="object-contain"
                   priority
-                  sizes="48px"
+                  sizes="40px"
                 />
               </div>
-              <div className="hidden xs:block">
-                <p className="text-sm font-extrabold text-navy-700 leading-tight">
+              {/* Brand name — shown only on sm (640px+) to prevent cramping on phones */}
+              <div className="hidden sm:block min-w-0">
+                <p className="text-sm font-extrabold text-navy-700 leading-tight truncate">
                   نبض للتمريض
                 </p>
                 <p className="text-xs font-medium text-medical-muted leading-tight">
                   المنزلي
                 </p>
               </div>
-              {/* Location badge */}
-              <span className="badge-navy text-xs hidden sm:inline-flex">
+              {/* Location badge — desktop only */}
+              <span className="badge-navy text-xs hidden lg:inline-flex shrink-0">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse-slow" />
                 دمياط
               </span>
@@ -127,7 +138,7 @@ export default function Header() {
             <div className="flex lg:hidden items-center gap-2">
               <a
                 href={getCallUrl()}
-                className="flex items-center justify-center w-10 h-10 rounded-xl bg-gold-50 text-gold-600"
+                className="flex items-center justify-center w-10 h-10 rounded-xl bg-gold-50 text-gold-600 shrink-0"
                 aria-label="اتصل بنا"
                 onClick={() => analytics.clickCall('header_mobile')}
               >
@@ -135,7 +146,7 @@ export default function Header() {
               </a>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="flex items-center justify-center w-10 h-10 rounded-xl bg-navy-50 text-navy-700"
+                className="flex items-center justify-center w-10 h-10 rounded-xl bg-navy-50 text-navy-700 shrink-0"
                 aria-label={isMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-menu"
@@ -156,7 +167,7 @@ export default function Header() {
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 z-40 bg-navy-950/50 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-navy-950/60 backdrop-blur-sm lg:hidden"
             onClick={closeMenu}
             aria-hidden="true"
           />
@@ -164,13 +175,13 @@ export default function Header() {
           {/* Drawer */}
           <nav
             id="mobile-menu"
-            className="fixed top-0 end-0 z-50 h-full w-72 bg-white shadow-card-lg lg:hidden animate-slide-up"
+            className="fixed top-0 end-0 z-50 h-full w-72 max-w-[85vw] bg-white shadow-card-lg lg:hidden animate-slide-up flex flex-col"
             aria-label="القائمة المحمولة"
           >
             {/* Drawer header */}
-            <div className="flex items-center justify-between p-4 border-b border-medical-border">
-              <div className="flex items-center gap-2.5">
-                <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-md">
+            <div className="flex items-center justify-between p-4 border-b border-medical-border shrink-0">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-md shrink-0">
                   <Image
                     src="/logo.jpg"
                     alt={siteConfig.brand.logoAlt}
@@ -179,14 +190,14 @@ export default function Header() {
                     sizes="40px"
                   />
                 </div>
-                <div>
-                  <p className="text-sm font-extrabold text-navy-700">نبض للتمريض المنزلي</p>
+                <div className="min-w-0">
+                  <p className="text-sm font-extrabold text-navy-700 truncate">نبض للتمريض المنزلي</p>
                   <p className="text-xs text-medical-muted">دمياط — مصر</p>
                 </div>
               </div>
               <button
                 onClick={closeMenu}
-                className="flex items-center justify-center w-9 h-9 rounded-xl bg-medical-gray text-medical-muted"
+                className="flex items-center justify-center w-9 h-9 rounded-xl bg-medical-gray text-medical-muted shrink-0 ms-2"
                 aria-label="إغلاق القائمة"
               >
                 <XMarkIcon className="w-5 h-5" aria-hidden="true" />
@@ -194,7 +205,7 @@ export default function Header() {
             </div>
 
             {/* Nav links */}
-            <div className="p-4 flex flex-col gap-1 overflow-y-auto">
+            <div className="p-4 flex flex-col gap-1 overflow-y-auto flex-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -211,8 +222,8 @@ export default function Header() {
               ))}
             </div>
 
-            {/* Contact in drawer */}
-            <div className="absolute bottom-0 inset-x-0 p-4 border-t border-medical-border bg-medical-gray">
+            {/* Contact in drawer — pinned to bottom */}
+            <div className="p-4 border-t border-medical-border bg-medical-gray shrink-0">
               <a
                 href={getWhatsAppUrl()}
                 target="_blank"
