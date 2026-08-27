@@ -81,13 +81,15 @@ function buildAdminWhatsAppMessage(bookingId: string, data: z.infer<typeof booki
 
 /** Save booking to Google Sheets via Apps Script webhook */
 async function saveToGoogleSheets(bookingId: string, data: z.infer<typeof bookingSchema>): Promise<void> {
-  const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL
-  if (!webhookUrl) return // Not configured — skip silently
+  const DEFAULT_SHEETS_URL =
+    'https://script.google.com/macros/s/AKfycbxBR6fJaq5_9yOGh7ISdEOL1tQNvmyf6R0HQ6m2cIU4mlQjNUoLYNxs2QPjCeoRamJSpg/exec'
+  const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL || DEFAULT_SHEETS_URL
 
   try {
-    await fetch(webhookUrl, {
+    const res = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      redirect: 'follow',
       body: JSON.stringify({
         bookingId,
         timestamp: new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' }),
@@ -103,10 +105,10 @@ async function saveToGoogleSheets(bookingId: string, data: z.infer<typeof bookin
         preferredDate: data.preferredDate,
         preferredTime: data.preferredTime,
         notes:         data.notes ?? '',
-        status:        'pending',
+        status:        'قيد الانتظار',
       }),
     })
-    console.log('[Booking API] Saved to Google Sheets ✓')
+    console.log('[Booking API] Saved to Google Sheets ✓ Status:', res.status)
   } catch (err) {
     // Don't fail the booking if Sheets is down — just log
     console.warn('[Booking API] Google Sheets save failed:', err)
