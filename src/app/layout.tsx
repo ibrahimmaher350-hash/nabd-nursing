@@ -131,9 +131,12 @@ const organizationSchema = {
   priceRange: 'حسب الخدمة والحالة',
   sameAs: [
     siteConfig.social.facebook,
+    siteConfig.social.facebookProfile,
     siteConfig.social.facebookGroup,
     siteConfig.social.blogger,
     siteConfig.social.googleBusiness,
+    siteConfig.social.cezmaStore,
+    siteConfig.social.telegram,
   ],
 }
 

@@ -135,12 +135,25 @@ export default function AdminSettingsPage() {
           <div className="space-y-3">
             <div>
               <label className="block text-xs font-semibold text-white/70 mb-1">
-                رابط صفحة فيسبوك:
+                رابط الصفحة الرسمية على فيسبوك:
               </label>
               <input
                 type="url"
                 value={formData.facebookUrl}
                 onChange={(e) => setFormData({ ...formData, facebookUrl: e.target.value })}
+                className="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-2 text-xs text-white/90 focus:border-gold-400 focus:outline-none font-mono"
+                dir="ltr"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-white/70 mb-1">
+                رابط الملف الشخصي المسؤول (إبراهيم ماهر):
+              </label>
+              <input
+                type="url"
+                value={formData.facebookProfileUrl || ''}
+                onChange={(e) => setFormData({ ...formData, facebookProfileUrl: e.target.value })}
                 className="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-2 text-xs text-white/90 focus:border-gold-400 focus:outline-none font-mono"
                 dir="ltr"
               />
@@ -161,6 +174,19 @@ export default function AdminSettingsPage() {
 
             <div>
               <label className="block text-xs font-semibold text-white/70 mb-1">
+                رابط قناة/حساب تليجرام:
+              </label>
+              <input
+                type="url"
+                value={formData.telegramUrl || ''}
+                onChange={(e) => setFormData({ ...formData, telegramUrl: e.target.value })}
+                className="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-2 text-xs text-white/90 focus:border-gold-400 focus:outline-none font-mono"
+                dir="ltr"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-white/70 mb-1">
                 رابط المدونة الصحية (Blogger):
               </label>
               <input
@@ -174,12 +200,38 @@ export default function AdminSettingsPage() {
 
             <div>
               <label className="block text-xs font-semibold text-white/70 mb-1">
-                رابط موقع Google Business Profile:
+                رابط موقع Google Business:
               </label>
               <input
                 type="url"
                 value={formData.googleBusinessUrl}
                 onChange={(e) => setFormData({ ...formData, googleBusinessUrl: e.target.value })}
+                className="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-2 text-xs text-white/90 focus:border-gold-400 focus:outline-none font-mono"
+                dir="ltr"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-white/70 mb-1">
+                رابط آراؤكم وتقييمكم على Google:
+              </label>
+              <input
+                type="url"
+                value={formData.googleReviewsUrl || ''}
+                onChange={(e) => setFormData({ ...formData, googleReviewsUrl: e.target.value })}
+                className="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-2 text-xs text-white/90 focus:border-gold-400 focus:outline-none font-mono"
+                dir="ltr"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-white/70 mb-1">
+                رابط متجر نبض على سيزما (Cezma):
+              </label>
+              <input
+                type="url"
+                value={formData.cezmaStoreUrl || ''}
+                onChange={(e) => setFormData({ ...formData, cezmaStoreUrl: e.target.value })}
                 className="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-2 text-xs text-white/90 focus:border-gold-400 focus:outline-none font-mono"
                 dir="ltr"
               />

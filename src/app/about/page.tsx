@@ -85,14 +85,32 @@ export default function AboutPage() {
                 <p className="mb-3">
                   نقدم خدماتنا حالياً داخل <strong className="text-navy-700">دمياط</strong> والمناطق التي يغطيها فريق نبض.
                 </p>
-                <a
-                  href={siteConfig.social.googleBusiness}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-secondary inline-flex items-center gap-2 text-sm"
-                >
-                  موقعنا على Google
-                </a>
+                <div className="flex flex-wrap gap-2.5">
+                  <a
+                    href={siteConfig.social.googleBusiness}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-secondary inline-flex items-center gap-2 text-xs sm:text-sm"
+                  >
+                    📍 موقعنا على Google
+                  </a>
+                  <a
+                    href={siteConfig.social.googleReviews}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 px-4 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 font-bold text-xs sm:text-sm inline-flex items-center gap-2 hover:bg-amber-100 transition-colors"
+                  >
+                    ⭐ آراؤكم وتقييمكم على Google
+                  </a>
+                  <a
+                    href={siteConfig.social.cezmaStore}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 px-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 font-bold text-xs sm:text-sm inline-flex items-center gap-2 hover:bg-emerald-100 transition-colors"
+                  >
+                    🛒 متجر نبض على سيزما
+                  </a>
+                </div>
               </div>
 
               {/* CTA */}

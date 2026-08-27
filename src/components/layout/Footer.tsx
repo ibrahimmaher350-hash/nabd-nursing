@@ -60,6 +60,34 @@ const BlogIcon = () => (
   </svg>
 )
 
+// Telegram icon
+const TelegramIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
+  </svg>
+)
+
+// Star / Review icon
+const StarIcon = () => (
+  <svg className="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
+  </svg>
+)
+
+// User icon
+const UserIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clipRule="evenodd" />
+  </svg>
+)
+
+// Store icon
+const StoreIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path fillRule="evenodd" d="M7.5 5.25a3 3 0 0 1 6 0v.75H18A2.25 2.25 0 0 1 20.25 8.25v10.5A2.25 2.25 0 0 1 18 21H6a2.25 2.25 0 0 1-2.25-2.25V8.25A2.25 2.25 0 0 1 6 6h4.5v-.75Zm1.5.75v-.75a1.5 1.5 0 0 1 3 0V6h-3Z" clipRule="evenodd" />
+  </svg>
+)
+
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const { settings, getCallUrl, getWhatsAppUrl } = useSettings()
@@ -134,83 +162,133 @@ export default function Footer() {
           </div>
 
           {/* Contact + Social */}
+          {/* Contact + All Official Platforms */}
           <div>
-            <h3 className="font-bold text-base mb-4 text-white">تواصل معنا</h3>
+            <h3 className="font-bold text-base mb-3 text-white">الاتصال والحجز</h3>
 
-            {/* Phone */}
-            <a
-              href={getCallUrl()}
-              className="flex items-center gap-2.5 text-white/80 hover:text-gold-300 text-sm mb-3 transition-colors"
-              onClick={() => analytics.clickCall('footer')}
-            >
-              <PhoneIcon className="w-4 h-4 text-gold-400 shrink-0" aria-hidden="true" />
-              {settings.phone}
-            </a>
+            <div className="flex flex-col gap-2.5 mb-5">
+              {/* Phone */}
+              <a
+                href={siteConfig.contact.callUrl}
+                className="flex items-center gap-2 text-white/90 hover:text-gold-300 text-sm font-semibold transition-colors"
+                onClick={() => analytics.clickCall('footer')}
+              >
+                <PhoneIcon className="w-4 h-4 text-gold-400 shrink-0" aria-hidden="true" />
+                <span>01001097896</span>
+              </a>
 
-            {/* WhatsApp */}
-            <a
-              href={getWhatsAppUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2.5 text-white/80 hover:text-gold-300 text-sm mb-5 transition-colors"
-              onClick={() => analytics.clickWhatsApp('footer')}
-            >
-              <WhatsAppIcon />
-              واتساب
-            </a>
+              {/* WhatsApp */}
+              <a
+                href="https://wa.me/201099667065"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-xs sm:text-sm font-semibold transition-colors"
+                onClick={() => analytics.clickWhatsApp('footer')}
+              >
+                <WhatsAppIcon />
+                <span>مراسلة إبراهيم عبر واتساب</span>
+              </a>
 
-            {/* Social */}
+              {/* Telegram */}
+              <a
+                href="https://t.me/Ibrahim5k"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sky-400 hover:text-sky-300 text-xs sm:text-sm font-semibold transition-colors"
+              >
+                <TelegramIcon />
+                <span>تليجرام: t.me/Ibrahim5k</span>
+              </a>
+            </div>
+
+            {/* Official Platforms */}
             <div>
-              <p className="text-xs text-white/50 mb-3 font-semibold uppercase tracking-wide">
-                تابعنا
+              <p className="text-xs text-white/50 mb-2.5 font-semibold uppercase tracking-wide">
+                منصات نبض الرسمية
               </p>
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="grid grid-cols-2 gap-2">
+                {/* Facebook Page */}
                 <a
-                  href={settings.facebookUrl || siteConfig.social.facebook}
+                  href="https://www.facebook.com/profile.php?id=61593884400330"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
-                  aria-label="صفحتنا على فيسبوك"
-                  onClick={() => analytics.facebookClick('page')}
+                  className="flex items-center gap-1.5 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
+                  aria-label="الصفحة الرسمية لنَبض للتمريض المنزلي"
                 >
                   <FacebookIcon />
-                  فيسبوك
+                  <span className="truncate">صفحة نبض</span>
                 </a>
 
+                {/* Responsible Profile */}
                 <a
-                  href={settings.facebookGroupUrl || siteConfig.social.facebookGroup}
+                  href="https://www.facebook.com/share/1BDJwJeW15/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
+                  className="flex items-center gap-1.5 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
+                  aria-label="الملف الشخصي المسؤول عن نبض – إبراهيم ماهر"
+                >
+                  <UserIcon />
+                  <span className="truncate">إبراهيم ماهر</span>
+                </a>
+
+                {/* Facebook Group */}
+                <a
+                  href="https://www.facebook.com/share/g/1BmBygobMw/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
                   aria-label="جروب نبض على فيسبوك"
-                  onClick={() => analytics.facebookClick('group')}
                 >
                   <FacebookIcon />
-                  الجروب
+                  <span className="truncate">جروب نبض</span>
                 </a>
 
+                {/* Blogger */}
                 <a
-                  href={settings.bloggerUrl || siteConfig.social.blogger}
+                  href="https://nabd-damietta.blogspot.com/?m=1"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
-                  aria-label="مدونة نبض الصحية"
-                  onClick={() => analytics.blogClick()}
+                  className="flex items-center gap-1.5 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
+                  aria-label="مدونة نبض – Blogger"
                 >
                   <BlogIcon />
-                  المدونة
+                  <span className="truncate">مدونة نبض</span>
                 </a>
 
+                {/* Google Business */}
                 <a
-                  href={siteConfig.social.googleBusiness}
+                  href="https://2u.pw/AGitWm"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
-                  aria-label="موقعنا على Google"
-                  onClick={() => analytics.googleBusinessClick()}
+                  className="flex items-center gap-1.5 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
+                  aria-label="نبض على Google"
                 >
                   <GoogleIcon />
-                  Google
+                  <span className="truncate">على Google</span>
+                </a>
+
+                {/* Google Reviews */}
+                <a
+                  href="https://2u.pw/lgOM5v"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 p-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-gold-300 text-xs font-medium transition-colors border border-amber-500/30"
+                  aria-label="آراؤكم وتقييمكم على Google"
+                >
+                  <StarIcon />
+                  <span className="truncate">التقييمات ⭐</span>
+                </a>
+
+                {/* Cezma Store */}
+                <a
+                  href="https://cezma.com/store/nabd.nu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 p-2.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-xs font-medium transition-colors border border-emerald-500/30 col-span-2"
+                  aria-label="متجر نبض على سيزما | Cezma"
+                >
+                  <StoreIcon />
+                  <span>متجر نبض على سيزما (Cezma) 🛒</span>
                 </a>
               </div>
             </div>

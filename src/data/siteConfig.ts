@@ -9,7 +9,7 @@ export const siteConfig = {
   brand: {
     name: 'نبض للتمريض المنزلي',
     shortName: 'نبض',
-    tagline: 'رعاية تبدأ من بيتك',
+    tagline: 'رعايتك الصحية تبدأ من مكانك، ونحن أقرب إليك.',
     description:
       'خدمات التمريض والرعاية الصحية المنزلية في دمياط ومحيطها',
     url: 'https://nabd-damietta.blogspot.com',
@@ -21,11 +21,12 @@ export const siteConfig = {
 
   // ─── Contact ─────────────────────────────────────────────
   contact: {
-    phone: '01099667065',
-    phoneE164: '+201099667065',
+    phone: '01001097896',
+    phoneE164: '+201001097896',
     whatsapp: '201099667065',
     whatsappUrl: 'https://wa.me/201099667065',
-    callUrl: 'tel:+201099667065',
+    callUrl: 'tel:+201001097896',
+    telegram: 'https://t.me/Ibrahim5k',
     email: null, // Not provided — do NOT invent
   },
 
@@ -38,12 +39,25 @@ export const siteConfig = {
     addressDisplay: 'دمياط، مصر',
   },
 
-  // ─── Social ──────────────────────────────────────────────
+  // ─── Social & Official Links ──────────────────────────────
   social: {
-    facebook: 'https://www.facebook.com/share/1D1B1uSJMy/',
-    facebookGroup: 'https://www.facebook.com/share/g/1Hok2omwVU/',
+    // 📘 الصفحة الرسمية لنَبض للتمريض المنزلي
+    facebook: 'https://www.facebook.com/profile.php?id=61593884400330',
+    // 🔵 الملف الشخصي المسؤول عن نبض – إبراهيم ماهر
+    facebookProfile: 'https://www.facebook.com/share/1BDJwJeW15/',
+    // 👥 جروب نبض على فيسبوك
+    facebookGroup: 'https://www.facebook.com/share/g/1BmBygobMw/',
+    // 📝 مدونة نبض – Blogger
     blogger: 'https://nabd-damietta.blogspot.com/?m=1',
-    googleBusiness: 'https://share.google/6Yj2LI07E3WNmZ7c0',
+    // 📍 نبض على Google
+    googleBusiness: 'https://2u.pw/AGitWm',
+    // ⭐ آراؤكم وتقييمكم على Google
+    googleReviews: 'https://2u.pw/lgOM5v',
+    // 🛒 متجر نبض على سيزما | Cezma
+    cezmaStore: 'https://cezma.com/store/nabd.nu',
+    // ✈️ تليجرام
+    telegram: 'https://t.me/Ibrahim5k',
+    // 📲 واتساب
     whatsapp: 'https://wa.me/201099667065',
   },
 

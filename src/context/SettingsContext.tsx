@@ -12,10 +12,14 @@ export interface SiteSettings {
   tagline: string
   phone: string
   whatsapp: string
+  telegramUrl?: string
   facebookUrl: string
+  facebookProfileUrl?: string
   facebookGroupUrl: string
   bloggerUrl: string
   googleBusinessUrl: string
+  googleReviewsUrl?: string
+  cezmaStoreUrl?: string
   serviceAreas: string
   bookingEnabled: boolean
   maintenanceMode: boolean
@@ -27,10 +31,14 @@ const defaultSettings: SiteSettings = {
   tagline: siteConfig.brand.tagline,
   phone: siteConfig.contact.phone,
   whatsapp: siteConfig.contact.whatsapp,
+  telegramUrl: siteConfig.contact.telegram,
   facebookUrl: siteConfig.social.facebook,
+  facebookProfileUrl: siteConfig.social.facebookProfile,
   facebookGroupUrl: siteConfig.social.facebookGroup,
   bloggerUrl: siteConfig.social.blogger,
   googleBusinessUrl: siteConfig.social.googleBusiness,
+  googleReviewsUrl: siteConfig.social.googleReviews,
+  cezmaStoreUrl: siteConfig.social.cezmaStore,
   serviceAreas: siteConfig.location.serviceAreas.join('، '),
   bookingEnabled: true,
   maintenanceMode: false,
