@@ -14,13 +14,12 @@ import { useSettings } from '@/context/SettingsContext'
 const footerLinks = {
   main: [
     { href: '/',               label: 'الرئيسية' },
-    { href: '/services',       label: 'الخدمات' },
+    { href: '/services',       label: 'خدمات التمريض 🩺' },
+    { href: '/booking',        label: 'طلب ممرض للمنزل 📅' },
+    { href: '/prescriptions',  label: 'الروشتات الطبية 💊' },
+    { href: '/offers',         label: 'عروض التمريض 🎁' },
     { href: '/first-aid',      label: 'دليل الإسعافات 🚑' },
-    { href: '/offers',         label: 'العروض' },
     { href: '/medical-record', label: 'ملفي الطبي' },
-    { href: '/booking',        label: 'الحجز' },
-    { href: '/about',          label: 'من نحن' },
-    { href: '/blog',           label: 'المدونة' },
     { href: '/contact',        label: 'تواصل معنا' },
   ],
   legal: [

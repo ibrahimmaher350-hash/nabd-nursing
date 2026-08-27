@@ -13,15 +13,14 @@ import { analytics } from '@/lib/analytics'
 import { useSettings } from '@/context/SettingsContext'
 
 const navLinks = [
-  { href: '/',               label: 'الرئيسية',     badge: null },
-  { href: '/services',       label: 'الخدمات',      badge: null },
-  { href: '/first-aid',      label: 'الإسعافات 🚑', badge: 'دليل' },
-  { href: '/offers',         label: 'العروض',       badge: 'جديد' },
-  { href: '/medical-record', label: 'ملفي الطبي',   badge: 'خاص' },
-  { href: '/booking',        label: 'احجز الآن',    badge: null },
-  { href: '/about',          label: 'من نحن',       badge: null },
-  { href: '/blog',           label: 'المدونة',      badge: null },
-  { href: '/contact',        label: 'تواصل معنا',   badge: null },
+  { href: '/',               label: 'الرئيسية',         badge: null },
+  { href: '/services',       label: 'خدماتنا 🩺',       badge: 'طلب' },
+  { href: '/booking',        label: 'احجز ممرض 📅',     badge: 'فوري' },
+  { href: '/prescriptions',  label: 'الروشتات 💊',      badge: 'جديد' },
+  { href: '/offers',         label: 'العروض 🎁',        badge: 'خصم' },
+  { href: '/first-aid',      label: 'دليل الإسعافات 🚑', badge: null },
+  { href: '/medical-record', label: 'ملفي الطبي',       badge: null },
+  { href: '/contact',        label: 'تواصل معنا',       badge: null },
 ]
 
 export default function Header() {
@@ -136,9 +135,9 @@ export default function Header() {
               </a>
               <Link
                 href="/booking"
-                className="btn-primary text-sm px-5 py-2.5"
+                className="btn-primary text-xs xl:text-sm px-4 xl:px-5 py-2.5 whitespace-nowrap"
               >
-                احجز الآن
+                احجز ممرض لمنزلك 🩺
               </Link>
             </div>
 
