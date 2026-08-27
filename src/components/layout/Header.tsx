@@ -13,14 +13,15 @@ import { analytics } from '@/lib/analytics'
 import { useSettings } from '@/context/SettingsContext'
 
 const navLinks = [
-  { href: '/',               label: 'الرئيسية',    badge: null },
-  { href: '/services',       label: 'الخدمات',     badge: null },
-  { href: '/offers',         label: 'العروض',      badge: 'جديد' },
-  { href: '/medical-record', label: 'ملفي الطبي',  badge: 'خاص' },
-  { href: '/booking',        label: 'احجز الآن',   badge: null },
-  { href: '/about',          label: 'من نحن',      badge: null },
-  { href: '/blog',           label: 'المدونة',     badge: null },
-  { href: '/contact',        label: 'تواصل معنا',  badge: null },
+  { href: '/',               label: 'الرئيسية',     badge: null },
+  { href: '/services',       label: 'الخدمات',      badge: null },
+  { href: '/first-aid',      label: 'الإسعافات 🚑', badge: 'دليل' },
+  { href: '/offers',         label: 'العروض',       badge: 'جديد' },
+  { href: '/medical-record', label: 'ملفي الطبي',   badge: 'خاص' },
+  { href: '/booking',        label: 'احجز الآن',    badge: null },
+  { href: '/about',          label: 'من نحن',       badge: null },
+  { href: '/blog',           label: 'المدونة',      badge: null },
+  { href: '/contact',        label: 'تواصل معنا',   badge: null },
 ]
 
 export default function Header() {
@@ -109,7 +110,7 @@ export default function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="btn-ghost text-xs xl:text-sm px-2 xl:px-3 relative inline-flex items-center gap-1 whitespace-nowrap"
+                    className="btn-ghost text-[11px] xl:text-xs 2xl:text-sm px-1.5 xl:px-2.5 relative inline-flex items-center gap-1 whitespace-nowrap"
                   >
                     {link.label}
                     {link.badge && (

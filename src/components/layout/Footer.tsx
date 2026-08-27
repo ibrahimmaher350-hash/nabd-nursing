@@ -15,6 +15,7 @@ const footerLinks = {
   main: [
     { href: '/',               label: 'الرئيسية' },
     { href: '/services',       label: 'الخدمات' },
+    { href: '/first-aid',      label: 'دليل الإسعافات 🚑' },
     { href: '/offers',         label: 'العروض' },
     { href: '/medical-record', label: 'ملفي الطبي' },
     { href: '/booking',        label: 'الحجز' },

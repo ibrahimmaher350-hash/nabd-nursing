@@ -90,14 +90,22 @@ export default function HeroSection() {
             </div>
 
             {/* Emergency notice */}
-            <div className="flex items-start gap-2 bg-red-900/30 border border-red-400/30 rounded-xl p-3 max-w-lg mx-auto lg:mx-0 text-start">
-              <ExclamationTriangleIcon
-                className="w-4 h-4 text-red-400 shrink-0 mt-0.5"
-                aria-hidden="true"
-              />
-              <p className="text-red-300 text-xs leading-relaxed">
-                في الحالات الطارئة — اتصل بخدمات الطوارئ أو اذهب لأقرب مستشفى.
-              </p>
+            <div className="flex items-center justify-between gap-2 bg-red-900/30 border border-red-400/30 rounded-xl p-3 max-w-lg mx-auto lg:mx-0 text-start">
+              <div className="flex items-start gap-2">
+                <ExclamationTriangleIcon
+                  className="w-4 h-4 text-red-400 shrink-0 mt-0.5"
+                  aria-hidden="true"
+                />
+                <p className="text-red-300 text-xs leading-relaxed">
+                  في الحالات الطارئة — اتصل بـ 123 أو اتبع
+                </p>
+              </div>
+              <Link
+                href="/first-aid"
+                className="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-lg shrink-0 transition-colors shadow"
+              >
+                دليل الإسعافات 🚑
+              </Link>
             </div>
 
             {/* Stats */}
