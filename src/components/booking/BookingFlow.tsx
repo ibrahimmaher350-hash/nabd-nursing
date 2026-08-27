@@ -111,8 +111,14 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
     bookingId: string
     serviceName: string
     customerName?: string
+    customerPhone?: string
+    patientName?: string
+    city?: string
+    address?: string
     preferredDate?: string
     preferredTime?: string
+    notes?: string
+    whatsappUrl?: string
   } | null>(null)
 
   const {
@@ -180,12 +186,24 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
       }
 
       analytics.bookingSuccess(json.bookingId, selectedServiceId)
+
+      // Auto-open WhatsApp to notify admin (opens in new tab)
+      if (json.whatsappUrl) {
+        window.open(json.whatsappUrl, '_blank', 'noopener,noreferrer')
+      }
+
       setSuccessData({
-        bookingId: json.bookingId,
-        serviceName: selectedService?.name ?? data.serviceId,
-        customerName: data.customerName,
+        bookingId:     json.bookingId,
+        serviceName:   selectedService?.name ?? data.serviceId,
+        customerName:  data.customerName,
+        customerPhone: data.customerPhone,
+        patientName:   data.patientName,
+        city:          data.city,
+        address:       data.address,
         preferredDate: data.preferredDate,
         preferredTime: data.preferredTime,
+        notes:         data.notes,
+        whatsappUrl:   json.whatsappUrl,
       })
     } catch {
       setSubmitError(
@@ -203,8 +221,14 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
         bookingId={successData.bookingId}
         serviceName={successData.serviceName}
         customerName={successData.customerName}
+        customerPhone={successData.customerPhone}
+        patientName={successData.patientName}
+        city={successData.city}
+        address={successData.address}
         preferredDate={successData.preferredDate}
         preferredTime={successData.preferredTime}
+        notes={successData.notes}
+        whatsappUrl={successData.whatsappUrl}
       />
     )
   }
