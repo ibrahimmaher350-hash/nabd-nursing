@@ -2,6 +2,7 @@
 /**
  * app/prescriptions/page.tsx — نبض للتمريض المنزلي
  * دليل أهم الروشتات الطبية الشائعة لخدمة المريض والتسويق لخدمات التمريض المنزلي
+ * مستوحى من كتاب روشتاتولوجي (Roshetatology - د. أحمد عبد الله)
  * يبحث بكلمة من العرض أو الشكوى بالعامية المصرية ويربط كل روشتة بخدمة التمريض المنزلية
  */
 
@@ -16,7 +17,6 @@ import {
   PhoneIcon,
   ExclamationTriangleIcon,
   ShieldCheckIcon,
-  CheckCircleIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   SparklesIcon,
@@ -25,28 +25,31 @@ import {
 import {
   prescriptionsDatabase,
   PRESCRIPTION_CATEGORIES,
-  type Prescription,
+  ABDOMINAL_PAIN_DIAGNOSTIC_GUIDE,
 } from '@/data/prescriptionsData'
 import { siteConfig } from '@/data/siteConfig'
 
 // Quick complaint search pills
 const POPULAR_COMPLAINTS = [
-  { label: 'ترجيع وإسهال 🤢', query: 'ترجيع' },
+  { label: 'ترجيع مستمر 🤢', query: 'ترجيع' },
+  { label: 'وجع ومغص بطن ⚡', query: 'مغص' },
+  { label: 'اشتباه زائدة دودية 🚨', query: 'زائدة' },
+  { label: 'حموضة وقرحة معدة 🔥', query: 'حموضة' },
+  { label: 'مغص مرارة وصفراء 🟡', query: 'مرارة' },
+  { label: 'قولون عصبي وغازات 💨', query: 'قولون' },
   { label: 'وجع في الزور ولوز 🤒', query: 'الزور' },
-  { label: 'كحة وبلغم بالصدر 🫁', query: 'كحة' },
   { label: 'حرقان بول وصديد 🚽', query: 'حرقان بول' },
-  { label: 'قرحة فراش وغيار جرح 🩹', query: 'قرحة' },
-  { label: 'ضغط دم عالي وصداع 🩸', query: 'ضغط' },
-  { label: 'مغص كلوي في الجنب ⚡', query: 'مغص كلوي' },
   { label: 'غضروف وعرق النسا 🦴', query: 'عرق النسا' },
   { label: 'جرح قيصرية وعمليات ✂️', query: 'قيصرية' },
   { label: 'حساسية وهرش جلدي 🔴', query: 'حساسية' },
+  { label: 'دورة شهرية ومغص 🌸', query: 'الدورة' },
 ]
 
 export default function PrescriptionsPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [expandedId, setExpandedId] = useState<string | null>(prescriptionsDatabase[0]?.id || null)
+  const [showAbdominalGuide, setShowAbdominalGuide] = useState<boolean>(false)
 
   // Filter prescriptions by complaint, medicine, title or category
   const filteredPrescriptions = useMemo(() => {
@@ -92,6 +95,13 @@ export default function PrescriptionsPage() {
     return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`
   }
 
+  const selectGuideItem = (query: string) => {
+    setSearchQuery(query)
+    setSelectedCategory('all')
+    setShowAbdominalGuide(false)
+    window.scrollTo({ top: 500, behavior: 'smooth' })
+  }
+
   return (
     <>
       <Header />
@@ -129,13 +139,13 @@ export default function PrescriptionsPage() {
           <div className="section-container max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-4 text-xs sm:text-sm font-bold text-gold-300">
               <SparklesIcon className="w-4 h-4 text-gold-400" />
-              <span>دليل الروشتات الطبية المبسط والخدمات التمريضية المنزلية</span>
+              <span>دليل الروشتات الطبية الشامل (Roshetatology) والخدمات التمريضية المنزلية</span>
             </div>
             <h1 className="!text-2xl sm:!text-4xl font-extrabold text-white mb-3">
               أهم <span className="text-gold-300">الروشتات الطبية</span> الشائعة 💊
             </h1>
             <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-              دليلك الطبي الشامل لأشهر الأمراض والحالات التي تواجه الأسرة المصرية؛ التشخيص، الأعراض، أدوية الروشتة بالعربي، وطلب تمريض نبض المنزلي لتعليق المحاليل وإعطاء الحقن.
+              دليلك الإكلينيكي المعتمد لتشخيص النزلات المعوية، الترجيع، وجع البطن والمغص، الزائدة، قرحة المعدة، واللوز؛ كل روشتة منفصلة ومترجمة للمريض المصري العامي مع زر طلب ممرض نبض لتنفيذ الحقن والمحاليل بالمنزل.
             </p>
 
             {/* ── Search Bar by Complaint / Symptom ── */}
@@ -145,7 +155,7 @@ export default function PrescriptionsPage() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="ابحث بكلمة من الشكوى أو العرض... (مثلاً: ترجيع، لوز، كحة، صديد، مغص، ضغط)"
+                  placeholder="ابحث بكلمة من الشكوى أو العرض... (مثلاً: ترجيع، مغص، زائدة، لوز، حموضة، مرارة، ضغط)"
                   className="w-full py-4 pe-12 ps-12 rounded-2xl bg-white text-navy-800 placeholder-medical-muted text-sm sm:text-base font-bold shadow-2xl border-2 border-transparent focus:border-gold-400 focus:outline-none transition-all"
                   dir="rtl"
                 />
@@ -182,8 +192,105 @@ export default function PrescriptionsPage() {
                 </button>
               ))}
             </div>
+
+            {/* ── Abdominal Pain Diagnostic Tool Button ── */}
+            <div className="mt-6">
+              <button
+                onClick={() => setShowAbdominalGuide((prev) => !prev)}
+                className="inline-flex items-center gap-2 bg-gold-500 hover:bg-gold-400 text-navy-950 px-4 sm:px-6 py-2.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg transition-transform active:scale-95"
+              >
+                <span>🧭 خريطة تشخيص وجع البطن والمغص (دور على السبب)</span>
+                {showAbdominalGuide ? (
+                  <ChevronUpIcon className="w-4 h-4" />
+                ) : (
+                  <ChevronDownIcon className="w-4 h-4" />
+                )}
+              </button>
+            </div>
           </div>
         </section>
+
+        {/* ── Interactive Abdominal Pain Diagnostic Map (من كتاب روشتاتولوجي ص 14-16) ── */}
+        {showAbdominalGuide && (
+          <section className="section-container mt-6">
+            <div className="max-w-4xl mx-auto bg-white border-2 border-gold-400 rounded-3xl p-5 sm:p-7 shadow-xl">
+              <div className="flex items-start justify-between gap-3 mb-4">
+                <div>
+                  <div className="inline-flex items-center gap-1.5 text-xs font-black text-gold-700 bg-gold-50 px-3 py-1 rounded-full border border-gold-200 mb-1">
+                    <span>📚 مرجع: Roshetatology - Dr / Ahmed Abd Allah</span>
+                  </div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-navy-800">
+                    دليل تشخيص وجع وألم البطن (Abdominal Pain: Search for Cause)
+                  </h2>
+                  <p className="text-xs sm:text-sm text-medical-muted mt-0.5">
+                    حدد مكان الوجع لتعرف سببه المرجح، الفحص الطبي المناسب، وكيفية التصرف السليم:
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowAbdominalGuide(false)}
+                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center shrink-0"
+                >
+                  <XMarkIcon className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {ABDOMINAL_PAIN_DIAGNOSTIC_GUIDE.map((guide) => (
+                  <div
+                    key={guide.id}
+                    className={`p-4 rounded-2xl border transition-all ${
+                      guide.isSurgicalAlert
+                        ? 'border-red-300 bg-red-50/70 ring-1 ring-red-200'
+                        : 'border-slate-200 bg-slate-50 hover:bg-slate-100/70'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2 mb-1.5">
+                      <span className="text-xs font-black text-navy-900 flex items-center gap-1">
+                        <span>📍</span>
+                        <span>{guide.locationName}</span>
+                      </span>
+                      {guide.isSurgicalAlert && (
+                        <span className="text-[10px] bg-red-600 text-white font-black px-2 py-0.5 rounded-full animate-pulse">
+                          طوارئ جراحية
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="text-xs sm:text-sm font-bold text-navy-800 mb-1">
+                      {guide.symptomsAndColic}
+                    </p>
+
+                    <div className="text-xs text-slate-700 flex flex-col gap-1 mt-2 pt-2 border-t border-slate-200">
+                      <div>
+                        <strong className="text-navy-700">الفحص:</strong> {guide.examinationKey}
+                      </div>
+                      <div>
+                        <strong className="text-navy-700">العلاج والإجراء:</strong> {guide.whatToDo}
+                      </div>
+                    </div>
+
+                    <div className="mt-3 pt-2 flex items-center justify-between gap-2">
+                      <button
+                        onClick={() => {
+                          if (guide.id.includes('appendicitis')) selectGuideItem('زائدة')
+                          else if (guide.id.includes('renal')) selectGuideItem('مغص كلوي')
+                          else if (guide.id.includes('gastritis')) selectGuideItem('حموضة')
+                          else if (guide.id.includes('gallbladder')) selectGuideItem('مرارة')
+                          else if (guide.id.includes('spastic')) selectGuideItem('قولون')
+                          else if (guide.id.includes('menses')) selectGuideItem('الدورة')
+                          else selectGuideItem('مغص')
+                        }}
+                        className="text-xs font-bold text-navy-700 hover:text-navy-900 underline flex items-center gap-1"
+                      >
+                        <span>عرض روشتة الحالة بالتفصيل ⬅️</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ── Main Content Area ── */}
         <div className="section-container -mt-5">
@@ -226,7 +333,7 @@ export default function PrescriptionsPage() {
                   لم نجد روشتة تطابق بحثك &quot;{searchQuery}&quot;
                 </h3>
                 <p className="text-xs sm:text-sm text-medical-muted max-w-md mx-auto mb-4">
-                  جرب البحث بكلمة عامية أخرى مثل: (ترجيع، اسهال، سخونية، لوز، كحة، مسالك، قرحة، ضغط، عرق النسا).
+                  جرب البحث بكلمة عامية أخرى مثل: (ترجيع، مغص، زائدة، اسهال، لوز، كحة، حموضة، مرارة، قولون، عرق النسا).
                 </p>
                 <button
                   onClick={() => {
@@ -329,7 +436,7 @@ export default function PrescriptionsPage() {
                           <div className="bg-amber-50/80 border border-amber-200 rounded-2xl p-4">
                             <div className="flex items-center gap-2 mb-2 text-xs sm:text-sm font-black text-amber-900">
                               <ExclamationTriangleIcon className="w-5 h-5 text-amber-600 shrink-0" />
-                              <span>الفحص السريري والتنبيهات الجراحية الهامة:</span>
+                              <span>الفحص السريري والتنبيهات الطبية والجراحية:</span>
                             </div>
                             {prescription.examinationAndWarnings.surgicalWarning && (
                               <p className="text-xs sm:text-sm text-amber-950 font-semibold mb-2 leading-relaxed">
