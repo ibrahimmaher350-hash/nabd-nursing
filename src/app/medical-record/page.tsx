@@ -48,6 +48,24 @@ interface PatientData {
   }>
 }
 
+function formatArabicDate(rawStr?: string): string {
+  if (!rawStr) return ''
+  try {
+    // If it already looks clean
+    if (rawStr.includes('صباح') || rawStr.includes('مساء')) return rawStr
+    const d = new Date(rawStr)
+    if (isNaN(d.getTime())) return rawStr
+    return d.toLocaleDateString('ar-EG', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  } catch {
+    return rawStr
+  }
+}
+
 const STORAGE_KEY = 'nabd_patient_phone'
 
 export default function MedicalRecordPage() {
@@ -267,7 +285,7 @@ export default function MedicalRecordPage() {
                       <div>
                         <span className="text-gold-400 text-xs font-black">موعد الزيارة القادمة</span>
                         <h3 className="text-lg sm:text-xl font-extrabold text-white mt-0.5">
-                          {patient.nextVisit}
+                          {formatArabicDate(patient.nextVisit)}
                         </h3>
                         {patient.nextService && (
                           <p className="text-slate-300 text-xs sm:text-sm mt-1">
@@ -463,7 +481,7 @@ export default function MedicalRecordPage() {
                             {v.serviceName}
                           </p>
                           <p className="text-xs text-medical-muted mt-0.5">
-                            الموعد: {v.date} {v.time && `• ${v.time}`}
+                            الموعد: {formatArabicDate(v.date)}
                           </p>
                         </div>
                         <span className="self-start xs:self-center text-xs font-bold px-2.5 py-1 rounded-full bg-navy-50 text-navy-700 border border-navy-100">
