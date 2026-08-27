@@ -12,6 +12,8 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import FloatingActions from '@/components/layout/FloatingActions'
 import { services, getServiceBySlug } from '@/data/services'
+import { getOffersForService } from '@/data/offers'
+import ServiceOfferBanner from '@/components/ui/ServiceOfferBanner'
 import { siteConfig, getWhatsAppUrl } from '@/data/siteConfig'
 
 interface Props {
@@ -86,6 +88,7 @@ export default async function ServicePage({ params }: Props) {
   }
 
   const whatsappUrl = getWhatsAppUrl(service.name)
+  const serviceOffers = getOffersForService(slug)
 
   return (
     <>
@@ -158,6 +161,15 @@ export default async function ServicePage({ params }: Props) {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
               {/* Main content */}
               <div className="lg:col-span-2 flex flex-col gap-8">
+
+                {/* ── Offer Banner in main content (mobile + tablet visible) ── */}
+                {serviceOffers.length > 0 && (
+                  <div className="lg:hidden flex flex-col gap-4">
+                    {serviceOffers.map((offer) => (
+                      <ServiceOfferBanner key={offer.id} offer={offer} />
+                    ))}
+                  </div>
+                )}
 
                 {/* Who needs this */}
                 <div>
@@ -233,6 +245,11 @@ export default async function ServicePage({ params }: Props) {
 
               {/* Sidebar */}
               <div className="flex flex-col gap-4">
+                {/* ── Offer Banner (if active offer exists) ── */}
+                {serviceOffers.map((offer) => (
+                  <ServiceOfferBanner key={offer.id} offer={offer} />
+                ))}
+
                 {/* Booking card */}
                 <div className="nabd-card p-5 sticky top-20">
                   <h3 className="font-bold text-navy-700 text-base mb-4">احجز هذه الخدمة</h3>

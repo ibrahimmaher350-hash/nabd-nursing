@@ -13,12 +13,13 @@ import { analytics } from '@/lib/analytics'
 import { useSettings } from '@/context/SettingsContext'
 
 const navLinks = [
-  { href: '/',          label: 'الرئيسية' },
-  { href: '/services',  label: 'الخدمات' },
-  { href: '/booking',   label: 'احجز الآن' },
-  { href: '/about',     label: 'من نحن' },
-  { href: '/blog',      label: 'المدونة' },
-  { href: '/contact',   label: 'تواصل معنا' },
+  { href: '/',          label: 'الرئيسية',  badge: null },
+  { href: '/services',  label: 'الخدمات',   badge: null },
+  { href: '/offers',    label: 'العروض',    badge: 'جديد' },
+  { href: '/booking',   label: 'احجز الآن', badge: null },
+  { href: '/about',     label: 'من نحن',    badge: null },
+  { href: '/blog',      label: 'المدونة',   badge: null },
+  { href: '/contact',   label: 'تواصل معنا', badge: null },
 ]
 
 export default function Header() {
@@ -107,9 +108,14 @@ export default function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="btn-ghost text-sm"
+                    className="btn-ghost text-sm relative inline-flex items-center gap-1.5"
                   >
                     {link.label}
+                    {link.badge && (
+                      <span className="bg-gold-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">
+                        {link.badge}
+                      </span>
+                    )}
                   </Link>
                 )
               )}
@@ -211,13 +217,18 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={closeMenu}
-                  className={`flex items-center px-4 py-3 rounded-xl text-base font-semibold transition-colors ${
+                  className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold transition-colors ${
                     link.href === '/booking'
                       ? 'bg-navy-700 text-white mt-2'
                       : 'text-navy-700 hover:bg-navy-50'
                   }`}
                 >
                   {link.label}
+                  {link.badge && (
+                    <span className="bg-gold-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full leading-none ms-2">
+                      {link.badge}
+                    </span>
+                  )}
                 </Link>
               ))}
             </div>

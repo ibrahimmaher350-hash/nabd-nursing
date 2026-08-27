@@ -11,12 +11,14 @@ import HeroSection from '@/components/sections/HeroSection'
 import QuickActions from '@/components/sections/QuickActions'
 import ServicesGrid from '@/components/sections/ServicesGrid'
 import NursePromo from '@/components/sections/NursePromo'
+import OffersSection from '@/components/sections/OffersSection'
 import WhyNabd from '@/components/sections/WhyNabd'
 import HowItWorks from '@/components/sections/HowItWorks'
 import BlogSection from '@/components/sections/BlogSection'
 import FAQ from '@/components/sections/FAQ'
 import FinalCTA from '@/components/sections/FinalCTA'
 import { getBlogProvider } from '@/lib/providers/BloggerProvider'
+import { getFeaturedOffers } from '@/data/offers'
 import { siteConfig } from '@/data/siteConfig'
 
 export const metadata: Metadata = {
@@ -32,6 +34,7 @@ export default async function HomePage() {
   // Fetch blog posts server-side (with fallback)
   const blogProvider = getBlogProvider()
   const blogPosts = await blogProvider.getPosts(3)
+  const featuredOffers = getFeaturedOffers()
 
   return (
     <>
@@ -44,25 +47,30 @@ export default async function HomePage() {
         {/* 2. Quick Actions */}
         <QuickActions />
 
-        {/* 3. Featured Services */}
+        {/* 3. Offers — يظهر مباشرة بعد QuickActions إذا توجد عروض */}
+        {featuredOffers.length > 0 && (
+          <OffersSection offers={featuredOffers} />
+        )}
+
+        {/* 4. Featured Services */}
         <ServicesGrid featured />
 
-        {/* 4. Nurse Promo — صورة الممرض الاحترافية */}
+        {/* 5. Nurse Promo — صورة الممرض الاحترافية */}
         <NursePromo />
 
-        {/* 5. Why Nabd */}
+        {/* 6. Why Nabd */}
         <WhyNabd />
 
-        {/* 5. How It Works */}
+        {/* 7. How It Works */}
         <HowItWorks />
 
-        {/* 6. Blog Section */}
+        {/* 8. Blog Section */}
         <BlogSection posts={blogPosts} />
 
-        {/* 7. FAQ */}
+        {/* 9. FAQ */}
         <FAQ />
 
-        {/* 8. Final CTA */}
+        {/* 10. Final CTA */}
         <FinalCTA />
       </main>
 
