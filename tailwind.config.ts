@@ -5,12 +5,13 @@ const config: Config = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/data/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       fontFamily: {
-        cairo: ['Cairo', 'sans-serif'],
-        sans: ['Cairo', 'sans-serif'],
+        cairo: ['var(--font-cairo)', 'Cairo', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['var(--font-cairo)', 'Cairo', 'system-ui', '-apple-system', 'sans-serif'],
       },
       colors: {
         // Primary Navy — from logo
