@@ -146,7 +146,7 @@ export default function BookingSuccess({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2.5">
           <a
             href={targetWhatsappUrl}
             target="_blank"
@@ -158,6 +158,44 @@ export default function BookingSuccess({
             </svg>
             إرسال تفاصيل الحجز الآن عبر واتساب
           </a>
+
+          {/* 📅 Add to Google Calendar Button */}
+          {(() => {
+            const title = encodeURIComponent(`موعد تمريض منزلي — نبض (${serviceName})`)
+            const details = encodeURIComponent(
+              `موعد زيارة التمريض المنزلي من نبض للتمريض المنزلي دمياط.\nالخدمة: ${serviceName}\nرقم الحجز: ${bookingId}\nللتواصل: 01001097896 - واتساب: 01099667065`
+            )
+            const loc = encodeURIComponent(address || 'دمياط، مصر')
+            let calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${loc}`
+            if (preferredDate) {
+              const [y, m, d] = preferredDate.split('-').map(Number)
+              const [h, min] = (preferredTime || '10:00').split(':').map(Number)
+              const pad = (n: number) => n.toString().padStart(2, '0')
+              const startStr = `${y}${pad(m)}${pad(d)}T${pad(h || 10)}${pad(min || 0)}00`
+              const endStr = `${y}${pad(m)}${pad(d)}T${pad(((h || 10) + 1) % 24)}${pad(min || 0)}00`
+              calUrl += `&dates=${startStr}/${endStr}`
+            }
+            return (
+              <a
+                href={calUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-navy-50 hover:bg-navy-100 text-navy-800 border border-navy-200 font-bold rounded-2xl py-3 px-4 text-xs sm:text-sm transition-all"
+              >
+                <span>📅</span>
+                <span>إضافة الموعد لتقويم الهاتف (تذكير بالزيارة)</span>
+              </a>
+            )
+          })()}
+
+          {/* 📋 Go to Medical Record Button */}
+          <Link
+            href="/medical-record"
+            className="inline-flex items-center justify-center gap-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 font-bold rounded-2xl py-3 px-4 text-xs sm:text-sm transition-all"
+          >
+            <span>📋</span>
+            <span>متابعة ملفي الطبي والقياسات</span>
+          </Link>
 
           <a
             href={getCallUrl()}
