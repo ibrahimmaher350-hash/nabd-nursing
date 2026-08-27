@@ -207,7 +207,7 @@ export default function FirstAidPage() {
               </span>
               {searchQuery && (
                 <span>
-                  نتائج البحث عن: <strong className="text-gold-600">"{searchQuery}"</strong>
+                  نتائج البحث عن: <strong className="text-gold-600">&quot;{searchQuery}&quot;</strong>
                 </span>
               )}
             </div>
@@ -217,7 +217,7 @@ export default function FirstAidPage() {
               <div className="nabd-card p-10 bg-white border border-medical-border text-center">
                 <span className="text-4xl mb-3 block">🔍</span>
                 <h3 className="text-lg font-black text-navy-700 mb-1">
-                  لم نجد حالة تطابق بحثك "{searchQuery}"
+                  لم نجد حالة تطابق بحثك &quot;{searchQuery}&quot;
                 </h3>
                 <p className="text-xs sm:text-sm text-medical-muted max-w-md mx-auto mb-4">
                   جرب البحث بكلمات عامية أخرى مثل: (حرق، شرقة، جرح، سكر، مغمى عليه، دوخة، كسر).
