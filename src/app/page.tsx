@@ -10,6 +10,7 @@ import FloatingActions from '@/components/layout/FloatingActions'
 import HeroSection from '@/components/sections/HeroSection'
 import QuickActions from '@/components/sections/QuickActions'
 import ServicesGrid from '@/components/sections/ServicesGrid'
+import NursePromo from '@/components/sections/NursePromo'
 import WhyNabd from '@/components/sections/WhyNabd'
 import HowItWorks from '@/components/sections/HowItWorks'
 import BlogSection from '@/components/sections/BlogSection'
@@ -46,7 +47,10 @@ export default async function HomePage() {
         {/* 3. Featured Services */}
         <ServicesGrid featured />
 
-        {/* 4. Why Nabd */}
+        {/* 4. Nurse Promo — صورة الممرض الاحترافية */}
+        <NursePromo />
+
+        {/* 5. Why Nabd */}
         <WhyNabd />
 
         {/* 5. How It Works */}
