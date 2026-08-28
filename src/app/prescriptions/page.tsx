@@ -32,11 +32,14 @@ import { siteConfig } from '@/data/siteConfig'
 // Quick complaint search pills
 const POPULAR_COMPLAINTS = [
   { label: 'ترجيع مستمر 🤢', query: 'ترجيع' },
+  { label: 'إسهال ودوسنتاريا 💧', query: 'اسهال' },
   { label: 'وجع ومغص بطن ⚡', query: 'مغص' },
+  { label: 'قولون عصبي وغازات 💨', query: 'قولون' },
+  { label: 'إمساك وحقنة شرجية 🧱', query: 'امساك' },
+  { label: 'زغطة وسوء هضم 🫄', query: 'زغطة' },
   { label: 'اشتباه زائدة دودية 🚨', query: 'زائدة' },
   { label: 'حموضة وقرحة معدة 🔥', query: 'حموضة' },
   { label: 'مغص مرارة وصفراء 🟡', query: 'مرارة' },
-  { label: 'قولون عصبي وغازات 💨', query: 'قولون' },
   { label: 'وجع في الزور ولوز 🤒', query: 'الزور' },
   { label: 'حرقان بول وصديد 🚽', query: 'حرقان بول' },
   { label: 'غضروف وعرق النسا 🦴', query: 'عرق النسا' },

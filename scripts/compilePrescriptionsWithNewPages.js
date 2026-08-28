@@ -1,4 +1,7 @@
-/**
+// scripts/compilePrescriptionsWithNewPages.js
+const fs = require('fs');
+
+const content = `/**
  * data/prescriptionsData.ts — نبض للتمريض المنزلي
  * دليل أهم الروشتات الطبية الشائعة لخدمة المريض المصري والتسويق لخدمات التمريض المنزلي
  * مستوحى ومطابق لمراجع الروشتات الإكلينيكية (Roshetatology - د. أحمد عبد الله)
@@ -80,7 +83,7 @@ export const ABDOMINAL_PAIN_DIAGNOSTIC_GUIDE: AbdominalPainGuideItem[] = [
     locationName: 'وجع في الجانب الأيمن والصدر يسمع في الكتف والإيد',
     symptomsAndColic: 'وجع المرارة والصفراء (Gall Bladder Pain): مغص شديد بعد تناول وجبة دسمة أو مقليات.',
     suspectedCause: 'التهاب كيس المرارة أو حصوات صفراوية، غالباً في السيدات بسن الأربعينات مع وزن زائد (Fair, Fat, Female, Forty).',
-    examinationKey: 'علامة ميرفي (Murphy\'s Sign): ألم مفاجئ يقطع التنفس عند الضغط أسفل الضلوع اليمنى أثناء الشهيق العميق.',
+    examinationKey: 'علامة ميرفي (Murphy\\\'s Sign): ألم مفاجئ يقطع التنفس عند الضغط أسفل الضلوع اليمنى أثناء الشهيق العميق.',
     whatToDo: 'أمبول فيسرالجين أو بسكوبان وريد + مسكن + إجراء سونار على البطن والتحضير للمنظار.',
     isSurgicalAlert: false,
   },
@@ -681,7 +684,7 @@ export const prescriptionsDatabase: Prescription[] = [
       'أكثر شيوعاً في السيدات بعد سن الأربعين مع زيادة الوزن وتكرار الحمل (4Fs: Female, Fat, Fertile, Forty).'
     ],
     examinationAndWarnings: {
-      surgicalWarning: 'علامة ميرفي (Murphy\'s Sign): عند وضع أصابع الفاحص تحت حافة الضلوع اليمنى ومطالبة المريض بأخذ نفس عميق، يتوقف المريض عن التنفس فجأة بسبب الألم الحاد، مما يؤكد التهاب المرارة.',
+      surgicalWarning: 'علامة ميرفي (Murphy\\\'s Sign): عند وضع أصابع الفاحص تحت حافة الضلوع اليمنى ومطالبة المريض بأخذ نفس عميق، يتوقف المريض عن التنفس فجأة بسبب الألم الحاد، مما يؤكد التهاب المرارة.',
       dehydrationSigns: 'فحص اصفرار العينين (بياض العين) والجلد وتغير لون البول للداكن كلون الشاي (يرقان انسدادي).',
       redFlags: 'ارتفاع شديد في الحرارة مع قشعريرة ورعشة واصفرار في العين (التهاب القنوات المرارية الصديدي Cholangitis حالة طارئة قصوى).'
     },
@@ -1164,7 +1167,7 @@ export const prescriptionsDatabase: Prescription[] = [
       'الإفراط في تناول اللحوم الحمراء أو السبانخ والمانجو والشوكولاتة والمشروبات الغازية.'
     ],
     examinationAndWarnings: {
-      surgicalWarning: 'فحص علامة جوردان (Murphy\'s punch): خبطة خفيفة بقبضة اليد على جانب الظهر تسبب ألماً مبرحاً تؤكد المغص الكلوي.',
+      surgicalWarning: 'فحص علامة جوردان (Murphy\\\'s punch): خبطة خفيفة بقبضة اليد على جانب الظهر تسبب ألماً مبرحاً تؤكد المغص الكلوي.',
       dehydrationSigns: 'المريض يتقلب في كل اتجاه ولا يجد وضعاً يريحه (عكس مريض الزائدة الذي يثبت بدون حركة).',
       redFlags: 'انقطاع البول التام لأكثر من 12 ساعة، أو سخونية ورعشة مع المغص الكلوي (انسداد صديدي بالكلى يتطلب تدخلاً جراحياً عاجلاً).'
     },
@@ -1390,3 +1393,7 @@ export const prescriptionsDatabase: Prescription[] = [
     }
   }
 ];
+`;
+
+fs.writeFileSync('C:/Users/OS_10/Desktop/nabd-nursing/src/data/prescriptionsData.ts', content, 'utf8');
+console.log('Successfully compiled 20 complete prescriptions matching all pages 12-25 of Roshetatology!');
