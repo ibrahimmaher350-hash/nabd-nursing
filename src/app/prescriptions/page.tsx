@@ -38,72 +38,76 @@ import { siteConfig } from '@/data/siteConfig'
 const SMART_SYMPTOM_PICKERS = [
   {
     id: 'digestive_vomit_diarrhea',
-    title: 'ترجيع وإسهال ونزلات',
+    title: 'ترجيع وإسهال ومغص',
     icon: '🤢',
     query: 'ترجيع',
     bgGradient: 'from-emerald-50 to-teal-50 border-emerald-200 text-emerald-900',
-    count: '3 حالات',
+    count: '12 حالة',
   },
   {
-    id: 'digestive_colic_appendix',
-    title: 'مغص وبطن وزائدة',
-    icon: '⚡',
-    query: 'مغص',
-    bgGradient: 'from-amber-50 to-orange-50 border-amber-200 text-amber-900',
-    count: '4 حالات',
-  },
-  {
-    id: 'spastic_colon_gas',
-    title: 'قولون وغازات وسوء هضم',
-    icon: '💨',
-    query: 'قولون',
+    id: 'respiratory_chest',
+    title: 'صدر وكحة وربو ولوز',
+    icon: '🫁',
+    query: 'كحة',
     bgGradient: 'from-sky-50 to-blue-50 border-sky-200 text-sky-900',
-    count: '3 حالات',
+    count: '11 حالة',
   },
   {
-    id: 'tonsils_respiratory',
-    title: 'زور ولوز وكحة وصدر',
-    icon: '🤒',
-    query: 'الزور',
-    bgGradient: 'from-rose-50 to-pink-50 border-rose-200 text-rose-900',
-    count: '2 حالة',
+    id: 'cardio_pressure',
+    title: 'ضغط وقلب وشرايين',
+    icon: '❤️',
+    query: 'ضغط',
+    bgGradient: 'from-rose-50 to-red-50 border-rose-200 text-rose-900',
+    count: '7 حالات',
   },
   {
-    id: 'uti_kidneys',
-    title: 'مسالك وبول ومغص كلوي',
-    icon: '🚽',
-    query: 'بول',
-    bgGradient: 'from-indigo-50 to-violet-50 border-indigo-200 text-indigo-900',
-    count: '2 حالة',
+    id: 'endocrine_diabetes',
+    title: 'سكر وغدد وأعصاب',
+    icon: '🩸',
+    query: 'سكر',
+    bgGradient: 'from-amber-50 to-orange-50 border-amber-200 text-amber-900',
+    count: '10 حالات',
   },
   {
-    id: 'bones_wounds_chronic',
-    title: 'عظام وغضروف وجروح',
-    icon: '🩹',
+    id: 'bones_joints_sciatica',
+    title: 'عظام وغضروف ومفاصل',
+    icon: '🦴',
     query: 'عرق النسا',
     bgGradient: 'from-slate-50 to-stone-100 border-slate-200 text-slate-900',
     count: '6 حالات',
   },
+  {
+    id: 'pediatrics_kids',
+    title: 'أطفال وسخونية ورضع',
+    icon: '👶',
+    query: 'أطفال',
+    bgGradient: 'from-indigo-50 to-violet-50 border-indigo-200 text-indigo-900',
+    count: '5 حالات',
+  },
 ]
 
-// ── Quick complaint search pills (أشهر الشكاوى السريعة) ──
+// ── Quick complaint search pills (أشهر الشكاوى السريعة عبر الـ 15 باباً) ──
 const POPULAR_COMPLAINTS = [
   { label: 'ترجيع مستمر 🤢', query: 'ترجيع' },
   { label: 'إسهال ودوسنتاريا 💧', query: 'اسهال' },
   { label: 'مغص وتقلصات بطن ⚡', query: 'مغص' },
   { label: 'قولون وغازات 💨', query: 'قولون' },
   { label: 'إمساك وحقنة شرجية 🧱', query: 'امساك' },
-  { label: 'زغطة وسوء هضم 🫄', query: 'زغطة' },
-  { label: 'اشتباه زائدة 🚨', query: 'زائدة' },
-  { label: 'حموضة وقرحة 🔥', query: 'حموضة' },
-  { label: 'مغص مرارة 🟡', query: 'مرارة' },
+  { label: 'ضغط مرتفع وصداع 🩺', query: 'ضغط' },
+  { label: 'سكر عالي وتنميل 🩸', query: 'سكر' },
+  { label: 'سخونية أطفال وتشنج 👶', query: 'سخونية' },
+  { label: 'أزمة ربو وكحة وصدر 🫁', query: 'ربو' },
   { label: 'التهاب لوز وزور 🤒', query: 'الزور' },
-  { label: 'حرقان بول 🚽', query: 'حرقان بول' },
-  { label: 'مغص كلوي ⚡', query: 'مغص كلوي' },
+  { label: 'شقيقة وصداع نصفي 🧠', query: 'صداع' },
+  { label: 'حزام ناري وأعصاب 🔥', query: 'حزام ناري' },
+  { label: 'مغص كلوي وحصوات ⚡', query: 'مغص كلوي' },
   { label: 'عرق النسا وغضروف 🦴', query: 'عرق النسا' },
+  { label: 'حروق وغيار معقم 🩹', query: 'حروق' },
   { label: 'جرح قيصرية وعمليات ✂️', query: 'قيصرية' },
   { label: 'قرح فراش 🩹', query: 'قرحة' },
-  { label: 'حساسية وهرش 🔴', query: 'حساسية' },
+  { label: 'رمد واحمرار عين 👁️', query: 'عين' },
+  { label: 'تسمم ومبيدات 🚨', query: 'تسمم' },
+  { label: 'نقص فيتامين د وب12 💊', query: 'فيتامين' },
   { label: 'مغص الدورة 🌸', query: 'الدورة' },
 ]
 
@@ -493,7 +497,7 @@ export default function PrescriptionsPage() {
                   لم نجد روشتة تطابق بحثك &quot;{searchQuery}&quot;
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mb-4">
-                  جرب البحث بكلمة عامية أخرى مثل: (ترجيع، اسهال، مغص، قولون، امساك، زغطة، لوز، بول، عرق النسا، قرحة).
+                  جرب البحث بكلمة عامية أخرى مثل: (ترجيع، اسهال، مغص، قولون، امساك، ضغط، سكر، لوز، سخونية، بول، عرق النسا، حروق، تسمم).
                 </p>
                 <button
                   onClick={() => {
@@ -502,7 +506,7 @@ export default function PrescriptionsPage() {
                   }}
                   className="bg-navy-800 text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow hover:bg-navy-900"
                 >
-                  عرض جميع الروشتات الـ 20
+                  عرض جميع الروشتات ({prescriptionsDatabase.length} حالة)
                 </button>
               </div>
             ) : (
@@ -535,8 +539,13 @@ export default function PrescriptionsPage() {
                           <div className="min-w-0">
                             <div className="flex items-center gap-2 flex-wrap mb-1">
                               <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-gold-100 text-gold-900 border border-gold-200">
-                                {prescription.categoryName.split(' ')[0]}
+                                {prescription.categoryName}
                               </span>
+                              {prescription.pageInBook && (
+                                <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
+                                  📖 {prescription.pageInBook}
+                                </span>
+                              )}
                               <span className="text-[11px] text-slate-500 font-bold">
                                 {prescription.titleEnglish}
                               </span>
