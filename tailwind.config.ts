@@ -81,7 +81,13 @@ const config: Config = {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'float': 'float 3s ease-in-out infinite',
         'slide-up': 'slideUp 0.4s ease-out',
+        'slide-in-right': 'slideInRight 0.35s ease-out',
+        'slide-in-left': 'slideInLeft 0.35s ease-out',
         'fade-in': 'fadeIn 0.3s ease-out',
+        'fade-in-up': 'fadeInUp 0.5s ease-out both',
+        'bounce-in': 'bounceIn 0.5s cubic-bezier(0.68,-0.55,0.265,1.55) both',
+        'shimmer': 'shimmer 2s linear infinite',
+        'count-up': 'countUp 0.6s ease-out both',
       },
       keyframes: {
         float: {
@@ -92,9 +98,34 @@ const config: Config = {
           '0%': { transform: 'translateY(20px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
+        slideInRight: {
+          '0%': { transform: 'translateX(100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        slideInLeft: {
+          '0%': { transform: 'translateX(-100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(16px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        bounceIn: {
+          '0%': { opacity: '0', transform: 'scale(0.6)' },
+          '60%': { opacity: '1', transform: 'scale(1.05)' },
+          '100%': { transform: 'scale(1)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+        countUp: {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       screens: {

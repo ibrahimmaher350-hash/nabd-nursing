@@ -632,6 +632,14 @@ export default function PrescriptionsPage() {
                                 <ShareIcon className="w-3.5 h-3.5 text-emerald-700" />
                                 <span>إرسال للصيدلية عبر واتساب 💬</span>
                               </button>
+
+                              <button
+                                onClick={() => window.print()}
+                                className="px-3 py-1.5 rounded-xl text-xs font-black inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 transition-all active:scale-95 no-print"
+                                title="طباعة الروشتة أو حفظ كـ PDF"
+                              >
+                                <span>طباعة 🖨️</span>
+                              </button>
                             </div>
 
                             <a

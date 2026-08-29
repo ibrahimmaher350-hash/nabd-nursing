@@ -182,7 +182,7 @@ export default function Header() {
           {/* Drawer */}
           <nav
             id="mobile-menu"
-            className="fixed top-0 end-0 z-50 h-full w-72 max-w-[85vw] bg-white shadow-card-lg lg:hidden animate-slide-up flex flex-col"
+            className="fixed top-0 end-0 z-50 h-full w-72 max-w-[85vw] bg-white shadow-card-lg lg:hidden animate-slide-in-right flex flex-col"
             aria-label="القائمة المحمولة"
           >
             {/* Drawer header */}

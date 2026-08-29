@@ -56,10 +56,10 @@ export default function HowItWorks() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 mb-10">
           {steps.map((step, index) => (
             <div key={step.number} className="relative flex flex-col items-center text-center gap-3">
-              {/* Connector line (desktop only) */}
+            {/* Connector line (desktop only) — flows in RTL direction */}
               {index < steps.length - 1 && (
                 <div
-                  className="hidden lg:block absolute top-7 end-0 w-1/2 h-0.5 bg-gradient-to-l from-gold-300 to-transparent"
+                  className="hidden lg:block absolute top-7 start-0 translate-x-full w-full h-0.5 bg-gradient-to-r from-gold-300 via-gold-200 to-transparent rtl:bg-gradient-to-l"
                   aria-hidden="true"
                 />
               )}

@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { services, type NabdService } from '@/data/services'
 import { getWhatsAppUrl } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
-import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { ChevronLeftIcon } from '@heroicons/react/24/outline'
 
 interface ServicesGridProps {
   featured?: boolean     // true = show 6 on homepage
@@ -72,7 +72,7 @@ function ServiceCard({ service }: { service: NabdService }) {
           onClick={() => analytics.viewService(service.id, service.name)}
         >
           التفاصيل
-          <ArrowLeftIcon className="w-3.5 h-3.5 ms-1 rtl:rotate-180" aria-hidden="true" />
+          <ChevronLeftIcon className="w-3.5 h-3.5 ms-1" aria-hidden="true" />
         </Link>
       </div>
     </article>
@@ -134,7 +134,7 @@ export default function ServicesGrid({
               className="btn-secondary inline-flex items-center gap-2"
             >
               عرض جميع الخدمات (15 خدمة)
-              <ArrowLeftIcon className="w-4 h-4 rtl:rotate-180" aria-hidden="true" />
+              <ChevronLeftIcon className="w-4 h-4" aria-hidden="true" />
             </Link>
           </div>
         )}

@@ -1,6 +1,6 @@
 /**
  * components/sections/NursePromo.tsx — قسم الترويج بصورة الممرض المحترف
- * يظهر بعد قسم الخدمات — يعرض الصورة الاحترافية مع النقاط المميزة
+ * تصميم محسّن مع Social Proof وبطاقات ثقة
  */
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,19 +8,25 @@ import Link from 'next/link'
 const features = [
   {
     icon: '🛡️',
-    title: 'رعاية آمنة',
-    desc: 'ضمن أعلى معايير السلامة.',
+    title: 'رعاية آمنة ومعتمدة',
+    desc: 'خدمات تمريضية وفق أعلى معايير السلامة الطبية.',
   },
   {
     icon: '👨‍⚕️',
-    title: 'فريق متخصص',
-    desc: 'تمريض محترف بخبرة عالية.',
+    title: 'فريق متخصص ومدرّب',
+    desc: 'تمريض محترف بخبرة عالية في الرعاية المنزلية.',
   },
   {
     icon: '🏠',
-    title: 'راحة في بيتك',
-    desc: 'رعاية متكاملة دون الحاجة لزيارة المستشفى.',
+    title: 'راحة تامة في منزلك',
+    desc: 'رعاية متكاملة دون الحاجة للتنقل أو المستشفى.',
   },
+]
+
+const trustBadges = [
+  { icon: '⭐', label: 'تقييم 5 نجوم' },
+  { icon: '🔒', label: 'بيانات آمنة' },
+  { icon: '⚡', label: 'استجابة فورية' },
 ]
 
 export default function NursePromo() {
@@ -63,9 +69,22 @@ export default function NursePromo() {
               </div>
 
               {/* Floating review card */}
-              <div className="absolute -top-4 -end-4 glass-dark rounded-2xl px-4 py-3 shadow-card-lg hidden sm:block">
+              <div className="absolute -top-4 -end-4 glass-dark rounded-2xl px-4 py-3 shadow-card-lg hidden sm:block animate-float">
                 <p className="text-gold-300 font-extrabold text-lg leading-none">15+</p>
                 <p className="text-white/70 text-xs mt-0.5">خدمة تمريضية</p>
+              </div>
+
+              {/* Trust badges strip */}
+              <div className="absolute -bottom-4 -start-4 hidden sm:flex flex-col gap-1.5">
+                {trustBadges.map((b) => (
+                  <div
+                    key={b.label}
+                    className="glass-dark rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-sm"
+                  >
+                    <span className="text-base" aria-hidden="true">{b.icon}</span>
+                    <span className="text-white/90 text-xs font-semibold whitespace-nowrap">{b.label}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -106,11 +125,24 @@ export default function NursePromo() {
               ))}
             </div>
 
+            {/* Mobile trust badges */}
+            <div className="flex items-center justify-center lg:justify-start gap-3 flex-wrap mb-6 sm:hidden">
+              {trustBadges.map((b) => (
+                <span
+                  key={b.label}
+                  className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5 text-xs text-white/90 font-medium"
+                >
+                  <span aria-hidden="true">{b.icon}</span>
+                  {b.label}
+                </span>
+              ))}
+            </div>
+
             <Link
               href="/booking"
               className="btn-primary inline-flex px-8 py-3.5 text-sm sm:text-base bg-gold-500 hover:bg-gold-600 shadow-gold"
             >
-              احجز الآن
+              احجز الآن 🩺
             </Link>
           </div>
 
