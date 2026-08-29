@@ -80,6 +80,12 @@ function getDefaultSettings() {
     bookingEnabled: true,
     maintenanceMode: false,
     pricingNote: siteConfig.booking.pricingNote,
+    adminPin: '2026',
+    announcement: '',
+    announcementActive: false,
+    servicesOverrides: {},
+    suppliesOverrides: {},
+    customProducts: [],
   }
 }
 

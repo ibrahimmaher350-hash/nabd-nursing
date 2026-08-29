@@ -55,6 +55,14 @@ export default function Header() {
 
   return (
     <>
+      {/* Dynamic Announcement Banner from Admin */}
+      {settings.announcementActive && settings.announcement && (
+        <div className="bg-gradient-to-r from-navy-950 via-navy-900 to-teal-950 text-white text-xs font-bold py-2 px-4 text-center border-b border-gold-500/30 flex items-center justify-center gap-2 shadow-sm animate-fade-in no-print">
+          <span className="text-gold-400 animate-pulse">📢</span>
+          <span className="leading-snug">{settings.announcement}</span>
+        </div>
+      )}
+
       <header
         className={`sticky top-0 z-50 w-full transition-all duration-300 ${
           isScrolled

@@ -1,11 +1,49 @@
 'use client'
 /**
- * context/SettingsContext.tsx — موفر الإعدادات الحية التفاعلية
- * يتيح تعديل أي رقم أو رابط أو معلومة من لوحة التحكم لتظهر فوراً وبشكل دائم في كامل الموقع
+ * context/SettingsContext.tsx — نبض للتمريض المنزلي
+ * موفر الإعدادات الحية التفاعلية ولوحة التحكم الشاملة
+ * يتيح التحكم المباشر والآمن في:
+ * - أسعار وحالة جميع الخدمات التمريضية
+ * - أسعار ومخزون الأجهزة والمستلزمات الطبية (بما فيها جهاز السكر فيفا تشيك)
+ * - أرقام التواصل وروابط السوشيال ميديا
+ * - رمز PIN السري للوحة التحكم
+ * - الشريط الإعلاني العلوي ووضع الصيانة
  */
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { siteConfig } from '@/data/siteConfig'
+
+export interface ServiceOverride {
+  price?: string
+  priceNote?: string
+  active?: boolean
+  bookingEnabled?: boolean
+  badge?: string
+}
+
+export interface SupplyOverride {
+  price?: string
+  oldPrice?: string
+  priceNumber?: number
+  badge?: string
+  inStock?: boolean
+  giftStrips?: string
+  warranty?: string
+  customTitle?: string
+}
+
+export interface CustomProduct {
+  id: string
+  name: string
+  category: string
+  categoryName: string
+  price: string
+  oldPrice?: string
+  badge?: string
+  image: string
+  shortDesc: string
+  inStock: boolean
+}
 
 export interface SiteSettings {
   businessName: string
@@ -24,6 +62,14 @@ export interface SiteSettings {
   bookingEnabled: boolean
   maintenanceMode: boolean
   pricingNote: string
+
+  // ── Admin Security & Overrides ──
+  adminPin?: string
+  announcement?: string
+  announcementActive?: boolean
+  servicesOverrides?: Record<string, ServiceOverride>
+  suppliesOverrides?: Record<string, SupplyOverride>
+  customProducts?: CustomProduct[]
 }
 
 const defaultSettings: SiteSettings = {
@@ -43,6 +89,14 @@ const defaultSettings: SiteSettings = {
   bookingEnabled: true,
   maintenanceMode: false,
   pricingNote: siteConfig.booking.pricingNote,
+
+  // Admin Defaults
+  adminPin: '2026',
+  announcement: '',
+  announcementActive: false,
+  servicesOverrides: {},
+  suppliesOverrides: {},
+  customProducts: [],
 }
 
 interface SettingsContextType {
@@ -51,6 +105,16 @@ interface SettingsContextType {
   getWhatsAppUrl: (serviceName?: string) => string
   getCallUrl: () => string
   saveSettings: (newSettings: Partial<SiteSettings>) => Promise<boolean>
+
+  // Helper getters for dynamic overrides
+  getServicePrice: (serviceId: string, defaultPrice?: string) => string
+  isServiceActive: (serviceId: string, defaultVal?: boolean) => boolean
+  isServiceBookingEnabled: (serviceId: string, defaultVal?: boolean) => boolean
+  getServiceBadge: (serviceId: string, defaultVal?: string) => string | undefined
+  getSupplyPrice: (supplyId: string, defaultPrice?: string) => string
+  getSupplyOldPrice: (supplyId: string, defaultOldPrice?: string) => string | undefined
+  getSupplyBadge: (supplyId: string, defaultBadge?: string) => string | undefined
+  isSupplyInStock: (supplyId: string, defaultStock?: boolean) => boolean
 }
 
 const SettingsContext = createContext<SettingsContextType>({
@@ -59,18 +123,22 @@ const SettingsContext = createContext<SettingsContextType>({
   getWhatsAppUrl: () => `https://wa.me/${siteConfig.contact.whatsapp}`,
   getCallUrl: () => `tel:${siteConfig.contact.phone}`,
   saveSettings: async () => false,
+
+  getServicePrice: (_id, def = 'حسب الحالة') => def,
+  isServiceActive: (_id, def = true) => def,
+  isServiceBookingEnabled: (_id, def = true) => def,
+  getServiceBadge: (_id, def) => def,
+  getSupplyPrice: (_id, def = '') => def,
+  getSupplyOldPrice: (_id, def) => def,
+  getSupplyBadge: (_id, def) => def,
+  isSupplyInStock: (_id, def = true) => def,
 })
 
 const STORAGE_KEY = 'nabd_site_settings'
 const EVENT_KEY = 'nabd_settings_updated'
 
-/**
- * Validates that settings don't contain corrupted data (e.g. "???" from encoding bugs).
- * Returns true only if Arabic fields look valid.
- */
 function isValidSettings(s: Partial<SiteSettings>): boolean {
   if (!s || typeof s !== 'object') return false
-  // A corrupted businessName will be "??? ??????? ???????" — reject if it only has ? chars
   const name = s.businessName ?? ''
   if (name && /^[\?]+(\s+[\?]+)*$/.test(name.trim())) return false
   return true
@@ -82,7 +150,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
 
   // Load from localStorage on mount, then sync with API
   useEffect(() => {
-    // 1. Quick initial load from localStorage (only if valid)
+    // 1. Quick initial load from localStorage
     try {
       const cached = localStorage.getItem(STORAGE_KEY)
       if (cached) {
@@ -90,13 +158,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         if (isValidSettings(parsed)) {
           setSettings({ ...defaultSettings, ...parsed })
         } else {
-          // Clear corrupted cache silently
           localStorage.removeItem(STORAGE_KEY)
-          console.warn('[Settings] Cleared corrupted settings from localStorage')
         }
       }
-    } catch (e) {
-      console.warn('Error reading cached settings:', e)
+    } catch {
       localStorage.removeItem(STORAGE_KEY)
     }
 
@@ -107,13 +172,15 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         if (res.ok) {
           const json = await res.json()
           if (json.settings && isValidSettings(json.settings)) {
-            const merged = { ...defaultSettings, ...json.settings }
+            const merged: SiteSettings = {
+              ...defaultSettings,
+              ...json.settings,
+              servicesOverrides: json.settings.servicesOverrides || {},
+              suppliesOverrides: json.settings.suppliesOverrides || {},
+              customProducts: json.settings.customProducts || [],
+            }
             setSettings(merged)
             localStorage.setItem(STORAGE_KEY, JSON.stringify(merged))
-          } else if (json.settings) {
-            // API returned corrupted data — use defaults, don't cache
-            console.warn('[Settings] API returned invalid settings, using defaults')
-            setSettings(defaultSettings)
           }
         }
       } catch (err) {
@@ -132,7 +199,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         if (cached) {
           const parsed = JSON.parse(cached)
           if (isValidSettings(parsed)) {
-            setSettings({ ...defaultSettings, ...parsed })
+            setSettings((prev) => ({ ...prev, ...parsed }))
           }
         }
       } catch (e) {
@@ -149,12 +216,15 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  // Helper to generate dynamic WhatsApp URL
+  // Dynamic WhatsApp URL
   const getWhatsAppUrl = useCallback(
     (serviceName?: string) => {
-      // Clean number (remove any non-digits)
       const raw = settings.whatsapp || siteConfig.contact.whatsapp
-      const cleanNumber = raw.startsWith('0') ? `2${raw}` : raw.startsWith('+') ? raw.replace('+', '') : raw
+      const cleanNumber = raw.startsWith('0')
+        ? `2${raw}`
+        : raw.startsWith('+')
+        ? raw.replace('+', '')
+        : raw
       const base = `https://wa.me/${cleanNumber}`
 
       if (!serviceName) {
@@ -167,16 +237,20 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     [settings.whatsapp]
   )
 
-  // Helper to generate dynamic Call URL
+  // Dynamic Call URL
   const getCallUrl = useCallback(() => {
     const raw = settings.phone || siteConfig.contact.phone
-    const cleanNumber = raw.startsWith('0') ? `+20${raw.slice(1)}` : raw.startsWith('+') ? raw : `+20${raw}`
+    const cleanNumber = raw.startsWith('0')
+      ? `+20${raw.slice(1)}`
+      : raw.startsWith('+')
+      ? raw
+      : `+20${raw}`
     return `tel:${cleanNumber}`
   }, [settings.phone])
 
-  // Save settings through API + localStorage + Broadcast event
+  // Save settings through API + localStorage + broadcast
   const saveSettings = async (newSettings: Partial<SiteSettings>): Promise<boolean> => {
-    const updated = { ...settings, ...newSettings }
+    const updated: SiteSettings = { ...settings, ...newSettings }
     setSettings(updated)
 
     // Save to local cache immediately
@@ -202,6 +276,72 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  // ── Helper Getters for Services ──
+  const getServicePrice = useCallback(
+    (serviceId: string, defaultPrice = 'حسب الحالة'): string => {
+      const override = settings.servicesOverrides?.[serviceId]
+      return override?.price?.trim() ? override.price : defaultPrice
+    },
+    [settings.servicesOverrides]
+  )
+
+  const isServiceActive = useCallback(
+    (serviceId: string, defaultVal = true): boolean => {
+      const override = settings.servicesOverrides?.[serviceId]
+      return override?.active !== undefined ? override.active : defaultVal
+    },
+    [settings.servicesOverrides]
+  )
+
+  const isServiceBookingEnabled = useCallback(
+    (serviceId: string, defaultVal = true): boolean => {
+      const override = settings.servicesOverrides?.[serviceId]
+      return override?.bookingEnabled !== undefined ? override.bookingEnabled : defaultVal
+    },
+    [settings.servicesOverrides]
+  )
+
+  const getServiceBadge = useCallback(
+    (serviceId: string, defaultVal?: string): string | undefined => {
+      const override = settings.servicesOverrides?.[serviceId]
+      return override?.badge?.trim() ? override.badge : defaultVal
+    },
+    [settings.servicesOverrides]
+  )
+
+  // ── Helper Getters for Supplies ──
+  const getSupplyPrice = useCallback(
+    (supplyId: string, defaultPrice = ''): string => {
+      const override = settings.suppliesOverrides?.[supplyId]
+      return override?.price?.trim() ? override.price : defaultPrice
+    },
+    [settings.suppliesOverrides]
+  )
+
+  const getSupplyOldPrice = useCallback(
+    (supplyId: string, defaultOldPrice?: string): string | undefined => {
+      const override = settings.suppliesOverrides?.[supplyId]
+      return override?.oldPrice?.trim() ? override.oldPrice : defaultOldPrice
+    },
+    [settings.suppliesOverrides]
+  )
+
+  const getSupplyBadge = useCallback(
+    (supplyId: string, defaultBadge?: string): string | undefined => {
+      const override = settings.suppliesOverrides?.[supplyId]
+      return override?.badge !== undefined ? override.badge : defaultBadge
+    },
+    [settings.suppliesOverrides]
+  )
+
+  const isSupplyInStock = useCallback(
+    (supplyId: string, defaultStock = true): boolean => {
+      const override = settings.suppliesOverrides?.[supplyId]
+      return override?.inStock !== undefined ? override.inStock : defaultStock
+    },
+    [settings.suppliesOverrides]
+  )
+
   return (
     <SettingsContext.Provider
       value={{
@@ -210,6 +350,14 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         getWhatsAppUrl,
         getCallUrl,
         saveSettings,
+        getServicePrice,
+        isServiceActive,
+        isServiceBookingEnabled,
+        getServiceBadge,
+        getSupplyPrice,
+        getSupplyOldPrice,
+        getSupplyBadge,
+        isSupplyInStock,
       }}
     >
       {children}

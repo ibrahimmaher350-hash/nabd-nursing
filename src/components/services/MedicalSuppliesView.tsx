@@ -28,21 +28,49 @@ import {
 import { siteConfig } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
 import SocialShareButton from '@/components/ui/SocialShareButton'
+import { useSettings } from '@/context/SettingsContext'
 
 export default function MedicalSuppliesView() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [showSpecs, setShowSpecs] = useState<boolean>(false)
   const [showBoxItems, setShowBoxItems] = useState<boolean>(true)
+  const { settings, getSupplyPrice, getSupplyOldPrice, getSupplyBadge, isSupplyInStock } = useSettings()
 
   const featured = FEATURED_GLUCOSE_METER
+  const featuredPrice = getSupplyPrice('vivachek-ino', featured.price)
+  const featuredOldPrice = getSupplyOldPrice('vivachek-ino', featured.oldPrice)
+  const featuredBadge = getSupplyBadge('vivachek-ino', featured.badge)
+  const featuredInStock = isSupplyInStock('vivachek-ino', true)
+
+  const allSupplies = [
+    ...ADDITIONAL_MEDICAL_SUPPLIES,
+    ...(settings.customProducts || []).map((cp) => ({
+      id: cp.id,
+      name: cp.name,
+      nameEnglish: cp.name,
+      slug: cp.id,
+      category: cp.category as any,
+      categoryName: cp.categoryName,
+      price: cp.price,
+      priceNumber: parseInt(cp.price) || 0,
+      oldPrice: cp.oldPrice,
+      badge: cp.badge,
+      image: cp.image || '/og-image.jpg',
+      shortDesc: cp.shortDesc,
+      features: [],
+      specifications: [],
+      inTheBox: [],
+      whatsappText: `السلام عليكم، محتاج اطلب ${cp.name} من نبض بدمياط.`,
+    })),
+  ]
 
   const filteredSupplies =
     selectedCategory === 'all'
-      ? ADDITIONAL_MEDICAL_SUPPLIES
-      : ADDITIONAL_MEDICAL_SUPPLIES.filter((item) => item.category === selectedCategory)
+      ? allSupplies
+      : allSupplies.filter((item) => item.category === selectedCategory)
 
   const getWhatsAppOrderUrl = (message: string) => {
-    const cleanPhone = siteConfig.contact.whatsapp.replace(/[^0-9]/g, '')
+    const cleanPhone = (settings.whatsapp || siteConfig.contact.whatsapp).replace(/[^0-9]/g, '')
     return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`
   }
 
@@ -92,7 +120,7 @@ export default function MedicalSuppliesView() {
                   {/* Floating Badge */}
                   <div className="absolute top-3 start-3">
                     <span className="bg-emerald-600 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-md">
-                      {featured.badge}
+                      {featuredBadge}
                     </span>
                   </div>
                   {/* Warranty Badge */}
@@ -109,11 +137,11 @@ export default function MedicalSuppliesView() {
                     <span className="text-xs text-medical-muted block font-medium">سعر العرض الحصري:</span>
                     <div className="flex items-baseline gap-2">
                       <span className="text-2xl sm:text-3xl font-black text-emerald-700">
-                        {featured.price}
+                        {featuredPrice}
                       </span>
-                      {featured.oldPrice && (
+                      {featuredOldPrice && (
                         <span className="text-sm text-slate-400 line-through">
-                          {featured.oldPrice}
+                          {featuredOldPrice}
                         </span>
                       )}
                     </div>
@@ -350,82 +378,102 @@ export default function MedicalSuppliesView() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filteredSupplies.map((item) => (
-            <article
-              key={item.id}
-              id={item.id}
-              className="nabd-card p-5 flex flex-col justify-between border border-medical-border bg-white hover:border-navy-300 transition-all group scroll-mt-24"
-            >
-              <div>
-                {/* Header Badge */}
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="badge-navy text-[11px] font-bold">
-                    {item.categoryName}
-                  </span>
-                  {item.badge && (
-                    <span className="badge-gold text-[10px] font-black">
-                      {item.badge}
-                    </span>
-                  )}
-                </div>
+          {filteredSupplies.map((item) => {
+            const itemPrice = getSupplyPrice(item.id, item.price)
+            const itemOldPrice = getSupplyOldPrice(item.id, item.oldPrice)
+            const itemBadge = getSupplyBadge(item.id, item.badge)
+            const inStock = isSupplyInStock(item.id, true)
 
-                {/* Title */}
-                <h3 className="text-base font-bold text-navy-800 leading-snug group-hover:text-navy-600 transition-colors">
-                  {item.name}
-                </h3>
-                <p className="text-[11px] text-slate-400 font-medium mb-3">
-                  {item.nameEnglish}
-                </p>
-
-                {/* Description */}
-                <p className="text-xs sm:text-sm text-medical-muted leading-relaxed mb-4">
-                  {item.shortDesc}
-                </p>
-
-                {/* Features Pill */}
-                <div className="flex flex-col gap-1.5 mb-5">
-                  {item.features.map((f, fIdx) => (
-                    <div key={fIdx} className="flex items-center gap-2 text-xs text-slate-700">
-                      <span className="shrink-0">{f.icon}</span>
-                      <span className="font-semibold truncate">{f.title}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Card Footer: Price + Order & Share Buttons */}
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+            return (
+              <article
+                key={item.id}
+                id={item.id}
+                className={`nabd-card p-5 flex flex-col justify-between border border-medical-border bg-white hover:border-navy-300 transition-all group scroll-mt-24 ${
+                  !inStock ? 'opacity-75 bg-slate-50' : ''
+                }`}
+              >
                 <div>
-                  <span className="text-[10px] text-medical-muted block">السعر:</span>
-                  <span className="text-sm font-black text-navy-800">{item.price}</span>
+                  {/* Header Badge */}
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="badge-navy text-[11px] font-bold">
+                      {item.categoryName}
+                    </span>
+                    {itemBadge && (
+                      <span className="badge-gold text-[10px] font-black">
+                        {itemBadge}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-base font-bold text-navy-800 leading-snug group-hover:text-navy-600 transition-colors">
+                    {item.name}
+                  </h3>
+                  <p className="text-[11px] text-slate-400 font-medium mb-3">
+                    {item.nameEnglish}
+                  </p>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-medical-muted leading-relaxed mb-4">
+                    {item.shortDesc}
+                  </p>
+
+                  {/* Features Pill */}
+                  <div className="flex flex-col gap-1.5 mb-5">
+                    {item.features.map((f, fIdx) => (
+                      <div key={fIdx} className="flex items-center gap-2 text-xs text-slate-700">
+                        <span className="shrink-0">{f.icon}</span>
+                        <span className="font-semibold truncate">{f.title}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-1.5">
-                  <SocialShareButton
-                    title={`${item.name} — نبض للتمريض المنزلي بدمياط`}
-                    description={item.shortDesc}
-                    url={`/services/medical-supplies#${item.id}`}
-                    image={item.image}
-                    variant="icon"
-                    className="w-8 h-8"
-                    detailsList={item.features.map((f) => `${f.title}: ${f.desc}`)}
-                    priceTag={item.price}
-                    deliveryNote="توصيل منزلي سريع لجميع مناطق دمياط مع ممرض متخصص."
-                    analyticsContext={`catalog_${item.id}`}
-                  />
-                  <a
-                    href={getWhatsAppOrderUrl(item.whatsappText)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-whatsapp text-xs py-2 px-3 shadow-sm inline-flex items-center gap-1"
-                    onClick={() => analytics.clickWhatsApp(`order_${item.id}`)}
-                  >
-                    <span>طلب</span>
-                  </a>
+                {/* Card Footer: Price + Order & Share Buttons */}
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                  <div>
+                    <span className="text-[10px] text-medical-muted block">السعر:</span>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-sm font-black text-navy-800">{itemPrice}</span>
+                      {itemOldPrice && (
+                        <span className="text-[10px] text-slate-400 line-through">{itemOldPrice}</span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5">
+                    <SocialShareButton
+                      title={`${item.name} — نبض للتمريض المنزلي بدمياط`}
+                      description={item.shortDesc}
+                      url={`/services/medical-supplies#${item.id}`}
+                      image={item.image}
+                      variant="icon"
+                      className="w-8 h-8"
+                      detailsList={item.features.map((f) => `${f.title}: ${f.desc}`)}
+                      priceTag={itemPrice}
+                      deliveryNote="توصيل منزلي سريع لجميع مناطق دمياط مع ممرض متخصص."
+                      analyticsContext={`catalog_${item.id}`}
+                    />
+                    {inStock ? (
+                      <a
+                        href={getWhatsAppOrderUrl(item.whatsappText)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-whatsapp text-xs py-2 px-3 shadow-sm inline-flex items-center gap-1"
+                        onClick={() => analytics.clickWhatsApp(`order_${item.id}`)}
+                      >
+                        <span>طلب</span>
+                      </a>
+                    ) : (
+                      <span className="text-[11px] font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg">
+                        نفد مؤقتاً
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            )
+          })}
         </div>
 
         {/* ── Custom Supplies Request Card ── */}

@@ -11,6 +11,8 @@ import { analytics } from '@/lib/analytics'
 import { ChevronLeftIcon } from '@heroicons/react/24/outline'
 import SocialShareButton from '@/components/ui/SocialShareButton'
 
+import { useSettings } from '@/context/SettingsContext'
+
 interface ServicesGridProps {
   featured?: boolean     // true = show 6 on homepage
   showFilter?: boolean   // true = show category filter
@@ -19,6 +21,12 @@ interface ServicesGridProps {
 
 // Service Card
 function ServiceCard({ service }: { service: NabdService }) {
+  const { getServicePrice, getServiceBadge, isServiceBookingEnabled } = useSettings()
+
+  const price = getServicePrice(service.id, '')
+  const customBadge = getServiceBadge(service.id)
+  const bookingEnabled = isServiceBookingEnabled(service.id, service.bookingEnabled)
+
   return (
     <article
       className="nabd-card p-5 flex flex-col gap-3.5 group"
@@ -29,10 +37,17 @@ function ServiceCard({ service }: { service: NabdService }) {
         {service.iconEmoji}
       </div>
 
-      {/* Category badge */}
-      <span className="badge-navy self-start text-xs">
-        {service.category}
-      </span>
+      {/* Badges */}
+      <div className="flex items-center gap-1.5 flex-wrap">
+        <span className="badge-navy text-xs">
+          {service.category}
+        </span>
+        {customBadge && (
+          <span className="badge-gold text-xs font-bold">
+            {customBadge}
+          </span>
+        )}
+      </div>
 
       {/* Title */}
       <h3 className="text-base font-bold text-navy-700 leading-snug line-clamp-2">
@@ -44,9 +59,17 @@ function ServiceCard({ service }: { service: NabdService }) {
         {service.shortDescription}
       </p>
 
+      {/* Price tag if set */}
+      {price && (
+        <div className="flex items-center justify-between text-xs py-1 border-t border-slate-100">
+          <span className="text-medical-muted font-medium">السعر:</span>
+          <span className="font-bold text-navy-900 bg-slate-100 px-2 py-0.5 rounded-lg">{price}</span>
+        </div>
+      )}
+
       {/* Actions */}
       <div className="flex flex-col gap-2 pt-1">
-        {service.bookingEnabled ? (
+        {bookingEnabled ? (
           <Link
             href={`/booking?service=${service.id}`}
             className="btn-primary text-sm py-2.5 px-4 w-full"
