@@ -138,12 +138,22 @@ export default function NursePromo() {
               ))}
             </div>
 
-            <Link
-              href="/booking"
-              className="btn-primary inline-flex px-8 py-3.5 text-sm sm:text-base bg-gold-500 hover:bg-gold-600 shadow-gold"
-            >
-              احجز الآن 🩺
-            </Link>
+            <div className="flex items-center justify-center lg:justify-start gap-3 flex-wrap">
+              <Link
+                href="/booking"
+                className="btn-primary inline-flex px-8 py-3.5 text-sm sm:text-base bg-gold-500 hover:bg-gold-600 shadow-gold"
+              >
+                احجز الآن 🩺
+              </Link>
+              <a
+                href="https://www.facebook.com/permalink.php?story_fbid=pfbid05UyzC9gPXGcyGiWVh3THNbXQToBgD7kDjxuTFTLdFwquepW6p9pqX1twpzpgtSYZl&id=61593884400330"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-2xl text-xs sm:text-sm font-bold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all"
+              >
+                <span>منشورنا على فيسبوك ↗️</span>
+              </a>
+            </div>
           </div>
 
         </div>
