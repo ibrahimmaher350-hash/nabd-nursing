@@ -279,13 +279,24 @@ export default function MedicalSuppliesView() {
                   </a>
 
                   <SocialShareButton
-                    title="جهاز قياس السكر فيفا تشيك (250 ج.م مع 10 شرائط هدية)"
-                    description="سهولة في الاستخدام بدون ألم ونتيجة فورية خلال 5 ثوانٍ مع 10 شرائط هدية وتوصيل منزلي بدمياط من نبض للتمريض المنزلي."
+                    title="جهاز قياس السكر في الدم فيفا تشيك (VivaChek Ino)"
+                    description="سهولة في الاستخدام بدون ألم 💯 ونتائج مضمونة وسريعة خلال 5 ثوانٍ فقط!"
                     url="/services/medical-supplies#vivachek-ino"
                     image="/vivachek.png"
                     variant="button"
                     buttonText="مشاركة العرض 📢"
                     className="bg-white/15 hover:bg-white/25 text-white border-white/30 text-xs sm:text-sm py-2.5 px-3 flex-1 sm:flex-none justify-center"
+                    detailsList={[
+                      'نتيجة سريعة ودقيقة خلال 5 ثوانٍ فقط ⏱️',
+                      'بدون كود (No Coding) وبدون ألم مع أصغر نقطة دم 🩸',
+                      'ذاكرة ذكية تراجع متوسطات حتى 90 يوماً 📉',
+                      'تنبيهات عند انتهاء صلاحية شرائط الاختبار 📥',
+                      'خاصية تصنيف الفحص قبل أو بعد الوجبات 🍽️',
+                      'مناسب للمنزل ولأطقم التمريض لفحص سكر الدم الطارئ 👨‍⚕️',
+                      'ضمان 5 سنوات معتمد وشهادات FDA و CE 🛡️',
+                    ]}
+                    priceTag="250 ج.م فقط مع 10 شرائط هدية وقلم وخز متطور وإبر 🎁"
+                    deliveryNote="توصيل منزلي سريع لجميع مناطق دمياط مع شرح وتدريب عملي مجاني على الاستخدام بواسطة ممرض نبض."
                     analyticsContext="vivachek_hero_share"
                   />
                 </div>
@@ -397,6 +408,9 @@ export default function MedicalSuppliesView() {
                     image={item.image}
                     variant="icon"
                     className="w-8 h-8"
+                    detailsList={item.features.map((f) => `${f.title}: ${f.desc}`)}
+                    priceTag={item.price}
+                    deliveryNote="توصيل منزلي سريع لجميع مناطق دمياط مع ممرض متخصص."
                     analyticsContext={`catalog_${item.id}`}
                   />
                   <a

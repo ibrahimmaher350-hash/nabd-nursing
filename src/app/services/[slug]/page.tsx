@@ -181,6 +181,8 @@ export default async function ServicePage({ params }: Props) {
                   variant="button"
                   buttonText="مشاركة الخدمة 📢"
                   className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-6 py-3.5 w-full sm:w-auto"
+                  detailsList={service.whatWeOffer}
+                  deliveryNote="رعاية وتمريض منزلي باهتمام وأمان داخل دمياط."
                   analyticsContext={`service_${slug}`}
                 />
               </div>

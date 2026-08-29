@@ -83,6 +83,8 @@ function ServiceCard({ service }: { service: NabdService }) {
             image={service.id === 'medical-supplies' ? '/vivachek.png' : '/og-image.jpg'}
             variant="compact"
             buttonText="مشاركة"
+            detailsList={service.whatWeOffer}
+            deliveryNote="خدمات تمريضية ورعاية منزلية باهتمام وأمان داخل دمياط."
             analyticsContext={`card_${service.id}`}
           />
         </div>
