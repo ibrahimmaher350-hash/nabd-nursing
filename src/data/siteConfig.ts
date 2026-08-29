@@ -12,7 +12,7 @@ export const siteConfig = {
     tagline: 'رعايتك الصحية تبدأ من مكانك، ونحن أقرب إليك.',
     description:
       'خدمات التمريض والرعاية الصحية المنزلية في دمياط ومحيطها',
-    url: 'https://nabd-damietta.blogspot.com',
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app',
     locale: 'ar-EG',
     dir: 'rtl' as const,
     logo: '/logo.jpg',

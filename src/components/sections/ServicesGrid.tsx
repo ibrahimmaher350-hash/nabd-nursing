@@ -9,6 +9,7 @@ import { services, type NabdService } from '@/data/services'
 import { getWhatsAppUrl } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
 import { ChevronLeftIcon } from '@heroicons/react/24/outline'
+import SocialShareButton from '@/components/ui/SocialShareButton'
 
 interface ServicesGridProps {
   featured?: boolean     // true = show 6 on homepage
@@ -66,14 +67,25 @@ function ServiceCard({ service }: { service: NabdService }) {
             تواصل لمعرفة التفاصيل
           </a>
         )}
-        <Link
-          href={`/services/${service.slug}`}
-          className="btn-ghost text-sm w-full justify-center"
-          onClick={() => analytics.viewService(service.id, service.name)}
-        >
-          التفاصيل
-          <ChevronLeftIcon className="w-3.5 h-3.5 ms-1" aria-hidden="true" />
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href={`/services/${service.slug}`}
+            className="btn-ghost text-sm flex-1 justify-center"
+            onClick={() => analytics.viewService(service.id, service.name)}
+          >
+            التفاصيل
+            <ChevronLeftIcon className="w-3.5 h-3.5 ms-1" aria-hidden="true" />
+          </Link>
+          <SocialShareButton
+            title={service.name}
+            description={service.shortDescription}
+            url={`/services/${service.slug}`}
+            image={service.id === 'medical-supplies' ? '/vivachek.png' : '/og-image.jpg'}
+            variant="compact"
+            buttonText="مشاركة"
+            analyticsContext={`card_${service.id}`}
+          />
+        </div>
       </div>
     </article>
   )

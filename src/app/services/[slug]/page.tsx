@@ -15,6 +15,7 @@ import { services, getServiceBySlug } from '@/data/services'
 import { getOffersForService } from '@/data/offers'
 import ServiceOfferBanner from '@/components/ui/ServiceOfferBanner'
 import MedicalSuppliesView from '@/components/services/MedicalSuppliesView'
+import SocialShareButton from '@/components/ui/SocialShareButton'
 import { siteConfig, getWhatsAppUrl } from '@/data/siteConfig'
 
 interface Props {
@@ -26,21 +27,42 @@ export async function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }))
 }
 
-// Dynamic metadata per service
+// Dynamic metadata per service with rich Open Graph preview for Facebook, WhatsApp & Twitter
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const service = getServiceBySlug(slug)
   if (!service) return {}
 
+  const isMedicalSupplies = slug === 'medical-supplies'
+  const ogImageUrl = isMedicalSupplies ? '/vivachek.png' : '/og-image.jpg'
+  const pageUrl = `/services/${slug}`
+
   return {
     title: service.seoTitle,
     description: service.seoDescription,
     keywords: service.keywords,
-    alternates: { canonical: `/services/${slug}` },
+    alternates: { canonical: pageUrl },
     openGraph: {
       title: service.seoTitle,
       description: service.seoDescription,
-      url: `/services/${slug}`,
+      url: pageUrl,
+      siteName: siteConfig.brand.name,
+      locale: 'ar_EG',
+      type: 'website',
+      images: [
+        {
+          url: ogImageUrl,
+          width: isMedicalSupplies ? 800 : 1200,
+          height: isMedicalSupplies ? 800 : 630,
+          alt: service.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: service.seoTitle,
+      description: service.seoDescription,
+      images: [ogImageUrl],
     },
   }
 }
@@ -151,6 +173,16 @@ export default async function ServicePage({ params }: Props) {
                   <PhoneIcon className="w-5 h-5" aria-hidden="true" />
                   اتصل الآن
                 </a>
+                <SocialShareButton
+                  title={service.name}
+                  description={service.shortDescription}
+                  url={`/services/${slug}`}
+                  image={slug === 'medical-supplies' ? '/vivachek.png' : '/og-image.jpg'}
+                  variant="button"
+                  buttonText="مشاركة الخدمة 📢"
+                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 px-6 py-3.5 w-full sm:w-auto"
+                  analyticsContext={`service_${slug}`}
+                />
               </div>
             </div>
           </div>

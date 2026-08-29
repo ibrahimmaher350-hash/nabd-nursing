@@ -20,7 +20,7 @@ const cairo = Cairo({
 // ── Metadata ──────────────────────────────────────────────────
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-damietta.blogspot.com'
+    process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app'
   ),
   title: {
     default: siteConfig.seo.defaultTitle,
@@ -109,14 +109,14 @@ export const viewport: Viewport = {
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': ['LocalBusiness', 'MedicalBusiness'],
-  '@id': `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-damietta.blogspot.com'}/#organization`,
+  '@id': `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app'}/#organization`,
   name: siteConfig.brand.name,
   alternateName: siteConfig.brand.shortName,
   description: siteConfig.brand.description,
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-damietta.blogspot.com',
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app',
   logo: {
     '@type': 'ImageObject',
-    url: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-damietta.blogspot.com'}/logo.jpg`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app'}/logo.jpg`,
   },
   telephone: siteConfig.contact.phoneE164,
   areaServed: {
@@ -144,7 +144,7 @@ const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: siteConfig.brand.name,
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-damietta.blogspot.com',
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app',
   inLanguage: 'ar-EG',
   potentialAction: {
     '@type': 'SearchAction',

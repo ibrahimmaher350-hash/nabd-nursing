@@ -15,6 +15,7 @@ type AnalyticsEventName =
   | 'facebook_click'
   | 'blog_click'
   | 'google_business_click'
+  | 'share_click'
 
 interface EventParams {
   service_name?: string
@@ -79,4 +80,7 @@ export const analytics = {
 
   googleBusinessClick: () =>
     trackEvent('google_business_click'),
+
+  shareClick: (platform: string, context?: string) =>
+    trackEvent('share_click', { source: platform, service_id: context }),
 }

@@ -27,6 +27,7 @@ import {
 } from '@/data/medicalSuppliesData'
 import { siteConfig } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
+import SocialShareButton from '@/components/ui/SocialShareButton'
 
 export default function MedicalSuppliesView() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
@@ -276,6 +277,17 @@ export default function MedicalSuppliesView() {
                     <PhoneIcon className="w-4 h-4" />
                     <span>01001097896</span>
                   </a>
+
+                  <SocialShareButton
+                    title="جهاز قياس السكر فيفا تشيك (250 ج.م مع 10 شرائط هدية)"
+                    description="سهولة في الاستخدام بدون ألم ونتيجة فورية خلال 5 ثوانٍ مع 10 شرائط هدية وتوصيل منزلي بدمياط من نبض للتمريض المنزلي."
+                    url="/services/medical-supplies#vivachek-ino"
+                    image="/vivachek.png"
+                    variant="button"
+                    buttonText="مشاركة العرض 📢"
+                    className="bg-white/15 hover:bg-white/25 text-white border-white/30 text-xs sm:text-sm py-2.5 px-3 flex-1 sm:flex-none justify-center"
+                    analyticsContext="vivachek_hero_share"
+                  />
                 </div>
               </div>
 
@@ -330,7 +342,8 @@ export default function MedicalSuppliesView() {
           {filteredSupplies.map((item) => (
             <article
               key={item.id}
-              className="nabd-card p-5 flex flex-col justify-between border border-medical-border bg-white hover:border-navy-300 transition-all group"
+              id={item.id}
+              className="nabd-card p-5 flex flex-col justify-between border border-medical-border bg-white hover:border-navy-300 transition-all group scroll-mt-24"
             >
               <div>
                 {/* Header Badge */}
@@ -369,22 +382,33 @@ export default function MedicalSuppliesView() {
                 </div>
               </div>
 
-              {/* Card Footer: Price + Order Button */}
+              {/* Card Footer: Price + Order & Share Buttons */}
               <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
                 <div>
                   <span className="text-[10px] text-medical-muted block">السعر:</span>
                   <span className="text-sm font-black text-navy-800">{item.price}</span>
                 </div>
 
-                <a
-                  href={getWhatsAppOrderUrl(item.whatsappText)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-whatsapp text-xs py-2 px-3.5 shadow-sm inline-flex items-center gap-1.5"
-                  onClick={() => analytics.clickWhatsApp(`order_${item.id}`)}
-                >
-                  <span>طلب عبر واتساب</span>
-                </a>
+                <div className="flex items-center gap-1.5">
+                  <SocialShareButton
+                    title={`${item.name} — نبض للتمريض المنزلي بدمياط`}
+                    description={item.shortDesc}
+                    url={`/services/medical-supplies#${item.id}`}
+                    image={item.image}
+                    variant="icon"
+                    className="w-8 h-8"
+                    analyticsContext={`catalog_${item.id}`}
+                  />
+                  <a
+                    href={getWhatsAppOrderUrl(item.whatsappText)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-whatsapp text-xs py-2 px-3 shadow-sm inline-flex items-center gap-1"
+                    onClick={() => analytics.clickWhatsApp(`order_${item.id}`)}
+                  >
+                    <span>طلب</span>
+                  </a>
+                </div>
               </div>
             </article>
           ))}
