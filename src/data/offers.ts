@@ -65,6 +65,36 @@ export const offers: NabdOffer[] = [
     bgGradient: 'from-navy-900 via-navy-800 to-navy-900',
     whatsappMessage: 'مرحبًا، أريد الاستفسار عن عروض تركيب محاليل الحديد الخاصة من نبض للتمريض المنزلي.',
   },
+  {
+    id: 'vivachek-glucose-meter-2026',
+    title: 'عرض خاص: جهاز قياس السكر فيفا تشيك (VivaChek Ino)',
+    subtitle: 'سهولة في الاستخدام بدون ألم وبنتيجة فورية خلال 5 ثوانٍ مع 10 شرائط هدية مجانية!',
+    serviceSlug: 'medical-supplies',
+    serviceName: 'توفير المستلزمات والأجهزة الطبية',
+    emoji: '🩸',
+    packages: [
+      {
+        label: 'جهاز فيفا تشيك + 10 شرائط هدية',
+        highlight: '250 ج.م فقط',
+        gift: '10 شرائط اختبار + قلم شكاكة وإبر مجاناً 🎁',
+        badge: 'الأكثر طلباً',
+        badgeColor: 'emerald',
+      },
+      {
+        label: 'الجهاز + علبة 50 شريط إضافية',
+        gift: 'توصيل منزلي وشرح عملي بدمياط 🚚',
+        badge: 'توفير كامل',
+        badgeColor: 'gold',
+      },
+    ],
+    validFrom: '2026-08-27',
+    validUntil: '2026-11-30',
+    active: true,
+    featured: true,
+    bgGradient: 'from-emerald-950 via-teal-900 to-navy-950',
+    whatsappMessage:
+      'السلام عليكم، محتاج أطلب عرض جهاز قياس السكر فيفا تشيك بسعر 250ج مع الـ 10 شرايط من نبض بدمياط.',
+  },
 ]
 
 /** Returns only currently active offers */

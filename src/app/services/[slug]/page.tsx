@@ -14,6 +14,7 @@ import FloatingActions from '@/components/layout/FloatingActions'
 import { services, getServiceBySlug } from '@/data/services'
 import { getOffersForService } from '@/data/offers'
 import ServiceOfferBanner from '@/components/ui/ServiceOfferBanner'
+import MedicalSuppliesView from '@/components/services/MedicalSuppliesView'
 import { siteConfig, getWhatsAppUrl } from '@/data/siteConfig'
 
 interface Props {
@@ -158,7 +159,44 @@ export default async function ServicePage({ params }: Props) {
         {/* Service Details */}
         <section className="bg-white py-10 sm:py-14">
           <div className="section-container">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+            {service.id === 'medical-supplies' ? (
+              <div className="flex flex-col gap-10">
+                {/* ── Active Offers Banner if available ── */}
+                {serviceOffers.length > 0 && (
+                  <div className="flex flex-col gap-4">
+                    {serviceOffers.map((offer) => (
+                      <ServiceOfferBanner key={offer.id} offer={offer} />
+                    ))}
+                  </div>
+                )}
+
+                {/* ── VivaChek Ino & Medical Supplies Catalog ── */}
+                <MedicalSuppliesView />
+
+                {/* ── Service FAQ ── */}
+                {service.faq.length > 0 && (
+                  <div className="max-w-4xl mx-auto w-full pt-8 border-t border-slate-200">
+                    <h2 className="text-xl sm:text-2xl font-bold text-navy-700 mb-6 text-center">
+                      أسئلة شائعة حول الأجهزة والمستلزمات الطبية
+                    </h2>
+                    <div className="flex flex-col gap-3">
+                      {service.faq.map((item, i) => (
+                        <details key={i} className="nabd-card">
+                          <summary className="flex items-center justify-between gap-4 p-4 sm:p-5 cursor-pointer font-semibold text-navy-700 text-sm sm:text-base">
+                            <span>{item.question}</span>
+                            <ChevronDownIcon className="w-4 h-4 text-gold-500 shrink-0" aria-hidden="true" />
+                          </summary>
+                          <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-medical-border">
+                            <p className="text-medical-muted text-sm leading-relaxed pt-3">{item.answer}</p>
+                          </div>
+                        </details>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
               {/* Main content */}
               <div className="lg:col-span-2 flex flex-col gap-8">
 
@@ -315,8 +353,9 @@ export default async function ServicePage({ params }: Props) {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          )}
+        </div>
+      </section>
       </main>
       <Footer />
       <FloatingActions />
