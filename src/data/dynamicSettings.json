@@ -15,5 +15,20 @@
   "bookingEnabled": true,
   "maintenanceMode": false,
   "pricingNote": "السعر يحدد حسب الخدمة والحالة والموقع.",
-  "updatedAt": "2026-08-27T19:55:00.000Z"
+  "adminPin": "2026",
+  "announcement": "",
+  "announcementActive": false,
+  "servicesOverrides": {},
+  "suppliesOverrides": {
+    "vivachek-ino": {
+      "price": "450 ج.م",
+      "oldPrice": "650 ج.م",
+      "priceNumber": 450,
+      "badge": "الأكثر مبيعاً 🏆 | عرض خاص 450ج",
+      "inStock": true,
+      "giftStrips": "10 شرائط هدية مجانية"
+    }
+  },
+  "customProducts": [],
+  "updatedAt": "2026-08-30T00:00:00.000Z"
 }

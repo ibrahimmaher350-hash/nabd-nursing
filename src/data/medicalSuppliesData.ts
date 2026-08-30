@@ -31,14 +31,14 @@ export const FEATURED_GLUCOSE_METER: MedicalProduct = {
   slug: 'vivachek-ino',
   category: 'glucose',
   categoryName: 'أجهزة قياس السكر',
-  price: '250 ج.م',
-  priceNumber: 250,
-  oldPrice: '350 ج.م',
-  badge: 'الأكثر مبيعاً 🏆 | عرض خاص 250ج',
+  price: '450 ج.م',
+  priceNumber: 450,
+  oldPrice: '650 ج.م',
+  badge: 'الأكثر مبيعاً 🏆 | عرض خاص 450ج',
   isFeatured: true,
   image: '/vivachek.png',
   shortDesc:
-    'سهولة تامة في الاستخدام بدون ألم 💯 ونتائج مضمونة وموثوقة خلال 5 ثوانٍ فقط. يأتي مع 10 شرائط اختبار هدية وقلم وخز متطور.',
+    'سهولة تامة في الاستخدام بدون ألم 💯 ونتائج مضمونة وموثوقة خلال 5 ثوانٍ فقط. يأتي بسعر 450 ج.م فقط بدلاً من 650 ج.م مع 10 شرائط اختبار هدية وقلم وخز متطور.',
   features: [
     {
       icon: '⚡',
@@ -92,7 +92,7 @@ export const FEATURED_GLUCOSE_METER: MedicalProduct = {
     'كتيب إرشادات باللغة العربية والإنجليزية + كارت الضمان',
   ],
   whatsappText:
-    'السلام عليكم، محتاج أطلب جهاز قياس السكر فيفا تشيك بسعر 250ج مع الـ 10 شرايط من نبض بدمياط.',
+    'السلام عليكم، محتاج أطلب جهاز قياس السكر فيفا تشيك بسعر 450ج مع الـ 10 شرايط من نبض بدمياط.',
 }
 
 // ── Additional Medical Supplies Available in Damietta ─────────

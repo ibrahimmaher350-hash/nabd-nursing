@@ -96,7 +96,7 @@ export default function MedicalSuppliesView() {
               توصيل لجميع مناطق دمياط 🚚
             </span>
             <span className="bg-gold-400 text-navy-950 px-2.5 py-0.5 rounded-full text-xs font-black">
-              250 ج.م فقط
+              {featuredPrice} فقط
             </span>
           </div>
         </div>
@@ -279,7 +279,7 @@ export default function MedicalSuppliesView() {
               <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-700 to-teal-800 text-white flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 shadow-md">
                 <div>
                   <p className="text-sm font-black text-gold-300">
-                    اطلب الجهاز الآن بسعر 250 ج.م مع 10 شرائط هدية
+                    اطلب الجهاز الآن بسعر {featuredPrice} {featuredOldPrice ? `(بدلاً من ${featuredOldPrice})` : ''} مع 10 شرائط هدية
                   </p>
                   <p className="text-xs text-emerald-100 mt-0.5">
                     الدفع عند الاستلام مع إمكانية تجربة وتشغيل الجهاز أمامك فوراً بدمياط.
@@ -288,7 +288,7 @@ export default function MedicalSuppliesView() {
 
                 <div className="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap">
                   <a
-                    href={getWhatsAppOrderUrl(featured.whatsappText)}
+                    href={getWhatsAppOrderUrl(`السلام عليكم، محتاج أطلب جهاز قياس السكر فيفا تشيك بسعر ${featuredPrice} مع الـ 10 شرايط من نبض بدمياط.`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-whatsapp text-xs sm:text-sm py-2.5 px-4 flex-1 sm:flex-none justify-center shadow-lg"
@@ -320,10 +320,10 @@ export default function MedicalSuppliesView() {
                       'ذاكرة ذكية تراجع متوسطات حتى 90 يوماً 📉',
                       'تنبيهات عند انتهاء صلاحية شرائط الاختبار 📥',
                       'خاصية تصنيف الفحص قبل أو بعد الوجبات 🍽️',
-                      'مناسب للمنزل ولأطقم التمريض لفحص سكر الدم الطارئ 👨‍⚕️',
+                      'منامس للمنزل ولأطقم التمريض لفحص سكر الدم الطارئ 👨‍⚕️',
                       'ضمان 5 سنوات معتمد وشهادات FDA و CE 🛡️',
                     ]}
-                    priceTag="250 ج.م فقط مع 10 شرائط هدية وقلم وخز متطور وإبر 🎁"
+                    priceTag={`${featuredPrice} ${featuredOldPrice ? `(بدلاً من ${featuredOldPrice})` : ''} مع 10 شرائط هدية وقلم وخز متطور وإبر 🎁`}
                     deliveryNote="توصيل منزلي سريع لجميع مناطق دمياط مع شرح وتدريب عملي مجاني على الاستخدام بواسطة ممرض نبض."
                     analyticsContext="vivachek_hero_share"
                   />

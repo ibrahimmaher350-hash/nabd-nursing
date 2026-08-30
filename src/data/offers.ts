@@ -75,7 +75,7 @@ export const offers: NabdOffer[] = [
     packages: [
       {
         label: 'جهاز فيفا تشيك + 10 شرائط هدية',
-        highlight: '250 ج.م فقط',
+        highlight: '450 ج.م فقط (بدلاً من 650 ج.م)',
         gift: '10 شرائط اختبار + قلم شكاكة وإبر مجاناً 🎁',
         badge: 'الأكثر طلباً',
         badgeColor: 'emerald',
@@ -93,7 +93,7 @@ export const offers: NabdOffer[] = [
     featured: true,
     bgGradient: 'from-emerald-950 via-teal-900 to-navy-950',
     whatsappMessage:
-      'السلام عليكم، محتاج أطلب عرض جهاز قياس السكر فيفا تشيك بسعر 250ج مع الـ 10 شرايط من نبض بدمياط.',
+      'السلام عليكم، محتاج أطلب عرض جهاز قياس السكر فيفا تشيك بسعر 450ج (بدلاً من 650ج) مع الـ 10 شرايط من نبض بدمياط.',
   },
 ]
 

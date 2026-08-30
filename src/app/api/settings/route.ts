@@ -61,21 +61,20 @@ function saveLocalSettings(settings: Record<string, unknown>) {
   }
 }
 
-// Default settings from siteConfig
-function getDefaultSettings() {
+// In-memory module cache across serverless requests on the same instance
+let inMemorySettings: Record<string, unknown> | null = null
+
+function getDefaultSettings(): Record<string, unknown> {
   return {
     businessName: siteConfig.brand.name,
     tagline: siteConfig.brand.tagline,
     phone: siteConfig.contact.phone,
     whatsapp: siteConfig.contact.whatsapp,
-    telegramUrl: siteConfig.contact.telegram,
+    telegramUrl: siteConfig.social.telegram || 'https://t.me/Ibrahim5k',
     facebookUrl: siteConfig.social.facebook,
-    facebookProfileUrl: siteConfig.social.facebookProfile,
+    facebookProfileUrl: siteConfig.social.facebookProfile || 'https://www.facebook.com/share/1BDJwJeW15/',
     facebookGroupUrl: siteConfig.social.facebookGroup,
     bloggerUrl: siteConfig.social.blogger,
-    googleBusinessUrl: siteConfig.social.googleBusiness,
-    googleReviewsUrl: siteConfig.social.googleReviews,
-    cezmaStoreUrl: siteConfig.social.cezmaStore,
     serviceAreas: siteConfig.location.serviceAreas.join('، '),
     bookingEnabled: true,
     maintenanceMode: false,
@@ -84,14 +83,31 @@ function getDefaultSettings() {
     announcement: '',
     announcementActive: false,
     servicesOverrides: {},
-    suppliesOverrides: {},
+    suppliesOverrides: {
+      'vivachek-ino': {
+        price: '450 ج.م',
+        oldPrice: '650 ج.م',
+        priceNumber: 450,
+        badge: 'الأكثر مبيعاً 🏆 | عرض خاص 450ج',
+        inStock: true,
+        giftStrips: '10 شرائط هدية مجانية',
+      },
+    },
     customProducts: [],
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    // 1. Try reading from Firestore if configured
+    // 1. Check in-memory module cache first
+    if (inMemorySettings) {
+      return NextResponse.json({
+        success: true,
+        settings: inMemorySettings,
+      })
+    }
+
+    // 2. Try reading from Firestore if configured
     const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
     if (projectId && projectId !== 'your_project_id_here' && projectId !== 'nabd-nursing') {
       try {
@@ -111,9 +127,11 @@ export async function GET() {
         const db = getFirestore()
         const doc = await db.collection('settings').doc('general').get()
         if (doc.exists) {
+          const loaded = { ...getDefaultSettings(), ...doc.data() }
+          inMemorySettings = loaded
           return NextResponse.json({
             success: true,
-            settings: { ...getDefaultSettings(), ...doc.data() },
+            settings: loaded,
           })
         }
       } catch (firestoreErr) {
@@ -121,9 +139,33 @@ export async function GET() {
       }
     }
 
-    // 2. Fallback to local file or defaults
+    // 3. Fallback to local file
     const local = getLocalSettings()
-    const finalSettings = local ? { ...getDefaultSettings(), ...local } : getDefaultSettings()
+    let finalSettings = local ? { ...getDefaultSettings(), ...local } : getDefaultSettings()
+
+    // 4. Check for cookie sync fallback if serverless lost memory
+    try {
+      const syncCookie = request.cookies.get('nabd_settings_sync')?.value
+      if (syncCookie) {
+        const parsedCookie = JSON.parse(decodeURIComponent(syncCookie))
+        if (parsedCookie && typeof parsedCookie === 'object') {
+          finalSettings = {
+            ...finalSettings,
+            ...parsedCookie,
+            servicesOverrides: {
+              ...(finalSettings.servicesOverrides as Record<string, unknown> || {}),
+              ...(parsedCookie.servicesOverrides || {}),
+            },
+            suppliesOverrides: {
+              ...(finalSettings.suppliesOverrides as Record<string, unknown> || {}),
+              ...(parsedCookie.suppliesOverrides || {}),
+            },
+          }
+        }
+      }
+    } catch {}
+
+    inMemorySettings = finalSettings
 
     return NextResponse.json({
       success: true,
@@ -149,7 +191,7 @@ export async function POST(request: NextRequest) {
     // Sanitize: reject any corrupted (???) values and keep defaults instead
     const sanitizedBody = sanitizeSettings(body as Record<string, unknown>, defaults as Record<string, unknown>)
 
-    const updatedSettings = {
+    const updatedSettings: Record<string, any> = {
       ...defaults,
       ...sanitizedBody,
       updatedAt: new Date().toISOString(),
@@ -182,11 +224,32 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    return NextResponse.json({
+    // 3. Update in-memory cache
+    inMemorySettings = updatedSettings
+
+    const response = NextResponse.json({
       success: true,
       message: 'تم حفظ وتحديث الإعدادات بنجاح',
       settings: updatedSettings,
     })
+
+    // 4. Set persistence cookie for all future requests
+    try {
+      response.cookies.set('nabd_settings_sync', encodeURIComponent(JSON.stringify({
+        servicesOverrides: updatedSettings.servicesOverrides,
+        suppliesOverrides: updatedSettings.suppliesOverrides,
+        customProducts: updatedSettings.customProducts,
+        announcement: updatedSettings.announcement,
+        announcementActive: updatedSettings.announcementActive,
+        updatedAt: updatedSettings.updatedAt,
+      })), {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: 'lax',
+      })
+    } catch {}
+
+    return response
   } catch (err) {
     console.error('[Settings API POST] Error:', err)
     return NextResponse.json(

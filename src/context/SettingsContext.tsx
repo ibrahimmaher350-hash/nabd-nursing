@@ -70,6 +70,7 @@ export interface SiteSettings {
   servicesOverrides?: Record<string, ServiceOverride>
   suppliesOverrides?: Record<string, SupplyOverride>
   customProducts?: CustomProduct[]
+  updatedAt?: string
 }
 
 const defaultSettings: SiteSettings = {
@@ -95,7 +96,16 @@ const defaultSettings: SiteSettings = {
   announcement: '',
   announcementActive: false,
   servicesOverrides: {},
-  suppliesOverrides: {},
+  suppliesOverrides: {
+    'vivachek-ino': {
+      price: '450 ج.م',
+      oldPrice: '650 ج.م',
+      priceNumber: 450,
+      badge: 'الأكثر مبيعاً 🏆 | عرض خاص 450ج',
+      inStock: true,
+      giftStrips: '10 شرائط هدية مجانية',
+    },
+  },
   customProducts: [],
 }
 
@@ -172,12 +182,31 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         if (res.ok) {
           const json = await res.json()
           if (json.settings && isValidSettings(json.settings)) {
+            // Read current local cache so we NEVER overwrite user edits with empty server defaults!
+            let cached: Partial<SiteSettings> = {}
+            try {
+              const c = localStorage.getItem(STORAGE_KEY)
+              if (c) cached = JSON.parse(c)
+            } catch {}
+
             const merged: SiteSettings = {
               ...defaultSettings,
               ...json.settings,
-              servicesOverrides: json.settings.servicesOverrides || {},
-              suppliesOverrides: json.settings.suppliesOverrides || {},
-              customProducts: json.settings.customProducts || [],
+              ...cached,
+              servicesOverrides: {
+                ...(defaultSettings.servicesOverrides || {}),
+                ...(json.settings.servicesOverrides || {}),
+                ...(cached.servicesOverrides || {}),
+              },
+              suppliesOverrides: {
+                ...(defaultSettings.suppliesOverrides || {}),
+                ...(json.settings.suppliesOverrides || {}),
+                ...(cached.suppliesOverrides || {}),
+              },
+              customProducts:
+                cached.customProducts && cached.customProducts.length > 0
+                  ? cached.customProducts
+                  : json.settings.customProducts || [],
             }
             setSettings(merged)
             localStorage.setItem(STORAGE_KEY, JSON.stringify(merged))
@@ -199,7 +228,18 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         if (cached) {
           const parsed = JSON.parse(cached)
           if (isValidSettings(parsed)) {
-            setSettings((prev) => ({ ...prev, ...parsed }))
+            setSettings((prev) => ({
+              ...prev,
+              ...parsed,
+              servicesOverrides: {
+                ...(prev.servicesOverrides || {}),
+                ...(parsed.servicesOverrides || {}),
+              },
+              suppliesOverrides: {
+                ...(prev.suppliesOverrides || {}),
+                ...(parsed.suppliesOverrides || {}),
+              },
+            }))
           }
         }
       } catch (e) {
@@ -248,14 +288,38 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     return `tel:${cleanNumber}`
   }, [settings.phone])
 
-  // Save settings through API + localStorage + broadcast
+  // Save Settings Function
   const saveSettings = async (newSettings: Partial<SiteSettings>): Promise<boolean> => {
-    const updated: SiteSettings = { ...settings, ...newSettings }
+    const updated: SiteSettings = {
+      ...settings,
+      ...newSettings,
+      servicesOverrides: {
+        ...(settings.servicesOverrides || {}),
+        ...(newSettings.servicesOverrides || {}),
+      },
+      suppliesOverrides: {
+        ...(settings.suppliesOverrides || {}),
+        ...(newSettings.suppliesOverrides || {}),
+      },
+      updatedAt: new Date().toISOString(),
+    }
     setSettings(updated)
 
     // Save to local cache immediately
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+      if (typeof document !== 'undefined') {
+        document.cookie = `nabd_settings_sync=${encodeURIComponent(
+          JSON.stringify({
+            servicesOverrides: updated.servicesOverrides,
+            suppliesOverrides: updated.suppliesOverrides,
+            customProducts: updated.customProducts,
+            announcement: updated.announcement,
+            announcementActive: updated.announcementActive,
+            updatedAt: updated.updatedAt,
+          })
+        )}; path=/; max-age=31536000; SameSite=Lax`
+      }
       window.dispatchEvent(new Event(EVENT_KEY))
     } catch (e) {
       console.warn(e)

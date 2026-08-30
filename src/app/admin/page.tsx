@@ -467,9 +467,9 @@ export default function AdminMasterPage() {
               {/* VivaChek Pricing Form */}
               {(() => {
                 const vivaOverride = suppliesOverrides['vivachek-ino'] || {}
-                const currentPrice = vivaOverride.price ?? FEATURED_GLUCOSE_METER.price
-                const currentOldPrice = vivaOverride.oldPrice ?? FEATURED_GLUCOSE_METER.oldPrice ?? '350 ج.م'
-                const currentBadge = vivaOverride.badge ?? FEATURED_GLUCOSE_METER.badge ?? 'عرض خاص 250ج'
+                const currentPrice = vivaOverride.price ?? FEATURED_GLUCOSE_METER.price ?? '450 ج.م'
+                const currentOldPrice = vivaOverride.oldPrice ?? FEATURED_GLUCOSE_METER.oldPrice ?? '650 ج.م'
+                const currentBadge = vivaOverride.badge ?? FEATURED_GLUCOSE_METER.badge ?? 'الأكثر مبيعاً 🏆 | عرض خاص 450ج'
                 const inStock = vivaOverride.inStock !== undefined ? vivaOverride.inStock : true
                 const giftStrips = vivaOverride.giftStrips ?? '10 شرائط هدية مجانية'
 
@@ -484,7 +484,7 @@ export default function AdminMasterPage() {
                         type="text"
                         value={currentPrice}
                         onChange={(e) => updateSupplyOverride('vivachek-ino', { price: e.target.value })}
-                        placeholder="250 ج.م"
+                        placeholder="450 ج.م"
                         className="w-full bg-navy-950 border border-gold-400/40 rounded-xl px-4 py-2.5 text-sm font-bold text-gold-300 focus:outline-none focus:border-gold-400"
                       />
                     </div>
@@ -498,7 +498,7 @@ export default function AdminMasterPage() {
                         type="text"
                         value={currentOldPrice}
                         onChange={(e) => updateSupplyOverride('vivachek-ino', { oldPrice: e.target.value })}
-                        placeholder="350 ج.م"
+                        placeholder="650 ج.م"
                         className="w-full bg-navy-950 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-gold-400"
                       />
                     </div>
