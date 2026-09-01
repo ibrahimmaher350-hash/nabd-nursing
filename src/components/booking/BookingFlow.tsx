@@ -1,7 +1,10 @@
 'use client'
 /**
  * components/booking/BookingFlow.tsx — نبض للتمريض المنزلي
- * Multi-step booking form with 12-hour format, "Other" service support, and comprehensive Lab Tests selector.
+ * Dynamic Multi-step booking form:
+ * - Lab tests & diagnostics appear ONLY when "سحب عينات وتحاليل منزلية" (home-sample-collection) is selected.
+ * - 12-Hour format (AM/PM & ص/م) everywhere.
+ * - "Other" (أخرى) custom service support.
  */
 
 import { useState } from 'react'
@@ -43,21 +46,19 @@ const bookingSchema = z.object({
 
 type BookingFormData = z.infer<typeof bookingSchema>
 
-// ── Steps config ─────────────────────────────────────────────
-const STEPS = [
-  { id: 1, label: 'الخدمة' },
-  { id: 2, label: 'التحاليل (اختياري)' },
-  { id: 3, label: 'البيانات والموقع' },
-  { id: 4, label: 'الموعد وتأكيد' },
-]
-
 // Progress indicator
-function StepIndicator({ currentStep }: { currentStep: number }) {
+function StepIndicator({
+  currentStep,
+  steps,
+}: {
+  currentStep: number
+  steps: Array<{ id: number; label: string }>
+}) {
   return (
     <div className="flex items-center justify-center gap-0 mb-8" role="list" aria-label="خطوات الحجز">
-      {STEPS.map((step, index) => (
+      {steps.map((step, index) => (
         <div key={step.id} className="flex items-center" role="listitem">
-          <div className={`flex flex-col items-center gap-1 ${index < STEPS.length - 1 ? 'me-1' : ''}`}>
+          <div className={`flex flex-col items-center gap-1 ${index < steps.length - 1 ? 'me-1' : ''}`}>
             <div
               className={`
                 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all
@@ -79,7 +80,7 @@ function StepIndicator({ currentStep }: { currentStep: number }) {
               {step.label}
             </span>
           </div>
-          {index < STEPS.length - 1 && (
+          {index < steps.length - 1 && (
             <div
               className={`w-6 sm:w-10 h-0.5 mb-5 transition-colors ${currentStep > step.id ? 'bg-medical-success' : 'bg-medical-border'}`}
               aria-hidden="true"
@@ -112,7 +113,7 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
-  // Lab tests state
+  // Lab tests state (active exclusively for sample collection)
   const [selectedLabTests, setSelectedLabTests] = useState<string[]>([])
   const [labSearchQuery, setLabSearchQuery] = useState('')
   const [customLabTestInput, setCustomLabTestInput] = useState('')
@@ -137,7 +138,6 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
     watch,
     trigger,
     getValues,
-    setValue,
     formState: { errors },
   } = useForm<BookingFormData>({
     resolver: zodResolver(bookingSchema),
@@ -152,6 +152,25 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
   const selectedServiceId = watch('serviceId')
   const customServiceName = watch('customServiceName')
   const selectedService = services.find((s) => s.id === selectedServiceId)
+
+  // Flag: Lab tests appear exclusively for home-sample-collection
+  const isLabService = selectedServiceId === 'home-sample-collection'
+
+  // Dynamic steps based on service
+  const dynamicSteps = isLabService
+    ? [
+        { id: 1, label: 'الخدمة' },
+        { id: 2, label: 'التحاليل المطلوبة' },
+        { id: 3, label: 'البيانات والموقع' },
+        { id: 4, label: 'الموعد وتأكيد' },
+      ]
+    : [
+        { id: 1, label: 'الخدمة' },
+        { id: 2, label: 'البيانات والموقع' },
+        { id: 3, label: 'الموعد وتأكيد' },
+      ]
+
+  const totalSteps = dynamicSteps.length
 
   // Computed effective service name
   const effectiveServiceName =
@@ -186,29 +205,43 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
 
   // Step navigation
   const goNext = async () => {
-    let fieldsToValidate: (keyof BookingFormData)[] = []
-
     if (step === 1) {
-      fieldsToValidate = ['serviceId']
+      const valid = await trigger(['serviceId'])
+      if (!valid) return
       if (selectedServiceId === 'other' && !customServiceName?.trim()) {
         alert('يرجى كتابة اسم الخدمة المطلوبة')
         return
       }
-    }
-    if (step === 3) {
-      fieldsToValidate = ['customerName', 'customerPhone', 'governorate', 'city', 'address']
-    }
-    if (step === 4) {
-      fieldsToValidate = ['preferredDate', 'preferredTime']
+      setStep(2)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
     }
 
-    const valid = await trigger(fieldsToValidate)
-    if (valid) {
-      if (step === 3) {
-        analytics.startBooking(selectedServiceId, effectiveServiceName)
+    if (isLabService) {
+      if (step === 2) {
+        // Lab step (optional or selection)
+        setStep(3)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        return
       }
-      setStep((s) => Math.min(s + 1, 4))
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      if (step === 3) {
+        const valid = await trigger(['customerName', 'customerPhone', 'governorate', 'city', 'address'])
+        if (!valid) return
+        analytics.startBooking(selectedServiceId, effectiveServiceName)
+        setStep(4)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        return
+      }
+    } else {
+      if (step === 2) {
+        // Contact Data step
+        const valid = await trigger(['customerName', 'customerPhone', 'governorate', 'city', 'address'])
+        if (!valid) return
+        analytics.startBooking(selectedServiceId, effectiveServiceName)
+        setStep(3)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        return
+      }
     }
   }
 
@@ -219,7 +252,7 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
 
   // Submit
   const handleSubmit = async () => {
-    const valid = await trigger()
+    const valid = await trigger(['preferredDate', 'preferredTime'])
     if (!valid) return
 
     setIsSubmitting(true)
@@ -231,7 +264,7 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
       const payload = {
         ...data,
         serviceName: effectiveServiceName,
-        selectedLabTests,
+        selectedLabTests: isLabService ? selectedLabTests : [],
         preferredTime12: data.preferredTime, // In 12-hour format
       }
 
@@ -265,7 +298,7 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
         preferredDate:    data.preferredDate,
         preferredTime:    data.preferredTime,
         notes:            data.notes,
-        selectedLabTests,
+        selectedLabTests: isLabService ? selectedLabTests : [],
         whatsappUrl:      json.whatsappUrl,
       })
     } catch {
@@ -298,7 +331,7 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
 
   return (
     <div className="max-w-xl mx-auto">
-      <StepIndicator currentStep={step} />
+      <StepIndicator currentStep={step} steps={dynamicSteps} />
 
       {/* ══════════════════════════════════════════════════════════════
           STEP 1: SERVICE SELECTION + "OTHER"
@@ -309,7 +342,7 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
             <h2 className="text-lg font-extrabold text-navy-700">
               اختر الخدمة المطلوبة 🩺
             </h2>
-            <span className="text-xs text-medical-muted">الخطوة 1 من 4</span>
+            <span className="text-xs text-medical-muted">الخطوة 1 من {totalSteps}</span>
           </div>
 
           <div className="flex flex-col gap-2 max-h-96 overflow-y-auto pr-1">
@@ -394,9 +427,9 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
       )}
 
       {/* ══════════════════════════════════════════════════════════════
-          STEP 2: LAB TESTS & DIAGNOSTICS SELECTOR (🧪 التحاليل المطلوبة)
+          STEP 2 (EXCLUSIVELY FOR LABS): LAB TESTS CHECKLIST (🧪 التحاليل المطلوبة)
       ══════════════════════════════════════════════════════════════ */}
-      {step === 2 && (
+      {isLabService && step === 2 && (
         <div className="nabd-card p-5 sm:p-6 shadow-card space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -406,11 +439,11 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
                   التحاليل والفحوصات المطلوبة
                 </h2>
                 <p className="text-xs text-medical-muted">
-                  (اختياري) اختر التحاليل لسحب العينة وتحليلها وإرسال التقرير لملفك الطبي
+                  حدد التحاليل المطلوبة لسحب العينات المنزلية وإرسال التقرير لملفك الطبي
                 </p>
               </div>
             </div>
-            <span className="text-xs text-medical-muted">الخطوة 2 من 4</span>
+            <span className="text-xs text-medical-muted">الخطوة 2 من {totalSteps}</span>
           </div>
 
           {/* Search Filter */}
@@ -528,15 +561,19 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
       )}
 
       {/* ══════════════════════════════════════════════════════════════
-          STEP 3: CONTACT DATA & LOCATION
+          CONTACT DATA & LOCATION:
+          - Step 3 if isLabService
+          - Step 2 if normal service
       ══════════════════════════════════════════════════════════════ */}
-      {step === 3 && (
+      {((isLabService && step === 3) || (!isLabService && step === 2)) && (
         <div className="nabd-card p-5 sm:p-6 shadow-card space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-extrabold text-navy-700">
               بيانات المريض والموقع 📍
             </h2>
-            <span className="text-xs text-medical-muted">الخطوة 3 من 4</span>
+            <span className="text-xs text-medical-muted">
+              الخطوة {isLabService ? 3 : 2} من {totalSteps}
+            </span>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -655,15 +692,19 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
       )}
 
       {/* ══════════════════════════════════════════════════════════════
-          STEP 4: 12-HOUR TIME, DATE & FINAL REVIEW
+          12-HOUR TIME, DATE & FINAL REVIEW:
+          - Step 4 if isLabService
+          - Step 3 if normal service
       ══════════════════════════════════════════════════════════════ */}
-      {step === 4 && (
+      {((isLabService && step === 4) || (!isLabService && step === 3)) && (
         <div className="nabd-card p-5 sm:p-6 shadow-card space-y-5">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-extrabold text-navy-700">
               تحديد الموعد ومراجعة الطلب ⏰
             </h2>
-            <span className="text-xs text-medical-muted">الخطوة 4 من 4</span>
+            <span className="text-xs text-medical-muted">
+              الخطوة {totalSteps} من {totalSteps}
+            </span>
           </div>
 
           {/* Date & 12-Hour Time Picker */}
@@ -760,7 +801,7 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
                   )}
                 </div>
 
-                {selectedLabTests.length > 0 && (
+                {isLabService && selectedLabTests.length > 0 && (
                   <div className="pt-2 border-t border-slate-200">
                     <span className="text-medical-muted font-bold block mb-1">
                       🧪 التحاليل المطلوبة ({selectedLabTests.length}):
@@ -796,7 +837,7 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
 
       {/* ── Navigation Buttons ── */}
       <div className={`flex gap-3 mt-4 ${step > 1 ? 'flex-row-reverse' : ''}`}>
-        {step < 4 ? (
+        {step < totalSteps ? (
           <button
             type="button"
             onClick={goNext}
@@ -809,7 +850,7 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
             type="button"
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className="btn-primary flex-1 disabled:opacity-70 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-700"
+            className="btn-primary flex-1 disabled:opacity-70 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-700 font-black"
           >
             {isSubmitting ? (
               <span className="flex items-center justify-center gap-2">
