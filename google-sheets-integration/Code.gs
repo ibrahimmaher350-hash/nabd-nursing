@@ -382,9 +382,46 @@ function syncGoogleCalendarEvent(data, existingEventId) {
       description: description,
       location: location
     });
+    
+    try {
+      newEvent.removeAllReminders();
+      newEvent.addPopupReminder(60);   // تذكير قبل الزيارة بساعة
+      newEvent.addPopupReminder(1440); // تذكير قبل الزيارة بـ 24 ساعة
+    } catch (remErr) {}
+    
     return newEvent.getId();
   } catch (e) {
     return existingEventId || "";
+  }
+}
+
+function setCalendarLinkCell(sheet, rowNumber, colNumber, eventId, preferredDate) {
+  try {
+    var calUrl = "https://calendar.google.com/calendar/r";
+    if (preferredDate) {
+      var rawDate = preferredDate.toString();
+      var isoMatch = rawDate.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+      var slashMatch = rawDate.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+      if (isoMatch) {
+        calUrl = "https://calendar.google.com/calendar/r/day/" + isoMatch[1] + "/" + parseInt(isoMatch[2], 10) + "/" + parseInt(isoMatch[3], 10);
+      } else if (slashMatch) {
+        calUrl = "https://calendar.google.com/calendar/r/day/" + slashMatch[3] + "/" + parseInt(slashMatch[2], 10) + "/" + parseInt(slashMatch[1], 10);
+      }
+    }
+    
+    var label = "📅 عرض بالتقويم";
+    if (eventId && eventId.length > 5) {
+      var shortId = eventId.split("@")[0];
+      label = "📅 عرض بالتقويم (" + shortId.substring(0, 8) + ")";
+    }
+    
+    var richText = SpreadsheetApp.newRichTextValue()
+      .setText(label)
+      .setLinkUrl(calUrl)
+      .build();
+    sheet.getRange(rowNumber, colNumber).setRichTextValue(richText);
+  } catch (err) {
+    sheet.getRange(rowNumber, colNumber).setValue(eventId || "📅 عرض بالتقويم");
   }
 }
 
@@ -478,18 +515,7 @@ function doPost(e) {
       sheet.getRange(targetRowIndex, 14).setValue(updatedLabs);
       sheet.getRange(targetRowIndex, 18).setValue(updatedAlerts);
       
-      if (calendarEventId) {
-        try {
-          var calRichText = SpreadsheetApp.newRichTextValue()
-            .setText("📅 موعد بالتقويم (" + calendarEventId.substring(0, 8) + ")")
-            .setLinkUrl("https://calendar.google.com/calendar/u/1/r")
-            .build();
-          sheet.getRange(targetRowIndex, 20).setRichTextValue(calRichText);
-        } catch (e) {
-          sheet.getRange(targetRowIndex, 20).setValue(calendarEventId);
-        }
-      }
-      
+      setCalendarLinkCell(sheet, targetRowIndex, 20, calendarEventId, data.preferredDate);
       setWhatsAppLinkCell(sheet, targetRowIndex, 19, cleanPhone, reminderMsg);
       sheet.getRange(targetRowIndex, 1, 1, PATIENT_HEADERS.length).setWrap(true).setVerticalAlignment("top");
       
@@ -530,18 +556,7 @@ function doPost(e) {
     
     var newRowIndex = sheet.getLastRow();
     setWhatsAppLinkCell(sheet, newRowIndex, 19, cleanPhone, reminderMsg);
-    
-    if (calendarEventId) {
-      try {
-        var calRichText = SpreadsheetApp.newRichTextValue()
-          .setText("📅 موعد بالتقويم (" + calendarEventId.substring(0, 8) + ")")
-          .setLinkUrl("https://calendar.google.com/calendar/u/1/r")
-          .build();
-        sheet.getRange(newRowIndex, 20).setRichTextValue(calRichText);
-      } catch (e) {
-        sheet.getRange(newRowIndex, 20).setValue(calendarEventId);
-      }
-    }
+    setCalendarLinkCell(sheet, newRowIndex, 20, calendarEventId, data.preferredDate);
     
     sheet.getRange(newRowIndex, 1, 1, PATIENT_HEADERS.length).setWrap(true).setVerticalAlignment("top");
     
@@ -680,7 +695,7 @@ function syncAllSystemsOneClick() {
       waLinksCount++;
     }
     
-    if (prefDate && (!existingEventId || existingEventId.indexOf("@") === -1)) {
+    if (prefDate) {
       try {
         var eventId = syncGoogleCalendarEvent({
           serviceName: serviceName,
@@ -691,18 +706,10 @@ function syncAllSystemsOneClick() {
           preferredTime: prefTime,
           city: city,
           address: address
-        }, "");
+        }, existingEventId);
         
         if (eventId) {
-          try {
-            var calRichText = SpreadsheetApp.newRichTextValue()
-              .setText("📅 عرض بالتقويم (" + eventId.substring(0, 8) + ")")
-              .setLinkUrl("https://calendar.google.com/calendar/u/1/r")
-              .build();
-            sheet.getRange(rowIndex, 20).setRichTextValue(calRichText);
-          } catch (e) {
-            sheet.getRange(rowIndex, 20).setValue(eventId);
-          }
+          setCalendarLinkCell(sheet, rowIndex, 20, eventId, prefDate);
           syncedEventsCount++;
         }
       } catch (err) {}
