@@ -3,13 +3,14 @@
 /**
  * components/analytics/MetaPixel.tsx — نبض للتمريض المنزلي
  * Meta (Facebook) Pixel integration with Next.js 14 App Router.
- * Pixel ID: 904182142414606
+ * Primary Pixel ID: 2115922919275276
+ * Secondary Pixel ID: 904182142414606
  */
 
 import { useEffect, Suspense } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import Script from 'next/script'
-import { FB_PIXEL_ID, fbPageView } from '@/lib/metaPixel'
+import { fbPageView } from '@/lib/metaPixel'
 
 function MetaPixelRouteTracker() {
   const pathname = usePathname()
@@ -40,7 +41,8 @@ export default function MetaPixel() {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '${FB_PIXEL_ID}');
+            fbq('init', '2115922919275276');
+            fbq('init', '904182142414606');
             fbq('track', 'PageView');
           `,
         }}
@@ -58,7 +60,14 @@ export default function MetaPixel() {
           width="1"
           style={{ display: 'none' }}
           alt="facebook pixel"
-          src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`}
+          src="https://www.facebook.com/tr?id=2115922919275276&ev=PageView&noscript=1"
+        />
+        <img
+          height="1"
+          width="1"
+          style={{ display: 'none' }}
+          alt="facebook pixel backup"
+          src="https://www.facebook.com/tr?id=904182142414606&ev=PageView&noscript=1"
         />
       </noscript>
     </>

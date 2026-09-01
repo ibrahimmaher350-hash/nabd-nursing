@@ -917,7 +917,7 @@ export default function AdminMasterPage() {
                       </span>
                     </div>
                     <p className="text-xs text-slate-400">
-                      معرف البيكسل: <code className="font-mono text-blue-300 bg-black/30 px-1.5 py-0.5 rounded">904182142414606</code>
+                      معرف البيكسل: <code className="font-mono text-blue-300 bg-black/30 px-1.5 py-0.5 rounded">2115922919275276</code>
                     </p>
                   </div>
                 </div>

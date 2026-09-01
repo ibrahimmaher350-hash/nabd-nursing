@@ -1,11 +1,19 @@
 /**
  * lib/metaPixel.ts — نبض للتمريض المنزلي
  * Meta Pixel (Facebook Pixel) & Catalog Event Tracking.
- * Pixel ID: 904182142414606
+ * Primary Pixel ID: 2115922919275276
+ * Secondary Pixel ID: 904182142414606
  */
 
-export const FB_PIXEL_ID =
-  process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID || '904182142414606'
+export const PRIMARY_FB_PIXEL_ID =
+  process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID || '2115922919275276'
+
+export const FB_PIXEL_ID = PRIMARY_FB_PIXEL_ID
+
+export const ALL_FB_PIXEL_IDS = [
+  '2115922919275276',
+  '904182142414606',
+]
 
 declare global {
   interface Window {
