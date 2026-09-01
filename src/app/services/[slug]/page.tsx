@@ -6,7 +6,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { PhoneIcon } from '@heroicons/react/24/solid'
+import { PhoneIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import { CheckCircleIcon, ExclamationTriangleIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -121,9 +121,9 @@ export default async function ServicePage({ params }: Props) {
 
       <Header />
       <main id="main-content">
-        {/* Breadcrumb */}
+        {/* Breadcrumb & Back Navigation */}
         <nav aria-label="مسار التنقل" className="bg-white border-b border-medical-border">
-          <div className="section-container py-3">
+          <div className="section-container py-3 flex items-center justify-between gap-4 flex-wrap">
             <ol className="flex items-center gap-2 text-xs text-medical-muted flex-wrap" role="list">
               <li><Link href="/" className="hover:text-navy-600">الرئيسية</Link></li>
               <li aria-hidden="true">/</li>
@@ -131,6 +131,13 @@ export default async function ServicePage({ params }: Props) {
               <li aria-hidden="true">/</li>
               <li className="text-navy-700 font-medium" aria-current="page">{service.name}</li>
             </ol>
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-1 text-xs font-bold text-navy-700 hover:text-navy-900 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-lg transition-all group"
+            >
+              <ArrowRightIcon className="w-3.5 h-3.5 text-navy-600 transition-transform group-hover:translate-x-1" />
+              <span>العودة لقائمة الخدمات</span>
+            </Link>
           </div>
         </nav>
 

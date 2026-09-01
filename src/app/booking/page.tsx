@@ -4,6 +4,8 @@
  */
 
 import type { Metadata } from 'next'
+import Link from 'next/link'
+import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import BookingFlow from '@/components/booking/BookingFlow'
@@ -25,7 +27,24 @@ export default function BookingPage({ searchParams }: BookingPageProps) {
       <Header />
       <main id="main-content">
         <section className="bg-gradient-section min-h-screen">
-          <div className="section-container py-10 sm:py-14">
+          <div className="section-container py-8 sm:py-12">
+            {/* Top Back Navigation */}
+            <div className="max-w-xl mx-auto mb-6 flex items-center justify-between">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-600 hover:text-navy-900 bg-white hover:bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-xl transition-all shadow-xs group"
+              >
+                <ArrowRightIcon className="w-4 h-4 text-navy-600 transition-transform group-hover:translate-x-1" />
+                <span>العودة للرئيسية</span>
+              </Link>
+              <Link
+                href="/services"
+                className="text-xs font-bold text-navy-600 hover:text-navy-800 hover:underline"
+              >
+                تصفح الخدمات
+              </Link>
+            </div>
+
             {/* Header */}
             <div className="text-center mb-8">
               <span className="badge-navy mb-3">احجز الآن</span>

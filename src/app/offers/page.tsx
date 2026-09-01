@@ -5,7 +5,7 @@
 
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SparklesIcon, CalendarDaysIcon } from '@heroicons/react/24/solid'
+import { SparklesIcon, CalendarDaysIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import FloatingActions from '@/components/layout/FloatingActions'
@@ -191,18 +191,37 @@ export default async function OffersPage() {
       <Header />
       <main id="main-content" className="pb-24 sm:pb-16">
         {/* Hero */}
-        <section className="bg-gradient-primary py-10 sm:py-14" aria-label="عروض نبض">
-          <div className="section-container text-center">
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-4">
-              <SparklesIcon className="w-4 h-4 text-gold-400" aria-hidden="true" />
-              <span className="text-white text-xs sm:text-sm font-bold">عروض وخصومات حصرية</span>
+        <section className="bg-gradient-primary py-8 sm:py-12" aria-label="عروض نبض">
+          <div className="section-container">
+            {/* Top Back Navigation */}
+            <div className="flex items-center justify-between mb-6">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-white/80 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-1.5 rounded-xl transition-all group"
+              >
+                <ArrowRightIcon className="w-4 h-4 text-gold-400 transition-transform group-hover:translate-x-1" />
+                <span>العودة للرئيسية</span>
+              </Link>
+              <Link
+                href="/services"
+                className="text-xs font-bold text-gold-300 hover:text-gold-200 hover:underline"
+              >
+                تصفح كافة الخدمات 🩺
+              </Link>
             </div>
-            <h1 className="!text-2xl sm:!text-3xl lg:!text-4xl font-extrabold text-white mb-3">
-              عروض وخصومات <span className="text-gold-300">نبض</span> 🎁
-            </h1>
-            <p className="text-slate-200 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-              استفد من عروضنا الحصرية على خدمات التمريض المنزلي داخل دمياط بأعلى جودة واهتمام.
-            </p>
+
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-4">
+                <SparklesIcon className="w-4 h-4 text-gold-400" aria-hidden="true" />
+                <span className="text-white text-xs sm:text-sm font-bold">عروض وخصومات حصرية</span>
+              </div>
+              <h1 className="!text-2xl sm:!text-3xl lg:!text-4xl font-extrabold text-white mb-3">
+                عروض وخصومات <span className="text-gold-300">نبض</span> 🎁
+              </h1>
+              <p className="text-slate-200 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+                استفد من عروضنا الحصرية على خدمات التمريض المنزلي داخل دمياط بأعلى جودة واهتمام.
+              </p>
+            </div>
           </div>
         </section>
 

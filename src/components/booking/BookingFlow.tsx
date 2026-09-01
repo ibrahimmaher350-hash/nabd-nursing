@@ -8,6 +8,7 @@
  */
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -18,6 +19,8 @@ import {
   PlusCircleIcon,
   XMarkIcon,
   BeakerIcon,
+  ArrowRightIcon,
+  ArrowLeftIcon,
 } from '@heroicons/react/24/solid'
 import { services } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
@@ -344,6 +347,33 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
 
   return (
     <div className="max-w-xl mx-auto">
+      {/* ── Top Navigation Bar (سهم الرجوع والتنقل العلوي) ── */}
+      <div className="flex items-center justify-between mb-4 px-1">
+        {step > 1 ? (
+          <button
+            type="button"
+            onClick={goBack}
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-navy-700 hover:text-navy-900 bg-white hover:bg-navy-50 border border-slate-200 hover:border-navy-300 rounded-xl px-3.5 py-2 transition-all shadow-xs group cursor-pointer"
+            aria-label="الرجوع للخطوة السابقة"
+          >
+            <ArrowRightIcon className="w-4 h-4 text-navy-600 transition-transform group-hover:translate-x-1" />
+            <span>الرجوع للخطوة السابقة</span>
+          </button>
+        ) : (
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-navy-700 hover:text-navy-900 bg-white hover:bg-navy-50 border border-slate-200 hover:border-navy-300 rounded-xl px-3.5 py-2 transition-all shadow-xs group cursor-pointer"
+            aria-label="الرجوع لكافة الخدمات"
+          >
+            <ArrowRightIcon className="w-4 h-4 text-navy-600 transition-transform group-hover:translate-x-1" />
+            <span>تصفح كافة الخدمات</span>
+          </Link>
+        )}
+        <span className="text-[11px] sm:text-xs font-bold text-medical-muted bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-full">
+          الخطوة {step} من {totalSteps}
+        </span>
+      </div>
+
       <StepIndicator currentStep={step} steps={dynamicSteps} />
 
       {/* ══════════════════════════════════════════════════════════════
@@ -882,22 +912,45 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
         </div>
       )}
 
-      {/* ── Navigation Buttons ── */}
-      <div className={`flex gap-3 mt-4 ${step > 1 ? 'flex-row-reverse' : ''}`}>
+      {/* ── Navigation Buttons (أزرار التقدم والرجوع) ── */}
+      <div className="flex gap-3 mt-6">
+        {step > 1 && (
+          <button
+            type="button"
+            onClick={goBack}
+            disabled={isSubmitting}
+            className="btn-secondary flex-1 flex items-center justify-center gap-2 text-sm sm:text-base font-bold disabled:opacity-50 cursor-pointer shadow-xs hover:bg-slate-100"
+          >
+            <ArrowRightIcon className="w-4 h-4 text-navy-600" />
+            <span>الرجوع</span>
+          </button>
+        )}
+
+        {step === 1 && (
+          <Link
+            href="/services"
+            className="btn-secondary flex-1 flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-slate-700 hover:text-navy-900 shadow-xs"
+          >
+            <ArrowRightIcon className="w-4 h-4 text-navy-600" />
+            <span>قائمة الخدمات</span>
+          </Link>
+        )}
+
         {step < totalSteps ? (
           <button
             type="button"
             onClick={goNext}
-            className="btn-primary flex-1"
+            className="btn-primary flex-1 flex items-center justify-center gap-2 text-sm sm:text-base font-bold cursor-pointer"
           >
-            التالي
+            <span>التالي</span>
+            <ArrowLeftIcon className="w-4 h-4 text-white" />
           </button>
         ) : (
           <button
             type="button"
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className="btn-primary flex-1 disabled:opacity-70 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-700 font-black"
+            className="btn-primary flex-1 flex items-center justify-center gap-2 text-sm sm:text-base disabled:opacity-70 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-700 font-black cursor-pointer shadow-md"
           >
             {isSubmitting ? (
               <span className="flex items-center justify-center gap-2">
@@ -908,19 +961,11 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
                 جار تأكيد وإرسال الحجز…
               </span>
             ) : (
-              'تأكيد وحجز الزيارة الآن 📅'
+              <>
+                <span>تأكيد وحجز الزيارة الآن 📅</span>
+                <CheckCircleIcon className="w-5 h-5 text-white" />
+              </>
             )}
-          </button>
-        )}
-
-        {step > 1 && (
-          <button
-            type="button"
-            onClick={goBack}
-            disabled={isSubmitting}
-            className="btn-secondary flex-1 disabled:opacity-50"
-          >
-            رجوع
           </button>
         )}
       </div>

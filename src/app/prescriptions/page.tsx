@@ -25,6 +25,7 @@ import {
   CheckIcon,
   ShareIcon,
   ArrowPathIcon,
+  ArrowRightIcon,
 } from '@heroicons/react/24/solid'
 import {
   prescriptionsDatabase,
@@ -234,20 +235,39 @@ export default function PrescriptionsPage() {
         </div>
 
         {/* ── Modern Hero Section ── */}
-        <section className="bg-gradient-to-b from-navy-950 via-navy-900 to-navy-800 text-white pt-8 pb-12 sm:pt-12 sm:pb-16 px-4">
-          <div className="section-container max-w-4xl text-center">
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1 mb-4 text-xs font-bold text-gold-300">
-              <SparklesIcon className="w-4 h-4 text-gold-400" />
-              <span>دليل الروشتات الطبية الشامل (Roshetatology) لخدمة مريض دمياط</span>
+        <section className="bg-gradient-to-b from-navy-950 via-navy-900 to-navy-800 text-white pt-6 pb-12 sm:pt-10 sm:pb-16 px-4">
+          <div className="section-container max-w-4xl">
+            {/* Top Back Navigation */}
+            <div className="flex items-center justify-between mb-6">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-white/80 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-1.5 rounded-xl transition-all group"
+              >
+                <ArrowRightIcon className="w-4 h-4 text-gold-400 transition-transform group-hover:translate-x-1" />
+                <span>العودة للرئيسية</span>
+              </Link>
+              <Link
+                href="/services"
+                className="text-xs font-bold text-gold-300 hover:text-gold-200 hover:underline"
+              >
+                تصفح الخدمات التمريضية 🩺
+              </Link>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-3">
-              أهم <span className="text-gold-400">الروشتات الطبية</span> الشائعة ℞
-            </h1>
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1 mb-4 text-xs font-bold text-gold-300">
+                <SparklesIcon className="w-4 h-4 text-gold-400" />
+                <span>دليل الروشتات الطبية الشامل (Roshetatology) لخدمة مريض دمياط</span>
+              </div>
 
-            <p className="text-slate-300 text-xs sm:text-base leading-relaxed max-w-2xl mx-auto mb-6">
-              دليلك المنظم لجميع الحالات الشائعة بالعامية المصرية؛ أدوية وجرعات واضحة، تشخيص سريع، وإمكانية نسخ الروشتة أو طلب ممرض نبض لتعليق المحاليل والحقن ببيتك.
-            </p>
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-3">
+                أهم <span className="text-gold-400">الروشتات الطبية</span> الشائعة ℞
+              </h1>
+
+              <p className="text-slate-300 text-xs sm:text-base leading-relaxed max-w-2xl mx-auto mb-6">
+                دليلك المنظم لجميع الحالات الشائعة بالعامية المصرية؛ أدوية وجرعات واضحة، تشخيص سريع، وإمكانية نسخ الروشتة أو طلب ممرض نبض لتعليق المحاليل والحقن ببيتك.
+              </p>
+            </div>
 
             {/* ── Search Input (Ultra-Clean & Responsive) ── */}
             <div className="max-w-xl mx-auto relative">

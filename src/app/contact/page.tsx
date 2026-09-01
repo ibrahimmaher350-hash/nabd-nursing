@@ -1,11 +1,9 @@
-/**
- * app/contact/page.tsx — تواصل معنا | نبض للتمريض المنزلي
- */
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import FloatingActions from '@/components/layout/FloatingActions'
-import { PhoneIcon } from '@heroicons/react/24/solid'
+import { PhoneIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import { siteConfig } from '@/data/siteConfig'
 
 export const metadata: Metadata = {
@@ -21,17 +19,36 @@ export default function ContactPage() {
 
       <main id="main-content" className="min-h-[85vh] bg-medical-gray pb-24 sm:pb-16">
         {/* Hero Section */}
-        <section className="bg-gradient-primary py-10 sm:py-14 text-white text-center">
+        <section className="bg-gradient-primary py-8 sm:py-12 text-white">
           <div className="section-container">
-            <span className="inline-block bg-white/10 border border-white/20 text-gold-300 text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full mb-3">
-              📍 نبض للتمريض المنزلي — دمياط
-            </span>
-            <h1 className="!text-2xl sm:!text-3xl lg:!text-4xl font-extrabold text-white mb-2">
-              تواصل معنا
-            </h1>
-            <p className="text-slate-200 text-sm sm:text-base max-w-xl mx-auto font-medium">
-              رعايتك الصحية تبدأ من مكانك، ونحن أقرب إليك.
-            </p>
+            {/* Top Back Navigation */}
+            <div className="flex items-center justify-between mb-6 max-w-4xl mx-auto">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-white/80 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-1.5 rounded-xl transition-all group"
+              >
+                <ArrowRightIcon className="w-4 h-4 text-gold-400 transition-transform group-hover:translate-x-1" />
+                <span>العودة للرئيسية</span>
+              </Link>
+              <Link
+                href="/booking"
+                className="text-xs font-bold text-gold-300 hover:text-gold-200 hover:underline"
+              >
+                احجز خدمة الآن 📅
+              </Link>
+            </div>
+
+            <div className="text-center">
+              <span className="inline-block bg-white/10 border border-white/20 text-gold-300 text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full mb-3">
+                📍 نبض للتمريض المنزلي — دمياط
+              </span>
+              <h1 className="!text-2xl sm:!text-3xl lg:!text-4xl font-extrabold text-white mb-2">
+                تواصل معنا
+              </h1>
+              <p className="text-slate-200 text-sm sm:text-base max-w-xl mx-auto font-medium">
+                رعايتك الصحية تبدأ من مكانك، ونحن أقرب إليك.
+              </p>
+            </div>
           </div>
         </section>
 

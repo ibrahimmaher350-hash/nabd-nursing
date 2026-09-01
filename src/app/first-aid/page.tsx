@@ -6,6 +6,7 @@
  */
 
 import { useState, useMemo } from 'react'
+import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import FloatingActions from '@/components/layout/FloatingActions'
@@ -19,6 +20,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   SparklesIcon,
+  ArrowRightIcon,
 } from '@heroicons/react/24/solid'
 import {
   firstAidDatabase,
@@ -119,18 +121,37 @@ export default function FirstAidPage() {
         </div>
 
         {/* ── Hero Banner ── */}
-        <section className="bg-gradient-primary text-white py-10 sm:py-14 text-center">
+        <section className="bg-gradient-primary text-white py-8 sm:py-12">
           <div className="section-container max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-4 text-xs sm:text-sm font-bold text-gold-300">
-              <SparklesIcon className="w-4 h-4 text-gold-400" />
-              <span>دليل الطوارئ التفاعلي المعتمد عالمياً والمبسط للمواطن</span>
+            {/* Top Back Navigation */}
+            <div className="flex items-center justify-between mb-6">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-white/80 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-1.5 rounded-xl transition-all group"
+              >
+                <ArrowRightIcon className="w-4 h-4 text-gold-400 transition-transform group-hover:translate-x-1" />
+                <span>العودة للرئيسية</span>
+              </Link>
+              <Link
+                href="/services"
+                className="text-xs font-bold text-gold-300 hover:text-gold-200 hover:underline"
+              >
+                خدمات التمريض المنزلي 🩺
+              </Link>
             </div>
-            <h1 className="!text-2xl sm:!text-4xl font-extrabold text-white mb-3">
-              دليل <span className="text-gold-300">الإسعافات الأولية</span> الذكي 🚑
-            </h1>
-            <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-              اكتب كلمة واحدة من الإصابة بأي لغة أو لهجة مصرية (زي: شرقة، حرق، بلع لسانه، مسمار، سخونية)، وهتظهر لك خطوات الإنقاذ فوراً مع مراعاة السن والرضع والحوامل.
-            </p>
+
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-4 text-xs sm:text-sm font-bold text-gold-300">
+                <SparklesIcon className="w-4 h-4 text-gold-400" />
+                <span>دليل الطوارئ التفاعلي المعتمد عالمياً والمبسط</span>
+              </div>
+              <h1 className="!text-2xl sm:!text-4xl font-extrabold text-white mb-3">
+                دليل <span className="text-gold-300">الإسعافات الأولية</span> الذكي 🚑
+              </h1>
+              <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+                اكتب كلمة واحدة من الإصابة بأي لغة أو لهجة مصرية (زي: شرقة، حرق، بلع لسانه، مسمار، سخونية)، وهتظهر لك خطوات الإنقاذ فوراً مع مراعاة السن والرضع والحوامل.
+              </p>
+            </div>
 
             {/* ── Search Input Box ── */}
             <div className="mt-7 max-w-xl mx-auto relative">

@@ -13,6 +13,7 @@ import FloatingActions from '@/components/layout/FloatingActions'
 import {
   CalendarDaysIcon,
   ArrowRightOnRectangleIcon,
+  ArrowRightIcon,
   ArrowPathIcon,
   PrinterIcon,
   BeakerIcon,
@@ -151,20 +152,38 @@ export default function MedicalRecordPage() {
 
       <main id="main-content" className="min-h-[80vh] bg-slate-100 pb-24 sm:pb-16 print:bg-white print:p-0">
         {/* ── Hero Section (Screen only) ── */}
-        <section className="bg-gradient-to-r from-navy-950 via-navy-900 to-slate-900 py-10 sm:py-12 text-white print:hidden">
-          <div className="section-container text-center">
-            <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-400/40 rounded-full px-4 py-1.5 mb-3 shadow-inner">
-              <ShieldCheckIcon className="w-4 h-4 text-gold-400" />
-              <span className="text-gold-200 text-xs sm:text-sm font-black">
-                السجل الصحي الموحد والملف الطبي الشامل
-              </span>
+        <section className="bg-gradient-to-r from-navy-950 via-navy-900 to-slate-900 py-8 sm:py-12 text-white print:hidden">
+          <div className="section-container">
+            <div className="flex items-center justify-between mb-4">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-white/80 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-1.5 rounded-xl transition-all group"
+              >
+                <ArrowRightIcon className="w-4 h-4 text-gold-400 transition-transform group-hover:translate-x-1" />
+                <span>العودة للرئيسية</span>
+              </Link>
+              <Link
+                href="/booking"
+                className="text-xs font-bold text-gold-300 hover:text-gold-200 hover:underline"
+              >
+                احجز خدمة جديدة 📅
+              </Link>
             </div>
+
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-400/40 rounded-full px-4 py-1.5 mb-3 shadow-inner">
+                <ShieldCheckIcon className="w-4 h-4 text-gold-400" />
+                <span className="text-gold-200 text-xs sm:text-sm font-black">
+                  السجل الصحي الموحد والملف الطبي الشامل
+                </span>
+              </div>
             <h1 className="!text-2xl sm:!text-3xl lg:!text-4xl font-extrabold text-white mb-2">
               ملفي <span className="text-gold-400">الطبي</span> 📋
             </h1>
             <p className="text-slate-300 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
               سجلك الطبي المتكامل مع نبض: تتبع العلامات الحيوية، مواعيد الزيارات والمتابعة الدورية، والتقارير الطبية.
             </p>
+            </div>
           </div>
         </section>
 

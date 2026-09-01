@@ -1,9 +1,7 @@
-/**
- * app/about/page.tsx — عن نبض للتمريض المنزلي
- */
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
+import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import FloatingActions from '@/components/layout/FloatingActions'
@@ -21,24 +19,43 @@ export default function AboutPage() {
       <Header />
       <main id="main-content">
         {/* Hero */}
-        <section className="bg-gradient-primary py-12 sm:py-16">
-          <div className="section-container text-center">
-            <div className="w-24 h-24 rounded-3xl overflow-hidden mx-auto mb-5 shadow-card-lg border-2 border-white/30">
-              <Image
-                src="/logo.jpg"
-                alt={siteConfig.brand.logoAlt}
-                width={96}
-                height={96}
-                className="object-contain w-full h-full"
-              />
+        <section className="bg-gradient-primary py-8 sm:py-14">
+          <div className="section-container">
+            {/* Top Back Navigation */}
+            <div className="flex items-center justify-between mb-6 max-w-3xl mx-auto">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-white/80 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-1.5 rounded-xl transition-all group"
+              >
+                <ArrowRightIcon className="w-4 h-4 text-gold-400 transition-transform group-hover:translate-x-1" />
+                <span>العودة للرئيسية</span>
+              </Link>
+              <Link
+                href="/services"
+                className="text-xs font-bold text-gold-300 hover:text-gold-200 hover:underline"
+              >
+                تصفح الخدمات 🩺
+              </Link>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
-              {siteConfig.brand.name}
-            </h1>
-            <p className="text-gold-300 text-lg font-semibold mb-2">{siteConfig.brand.tagline}</p>
-            <p className="text-white/70 text-base max-w-lg mx-auto">
-              {siteConfig.brand.description}
-            </p>
+
+            <div className="text-center">
+              <div className="w-24 h-24 rounded-3xl overflow-hidden mx-auto mb-5 shadow-card-lg border-2 border-white/30">
+                <Image
+                  src="/logo.jpg"
+                  alt={siteConfig.brand.logoAlt}
+                  width={96}
+                  height={96}
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+                {siteConfig.brand.name}
+              </h1>
+              <p className="text-gold-300 text-lg font-semibold mb-2">{siteConfig.brand.tagline}</p>
+              <p className="text-white/70 text-base max-w-lg mx-auto">
+                {siteConfig.brand.description}
+              </p>
+            </div>
           </div>
         </section>
 
