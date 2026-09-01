@@ -7,7 +7,7 @@
  * - "Other" (أخرى) custom service support.
  */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -164,6 +164,23 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
   const selectedServiceId = watch('serviceId')
   const customServiceName = watch('customServiceName')
   const selectedService = services.find((s) => s.id === selectedServiceId)
+
+  // Smart clinical follow-up suggestion based on selected service
+  useEffect(() => {
+    if (selectedServiceId === 'urinary-catheter') {
+      setFollowUpInterval('30_days') // تغيير القسطرة كل 30 يوماً
+    } else if (selectedServiceId === 'ryle-tube') {
+      setFollowUpInterval('30_days') // تغيير الرايل كل شهر
+    } else if (selectedServiceId === 'cannula-installation') {
+      setFollowUpInterval('3_days') // تغيير الكانيولا كل 3 أيام
+    } else if (selectedServiceId === 'wound-care-burns') {
+      setFollowUpInterval('3_days') // غيار الجروح كل 3 أيام
+    } else if (selectedServiceId === 'elderly-care') {
+      setFollowUpInterval('weekly') // رعاية كبار السن أسبوعياً
+    } else if (selectedServiceId === 'diabetic-foot-care' || selectedServiceId === 'post-surgery-care') {
+      setFollowUpInterval('7_days') // متابعة أسبوعية
+    }
+  }, [selectedServiceId])
 
   // Flag: Lab tests appear exclusively for home-sample-collection
   const isLabService = selectedServiceId === 'home-sample-collection'

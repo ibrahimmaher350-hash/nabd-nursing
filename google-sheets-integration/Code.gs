@@ -389,6 +389,47 @@ function syncGoogleCalendarEvent(data, existingEventId) {
       newEvent.addPopupReminder(1440); // تذكير قبل الزيارة بـ 24 ساعة
     } catch (remErr) {}
     
+    // ── جدولة موعد المتابعة والتغيير الدوري في Google Calendar (بعد 30 يوم أو حسب الخدمة) ──
+    if (data.nextFollowUpDate) {
+      try {
+        var fYear = year, fMonth = month, fDay = day;
+        var rawFDate = data.nextFollowUpDate.toString();
+        var fIso = rawFDate.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+        var fSlash = rawFDate.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+        
+        if (fIso) {
+          fYear = parseInt(fIso[1], 10);
+          fMonth = parseInt(fIso[2], 10) - 1;
+          fDay = parseInt(fIso[3], 10);
+        } else if (fSlash) {
+          fDay = parseInt(fSlash[1], 10);
+          fMonth = parseInt(fSlash[2], 10) - 1;
+          fYear = parseInt(fSlash[3], 10);
+        }
+        
+        var fStartTime = new Date(fYear, fMonth, fDay, hour, min, 0);
+        var fEndTime = new Date(fYear, fMonth, fDay, hour + 1, min, 0);
+        var fTitle = "🔄 موعد متابعة وتغيير: " + (data.serviceName || "زيارة تمريضية") + " — " + (data.patientName || data.customerName || "مريض نبض");
+        var fDesc = "🏥 نبض للتمريض المنزلي — تذكير بموعد المتابعة والتغيير الدوري المجدول:\n" +
+          "👤 اسم المريض: " + (data.patientName || data.customerName || "") + "\n" +
+          "📞 هاتف: " + (data.customerPhone || "") + "\n" +
+          "🩺 الخدمة: " + (data.serviceName || "") + "\n" +
+          "📍 المكان: " + (data.city || "") + " - " + (data.address || "") + "\n" +
+          "⏰ الوقت: " + formatTime12HArabic(data.preferredTime);
+          
+        var followUpEvent = calendar.createEvent(fTitle, fStartTime, fEndTime, {
+          description: fDesc,
+          location: location
+        });
+        
+        try {
+          followUpEvent.removeAllReminders();
+          followUpEvent.addPopupReminder(1440); // تذكير قبلها بيوم
+          followUpEvent.addPopupReminder(60);   // تذكير قبلها بساعة
+        } catch (feRem) {}
+      } catch (fErr) {}
+    }
+    
     return newEvent.getId();
   } catch (e) {
     return existingEventId || "";
@@ -689,6 +730,24 @@ function syncAllSystemsOneClick() {
     var prefDate = dateMatch ? dateMatch[0] : "";
     var prefTime = timeMatch ? timeMatch[0] : "10:00 AM";
     
+    var nextFollowUpDate = "";
+    if (nextVisitText.indexOf("المتابعة القادمة:") !== -1) {
+      var followUpPart = nextVisitText.split("المتابعة القادمة:")[1];
+      var fDateMatch = followUpPart.match(/(\d{4}-\d{2}-\d{2})|(\d{1,2}\/\d{1,2}\/\d{4})/);
+      if (fDateMatch) nextFollowUpDate = fDateMatch[0];
+    } else if (serviceName.indexOf("قسطرة") !== -1 || serviceName.indexOf("رايل") !== -1 || (row[17] || "").toString().indexOf("بروستاتا") !== -1) {
+      // حساب وجدولة تلقائية للمتابعة بعد 30 يوماً لحالات القسطرة والرايل
+      if (prefDate) {
+        var baseD = new Date(prefDate);
+        if (!isNaN(baseD.getTime())) {
+          var futureD = new Date(baseD.getTime() + 30 * 24 * 60 * 60 * 1000);
+          nextFollowUpDate = futureD.toISOString().split("T")[0];
+          var updatedNextVisit = nextVisitText + "\n🔄 المتابعة القادمة: " + getArabicDayWithDate(nextFollowUpDate);
+          sheet.getRange(rowIndex, 11).setValue(updatedNextVisit);
+        }
+      }
+    }
+    
     if (cleanPhone) {
       var reminderMsg = buildNabdReminderText(customerName, serviceName, prefDate, prefTime, city + " - " + address);
       setWhatsAppLinkCell(sheet, rowIndex, 19, cleanPhone, reminderMsg);
@@ -704,6 +763,7 @@ function syncAllSystemsOneClick() {
           customerPhone: customerPhone,
           preferredDate: prefDate,
           preferredTime: prefTime,
+          nextFollowUpDate: nextFollowUpDate,
           city: city,
           address: address
         }, existingEventId);
