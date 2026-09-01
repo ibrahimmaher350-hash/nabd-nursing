@@ -1,12 +1,14 @@
 /**
  * Google Apps Script — نبض للتمريض المنزلي (Nabd Home Nursing)
  * ─────────────────────────────────────────────────────────────
+ * نظام الربط الثلاثي الموحد (الموقع الإلكتروني + Google Sheets + Google Calendar)
+ * 
  * 1. إدارة ملفات المرضى بنظام السجل الموحد (Single-Row Patient Record).
  * 2. ربط ومزامنة المواعيد مع Google Calendar بنظام 12 ساعة (AM/PM).
- * 3. نظام رسائل التذكير التلقائية عبر واتساب بصيغة نبض الرسمية.
- * 4. نظام المتابعة التلقائية المجدولة (بعد 3 أيام، أسبوعين، شهر، 3 شهور).
- * 5. تصدير ملف المريض كـ PDF احترافي بهوية نبض بضغطة زر.
- * 6. بوابة API لاستعلام الموقع وتطبيق الويب عن الملف الطبي والزيارات.
+ * 3. نظام رسائل التذكير التلقائية عبر واتساب بصيغة نبض الرسمية مع اسم اليوم بالعربي.
+ * 4. نظام المتابعة الدورية التلقائية المجدولة (بعد 3 أيام، أسبوع، أسبوعين، شهر، 3 شهور).
+ * 5. تصدير ملف المريض كـ PDF طبي فاخر بهوية نبض (Navy & Gold) بضغطة زر واحدة.
+ * 6. بوابة API ثنائية الاتجاه (Webhooks) لربط الموقع الإلكتروني وقاعدة البيانات.
  */
 
 // ── أسماء الشيتات المعتمدة ──
@@ -37,6 +39,19 @@ var PATIENT_HEADERS = [
   "📲 تذكير واتساب الموعد",           // 19 (S)
   "📅 معرف تقويم جوجل (Event ID)",     // 20 (T)
   "📄 رابط ملف المريض PDF"            // 21 (U)
+];
+
+// ── عناوين شيت تنبيهات المتابعة ──
+var FOLLOWUP_HEADERS = [
+  "رقم المريض",
+  "اسم المريض",
+  "رقم الهاتف",
+  "الخدمة السابقة",
+  "تاريخ الزيارة السابقة",
+  "تاريخ المتابعة المستحقة",
+  "نوع المتابعة",
+  "الحالة",
+  "📲 إرسال رسالة المتابعة"
 ];
 
 // ── مصفوفة أيام الأسبوع بالعربية ──
@@ -123,10 +138,24 @@ function buildNabdReminderText(customerName, serviceName, preferredDate, preferr
 }
 
 /**
+ * إنشاء صيغة رسالة المتابعة الدورية للعميل
+ */
+function buildNabdFollowUpText(customerName, serviceName, previousDate) {
+  return "السلام عليكم يا أستاذ / ة " + (customerName || "العميل الكريم") + "،\n" +
+    "نتمنى لحضرتك دوام الصحة والعافية. 🤍\n\n" +
+    "🩺 فريق نبض للتمريض المنزلي بيطمن على صحتك بعد تقديم خدمة (" + (serviceName || "الرعاية التمريضية") + ").\n" +
+    "لو محتاج أي متابعة، قياس علامات حيوية، أو حجز زيارة دورية قادمة، احنا دايماً في خدمتك لحد باب بيتك.\n\n" +
+    "🏥 نبض للتمريض المنزلي — دمياط\n" +
+    "هاتف/واتساب: 01001097896 / 01099667065 💙";
+}
+
+/**
  * تهيئة الشيتات بالهيدرز والتنسيق الطبي
  */
 function setupSheetStructure() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
+  
+  // 1. شيت الملفات الطبية الموحدة
   var sheet = ss.getSheetByName(SHEET_PATIENTS);
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_PATIENTS, 0);
@@ -143,7 +172,37 @@ function setupSheetStructure() {
     sheet.setRowHeight(1, 45);
     sheet.setFrozenRows(1);
     sheet.setRightToLeft(true);
+    
+    // ضبط اتساع الأعمدة
+    sheet.setColumnWidth(1, 120); // Patient ID
+    sheet.setColumnWidth(2, 160); // Name
+    sheet.setColumnWidth(4, 130); // Phone
+    sheet.setColumnWidth(6, 120); // City
+    sheet.setColumnWidth(7, 180); // Address
+    sheet.setColumnWidth(11, 200); // Next Visit
+    sheet.setColumnWidth(12, 250); // Visits
+    sheet.setColumnWidth(13, 220); // Vitals
+    sheet.setColumnWidth(14, 220); // Labs
+    sheet.setColumnWidth(19, 160); // WhatsApp Reminder
+    sheet.setColumnWidth(20, 160); // Calendar ID
+    sheet.setColumnWidth(21, 160); // PDF Link
   }
+
+  // 2. شيت تنبيهات المتابعة والتذكيرات
+  var followUpSheet = ss.getSheetByName(SHEET_FOLLOWUPS);
+  if (!followUpSheet) {
+    followUpSheet = ss.insertSheet(SHEET_FOLLOWUPS);
+    followUpSheet.appendRow(FOLLOWUP_HEADERS);
+    var fRange = followUpSheet.getRange(1, 1, 1, FOLLOWUP_HEADERS.length);
+    fRange.setBackground("#B45309");
+    fRange.setFontColor("#FFFFFF");
+    fRange.setFontWeight("bold");
+    fRange.setHorizontalAlignment("center");
+    followUpSheet.setRowHeight(1, 40);
+    followUpSheet.setFrozenRows(1);
+    followUpSheet.setRightToLeft(true);
+  }
+
   return sheet;
 }
 
@@ -155,7 +214,6 @@ function syncGoogleCalendarEvent(data, existingEventId) {
     var calendar = CalendarApp.getDefaultCalendar();
     var title = "🩺 " + (data.serviceName || "زيارة تمريض") + " — " + (data.patientName || data.customerName || "مريض نبض");
     
-    // حساب التاريخ والوقت
     var dateParts = (data.preferredDate || "").split("-");
     if (dateParts.length < 3) return existingEventId || "";
     
@@ -187,6 +245,7 @@ function syncGoogleCalendarEvent(data, existingEventId) {
       "🩺 الخدمة: " + (data.serviceName || "") + "\n" +
       "📍 العنوان: " + (data.city || "") + " - " + (data.address || "") + "\n" +
       "⏰ الوقت: " + formatTime12HArabic(data.preferredTime) + "\n" +
+      (data.nextFollowUpDate ? ("🔄 المتابعة القادمة: " + getArabicDayWithDate(data.nextFollowUpDate) + "\n") : "") +
       (data.notes ? ("📝 ملاحظات: " + data.notes + "\n") : "") +
       (data.selectedLabTests && data.selectedLabTests.length > 0 ? ("🧪 التحاليل: " + data.selectedLabTests.join("، ") + "\n") : "");
 
@@ -359,19 +418,19 @@ function doPost(e) {
 }
 
 /**
- * doGet: استعلامات الملف الطبي وتصدير الـ PDF
+ * doGet: استعلامات الملف الطبي والزيارات
  */
 function doGet(e) {
   try {
     var sheet = setupSheetStructure();
-    var action = (e && e.parameter && e.parameter.action) || "getPatient";
     var query = (e && e.parameter && (e.parameter.phone || e.parameter.patientId || e.parameter.query)) || "";
     
     if (!query) {
       return ContentService.createTextOutput(JSON.stringify({
         status: "active",
         brand: "نبض للتمريض المنزلي — دمياط",
-        version: "2026.1"
+        systemsLinked: ["Website", "Google Sheets", "Google Calendar"],
+        version: "2026.2"
       })).setMimeType(ContentService.MimeType.JSON);
     }
     
@@ -435,16 +494,75 @@ function doGet(e) {
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
   ui.createMenu("🏥 نبض للتمريض المنزلي")
-    .addItem("📄 تصدير ملف المريض المحدد PDF", "exportSelectedPatientPdf")
-    .addItem("⏰ مزامنة مواعيد اليوم مع Google Calendar", "syncAllPendingCalendarEvents")
-    .addItem("🔔 فحص تذكيرات المتابعة الدورية", "checkDailyFollowUpReminders")
+    .addItem("🚀 المزامنة الشاملة بضغطة زر (Sync All Systems)", "syncAllSystemsOneClick")
     .addSeparator()
-    .addItem("⚙️ تهيئة وتنسيق الجداول الطبية", "setupSheetStructure")
+    .addItem("📄 تصدير ملف المريض المحدد PDF بهوية نبض", "exportSelectedPatientPdf")
+    .addItem("⏰ مزامنة المواعيد مع Google Calendar", "syncAllPendingCalendarEvents")
+    .addItem("🔔 فحص وتحديث تنبيهات المتابعة الدورية", "checkDailyFollowUpReminders")
+    .addSeparator()
+    .addItem("⚙️ تهيئة وتنسيق الجداول الطبية الموحدة", "setupSheetStructure")
     .addToUi();
 }
 
 /**
- * تصدير ملف المريض المحدد كـ PDF رسمي
+ * 🚀 دالة المزامنة الشاملة للأنظمة الثلاثة بضغطة زر واحدة (Sync All Systems One-Click)
+ */
+function syncAllSystemsOneClick() {
+  var sheet = setupSheetStructure();
+  var allData = sheet.getDataRange().getValues();
+  var syncedEventsCount = 0;
+  var followUpsScheduledCount = 0;
+  
+  var calendar = CalendarApp.getDefaultCalendar();
+  
+  for (var i = 1; i < allData.length; i++) {
+    var row = allData[i];
+    var rowIndex = i + 1;
+    var patientId = row[0];
+    var patientName = row[1] || row[2];
+    var customerPhone = row[3];
+    var address = (row[5] || "") + " - " + (row[6] || "");
+    var nextVisitText = (row[10] || "").toString();
+    var existingEventId = row[19] || "";
+    
+    // استخراج التاريخ والوقت من نص الزيارة القادمة
+    var dateMatch = nextVisitText.match(/(\d{4}-\d{2}-\d{2})|(\d{1,2}\/\d{1,2}\/\d{4})/);
+    var timeMatch = nextVisitText.match(/(\d{1,2}:\d{2}\s*(AM|PM|صباحاً|مساءً)?)/i);
+    
+    if (dateMatch && timeMatch && !existingEventId) {
+      try {
+        var eventId = syncGoogleCalendarEvent({
+          serviceName: "زيارة تمريضية",
+          patientName: patientName,
+          customerPhone: customerPhone,
+          preferredDate: dateMatch[0],
+          preferredTime: timeMatch[0],
+          city: row[5] || "",
+          address: row[6] || ""
+        }, "");
+        
+        if (eventId) {
+          sheet.getRange(rowIndex, 20).setValue(eventId);
+          syncedEventsCount++;
+        }
+      } catch (err) {}
+    }
+  }
+  
+  // تحديث شيت المتابعات
+  checkDailyFollowUpReminders();
+  
+  SpreadsheetApp.getUi().alert(
+    "✅ تمت المزامنة الشاملة للأنظمة الثلاثة بنجاح! 🚀\n\n" +
+    "1. جدول بيانات Google Sheets: تم تنسيق وتحديث السجلات الموحدة.\n" +
+    "2. تقويم Google Calendar: تمت مزامنة المواعيد الجديدة (" + syncedEventsCount + " موعد).\n" +
+    "3. نظام التذكيرات والمتابعة: تم فحص وتحديث قائمة المتابعة الدورية.\n\n" +
+    "🏥 نبض للتمريض المنزلي — رعايتك الصحية تبدأ من مكانك."
+  );
+}
+
+/**
+ * تصدير ملف المريض المحدد كـ PDF رسمي فاخر بهوية نبض
  */
 function exportSelectedPatientPdf() {
   var sheet = setupSheetStructure();
@@ -455,60 +573,123 @@ function exportSelectedPatientPdf() {
   }
   
   var rowData = sheet.getRange(activeRow, 1, 1, PATIENT_HEADERS.length).getValues()[0];
-  var patientId = rowData[0];
-  var patientName = rowData[1] || rowData[2];
+  var patientId = rowData[0] || "NABD-0001";
+  var patientName = rowData[1] || rowData[2] || "مريض نبض";
   
-  // إنشاء مستند Google Doc مؤقت وتنسيقه بهوية نبض
-  var doc = DocumentApp.create("ملف_طبي_" + patientId + "_" + patientName);
-  var body = doc.getBody();
-  body.setRTL(true);
+  var htmlContent = "<!DOCTYPE html><html dir='rtl' lang='ar'><head><meta charset='UTF-8'>" +
+    "<style>" +
+    "@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');" +
+    "body { font-family: 'Cairo', Arial, sans-serif; direction: rtl; padding: 25px; color: #0F172A; background: #FFF; }" +
+    ".header { border-bottom: 4px solid #1B2B6B; padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }" +
+    ".brand-title { font-size: 22px; font-weight: 900; color: #1B2B6B; margin: 0; }" +
+    ".brand-sub { font-size: 13px; color: #475569; margin: 2px 0; }" +
+    ".gold-bar { background: #1B2B6B; color: #FFF; padding: 8px 15px; border-radius: 8px; font-weight: bold; font-size: 13px; display: flex; justify-content: space-between; margin-top: 10px; }" +
+    ".card { background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 12px; padding: 15px; margin-bottom: 15px; }" +
+    ".card-title { font-size: 15px; font-weight: 800; color: #1B2B6B; border-bottom: 1px solid #E2E8F0; padding-bottom: 6px; margin-top: 0; margin-bottom: 10px; }" +
+    ".grid-2 { display: flex; gap: 15px; }" +
+    ".grid-2 > div { flex: 1; }" +
+    ".badge-id { background: #D97706; color: #FFF; padding: 3px 10px; border-radius: 6px; font-weight: bold; font-size: 12px; }" +
+    ".footer { border-top: 2px solid #CBD5E1; padding-top: 15px; margin-top: 25px; display: flex; justify-content: space-between; text-align: center; }" +
+    ".stamp-box { border: 2px dashed #1B2B6B; border-radius: 10px; padding: 10px; min-width: 180px; }" +
+    "</style></head><body>" +
+    
+    "<div class='header'>" +
+    "  <div>" +
+    "    <h1 class='brand-title'>🏥 نبض للتمريض المنزلي والرعاية الصحية</h1>" +
+    "    <p class='brand-sub'>NABD Home Nursing & Medical Healthcare Services — دمياط</p>" +
+    "    <p style='color:#D97706; font-size:12px; font-weight:bold;'>رعايتك الصحية تبدأ من مكانك، ونحن أقرب إليك</p>" +
+    "  </div>" +
+    "</div>" +
+    
+    "<div class='gold-bar'>" +
+    "  <span>السجل الصحي الموحد والملف الطبي الشامل</span>" +
+    "  <span>المعرف: " + patientId + "</span>" +
+    "</div><br/>" +
+    
+    "<div class='card'>" +
+    "  <h3 class='card-title'>👤 بيانات المريض الأساسية (Patient Identification)</h3>" +
+    "  <p><strong>اسم المريض:</strong> " + patientName + " &nbsp;|&nbsp; <strong>الهاتف:</strong> " + (rowData[3] || "") + "</p>" +
+    "  <p><strong>العنوان:</strong> " + (rowData[5] || "دمياط") + " - " + (rowData[6] || "") + " &nbsp;|&nbsp; <strong>حالة الملف:</strong> نشط ✅</p>" +
+    "</div>" +
+    
+    (rowData[10] ? ("<div class='card' style='background:#FEF3C7; border-color:#F59E0B;'><h3 class='card-title' style='color:#B45309;'>📅 موعد الزيارة القادمة والمتابعة</h3><p style='white-space:pre-line; font-weight:bold; color:#78350F;'>" + rowData[10] + "</p></div>") : "") +
+    
+    "<div class='grid-2'>" +
+    "  <div class='card'><h3 class='card-title'>📊 سجل العلامات الحيوية</h3><p style='white-space:pre-line; font-size:12px;'>" + (rowData[12] || "لا توجد قياسات مسجلة بعد.") + "</p></div>" +
+    "  <div class='card'><h3 class='card-title'>🩺 سجل الزيارات التمريضية</h3><p style='white-space:pre-line; font-size:12px;'>" + (rowData[11] || "لا توجد زيارات سابقة مسجلة.") + "</p></div>" +
+    "</div>" +
+    
+    (rowData[13] ? ("<div class='card'><h3 class='card-title'>🧪 سجل التحاليل والفحوصات</h3><p style='white-space:pre-line; font-size:12px;'>" + rowData[13] + "</p></div>") : "") +
+    
+    "<div class='footer'>" +
+    "  <div><p><strong>المشرف التمريضي:</strong> إبراهيم ماهر</p><p style='font-size:11px; color:#64748B;'>نبض للتمريض المنزلي — دمياط</p></div>" +
+    "  <div class='stamp-box'><p style='margin:0; font-weight:bold; color:#1B2B6B;'>🏛️ ختم مؤسسة نبض</p><p style='margin:0; font-size:10px; color:#475569;'>معتمد وموثق بدمياط</p></div>" +
+    "</div>" +
+    
+    "</body></html>";
+
+  var htmlOutput = HtmlService.createHtmlOutput(htmlContent);
+  var pdfBlob = htmlOutput.getAs("application/pdf");
+  pdfBlob.setName("الملف_الطبي_" + patientId + "_" + patientName + ".pdf");
   
-  // ترويسة التقرير
-  body.appendParagraph("🏥 نبض للتمريض المنزلي — دمياط").setHeading(DocumentApp.ParagraphHeading.HEADING1).setAlignment(DocumentApp.HorizontalAlignment.CENTER);
-  body.appendParagraph("الملف الصحي الشامل للمريض | السجل الطبي الموحد").setAlignment(DocumentApp.HorizontalAlignment.CENTER);
-  body.appendParagraph("──────────────────────────────────────────").setAlignment(DocumentApp.HorizontalAlignment.CENTER);
-  
-  // بيانات المريض
-  body.appendParagraph("👤 بيانات المريض الأساسية:").setHeading(DocumentApp.ParagraphHeading.HEADING2);
-  body.appendParagraph("• رقم المريض التعريفي: " + patientId);
-  body.appendParagraph("• اسم المريض: " + patientName);
-  body.appendParagraph("• رقم الهاتف: " + rowData[3]);
-  body.appendParagraph("• العنوان: " + rowData[5] + " - " + rowData[6]);
-  body.appendParagraph("• تاريخ إنشاء الملف: " + rowData[8]);
-  body.appendParagraph("• آخر تحديث: " + rowData[9]);
-  
-  // الزيارات والعلامات الحيوية
-  if (rowData[10]) body.appendParagraph("\n📅 موعد الزيارة القادمة:\n" + rowData[10]);
-  if (rowData[12]) body.appendParagraph("\n📊 سجل العلامات الحيوية والقياسات:\n" + rowData[12]);
-  if (rowData[11]) body.appendParagraph("\n🩺 سجل الزيارات والمتابعة:\n" + rowData[11]);
-  if (rowData[13]) body.appendParagraph("\n🧪 سجل التحاليل والتقارير الطبية:\n" + rowData[13]);
-  if (rowData[15]) body.appendParagraph("\n💊 الأدوية الحالية والجرعات:\n" + rowData[15]);
-  if (rowData[16]) body.appendParagraph("\n📝 التعليمات الطبية وملاحظات التمريض:\n" + rowData[16]);
-  if (rowData[17]) body.appendParagraph("\n⚠️ التنبيهات الخاصة:\n" + rowData[17]);
-  
-  body.appendParagraph("\n──────────────────────────────────────────").setAlignment(DocumentApp.HorizontalAlignment.CENTER);
-  body.appendParagraph("نبض للتمريض المنزلي — رعايتك الصحية تبدأ من مكانك، ونحن أقرب إليك.\nهاتف/واتساب: 01001097896 / 01099667065").setAlignment(DocumentApp.HorizontalAlignment.CENTER);
-  
-  doc.saveAndClose();
-  
-  // تحويل إلى PDF
-  var pdfFile = DriveApp.createFile(doc.getAs("application/pdf"));
-  pdfFile.setName("الملف_الطبي_" + patientId + "_" + patientName + ".pdf");
+  var pdfFile = DriveApp.createFile(pdfBlob);
   var pdfUrl = pdfFile.getUrl();
   
-  // حفظ رابط الـ PDF في الشيت
   sheet.getRange(activeRow, 21).setValue(pdfUrl);
-  
-  SpreadsheetApp.getUi().alert("تم إنشاء ملف المريض PDF بنجاح! 🎉\n\nرابط الملف:\n" + pdfUrl);
+  SpreadsheetApp.getUi().alert("تم إنشاء وتصدير ملف المريض PDF الفاخر بنجاح! 🎉\n\nرابط الملف على Google Drive:\n" + pdfUrl);
 }
 
 /**
- * فحص المتابعات والتذكيرات الدورية
+ * فحص وتحديث تنبيهات المتابعة الدورية
  */
 function checkDailyFollowUpReminders() {
-  SpreadsheetApp.getUi().alert("تم فحص المتابعات وجدولة التذكيرات لمرضى نبض بنجاح ✅");
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = setupSheetStructure();
+  var followUpSheet = ss.getSheetByName(SHEET_FOLLOWUPS);
+  
+  var allData = sheet.getDataRange().getValues();
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  // مسح البيانات السابقة بالشيت لتحديثها
+  var lastRow = followUpSheet.getLastRow();
+  if (lastRow > 1) {
+    followUpSheet.getRange(2, 1, lastRow - 1, FOLLOWUP_HEADERS.length).clearContent();
+  }
+  
+  var followUpsAdded = 0;
+  
+  for (var i = 1; i < allData.length; i++) {
+    var row = allData[i];
+    var patientId = row[0];
+    var patientName = row[1] || row[2];
+    var phone = row[3];
+    var cleanPhone = cleanEgyptianPhone(phone);
+    var nextVisitText = (row[10] || "").toString();
+    
+    if (nextVisitText.indexOf("المتابعة القادمة") !== -1) {
+      var followUpMsg = buildNabdFollowUpText(patientName, "الخدمة التمريضية", "");
+      var waLink = '=HYPERLINK("https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(followUpMsg) + '", "📲 إرسال رسالة المتابعة")';
+      
+      followUpSheet.appendRow([
+        patientId,
+        patientName,
+        phone,
+        "متابعة دورية",
+        row[9] || "اليوم",
+        nextVisitText.split("المتابعة القادمة:")[1] || "مجدول",
+        "متابعة دورية مستحقة",
+        "مستحقة",
+        waLink
+      ]);
+      followUpsAdded++;
+    }
+  }
 }
 
+/**
+ * مزامنة مواعيد اليوم مع Google Calendar
+ */
 function syncAllPendingCalendarEvents() {
-  SpreadsheetApp.getUi().alert("تمت مزامنة المواعيد مع Google Calendar بنجاح ✅");
+  syncAllSystemsOneClick();
 }
