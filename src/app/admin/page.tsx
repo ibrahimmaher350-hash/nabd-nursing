@@ -900,6 +900,71 @@ export default function AdminMasterPage() {
               </div>
             </div>
 
+            {/* Meta Pixel & Facebook Catalog Integration */}
+            <div className="bg-gradient-to-r from-navy-900 via-slate-900 to-blue-950 border-2 border-blue-500/40 rounded-3xl p-6 shadow-card space-y-4">
+              <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold text-lg">
+                    📘
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-black text-white">
+                        ربط بيكسل وكتالوج فيسبوك (Meta Pixel &amp; Catalog)
+                      </h3>
+                      <span className="badge bg-emerald-500/20 text-emerald-300 text-[10px] px-2 py-0.5 font-bold">
+                        متصل ونشط ✅
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-400">
+                      معرف البيكسل: <code className="font-mono text-blue-300 bg-black/30 px-1.5 py-0.5 rounded">904182142414606</code>
+                    </p>
+                  </div>
+                </div>
+
+                <a
+                  href="https://eventsmanager.facebook.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-blue-300 hover:text-blue-200 underline hidden sm:inline"
+                >
+                  مدير الأحداث ↗
+                </a>
+              </div>
+
+              {/* Data Feed URL for Facebook Commerce Manager */}
+              <div className="bg-navy-950/80 border border-blue-500/30 rounded-2xl p-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold text-blue-200">
+                    🔗 رابط موجز كتالوج الخدمات والمستلزمات (Data Feed URL):
+                  </label>
+                  <span className="text-[10px] text-slate-400">XML / RSS 2.0 القياسي لفيسبوك</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    readOnly
+                    value="https://nabd-nursing.vercel.app/api/facebook-catalog"
+                    className="flex-1 bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-xs font-mono text-slate-200 select-all focus:outline-none"
+                    dir="ltr"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText('https://nabd-nursing.vercel.app/api/facebook-catalog')
+                      alert('تم نسخ رابط كتالوج فيسبوك بنجاح! 📋✅')
+                    }}
+                    className="btn-primary py-2 px-3 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shrink-0"
+                  >
+                    نسخ الرابط 📋
+                  </button>
+                </div>
+                <p className="text-[11px] text-slate-400 leading-relaxed pt-1">
+                  💡 <strong>كيف تربط الكتالوج؟</strong> في <a href="https://business.facebook.com/commerce" target="_blank" rel="noopener noreferrer" className="text-blue-300 underline font-bold">مدير المعاملات (Commerce Manager)</a>، اضغط على <strong>إضافة عناصر &gt; استخدام موجز البيانات (Data Feed) &gt; جدول التحديث اليومي</strong>، ثم الصق هذا الرابط ليقوم فيسبوك بمزامنة كافة الـ 15 خدمة وجهاز السكر والمستلزمات بأسعارها تلقائياً!
+                </p>
+              </div>
+            </div>
+
             {/* Maintenance Mode */}
             <div className="bg-navy-900 border border-white/10 rounded-3xl p-6 shadow-card flex items-center justify-between">
               <div>

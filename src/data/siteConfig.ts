@@ -141,6 +141,7 @@ export const siteConfig = {
   analytics: {
     ga4Id: null, // Set GA4 Measurement ID here
     gtmId: null, // Optional GTM
+    metaPixelId: '904182142414606', // Meta (Facebook) Pixel ID
   },
 
   // ─── PWA ────────────────────────────────────────────────

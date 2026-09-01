@@ -158,6 +158,7 @@ const websiteSchema = {
 
 import NotificationPrompt from '@/components/ui/NotificationPrompt'
 import { SettingsProvider } from '@/context/SettingsContext'
+import MetaPixel from '@/components/analytics/MetaPixel'
 
 // ── Root Layout ───────────────────────────────────────────────
 export default function RootLayout({
@@ -224,6 +225,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="font-cairo antialiased">
+        <MetaPixel />
         <SettingsProvider>
           {children}
           <NotificationPrompt />
