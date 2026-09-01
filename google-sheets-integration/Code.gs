@@ -1,14 +1,14 @@
 /**
  * Google Apps Script — نبض للتمريض المنزلي (Nabd Home Nursing)
  * ─────────────────────────────────────────────────────────────
- * نظام الربط الثلاثي الموحد (الموقع الإلكتروني + Google Sheets + Google Calendar)
+ * نظام الربط الثلاثي الموحد والمحسن (الموقع الإلكتروني + Google Sheets + Google Calendar)
  * 
- * 1. إدارة ملفات المرضى بنظام السجل الموحد (Single-Row Patient Record).
- * 2. ربط ومزامنة المواعيد مع Google Calendar بنظام 12 ساعة (AM/PM).
- * 3. نظام رسائل التذكير التلقائية عبر واتساب بصيغة نبض الرسمية مع اسم اليوم بالعربي.
- * 4. نظام المتابعة الدورية التلقائية المجدولة (بعد 3 أيام، أسبوع، أسبوعين، شهر، 3 شهور).
- * 5. تصدير ملف المريض كـ PDF طبي فاخر بهوية نبض (Navy & Gold) بضغطة زر واحدة.
- * 6. بوابة API ثنائية الاتجاه (Webhooks) لربط الموقع الإلكتروني وقاعدة البيانات.
+ * 1. ضبط وتنسيق الجداول الطبية (Wrap text لمنع التداخل وتنسيق العرض والارتفاع).
+ * 2. تفعيل روابط تذكير واتساب الفورية (Clickable RichText Links).
+ * 3. مزامنة فورية وموثوقة مع Google Calendar وحفظ معرف الحدث (Event ID).
+ * 4. هيكل السجل الطبي الموحد (Single-Row Patient Record).
+ * 5. جدولة المتابعات الدورية (بعد 3 أيام، أسبوع، أسبوعين، شهر، 3 شهور).
+ * 6. تصدير ملف المريض الفاخر PDF بهوية نبض الطبية.
  */
 
 // ── أسماء الشيتات المعتمدة ──
@@ -61,10 +61,24 @@ var ARABIC_DAYS = ["الأحد", "الإثنين", "الثلاثاء", "الأر
  * دالة تحويل الوقت إلى صيغة 12 ساعة (02:00 PM / 02:00 م)
  */
 function formatTime12H(timeStr) {
-  if (!timeStr) return "";
+  if (!timeStr) return "10:00 AM";
   var str = timeStr.toString().trim();
   if (str.toUpperCase().indexOf("AM") !== -1 || str.toUpperCase().indexOf("PM") !== -1) {
     return str.toUpperCase();
+  }
+  if (str.indexOf("صباح") !== -1 || str.indexOf("ص") !== -1) {
+    var clean = str.replace(/[^0-9:]/g, "");
+    var parts = clean.split(":");
+    var h = (parts[0] || "10");
+    var m = (parts[1] || "00");
+    return (h.length === 1 ? "0" + h : h) + ":" + m + " AM";
+  }
+  if (str.indexOf("مساء") !== -1 || str.indexOf("م") !== -1) {
+    var clean = str.replace(/[^0-9:]/g, "");
+    var parts = clean.split(":");
+    var h = (parts[0] || "02");
+    var m = (parts[1] || "00");
+    return (h.length === 1 ? "0" + h : h) + ":" + m + " PM";
   }
   var match = str.match(/^(\d{1,2}):(\d{2})/);
   if (match) {
@@ -150,7 +164,7 @@ function buildNabdFollowUpText(customerName, serviceName, previousDate) {
 }
 
 /**
- * تهيئة الشيتات بالهيدرز والتنسيق الطبي
+ * تهيئة وتنسيق الشيتات بالكامل ومنع تداخل الخانات
  */
 function setupSheetStructure() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -161,31 +175,57 @@ function setupSheetStructure() {
     sheet = ss.insertSheet(SHEET_PATIENTS, 0);
   }
   
+  // إذا كان الشيت جديداً أو يحتاج كتابة الهيدرز
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(PATIENT_HEADERS);
-    var range = sheet.getRange(1, 1, 1, PATIENT_HEADERS.length);
-    range.setBackground("#1B2B6B");
-    range.setFontColor("#FFFFFF");
-    range.setFontWeight("bold");
-    range.setHorizontalAlignment("center");
-    range.setVerticalAlignment("middle");
-    sheet.setRowHeight(1, 45);
-    sheet.setFrozenRows(1);
-    sheet.setRightToLeft(true);
-    
-    // ضبط اتساع الأعمدة
-    sheet.setColumnWidth(1, 120); // Patient ID
-    sheet.setColumnWidth(2, 160); // Name
-    sheet.setColumnWidth(4, 130); // Phone
-    sheet.setColumnWidth(6, 120); // City
-    sheet.setColumnWidth(7, 180); // Address
-    sheet.setColumnWidth(11, 200); // Next Visit
-    sheet.setColumnWidth(12, 250); // Visits
-    sheet.setColumnWidth(13, 220); // Vitals
-    sheet.setColumnWidth(14, 220); // Labs
-    sheet.setColumnWidth(19, 160); // WhatsApp Reminder
-    sheet.setColumnWidth(20, 160); // Calendar ID
-    sheet.setColumnWidth(21, 160); // PDF Link
+  } else {
+    sheet.getRange(1, 1, 1, PATIENT_HEADERS.length).setValues([PATIENT_HEADERS]);
+  }
+  
+  // تنسيق ترويسة الشيت
+  var range = sheet.getRange(1, 1, 1, PATIENT_HEADERS.length);
+  range.setBackground("#1B2B6B");
+  range.setFontColor("#FFFFFF");
+  range.setFontWeight("bold");
+  range.setFontSize(10);
+  range.setHorizontalAlignment("center");
+  range.setVerticalAlignment("middle");
+  range.setWrap(true);
+  sheet.setRowHeight(1, 45);
+  sheet.setFrozenRows(1);
+  sheet.setFrozenColumns(2);
+  sheet.setRightToLeft(true);
+  
+  // ضبط اتساع كافة الأعمدة لمنع تداخل النصوص نهائياً
+  sheet.setColumnWidth(1, 130); // Patient ID
+  sheet.setColumnWidth(2, 170); // Patient Name
+  sheet.setColumnWidth(3, 160); // Customer Name
+  sheet.setColumnWidth(4, 130); // Phone
+  sheet.setColumnWidth(5, 130); // WhatsApp
+  sheet.setColumnWidth(6, 130); // City
+  sheet.setColumnWidth(7, 240); // Address
+  sheet.setColumnWidth(8, 90);  // Status
+  sheet.setColumnWidth(9, 140); // Created At
+  sheet.setColumnWidth(10, 140); // Updated At
+  sheet.setColumnWidth(11, 230); // Next Visit
+  sheet.setColumnWidth(12, 280); // Visits History
+  sheet.setColumnWidth(13, 230); // Vitals History
+  sheet.setColumnWidth(14, 230); // Labs History
+  sheet.setColumnWidth(15, 230); // Services History
+  sheet.setColumnWidth(16, 180); // Medications
+  sheet.setColumnWidth(17, 180); // Instructions
+  sheet.setColumnWidth(18, 180); // Alerts & Notes
+  sheet.setColumnWidth(19, 170); // WhatsApp Reminder Link
+  sheet.setColumnWidth(20, 180); // Google Calendar Event ID
+  sheet.setColumnWidth(21, 170); // PDF Link
+  
+  // تفعيل التفاف النص (Wrap text) والمحاذاة لكامل الشيت
+  if (sheet.getLastRow() > 1) {
+    var dataRange = sheet.getRange(2, 1, sheet.getLastRow() - 1, PATIENT_HEADERS.length);
+    dataRange.setWrap(true);
+    dataRange.setVerticalAlignment("top");
+    dataRange.setHorizontalAlignment("center");
+    dataRange.setFontSize(10);
   }
 
   // 2. شيت تنبيهات المتابعة والتذكيرات
@@ -193,34 +233,84 @@ function setupSheetStructure() {
   if (!followUpSheet) {
     followUpSheet = ss.insertSheet(SHEET_FOLLOWUPS);
     followUpSheet.appendRow(FOLLOWUP_HEADERS);
-    var fRange = followUpSheet.getRange(1, 1, 1, FOLLOWUP_HEADERS.length);
-    fRange.setBackground("#B45309");
-    fRange.setFontColor("#FFFFFF");
-    fRange.setFontWeight("bold");
-    fRange.setHorizontalAlignment("center");
-    followUpSheet.setRowHeight(1, 40);
-    followUpSheet.setFrozenRows(1);
-    followUpSheet.setRightToLeft(true);
+  } else if (followUpSheet.getLastRow() === 0) {
+    followUpSheet.appendRow(FOLLOWUP_HEADERS);
   }
+  
+  var fRange = followUpSheet.getRange(1, 1, 1, FOLLOWUP_HEADERS.length);
+  fRange.setBackground("#B45309");
+  fRange.setFontColor("#FFFFFF");
+  fRange.setFontWeight("bold");
+  fRange.setHorizontalAlignment("center");
+  fRange.setVerticalAlignment("middle");
+  followUpSheet.setRowHeight(1, 40);
+  followUpSheet.setFrozenRows(1);
+  followUpSheet.setRightToLeft(true);
+  
+  followUpSheet.setColumnWidth(1, 120);
+  followUpSheet.setColumnWidth(2, 160);
+  followUpSheet.setColumnWidth(3, 130);
+  followUpSheet.setColumnWidth(4, 180);
+  followUpSheet.setColumnWidth(5, 140);
+  followUpSheet.setColumnWidth(6, 160);
+  followUpSheet.setColumnWidth(7, 150);
+  followUpSheet.setColumnWidth(8, 100);
+  followUpSheet.setColumnWidth(9, 180);
 
   return sheet;
 }
 
 /**
- * ربط ومزامنة موعد في Google Calendar
+ * ربط ومزامنة موعد في Google Calendar بدقة فائقة
  */
 function syncGoogleCalendarEvent(data, existingEventId) {
   try {
-    var calendar = CalendarApp.getDefaultCalendar();
-    var title = "🩺 " + (data.serviceName || "زيارة تمريض") + " — " + (data.patientName || data.customerName || "مريض نبض");
+    var calendar = null;
+    try {
+      calendar = CalendarApp.getDefaultCalendar();
+    } catch (cErr) {}
     
-    var dateParts = (data.preferredDate || "").split("-");
-    if (dateParts.length < 3) return existingEventId || "";
+    if (!calendar) {
+      var allCals = CalendarApp.getAllCalendars();
+      if (allCals && allCals.length > 0) calendar = allCals[0];
+    }
     
-    var year = parseInt(dateParts[0], 10);
-    var month = parseInt(dateParts[1], 10) - 1;
-    var day = parseInt(dateParts[2], 10);
+    if (!calendar) {
+      Logger.log("Calendar access unavailable");
+      return existingEventId || "";
+    }
     
+    var title = "🩺 " + (data.serviceName || "زيارة تمريضية") + " — " + (data.patientName || data.customerName || "مريض نبض");
+    
+    // استخراج السنة والشهر واليوم
+    var year = 2026;
+    var month = 8; // September (0-based)
+    var day = 1;
+    
+    if (data.preferredDate) {
+      var rawDate = data.preferredDate.toString();
+      var isoMatch = rawDate.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+      var slashMatch = rawDate.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+      
+      if (isoMatch) {
+        year = parseInt(isoMatch[1], 10);
+        month = parseInt(isoMatch[2], 10) - 1;
+        day = parseInt(isoMatch[3], 10);
+      } else if (slashMatch) {
+        day = parseInt(slashMatch[1], 10);
+        month = parseInt(slashMatch[2], 10) - 1;
+        year = parseInt(slashMatch[3], 10);
+      } else {
+        var parsedD = new Date(rawDate);
+        if (!isNaN(parsedD.getTime())) {
+          year = parsedD.getFullYear();
+          month = parsedD.getMonth();
+          day = parsedD.getDate();
+        }
+      }
+    }
+    
+    // حساب الساعة والدقيقة
     var time12 = formatTime12H(data.preferredTime);
     var hour = 10;
     var min = 0;
@@ -252,7 +342,7 @@ function syncGoogleCalendarEvent(data, existingEventId) {
     var location = (data.city || "") + " - " + (data.address || "") + "، دمياط، مصر";
     
     // إذا كان الموعد موجوداً مسبقاً، نعدله بدلاً من تكراره
-    if (existingEventId) {
+    if (existingEventId && existingEventId.indexOf("@") !== -1) {
       try {
         var existingEvent = calendar.getEventById(existingEventId);
         if (existingEvent) {
@@ -262,9 +352,7 @@ function syncGoogleCalendarEvent(data, existingEventId) {
           existingEvent.setLocation(location);
           return existingEventId;
         }
-      } catch (err) {
-        // Event not found, create new
-      }
+      } catch (err) {}
     }
     
     var newEvent = calendar.createEvent(title, startTime, endTime, {
@@ -275,6 +363,24 @@ function syncGoogleCalendarEvent(data, existingEventId) {
   } catch (e) {
     Logger.log("Calendar sync error: " + e.toString());
     return existingEventId || "";
+  }
+}
+
+/**
+ * وضع رابط واتساب الفعّال Clickable في الخلية
+ */
+function setWhatsAppLinkCell(sheet, rowNumber, colNumber, cleanPhone, reminderMsg) {
+  try {
+    var waUrl = "https://wa.me/" + cleanPhone + "?text=" + encodeURIComponent(reminderMsg);
+    var richText = SpreadsheetApp.newRichTextValue()
+      .setText("📲 إرسال تذكير الموعد")
+      .setLinkUrl(waUrl)
+      .build();
+    sheet.getRange(rowNumber, colNumber).setRichTextValue(richText);
+  } catch (err) {
+    sheet.getRange(rowNumber, colNumber).setValue(
+      '=HYPERLINK("https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(reminderMsg) + '", "📲 إرسال تذكير الموعد")'
+    );
   }
 }
 
@@ -301,7 +407,6 @@ function doPost(e) {
       data.preferredTime,
       fullAddress
     );
-    var whatsappReminderFormula = '=HYPERLINK("https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(reminderMsg) + '", "📲 إرسال تذكير الموعد")';
     
     // البحث عن سجل المريض الحالي في الشيت (مريض واحد لكل صف)
     var allData = sheet.getDataRange().getValues();
@@ -363,8 +468,13 @@ function doPost(e) {
       sheet.getRange(targetRowIndex, 12).setValue(updatedVisits); // سجل الزيارات المدمج
       sheet.getRange(targetRowIndex, 14).setValue(updatedLabs); // سجل التحاليل المدمج
       sheet.getRange(targetRowIndex, 18).setValue(updatedAlerts); // التنبيهات
-      sheet.getRange(targetRowIndex, 19).setValue(whatsappReminderFormula); // زر التذكير
       sheet.getRange(targetRowIndex, 20).setValue(calendarEventId); // معرف التقويم
+      
+      // وضع زر الواتساب الفعّال
+      setWhatsAppLinkCell(sheet, targetRowIndex, 19, cleanPhone, reminderMsg);
+      
+      // تنسيق التفاف النص
+      sheet.getRange(targetRowIndex, 1, 1, PATIENT_HEADERS.length).setWrap(true).setVerticalAlignment("top");
       
       return ContentService.createTextOutput(JSON.stringify({
         success: true,
@@ -397,10 +507,14 @@ function doPost(e) {
       "", // الأدوية
       "", // التعليمات
       data.notes || "",
-      whatsappReminderFormula,
+      "", // سيتم وضع زر الواتساب
       calendarEventId,
       "" // رابط PDF
     ]);
+    
+    var newRowIndex = sheet.getLastRow();
+    setWhatsAppLinkCell(sheet, newRowIndex, 19, cleanPhone, reminderMsg);
+    sheet.getRange(newRowIndex, 1, 1, PATIENT_HEADERS.length).setWrap(true).setVerticalAlignment("top");
     
     return ContentService.createTextOutput(JSON.stringify({
       success: true,
@@ -430,7 +544,7 @@ function doGet(e) {
         status: "active",
         brand: "نبض للتمريض المنزلي — دمياط",
         systemsLinked: ["Website", "Google Sheets", "Google Calendar"],
-        version: "2026.2"
+        version: "2026.3"
       })).setMimeType(ContentService.MimeType.JSON);
     }
     
@@ -494,7 +608,7 @@ function doGet(e) {
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
   ui.createMenu("🏥 نبض للتمريض المنزلي")
-    .addItem("🚀 المزامنة الشاملة بضغطة زر (Sync All Systems)", "syncAllSystemsOneClick")
+    .addItem("🚀 المزامنة الشاملة وإصلاح وتنسيق الجداول (One-Click Sync)", "syncAllSystemsOneClick")
     .addSeparator()
     .addItem("📄 تصدير ملف المريض المحدد PDF بهوية نبض", "exportSelectedPatientPdf")
     .addItem("⏰ مزامنة المواعيد مع Google Calendar", "syncAllPendingCalendarEvents")
@@ -505,40 +619,56 @@ function onOpen() {
 }
 
 /**
- * 🚀 دالة المزامنة الشاملة للأنظمة الثلاثة بضغطة زر واحدة (Sync All Systems One-Click)
+ * 🚀 دالة المزامنة الشاملة والإصلاح التلقائي لكافة الصفوف وتفعيل أزرار الواتساب والتقويم
  */
 function syncAllSystemsOneClick() {
   var sheet = setupSheetStructure();
   var allData = sheet.getDataRange().getValues();
   var syncedEventsCount = 0;
-  var followUpsScheduledCount = 0;
+  var waLinksCount = 0;
   
-  var calendar = CalendarApp.getDefaultCalendar();
-  
+  // المرور على كافة الصفوف وإصلاحها وتفعيل أزرار الواتساب والتقويم
   for (var i = 1; i < allData.length; i++) {
     var row = allData[i];
     var rowIndex = i + 1;
-    var patientId = row[0];
-    var patientName = row[1] || row[2];
-    var customerPhone = row[3];
-    var address = (row[5] || "") + " - " + (row[6] || "");
+    var patientId = row[0] || ("NABD-" + ("0000" + i).slice(-4));
+    var patientName = row[1] || row[2] || "مريض نبض";
+    var customerName = row[2] || patientName;
+    var customerPhone = (row[3] || "").toString().trim();
+    var cleanPhone = cleanEgyptianPhone(customerPhone);
+    var city = row[5] || "دمياط";
+    var address = row[6] || "";
     var nextVisitText = (row[10] || "").toString();
-    var existingEventId = row[19] || "";
+    var existingEventId = (row[19] || "").toString();
     
-    // استخراج التاريخ والوقت من نص الزيارة القادمة
+    // استخراج التاريخ والوقت والخدمة
     var dateMatch = nextVisitText.match(/(\d{4}-\d{2}-\d{2})|(\d{1,2}\/\d{1,2}\/\d{4})/);
     var timeMatch = nextVisitText.match(/(\d{1,2}:\d{2}\s*(AM|PM|صباحاً|مساءً)?)/i);
+    var serviceMatch = nextVisitText.match(/الخدمة:\s*([^\n]+)/);
+    var serviceName = serviceMatch ? serviceMatch[1].trim() : "زيارة تمريضية";
     
-    if (dateMatch && timeMatch && !existingEventId) {
+    var prefDate = dateMatch ? dateMatch[0] : "";
+    var prefTime = timeMatch ? timeMatch[0] : "10:00 AM";
+    
+    // 1. تفعيل زر تذكير الواتساب
+    if (cleanPhone) {
+      var reminderMsg = buildNabdReminderText(customerName, serviceName, prefDate, prefTime, city + " - " + address);
+      setWhatsAppLinkCell(sheet, rowIndex, 19, cleanPhone, reminderMsg);
+      waLinksCount++;
+    }
+    
+    // 2. مزامنة موعد تقويم جوجل
+    if (prefDate && (!existingEventId || existingEventId.indexOf("@") === -1)) {
       try {
         var eventId = syncGoogleCalendarEvent({
-          serviceName: "زيارة تمريضية",
+          serviceName: serviceName,
           patientName: patientName,
+          customerName: customerName,
           customerPhone: customerPhone,
-          preferredDate: dateMatch[0],
-          preferredTime: timeMatch[0],
-          city: row[5] || "",
-          address: row[6] || ""
+          preferredDate: prefDate,
+          preferredTime: prefTime,
+          city: city,
+          address: address
         }, "");
         
         if (eventId) {
@@ -549,14 +679,20 @@ function syncAllSystemsOneClick() {
     }
   }
   
+  // تفعيل التفاف النص والتنسيق العام
+  sheet.getDataRange().setWrap(true);
+  sheet.getDataRange().setVerticalAlignment("top");
+  sheet.getDataRange().setHorizontalAlignment("center");
+  
   // تحديث شيت المتابعات
   checkDailyFollowUpReminders();
   
   SpreadsheetApp.getUi().alert(
-    "✅ تمت المزامنة الشاملة للأنظمة الثلاثة بنجاح! 🚀\n\n" +
-    "1. جدول بيانات Google Sheets: تم تنسيق وتحديث السجلات الموحدة.\n" +
-    "2. تقويم Google Calendar: تمت مزامنة المواعيد الجديدة (" + syncedEventsCount + " موعد).\n" +
-    "3. نظام التذكيرات والمتابعة: تم فحص وتحديث قائمة المتابعة الدورية.\n\n" +
+    "✅ تم إصلاح وتنسيق الجداول والمزامنة الشاملة بنجاح! 🚀\n\n" +
+    "1. تنسيق الجداول: تم تفعيل التفاف النص (Wrap text) وضبط اتساع الخانات لمنع التداخل.\n" +
+    "2. زر تذكير واتساب: تم تفعيل الروابط التفاعلية لجميع المرضى (" + waLinksCount + " رابط).\n" +
+    "3. تقويم Google Calendar: تمت مزامنة وإنشاء مواعيد التقويم (" + syncedEventsCount + " موعد).\n" +
+    "4. شيت المتابعات: تم تحديث قائمة المتابعة الدورية في شيت تنبيهات المتابعة.\n\n" +
     "🏥 نبض للتمريض المنزلي — رعايتك الصحية تبدأ من مكانك."
   );
 }
@@ -588,7 +724,6 @@ function exportSelectedPatientPdf() {
     ".card-title { font-size: 15px; font-weight: 800; color: #1B2B6B; border-bottom: 1px solid #E2E8F0; padding-bottom: 6px; margin-top: 0; margin-bottom: 10px; }" +
     ".grid-2 { display: flex; gap: 15px; }" +
     ".grid-2 > div { flex: 1; }" +
-    ".badge-id { background: #D97706; color: #FFF; padding: 3px 10px; border-radius: 6px; font-weight: bold; font-size: 12px; }" +
     ".footer { border-top: 2px solid #CBD5E1; padding-top: 15px; margin-top: 25px; display: flex; justify-content: space-between; text-align: center; }" +
     ".stamp-box { border: 2px dashed #1B2B6B; border-radius: 10px; padding: 10px; min-width: 180px; }" +
     "</style></head><body>" +
@@ -648,16 +783,11 @@ function checkDailyFollowUpReminders() {
   var followUpSheet = ss.getSheetByName(SHEET_FOLLOWUPS);
   
   var allData = sheet.getDataRange().getValues();
-  var today = new Date();
-  today.setHours(0, 0, 0, 0);
   
-  // مسح البيانات السابقة بالشيت لتحديثها
   var lastRow = followUpSheet.getLastRow();
   if (lastRow > 1) {
     followUpSheet.getRange(2, 1, lastRow - 1, FOLLOWUP_HEADERS.length).clearContent();
   }
-  
-  var followUpsAdded = 0;
   
   for (var i = 1; i < allData.length; i++) {
     var row = allData[i];
@@ -669,7 +799,7 @@ function checkDailyFollowUpReminders() {
     
     if (nextVisitText.indexOf("المتابعة القادمة") !== -1) {
       var followUpMsg = buildNabdFollowUpText(patientName, "الخدمة التمريضية", "");
-      var waLink = '=HYPERLINK("https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(followUpMsg) + '", "📲 إرسال رسالة المتابعة")';
+      var waUrl = "https://wa.me/" + cleanPhone + "?text=" + encodeURIComponent(followUpMsg);
       
       followUpSheet.appendRow([
         patientId,
@@ -680,9 +810,21 @@ function checkDailyFollowUpReminders() {
         nextVisitText.split("المتابعة القادمة:")[1] || "مجدول",
         "متابعة دورية مستحقة",
         "مستحقة",
-        waLink
+        ""
       ]);
-      followUpsAdded++;
+      
+      var fLastRow = followUpSheet.getLastRow();
+      try {
+        var richText = SpreadsheetApp.newRichTextValue()
+          .setText("📲 إرسال رسالة المتابعة")
+          .setLinkUrl(waUrl)
+          .build();
+        followUpSheet.getRange(fLastRow, 9).setRichTextValue(richText);
+      } catch (e) {
+        followUpSheet.getRange(fLastRow, 9).setValue(
+          '=HYPERLINK("' + waUrl + '", "📲 إرسال رسالة المتابعة")'
+        );
+      }
     }
   }
 }
