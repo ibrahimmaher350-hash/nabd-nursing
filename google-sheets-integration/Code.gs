@@ -560,6 +560,8 @@ function doPost(e) {
       setWhatsAppLinkCell(sheet, targetRowIndex, 19, cleanPhone, reminderMsg);
       sheet.getRange(targetRowIndex, 1, 1, PATIENT_HEADERS.length).setWrap(true).setVerticalAlignment("top");
       
+      checkDailyFollowUpReminders();
+      
       return ContentService.createTextOutput(JSON.stringify({
         success: true,
         patientId: existingPatientId,
@@ -600,6 +602,8 @@ function doPost(e) {
     setCalendarLinkCell(sheet, newRowIndex, 20, calendarEventId, data.preferredDate);
     
     sheet.getRange(newRowIndex, 1, 1, PATIENT_HEADERS.length).setWrap(true).setVerticalAlignment("top");
+    
+    checkDailyFollowUpReminders();
     
     return ContentService.createTextOutput(JSON.stringify({
       success: true,
@@ -894,16 +898,23 @@ function checkDailyFollowUpReminders() {
     var nextVisitText = (row[10] || "").toString();
     
     if (nextVisitText.indexOf("المتابعة القادمة") !== -1) {
-      var followUpMsg = buildNabdFollowUpText(patientName, "الخدمة التمريضية", "");
+      var serviceName = "الخدمة التمريضية";
+      var serviceMatch = nextVisitText.match(/الخدمة:\s*([^\n]+)/);
+      if (serviceMatch) serviceName = serviceMatch[1].trim();
+      
+      var followUpDateStr = nextVisitText.split("المتابعة القادمة:")[1] || "مجدول";
+      followUpDateStr = followUpDateStr.trim();
+      
+      var followUpMsg = buildNabdFollowUpText(patientName, serviceName, "");
       var waUrl = "https://wa.me/" + cleanPhone + "?text=" + encodeURIComponent(followUpMsg);
       
       followUpSheet.appendRow([
         patientId,
         patientName,
         phone,
-        "متابعة دورية",
+        serviceName,
         row[9] || "اليوم",
-        nextVisitText.split("المتابعة القادمة:")[1] || "مجدول",
+        followUpDateStr,
         "متابعة دورية مستحقة",
         "مستحقة",
         ""

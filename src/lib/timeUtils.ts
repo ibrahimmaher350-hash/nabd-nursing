@@ -33,10 +33,13 @@ export const TIME_SLOTS_12H = [
 
 export const FOLLOW_UP_INTERVALS = [
   { value: 'none', label: 'زيارة واحدة فقط (بدون متابعة مجدولة)', days: 0 },
+  { value: '2_days', label: 'متابعة دورية بعد يومين (48 ساعة)', days: 2 },
   { value: '3_days', label: 'متابعة دورية بعد 3 أيام', days: 3 },
   { value: '1_week', label: 'متابعة دورية بعد أسبوع (7 أيام)', days: 7 },
   { value: '2_weeks', label: 'متابعة دورية بعد أسبوعين (14 يوم)', days: 14 },
+  { value: '3_weeks', label: 'متابعة دورية بعد 3 أسابيع (21 يوم)', days: 21 },
   { value: '1_month', label: 'متابعة دورية بعد شهر (30 يوم)', days: 30 },
+  { value: '2_months', label: 'متابعة دورية بعد شهرين (60 يوم)', days: 60 },
   { value: '3_months', label: 'متابعة دورية بعد 3 شهور (90 يوم)', days: 90 },
 ]
 
