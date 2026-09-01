@@ -140,13 +140,13 @@ function buildNabdReminderText(customerName, serviceName, preferredDate, preferr
   var time12Ar = formatTime12HArabic(preferredTime);
 
   return "السلام عليكم يا أستاذ / ة " + (customerName || "العميل الكريم") + "،\n" +
-    "نتمنى تكون بخير وبأفضل حال. 🤍\n\n" +
-    "📅 بنفكرك بموعد زيارة نبض للتمريض المنزلي\n" +
+    "نتمنى تكون بخير وبأفضل حال. 🤍\n" +
+    "📅 تذكير بموعد زيارة نبض للتمريض المنزلي\n" +
     "🩺 الخدمة المطلوبة: " + (serviceName || "خدمة تمريضية") + "\n" +
-    "📆 التاريخ واليوم: " + dayDateStr + "\n" +
+    "📆 التاريخ: " + dayDateStr + "\n" +
     "⏰ الساعة: " + time12Ar + "\n" +
-    "📍 مكان الزيارة: " + (address || "دمياط") + "\n\n" +
-    "🤍 بنفكّرك بموعد الزيارة علشان نضمن انتظام الرعاية وتقديم الخدمة في الموعد المحدد، ونتمنى إن الزيارة تكون سبب في راحتك واطمئنانك.\n\n" +
+    "📍 مكان الزيارة: " + (address || "دمياط") + "\n" +
+    "🤍 بنفكّرك بموعد الزيارة علشان نضمن انتظام الرعاية وتقديم الخدمة في الموعد المحدد، ونتمنى إن الزيارة تكون سبب في راحتك واطمئنانك.\n" +
     "🏥 نبض للتمريض المنزلي\n" +
     "رعايتك الصحية تبدأ من مكانك، ونحن أقرب إليك. 💙";
 }
@@ -672,7 +672,15 @@ function syncAllSystemsOneClick() {
         }, "");
         
         if (eventId) {
-          sheet.getRange(rowIndex, 20).setValue(eventId);
+          try {
+            var calRichText = SpreadsheetApp.newRichTextValue()
+              .setText("📅 عرض بالتقويم (" + eventId.substring(0, 8) + ")")
+              .setLinkUrl("https://calendar.google.com/calendar/u/1/r")
+              .build();
+            sheet.getRange(rowIndex, 20).setRichTextValue(calRichText);
+          } catch (e) {
+            sheet.getRange(rowIndex, 20).setValue(eventId);
+          }
           syncedEventsCount++;
         }
       } catch (err) {}

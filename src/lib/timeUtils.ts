@@ -195,20 +195,17 @@ export function buildCustomerReminderMessage(params: {
   preferredTime: string
   address: string
 }): string {
-  const dayName = getArabicDayName(params.preferredDate) || 'المحدد'
-  const time12 = formatTo12HourArabic(params.preferredTime) || params.preferredTime
+  const dayDate = formatArabicDateWithDay(params.preferredDate) || params.preferredDate || ''
+  const time12 = formatTo12HourArabic(params.preferredTime) || params.preferredTime || ''
 
   return `السلام عليكم يا أستاذ / ة ${params.customerName || 'العميل الكريم'}،
 نتمنى تكون بخير وبأفضل حال. 🤍
-
-📅 بنفكرك بموعد زيارة نبض للتمريض المنزلي
+📅 تذكير بموعد زيارة نبض للتمريض المنزلي
 🩺 الخدمة المطلوبة: ${params.serviceName || 'خدمة تمريضية'}
-📆 التاريخ واليوم: ${dayName} ${params.preferredDate || ''}
+📆 التاريخ: ${dayDate}
 ⏰ الساعة: ${time12}
 📍 مكان الزيارة: ${params.address || 'دمياط'}
-
 🤍 بنفكّرك بموعد الزيارة علشان نضمن انتظام الرعاية وتقديم الخدمة في الموعد المحدد، ونتمنى إن الزيارة تكون سبب في راحتك واطمئنانك.
-
 🏥 نبض للتمريض المنزلي
 رعايتك الصحية تبدأ من مكانك، ونحن أقرب إليك. 💙`
 }
