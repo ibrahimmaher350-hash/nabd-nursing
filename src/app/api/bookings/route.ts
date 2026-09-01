@@ -1,8 +1,8 @@
 /**
  * app/api/bookings/route.ts — نبض للتمريض المنزلي
  * POST /api/bookings
- * 1. يُرسل بيانات الحجز لواتساب صاحب العمل (رقم نبض)
- * 2. يُسجّل في Google Sheets إذا تم ضبط GOOGLE_SHEETS_WEBHOOK_URL
+ * 1. يُرسل بيانات الحجز لواتساب المشرف (نبض للتمريض المنزلي)
+ * 2. يُسجّل في Google Sheets ويُنشئ موعد Google Calendar ويربط ملف المريض الموحد
  */
 
 import { NextRequest, NextResponse } from 'next/server'
@@ -10,21 +10,25 @@ import { z } from 'zod'
 import fs from 'fs'
 import path from 'path'
 import { siteConfig } from '@/data/siteConfig'
+import { formatTo12HourArabic, formatArabicDateWithDay, buildCustomerReminderMessage } from '@/lib/timeUtils'
 
 const bookingSchema = z.object({
-  serviceId:     z.string().min(1),
-  serviceName:   z.string().min(1),
-  customerName:  z.string().min(2),
-  customerPhone: z.string().regex(/^01[0-9]{9}$/),
-  whatsapp:      z.string().optional(),
-  patientName:   z.string().optional(),
-  governorate:   z.string().min(1),
-  city:          z.string().min(2),
-  address:       z.string().min(5),
-  landmark:      z.string().optional(),
-  preferredDate: z.string().min(1),
-  preferredTime: z.string().min(1),
-  notes:         z.string().max(500).optional(),
+  serviceId:         z.string().min(1),
+  serviceName:       z.string().min(1),
+  customServiceName: z.string().optional(),
+  customerName:      z.string().min(2),
+  customerPhone:     z.string().regex(/^01[0-9]{9}$/),
+  whatsapp:          z.string().optional(),
+  patientName:       z.string().optional(),
+  governorate:       z.string().min(1),
+  city:              z.string().min(2),
+  address:           z.string().min(5),
+  landmark:          z.string().optional(),
+  preferredDate:     z.string().min(1),
+  preferredTime:     z.string().min(1),
+  notes:             z.string().max(500).optional(),
+  labNotes:          z.string().max(500).optional(),
+  selectedLabTests:  z.array(z.string()).optional(),
 })
 
 /** Get dynamic admin WhatsApp number */
@@ -54,8 +58,11 @@ function generateBookingId(): string {
 
 /** Build the WhatsApp message body sent to the admin */
 function buildAdminWhatsAppMessage(bookingId: string, data: z.infer<typeof bookingSchema>): string {
+  const formattedDayDate = formatArabicDateWithDay(data.preferredDate)
+  const formattedTime = formatTo12HourArabic(data.preferredTime)
+
   const lines = [
-    '🔔 *طلب حجز جديد — نبض للتمريض المنزلي*',
+    '🔔 *طلب حجز تمريض جديد — نبض للتمريض المنزلي*',
     '─────────────────────',
     `🆔 *رقم الحجز:* ${bookingId}`,
     `🏥 *الخدمة:* ${data.serviceName}`,
@@ -70,8 +77,15 @@ function buildAdminWhatsAppMessage(bookingId: string, data: z.infer<typeof booki
     `🏠 *العنوان:* ${data.address}`,
     ...(data.landmark ? [`📌 *علامة مميزة:* ${data.landmark}`] : []),
     '─────────────────────',
-    `📅 *التاريخ المطلوب:* ${data.preferredDate}`,
-    `🕐 *الوقت المطلوب:* ${data.preferredTime}`,
+    `📅 *التاريخ واليوم:* ${formattedDayDate}`,
+    `🕐 *الوقت:* ${data.preferredTime} (${formattedTime})`,
+    ...(data.selectedLabTests && data.selectedLabTests.length > 0
+      ? [
+          '─────────────────────',
+          `🧪 *التحاليل المطلوبة:* ${data.selectedLabTests.join('، ')}`,
+        ]
+      : []),
+    ...(data.labNotes ? [`🔬 *ملاحظات التحاليل:* ${data.labNotes}`] : []),
     ...(data.notes ? ['─────────────────────', `📝 *ملاحظات:* ${data.notes}`] : []),
     '─────────────────────',
     `⏰ *وقت الطلب:* ${new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' })}`,
@@ -86,44 +100,69 @@ async function saveToGoogleSheets(bookingId: string, data: z.infer<typeof bookin
   const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL || DEFAULT_SHEETS_URL
 
   try {
+    const formattedDayDate = formatArabicDateWithDay(data.preferredDate)
+    const formattedTime12 = formatTo12HourArabic(data.preferredTime)
+
+    // Pre-calculated reminder message
+    const reminderMsg = buildCustomerReminderMessage({
+      customerName: data.customerName,
+      serviceName: data.serviceName,
+      preferredDate: data.preferredDate,
+      preferredTime: data.preferredTime,
+      address: `${data.city} - ${data.address}`,
+    })
+
+    const payload = {
+      action: 'addBooking',
+      bookingId,
+      timestamp: new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' }),
+      serviceName:      data.serviceName,
+      customerName:     data.customerName,
+      customerPhone:    data.customerPhone,
+      whatsapp:         data.whatsapp ?? '',
+      patientName:      data.patientName ?? '',
+      governorate:      data.governorate,
+      city:             data.city,
+      address:          data.address,
+      landmark:         data.landmark ?? '',
+      preferredDate:    data.preferredDate,
+      formattedDayDate: formattedDayDate,
+      preferredTime:    data.preferredTime,
+      formattedTime12:  formattedTime12,
+      notes:            data.notes ?? '',
+      selectedLabTests: data.selectedLabTests ?? [],
+      labNotes:         data.labNotes ?? '',
+      reminderMessage:  reminderMsg,
+      status:           'قيد الانتظار',
+    }
+
     const res = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       redirect: 'follow',
-      body: JSON.stringify({
-        bookingId,
-        timestamp: new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' }),
-        serviceName:   data.serviceName,
-        customerName:  data.customerName,
-        customerPhone: data.customerPhone,
-        whatsapp:      data.whatsapp ?? '',
-        patientName:   data.patientName ?? '',
-        governorate:   data.governorate,
-        city:          data.city,
-        address:       data.address,
-        landmark:      data.landmark ?? '',
-        preferredDate: data.preferredDate,
-        preferredTime: data.preferredTime,
-        notes:         data.notes ?? '',
-        status:        'قيد الانتظار',
-      }),
+      body: JSON.stringify(payload),
     })
-    console.log('[Booking API] Saved to Google Sheets ✓ Status:', res.status)
+
+    if (!res.ok) {
+      console.warn(`[Google Sheets] Webhook responded with status: ${res.status}`)
+    }
   } catch (err) {
-    // Don't fail the booking if Sheets is down — just log
-    console.warn('[Booking API] Google Sheets save failed:', err)
+    console.warn('[Google Sheets] Webhook call failed:', err)
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-
-    // Validate
     const parsed = bookingSchema.safeParse(body)
+
     if (!parsed.success) {
       return NextResponse.json(
-        { success: false, error: 'بيانات غير صحيحة. تحقق من الحقول المطلوبة.' },
+        {
+          success: false,
+          error: 'البيانات المدخلة غير مكتملة أو غير صحيحة',
+          details: parsed.error.flatten(),
+        },
         { status: 400 }
       )
     }
@@ -131,56 +170,41 @@ export async function POST(request: NextRequest) {
     const data = parsed.data
     const bookingId = generateBookingId()
 
-    // ── 1. Build WhatsApp URL for admin notification ──────────
+    // 1. Save to Google Sheets & Google Calendar asynchronously
+    saveToGoogleSheets(bookingId, data).catch((err) =>
+      console.error('[Booking API] Google Sheets background sync error:', err)
+    )
+
+    // 2. Build WhatsApp URL
     const adminPhone = getAdminWhatsAppNumber()
-    const msg = buildAdminWhatsAppMessage(bookingId, data)
-    const whatsappUrl = `https://wa.me/${adminPhone}?text=${encodeURIComponent(msg)}`
+    const message = buildAdminWhatsAppMessage(bookingId, data)
+    const whatsappUrl = `https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`
 
-    // ── 2. Save to Google Sheets (non-blocking) ───────────────
-    await saveToGoogleSheets(bookingId, data)
+    // 3. Pre-generate Customer Reminder Message
+    const customerReminderMessage = buildCustomerReminderMessage({
+      customerName: data.customerName,
+      serviceName: data.serviceName,
+      preferredDate: data.preferredDate,
+      preferredTime: data.preferredTime,
+      address: `${data.city} - ${data.address}`,
+    })
 
-    // ── 3. Try Firestore if configured ────────────────────────
-    const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
-    if (projectId && projectId !== 'your_project_id_here' && projectId !== 'nabd-nursing') {
-      try {
-        const { initializeApp, getApps, cert } = await import('firebase-admin/app')
-        const { getFirestore, FieldValue } = await import('firebase-admin/firestore')
-
-        if (!getApps().length) {
-          initializeApp({
-            credential: cert({
-              projectId:   process.env.FIREBASE_ADMIN_PROJECT_ID,
-              clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
-              privateKey:  process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-            }),
-          })
-        }
-
-        const db = getFirestore()
-        await db.collection('bookings').add({
-          bookingId,
-          ...data,
-          status:    'pending',
-          source:    'website',
-          createdAt: FieldValue.serverTimestamp(),
-          updatedAt: FieldValue.serverTimestamp(),
-        })
-      } catch (firestoreErr) {
-        console.warn('[Booking API] Firestore save failed (non-critical):', firestoreErr)
-      }
-    }
-
-    // Return success with whatsappUrl for client to open
     return NextResponse.json({
       success: true,
       bookingId,
-      whatsappUrl,    // Client opens this to notify admin
-      message: 'تم استلام طلب الحجز. سيتم التواصل معك لتأكيد الموعد.',
+      whatsappUrl,
+      customerReminderMessage,
+      serviceName: data.serviceName,
+      preferredDate: data.preferredDate,
+      preferredTime: data.preferredTime,
+      formattedTime12: formatTo12HourArabic(data.preferredTime),
+      dayName: formatArabicDateWithDay(data.preferredDate),
+      message: 'تم استلام طلب الحجز بنجاح',
     })
   } catch (error) {
-    console.error('[Booking API] Error:', error)
+    console.error('[Booking API] Server Error:', error)
     return NextResponse.json(
-      { success: false, error: 'تعذر إرسال الطلب حالياً. حاول مرة أخرى أو تواصل معنا عبر واتساب.' },
+      { success: false, error: 'حدث خطأ في الخادم أثناء معالجة الحجز' },
       { status: 500 }
     )
   }

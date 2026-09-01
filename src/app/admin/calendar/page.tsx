@@ -1,13 +1,21 @@
 'use client'
 /**
- * app/admin/calendar/page.tsx — التقويم وجدول المواعيد
+ * app/admin/calendar/page.tsx — تقويم وجدول المواعيد بنظام 12 ساعة
  */
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { getAllBookings } from '@/lib/firebase/firestore'
 import type { Booking } from '@/types/booking'
-import { ChevronRightIcon, ChevronLeftIcon, CalendarDaysIcon, ClockIcon, MapPinIcon, UserIcon } from '@heroicons/react/24/outline'
+import {
+  ChevronRightIcon,
+  ChevronLeftIcon,
+  CalendarDaysIcon,
+  ClockIcon,
+  MapPinIcon,
+  UserIcon,
+} from '@heroicons/react/24/outline'
+import { formatTo12HourArabic, formatArabicDateWithDay, buildCustomerReminderMessage } from '@/lib/timeUtils'
 
 type CalendarView = 'day' | 'week' | 'month'
 
@@ -61,30 +69,41 @@ export default function AdminCalendarPage() {
           </Link>
           <h1 className="text-xl font-bold flex items-center gap-2">
             <CalendarDaysIcon className="w-6 h-6 text-gold-400" />
-            تقويم المواعيد
+            تقويم ومواعيد الزيارات (12 ساعة)
           </h1>
         </div>
 
-        {/* View Switcher */}
-        <div className="flex bg-navy-900 rounded-xl p-1 border border-white/10 self-start sm:self-auto">
-          {(['day', 'week', 'month'] as CalendarView[]).map((v) => (
-            <button
-              key={v}
-              onClick={() => setView(v)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                view === v ? 'bg-gold-500 text-white shadow-md' : 'text-white/60 hover:text-white'
-              }`}
-            >
-              {v === 'day' ? 'يومي' : v === 'week' ? 'أسبوعي' : 'شهري'}
-            </button>
-          ))}
+        <div className="flex items-center gap-2 flex-wrap">
+          <a
+            href="https://calendar.google.com/calendar/u/1/r"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary py-1.5 px-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm"
+          >
+            📅 فتح تقويم Google Calendar ↗
+          </a>
+
+          {/* View Switcher */}
+          <div className="flex bg-navy-900 rounded-xl p-1 border border-white/10">
+            {(['day', 'week', 'month'] as CalendarView[]).map((v) => (
+              <button
+                key={v}
+                onClick={() => setView(v)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  view === v ? 'bg-gold-500 text-white shadow-md' : 'text-white/60 hover:text-white'
+                }`}
+              >
+                {v === 'day' ? 'يومي' : v === 'week' ? 'أسبوعي' : 'شهري'}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Date Navigation */}
       <div className="bg-navy-900 border border-white/10 rounded-2xl p-4 flex items-center justify-between mb-6 shadow-card">
         <button
-          onClick={() => changeDate(1)} // In RTL, right moves to future or past depending on convention
+          onClick={() => changeDate(1)}
           className="p-2 rounded-xl bg-navy-800 text-white/80 hover:text-white hover:bg-navy-700 transition"
           aria-label="الفترة التالية"
         >
@@ -107,123 +126,84 @@ export default function AdminCalendarPage() {
         </button>
       </div>
 
-      {/* Main Calendar View Content */}
+      {/* Bookings List for selected date */}
       {loading ? (
-        <div className="grid grid-cols-1 gap-4">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-navy-900/60 rounded-2xl h-24 animate-pulse border border-white/5" />
+        <div className="space-y-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="h-24 bg-navy-900 rounded-2xl animate-pulse" />
           ))}
         </div>
+      ) : dayBookings.length === 0 ? (
+        <div className="text-center py-16 bg-navy-900/50 rounded-3xl border border-white/5">
+          <p className="text-4xl mb-3">📅</p>
+          <p className="text-sm text-white/60">لا توجد مواعيد مسجلة في هذا اليوم</p>
+        </div>
       ) : (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold text-white/80">
-              مواعيد التاريخ المحدد ({dateStr}):
-            </h2>
-            <span className="badge bg-navy-800 text-gold-400 text-xs border border-white/10">
-              {dayBookings.length} مواعيد اليوم
-            </span>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {dayBookings.map((b) => {
+            const rawPhone = b.whatsapp || b.customerPhone
+            const cleanPhone = rawPhone?.replace(/[^0-9]/g, '')
+            const targetPhone = cleanPhone?.startsWith('0') ? `2${cleanPhone}` : cleanPhone
 
-          {dayBookings.length === 0 ? (
-            <div className="bg-navy-900 border border-white/10 rounded-2xl p-8 text-center text-white/50">
-              <CalendarDaysIcon className="w-12 h-12 mx-auto mb-3 opacity-30 text-gold-400" />
-              <p className="text-base font-semibold">لا توجد مواعيد مسجلة في هذا اليوم</p>
-              <p className="text-xs mt-1 text-white/40">اختر يوماً آخر أو استعرض كل الحجوزات من قسم إدارة الحجوزات</p>
-              <Link href="/admin/bookings" className="inline-block mt-4 text-xs text-gold-400 underline">
-                الانتقال لجدول الحجوزات الكامل
-              </Link>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {dayBookings.map((b) => (
-                <div
-                  key={b.docId}
-                  className="bg-navy-900 border border-white/10 rounded-2xl p-5 shadow-card hover:border-gold-500/50 transition-all flex flex-col justify-between"
-                >
+            const reminderText = buildCustomerReminderMessage({
+              customerName: b.customerName,
+              serviceName: b.serviceName,
+              preferredDate: b.preferredDate,
+              preferredTime: b.preferredTime,
+              address: `${b.city} - ${b.address || ''}`,
+            })
+
+            return (
+              <div
+                key={b.docId}
+                className="bg-navy-900 border border-white/10 rounded-2xl p-5 shadow-card hover:border-gold-500/40 transition-all space-y-3"
+              >
+                <div className="flex items-start justify-between">
                   <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="badge bg-gold-500/20 text-gold-300 font-mono text-xs border border-gold-500/30">
-                        {b.bookingId}
-                      </span>
-                      <span className="text-xs px-2.5 py-1 rounded-full bg-navy-800 text-white/80 font-medium">
-                        {b.status === 'pending'
-                          ? 'جديد'
-                          : b.status === 'confirmed'
-                          ? 'مؤكد'
-                          : b.status === 'completed'
-                          ? 'مكتمل'
-                          : 'ملغي'}
-                      </span>
-                    </div>
-
-                    <h3 className="text-base font-bold text-white mb-2">{b.serviceName}</h3>
-
-                    <div className="space-y-1.5 text-xs text-white/70">
-                      <p className="flex items-center gap-2">
-                        <UserIcon className="w-4 h-4 text-gold-400" />
-                        <span>{b.customerName} {b.patientName ? `(المريض: ${b.patientName})` : ''}</span>
-                      </p>
-                      <p className="flex items-center gap-2">
-                        <ClockIcon className="w-4 h-4 text-gold-400" />
-                        <span>{b.preferredTime}</span>
-                      </p>
-                      <p className="flex items-center gap-2">
-                        <MapPinIcon className="w-4 h-4 text-gold-400" />
-                        <span>دمياط — {b.city} ({b.address})</span>
-                      </p>
-                    </div>
-
-                    {b.notes && (
-                      <p className="mt-3 p-2 bg-navy-950/60 rounded-xl text-xs text-white/60 border border-white/5">
-                        ملاحظة: {b.notes}
-                      </p>
-                    )}
+                    <h3 className="text-base font-bold text-white">{b.serviceName}</h3>
+                    <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
+                      <UserIcon className="w-3.5 h-3.5" />
+                      <span>{b.customerName}</span>
+                      {b.patientName && <span>(المريض: {b.patientName})</span>}
+                    </p>
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-white/10 flex gap-2">
-                    <a
-                      href={`https://wa.me/${b.whatsapp ?? b.customerPhone}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 bg-[#25D366] text-white text-center py-2 rounded-xl text-xs font-bold hover:opacity-90"
-                    >
-                      واتساب
-                    </a>
-                    <a
-                      href={`tel:${b.customerPhone}`}
-                      className="flex-1 bg-gold-500 text-white text-center py-2 rounded-xl text-xs font-bold hover:opacity-90"
-                    >
-                      اتصال
-                    </a>
-                  </div>
+                  <span className="badge bg-gold-500/20 text-gold-300 font-mono text-xs font-bold px-2.5 py-1">
+                    {formatTo12HourArabic(b.preferredTime)}
+                  </span>
                 </div>
-              ))}
-            </div>
-          )}
 
-          {/* Quick list of upcoming bookings */}
-          <div className="mt-10">
-            <h2 className="text-sm font-bold text-white/80 mb-3">كل المواعيد القادمة في النظام</h2>
-            <div className="bg-navy-900 border border-white/10 rounded-2xl divide-y divide-white/5 overflow-hidden">
-              {bookings.slice(0, 10).map((b) => (
-                <div key={b.docId} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-navy-800/50 transition">
-                  <div>
-                    <span className="text-xs font-mono text-gold-400 font-bold">{b.bookingId}</span>
-                    <span className="mx-2 text-white/30">•</span>
-                    <span className="font-bold text-sm text-white">{b.customerName}</span>
-                    <span className="mx-2 text-white/30">•</span>
-                    <span className="text-xs text-white/70">{b.serviceName}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-xs text-white/60">
-                    <span>📅 {b.preferredDate}</span>
-                    <span>⏰ {b.preferredTime}</span>
-                    <span>📍 {b.city}</span>
-                  </div>
+                <div className="bg-navy-950/60 p-3 rounded-xl text-xs space-y-1 text-slate-300">
+                  <p className="flex items-center gap-1.5">
+                    <MapPinIcon className="w-3.5 h-3.5 text-gold-400" />
+                    <span>دمياط — {b.city} {b.address ? `(${b.address})` : ''}</span>
+                  </p>
+                  <p className="flex items-center gap-1.5 font-mono">
+                    <ClockIcon className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>{formatArabicDateWithDay(b.preferredDate)} — {formatTo12HourArabic(b.preferredTime)}</span>
+                  </p>
                 </div>
-              ))}
-            </div>
-          </div>
+
+                <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                  <a
+                    href={`https://wa.me/${targetPhone}?text=${encodeURIComponent(reminderText)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg flex items-center gap-1 font-bold"
+                  >
+                    📲 إرسال التذكير
+                  </a>
+
+                  <a
+                    href={`tel:${b.customerPhone}`}
+                    className="text-xs text-gold-300 hover:underline font-mono"
+                  >
+                    📞 {b.customerPhone}
+                  </a>
+                </div>
+              </div>
+            )
+          })}
         </div>
       )}
     </div>
