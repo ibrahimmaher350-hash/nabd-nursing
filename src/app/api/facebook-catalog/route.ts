@@ -1,21 +1,19 @@
 /**
  * app/api/facebook-catalog/route.ts — نبض للتمريض المنزلي
- * Meta (Facebook) Commerce & Services Catalog Feed.
+ * Meta (Facebook) Services Catalog Feed.
+ * 
+ * Contains exclusively the 15 official services from:
+ * https://nabd-nursing.vercel.app/services
  * 
  * Supports:
- * - XML RSS 2.0 / Google Merchant & Facebook Product Catalog standard feed
+ * - XML RSS 2.0 / Google Merchant & Facebook Catalog standard feed (Default)
  * - CSV format via ?format=csv
- * 
- * URL to paste into Facebook Commerce Manager:
- * https://nabd-nursing.vercel.app/api/facebook-catalog
  */
 
 import { NextRequest, NextResponse } from 'next/server'
+import fs from 'fs'
+import path from 'path'
 import { services } from '@/data/services'
-import {
-  FEATURED_GLUCOSE_METER,
-  ADDITIONAL_MEDICAL_SUPPLIES,
-} from '@/data/medicalSuppliesData'
 import { siteConfig } from '@/data/siteConfig'
 
 const BASE_URL =
@@ -31,69 +29,68 @@ function sanitizeXml(str: string): string {
     .replace(/'/g, '&apos;')
 }
 
+function getSavedSettings() {
+  try {
+    const filePath = path.join(process.cwd(), 'src', 'data', 'dynamicSettings.json')
+    if (fs.existsSync(filePath)) {
+      return JSON.parse(fs.readFileSync(filePath, 'utf-8'))
+    }
+  } catch {}
+  return null
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const format = searchParams.get('format')
+  const dynSettings = getSavedSettings()
 
-  // 1. Catalog Products and Services List
-  const items = [
-    // 🩸 VivaChek Ino Glucose Meter (Hero Product)
-    {
-      id: 'vivachek-ino',
-      title: 'جهاز قياس السكر في الدم فيفا تشيك إنو (VivaChek Ino) مع 10 شرائط هدية',
-      description:
-        'جهاز قياس السكر المنزلي فيفا تشيك إنو بدون ألم وبنتيجة فورية خلال 5 ثوانٍ، ذاكرة 90 يوماً، ضمان 5 سنوات، مع 10 شرائط هدية وقلم وخز وتوصيل لجميع مناطق دمياط.',
-      link: `${BASE_URL}/services/medical-supplies#vivachek-ino`,
-      image_link: `${BASE_URL}/vivachek.png`,
-      brand: 'نبض للتمريض المنزلي',
-      condition: 'new',
-      availability: 'in stock',
-      price: '650.00 EGP',
-      sale_price: '450.00 EGP',
-      google_product_category: 'Health & Beauty > Health Care > Medical Supplies',
-      product_type: 'أجهزة قياس السكر والمستلزمات الطبية',
-      custom_label_0: 'أجهزة طبية',
-      custom_label_1: 'دمياط',
-    },
+  // ── Build the exact list of 15 services from /services ──
+  const catalogItems = services.map((srv) => {
+    const isSupplies = srv.id === 'medical-supplies'
+    const srvOverride = dynSettings?.servicesOverrides?.[srv.id]
+    const vivaOverride = dynSettings?.suppliesOverrides?.['vivachek-ino']
 
-    // 📦 Additional Medical Supplies
-    ...ADDITIONAL_MEDICAL_SUPPLIES.map((sup) => ({
-      id: sup.id,
-      title: `${sup.name} — نبض للتمريض المنزلي`,
-      description: `${sup.shortDesc} متوفر للتوصيل المنزلي لجميع مناطق دمياط.`,
-      link: `${BASE_URL}/services/medical-supplies#${sup.id}`,
-      image_link: `${BASE_URL}${sup.image.startsWith('/') ? sup.image : `/${sup.image}`}`,
-      brand: 'نبض للتمريض المنزلي',
-      condition: 'new',
-      availability: 'in stock',
-      price: sup.oldPrice ? `${parseInt(sup.oldPrice) || 500}.00 EGP` : `${parseInt(sup.price) || 350}.00 EGP`,
-      sale_price: `${parseInt(sup.price) || 350}.00 EGP`,
-      google_product_category: 'Health & Beauty > Health Care > Medical Supplies',
-      product_type: sup.categoryName,
-      custom_label_0: 'مستلزمات طبية',
-      custom_label_1: 'دمياط',
-    })),
+    // Pricing
+    let priceStr = '150.00 EGP'
+    let salePriceStr = '150.00 EGP'
 
-    // 🩺 15 Home Nursing Services
-    ...services.map((srv) => ({
-      id: `service-${srv.id}`,
-      title: `${srv.name} بالمنزل في دمياط — نبض`,
-      description: `${srv.description} كادر تمريض مؤهل، أمان واحترافية ورعاية متكاملة في منزلك داخل دمياط.`,
+    if (isSupplies) {
+      const saleNum = parseInt((vivaOverride?.price || '450').replace(/[^0-9]/g, '')) || 450
+      const regNum = parseInt((vivaOverride?.oldPrice || '650').replace(/[^0-9]/g, '')) || 650
+      priceStr = `${regNum}.00 EGP`
+      salePriceStr = `${saleNum}.00 EGP`
+    } else if (srvOverride?.price) {
+      const num = parseInt(srvOverride.price.replace(/[^0-9]/g, '')) || 150
+      priceStr = `${num}.00 EGP`
+      salePriceStr = `${num}.00 EGP`
+    }
+
+    // Image link
+    const imageLink = isSupplies
+      ? `${BASE_URL}/vivachek.png`
+      : `${BASE_URL}/og-image.jpg`
+
+    return {
+      id: srv.slug,
+      title: `${srv.name} — نبض للتمريض المنزلي بدمياط`,
+      description: `${srv.description} ${srv.shortDescription} متوفر لجميع مناطق دمياط مع كادر تمريض مؤهل.`,
       link: `${BASE_URL}/services/${srv.slug}`,
-      image_link: `${BASE_URL}/og-image.jpg`,
+      image_link: imageLink,
       brand: 'نبض للتمريض المنزلي',
       condition: 'new',
       availability: 'in stock',
-      price: '150.00 EGP',
-      sale_price: '150.00 EGP',
-      google_product_category: 'Health & Beauty > Health Care > Home Health Care Services',
-      product_type: `خدمات تمريضية > ${srv.category}`,
-      custom_label_0: 'خدمات تمريضية منزلية',
+      price: priceStr,
+      sale_price: salePriceStr,
+      google_product_category: isSupplies
+        ? 'Health & Beauty > Health Care > Medical Supplies'
+        : 'Health & Beauty > Health Care > Home Health Care Services',
+      product_type: `خدمات تمريضية منزلية > ${srv.category}`,
+      custom_label_0: srv.category,
       custom_label_1: 'دمياط',
-    })),
-  ]
+    }
+  })
 
-  // 2. Output CSV format if requested
+  // ── CSV Export ──
   if (format === 'csv') {
     const headers = [
       'id',
@@ -114,7 +111,7 @@ export async function GET(request: NextRequest) {
 
     const csvRows = [
       headers.join(','),
-      ...items.map((it) =>
+      ...catalogItems.map((it) =>
         [
           `"${it.id}"`,
           `"${it.title.replace(/"/g, '""')}"`,
@@ -138,14 +135,14 @@ export async function GET(request: NextRequest) {
       status: 200,
       headers: {
         'Content-Type': 'text/csv; charset=utf-8',
-        'Content-Disposition': 'inline; filename="facebook-catalog.csv"',
+        'Content-Disposition': 'inline; filename="nabd-services-catalog.csv"',
         'Cache-Control': 'public, max-age=3600, s-maxage=86400',
       },
     })
   }
 
-  // 3. Output XML / RSS 2.0 Google Merchant & Meta Product Feed (Default)
-  const xmlItems = items
+  // ── XML RSS 2.0 / Google Merchant Feed (Default) ──
+  const xmlItems = catalogItems
     .map(
       (it) => `
     <item>
@@ -170,8 +167,8 @@ export async function GET(request: NextRequest) {
   const xmlFeed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
   <channel>
-    <title>${sanitizeXml(siteConfig.brand.name)} — كتالوج الخدمات والمستلزمات الطبية</title>
-    <link>${BASE_URL}</link>
+    <title>${sanitizeXml(siteConfig.brand.name)} — كتالوج الخدمات التمريضية</title>
+    <link>${BASE_URL}/services</link>
     <description>${sanitizeXml(siteConfig.brand.description)}</description>
     ${xmlItems}
   </channel>
