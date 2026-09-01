@@ -29,6 +29,8 @@ const bookingSchema = z.object({
   notes:             z.string().max(500).optional(),
   labNotes:          z.string().max(500).optional(),
   selectedLabTests:  z.array(z.string()).optional(),
+  followUpInterval:  z.string().optional(),
+  nextFollowUpDate:  z.string().optional(),
 })
 
 /** Get dynamic admin WhatsApp number */
@@ -79,6 +81,9 @@ function buildAdminWhatsAppMessage(bookingId: string, data: z.infer<typeof booki
     '─────────────────────',
     `📅 *التاريخ واليوم:* ${formattedDayDate}`,
     `🕐 *الوقت:* ${data.preferredTime} (${formattedTime})`,
+    ...(data.nextFollowUpDate
+      ? [`🔄 *المتابعة القادمة المجدولة:* ${formatArabicDateWithDay(data.nextFollowUpDate)}`]
+      : []),
     ...(data.selectedLabTests && data.selectedLabTests.length > 0
       ? [
           '─────────────────────',
@@ -129,6 +134,8 @@ async function saveToGoogleSheets(bookingId: string, data: z.infer<typeof bookin
       formattedDayDate: formattedDayDate,
       preferredTime:    data.preferredTime,
       formattedTime12:  formattedTime12,
+      followUpInterval: data.followUpInterval ?? 'none',
+      nextFollowUpDate: data.nextFollowUpDate ?? '',
       notes:            data.notes ?? '',
       selectedLabTests: data.selectedLabTests ?? [],
       labNotes:         data.labNotes ?? '',
@@ -199,6 +206,7 @@ export async function POST(request: NextRequest) {
       preferredTime: data.preferredTime,
       formattedTime12: formatTo12HourArabic(data.preferredTime),
       dayName: formatArabicDateWithDay(data.preferredDate),
+      nextFollowUpDate: data.nextFollowUpDate,
       message: 'تم استلام طلب الحجز بنجاح',
     })
   } catch (error) {

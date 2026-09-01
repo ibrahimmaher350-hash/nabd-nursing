@@ -267,8 +267,9 @@ function doPost(e) {
     // مزامنة موعد تقويم جوجل
     var calendarEventId = syncGoogleCalendarEvent(data, existingCalendarEventId);
     
-    // تفاصيل الزيارة القادمة
-    var nextVisitCell = (data.preferredDate ? (dayDateStr + " - " + time12Ar) : "") + "\nالخدمة: " + (data.serviceName || "") + "\nالحالة: مؤكدة";
+    // تفاصيل الزيارة القادمة والمتابعة المجدولة
+    var nextFollowUpStr = data.nextFollowUpDate ? ("\n🔄 المتابعة القادمة: " + getArabicDayWithDate(data.nextFollowUpDate)) : "";
+    var nextVisitCell = (data.preferredDate ? (dayDateStr + " - " + time12Ar) : "") + "\nالخدمة: " + (data.serviceName || "") + "\nالحالة: مؤكدة" + nextFollowUpStr;
     
     // نص الزيارة الجديدة للإضافة في سجل الزيارات
     var newVisitEntry = dayDateStr + " | " + time12Ar + "\nالخدمة: " + (data.serviceName || "") + "\nالحالة: قيد التنفيذ\nالملاحظات: " + (data.notes || "لا توجد ملاحظات إضافية");

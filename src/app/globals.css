@@ -287,57 +287,45 @@
 
 /* ─── Print ─────────────────────────────────────────────────── */
 @media print {
-  .no-print { display: none !important; }
-  header, footer, nav, .fab, [role="complementary"] { display: none !important; }
+  @page {
+    margin: 8mm 10mm;
+    size: A4 portrait;
+  }
+
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  .no-print,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  header, footer, nav, .fab, [role="complementary"], #floating-actions, .emergency-float {
+    display: none !important;
+  }
 
   body {
-    font-family: 'Cairo', Arial, sans-serif;
-    font-size: 12pt;
-    direction: rtl;
-    color: #000;
+    font-family: var(--font-cairo), 'Cairo', system-ui, sans-serif !important;
     background: #fff !important;
-  }
-
-  /* Prescription card print styles */
-  article {
-    break-inside: avoid;
-    page-break-inside: avoid;
-    border: 1px solid #ddd !important;
-    box-shadow: none !important;
-    margin-bottom: 1.5rem;
-  }
-
-  /* Print header — show brand */
-  main::before {
-    content: 'نبض للتمريض المنزلي | دمياط | 01001097896';
-    display: block;
-    text-align: center;
+    color: #0f172a !important;
     font-size: 11pt;
-    font-weight: bold;
-    color: #1B2B6B;
-    border-bottom: 2px solid #1B2B6B;
-    padding-bottom: 8pt;
-    margin-bottom: 16pt;
+    direction: rtl;
+    padding: 0 !important;
+    margin: 0 !important;
   }
-
-  /* Fix gradient backgrounds for print */
-  .bg-gradient-primary,
-  .bg-gradient-section,
-  .bg-gradient-card {
-    background: #fff !important;
-    color: #000 !important;
-  }
-
-  /* Keep nursing service card visible in print */
-  .bg-gradient-to-br { background: #f8fafc !important; }
 
   a[href]::after {
-    content: ' (' attr(href) ')';
-    font-size: 9pt;
-    color: #64748b;
+    content: none !important;
   }
-  a[href^="tel"]::after,
-  a[href^="https://wa.me"]::after { content: ''; }
+
+  /* Prescription & report card print styles */
+  .page-break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
 }
 
 /* ─── Entrance animation for feature cards ──────────────────── */

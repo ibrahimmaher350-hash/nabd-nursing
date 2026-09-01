@@ -22,7 +22,13 @@ import {
 import { services } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
-import { TIME_SLOTS_12H, formatTo12HourArabic, formatArabicDateWithDay } from '@/lib/timeUtils'
+import {
+  TIME_SLOTS_12H,
+  FOLLOW_UP_INTERVALS,
+  calculateNextFollowUpDate,
+  formatTo12HourArabic,
+  formatArabicDateWithDay,
+} from '@/lib/timeUtils'
 import { ALL_LAB_TEST_NAMES } from '@/data/labTestsData'
 import BookingSuccess from './BookingSuccess'
 
@@ -117,6 +123,9 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
   const [selectedLabTests, setSelectedLabTests] = useState<string[]>([])
   const [labSearchQuery, setLabSearchQuery] = useState('')
   const [customLabTestInput, setCustomLabTestInput] = useState('')
+
+  // Follow-up interval & next visit scheduling
+  const [followUpInterval, setFollowUpInterval] = useState('none')
 
   const [successData, setSuccessData] = useState<{
     bookingId: string
@@ -261,11 +270,15 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
 
     try {
       const data = getValues()
+      const nextFollowUpDate = calculateNextFollowUpDate(data.preferredDate, followUpInterval)
+
       const payload = {
         ...data,
         serviceName: effectiveServiceName,
         selectedLabTests: isLabService ? selectedLabTests : [],
         preferredTime12: data.preferredTime, // In 12-hour format
+        followUpInterval,
+        nextFollowUpDate,
       }
 
       const res = await fetch('/api/bookings', {
@@ -745,6 +758,40 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
               <FieldError message={errors.preferredTime?.message} />
             </div>
           </div>
+
+          {/* Follow-up & Next Visit Scheduling */}
+          {(() => {
+            const preferredDateVal = watch('preferredDate')
+            const calculatedNextDate = calculateNextFollowUpDate(preferredDateVal, followUpInterval)
+            return (
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2">
+                <label htmlFor="followUpInterval" className="nabd-label text-xs font-bold text-navy-800 mb-1 block">
+                  🔄 تكرار أو موعد الزيارة القادمة (المتابعة الدورية):
+                </label>
+                <select
+                  id="followUpInterval"
+                  value={followUpInterval}
+                  onChange={(e) => setFollowUpInterval(e.target.value)}
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-xs sm:text-sm font-bold text-navy-900 focus:outline-none focus:border-navy-600"
+                >
+                  {FOLLOW_UP_INTERVALS.map((item) => (
+                    <option key={item.value} value={item.value}>
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+
+                {followUpInterval !== 'none' && calculatedNextDate && (
+                  <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 font-bold flex items-center gap-1.5 animate-fade-in">
+                    <CheckCircleIcon className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>
+                      سيتم جدولة موعد المتابعة القادمة تلقائياً بتاريخ: {formatArabicDateWithDay(calculatedNextDate)}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )
+          })()}
 
           {/* Notes */}
           <div>

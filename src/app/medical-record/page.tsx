@@ -1,10 +1,11 @@
 'use client'
 /**
  * app/medical-record/page.tsx — نبض للتمريض المنزلي
- * ملفي الطبي — السجل الصحي الموحد للمريض مع الجدول الزمني الرأسي وتصدير PDF
+ * ملفي الطبي — السجل الصحي الموحد للمريض مع القالب الطبي الاحترافي بهوية نبض (Navy & Gold) وتصدير PDF عالي الدقة
  */
 
 import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -13,21 +14,24 @@ import {
   CalendarDaysIcon,
   ArrowRightOnRectangleIcon,
   ArrowPathIcon,
-  DocumentArrowDownIcon,
-  ClipboardDocumentCheckIcon,
-  HeartIcon,
-  ShieldCheckIcon,
   PrinterIcon,
   BeakerIcon,
-  SparklesIcon,
+  ShieldCheckIcon,
   CheckCircleIcon,
   ClockIcon,
   MapPinIcon,
   PhoneIcon,
   UserIcon,
+  HeartIcon,
+  DocumentTextIcon,
+  SparklesIcon,
 } from '@heroicons/react/24/solid'
 import { useSettings } from '@/context/SettingsContext'
-import { formatTo12HourArabic, formatArabicDateWithDay } from '@/lib/timeUtils'
+import {
+  formatTo12HourArabic,
+  formatArabicDateWithDay,
+  cleanDateAndTimeString,
+} from '@/lib/timeUtils'
 
 interface PatientRecord {
   patientId: string
@@ -59,10 +63,10 @@ export default function MedicalRecordPage() {
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const [patient, setPatient] = useState<PatientRecord | null>(null)
-  const printRef = useRef<HTMLDivElement>(null)
+  const [reportDate, setReportDate] = useState('')
 
-  // Check saved phone on mount
   useEffect(() => {
+    setReportDate(formatArabicDateWithDay(new Date()))
     try {
       const savedPhone = localStorage.getItem(STORAGE_KEY)
       if (savedPhone) {
@@ -114,60 +118,63 @@ export default function MedicalRecordPage() {
     window.print()
   }
 
-  // Helper parser for multi-line vitals history
+  // Parse multi-line vitals history and clean dates
   const parsedVitals = patient?.vitalsHistory
     ? patient.vitalsHistory
         .split('\n\n')
-        .map((entry) => entry.trim())
+        .map((entry) => cleanDateAndTimeString(entry.trim()))
         .filter(Boolean)
     : []
 
-  // Helper parser for multi-line visits history
+  // Parse multi-line visits history and clean dates
   const parsedVisits = patient?.visitsHistory
     ? patient.visitsHistory
         .split('\n\n')
-        .map((entry) => entry.trim())
+        .map((entry) => cleanDateAndTimeString(entry.trim()))
         .filter(Boolean)
     : []
 
-  // Helper parser for lab tests
+  // Parse lab tests and clean dates
   const parsedLabs = patient?.labTestsHistory
     ? patient.labTestsHistory
         .split('\n\n')
-        .map((entry) => entry.trim())
+        .map((entry) => cleanDateAndTimeString(entry.trim()))
         .filter(Boolean)
     : []
+
+  // Clean next visit string
+  const cleanedNextVisit = cleanDateAndTimeString(patient?.nextVisit)
 
   return (
     <>
       <Header />
 
-      <main id="main-content" className="min-h-[80vh] bg-slate-50 pb-24 sm:pb-16 print:bg-white print:p-0">
-        {/* ── Hero Section (Hidden on print) ── */}
-        <section className="bg-gradient-to-r from-navy-950 via-navy-900 to-slate-900 py-10 sm:py-14 text-white print:hidden">
+      <main id="main-content" className="min-h-[80vh] bg-slate-100 pb-24 sm:pb-16 print:bg-white print:p-0">
+        {/* ── Hero Section (Screen only) ── */}
+        <section className="bg-gradient-to-r from-navy-950 via-navy-900 to-slate-900 py-10 sm:py-12 text-white print:hidden">
           <div className="section-container text-center">
-            <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-400/30 rounded-full px-4 py-1.5 mb-4">
+            <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-400/40 rounded-full px-4 py-1.5 mb-3 shadow-inner">
               <ShieldCheckIcon className="w-4 h-4 text-gold-400" />
               <span className="text-gold-200 text-xs sm:text-sm font-black">
-                السجل الطبي الموحد للمريض
+                السجل الصحي الموحد والملف الطبي الشامل
               </span>
             </div>
             <h1 className="!text-2xl sm:!text-3xl lg:!text-4xl font-extrabold text-white mb-2">
               ملفي <span className="text-gold-400">الطبي</span> 📋
             </h1>
             <p className="text-slate-300 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
-              سجلك الصحي المتكامل مع نبض: العلامات الحيوية، مواعيد الزيارات، التحاليل الطبية، والأدوية في جدول زمني مرتب.
+              سجلك الطبي المتكامل مع نبض: تتبع العلامات الحيوية، مواعيد الزيارات والمتابعة الدورية، والتقارير الطبية.
             </p>
           </div>
         </section>
 
-        <div className="section-container -mt-6">
+        <div className="section-container -mt-6 print:m-0 print:p-0 print:max-w-full">
           {/* ══════════════════════════════════════════════════════════════
-              STATE 1: LOGIN / SEARCH CARD
+              STATE 1: LOGIN / SEARCH (Screen only)
           ══════════════════════════════════════════════════════════════ */}
           {!patient ? (
             <div className="max-w-md mx-auto bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl animate-fade-in print:hidden">
-              <div className="w-14 h-14 rounded-2xl bg-navy-50 text-navy-700 flex items-center justify-center text-2xl mx-auto mb-4">
+              <div className="w-16 h-16 rounded-2xl bg-navy-50 text-navy-700 flex items-center justify-center text-3xl mx-auto mb-4 border border-navy-100">
                 🩺
               </div>
 
@@ -221,7 +228,7 @@ export default function MedicalRecordPage() {
                       جار جلب الملف الطبي…
                     </>
                   ) : (
-                    'عرض ملفي الطبي 📄'
+                    'عرض وتصدير ملفي الطبي 📄'
                   )}
                 </button>
               </form>
@@ -240,262 +247,349 @@ export default function MedicalRecordPage() {
             </div>
           ) : (
             /* ══════════════════════════════════════════════════════════════
-                STATE 2: PATIENT MEDICAL RECORD & TIMELINE
+                STATE 2: MASTERPIECE MEDICAL RECORD (SCREEN & PDF PRINT)
             ══════════════════════════════════════════════════════════════ */
-            <div ref={printRef} className="space-y-6 animate-fade-in max-w-4xl mx-auto">
-              {/* Patient Profile Header Card */}
-              <div className="bg-white border-2 border-navy-100 rounded-3xl p-6 sm:p-8 shadow-card relative overflow-hidden print:border print:shadow-none">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
-                  <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-2xl bg-navy-700 text-gold-400 flex items-center justify-center text-3xl font-black shadow-inner">
-                      👤
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="badge bg-gold-500 text-navy-950 font-mono text-xs font-black px-2.5 py-0.5">
-                          {patient.patientId || 'NABD-0001'}
-                        </span>
-                        <span className="badge bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5">
-                          {patient.status || 'نشط'}
-                        </span>
-                      </div>
-                      <h2 className="text-xl sm:text-2xl font-black text-navy-900 mt-1">
-                        {patient.name}
-                      </h2>
-                      <p className="text-xs text-slate-500 flex items-center gap-2 mt-0.5">
-                        <span>📞 {patient.phone}</span>
-                        <span>•</span>
-                        <span>📍 دمياط — {patient.city || patient.address}</span>
-                      </p>
-                    </div>
+            <div className="max-w-4xl mx-auto space-y-6 print:m-0 print:p-0 print:max-w-full">
+              {/* Screen Top Action Bar (Hidden on print) */}
+              <div className="flex items-center justify-between bg-white border border-slate-200 rounded-2xl p-4 shadow-sm print:hidden">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-navy-700 text-white flex items-center justify-center font-black text-sm">
+                    {patient.patientId || 'NABD'}
                   </div>
-
-                  {/* Actions Header (Hidden on Print) */}
-                  <div className="flex items-center gap-2 print:hidden">
-                    <button
-                      onClick={handlePrintPdf}
-                      className="btn-secondary py-2 px-3.5 bg-slate-100 hover:bg-slate-200 text-navy-800 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm"
-                      title="طباعة أو تصدير كـ PDF"
-                    >
-                      <PrinterIcon className="w-4 h-4 text-navy-600" />
-                      طباعة / PDF
-                    </button>
-
-                    <button
-                      onClick={handleLogout}
-                      className="btn-secondary py-2 px-3.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-xl text-xs font-bold flex items-center gap-1.5"
-                    >
-                      <ArrowRightOnRectangleIcon className="w-4 h-4" />
-                      خروج
-                    </button>
+                  <div>
+                    <h2 className="text-sm font-black text-navy-900">
+                      ملف المريض: {patient.name}
+                    </h2>
+                    <p className="text-[11px] text-slate-400">
+                      معرف المريض: {patient.patientId || 'NABD-0001'} • دمياط
+                    </p>
                   </div>
                 </div>
 
-                {/* Metadata Row */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 text-xs text-slate-600">
-                  <div>
-                    <span className="text-slate-400 block text-[11px]">تاريخ إنشاء الملف:</span>
-                    <strong className="text-navy-900">{patient.createdAt || '01/09/2026'}</strong>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[11px]">آخر تحديث:</span>
-                    <strong className="text-navy-900">{patient.updatedAt || 'اليوم'}</strong>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[11px]">المدينة:</span>
-                    <strong className="text-navy-900">{patient.city || 'دمياط'}</strong>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[11px]">مقدم الرعاية:</span>
-                    <strong className="text-navy-900">نبض للتمريض المنزلي</strong>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handlePrintPdf}
+                    className="btn-primary py-2 px-4 bg-navy-700 hover:bg-navy-800 text-white rounded-xl text-xs font-black flex items-center gap-2 shadow-cta"
+                  >
+                    <PrinterIcon className="w-4 h-4 text-gold-400" />
+                    طباعة وتصدير PDF 📄
+                  </button>
+
+                  <button
+                    onClick={handleLogout}
+                    className="btn-secondary py-2 px-3 bg-red-50 hover:bg-red-100 text-red-700 rounded-xl text-xs font-bold flex items-center gap-1"
+                  >
+                    <ArrowRightOnRectangleIcon className="w-4 h-4" />
+                    خروج
+                  </button>
                 </div>
               </div>
 
-              {/* Next Upcoming Visit Card */}
-              {patient.nextVisit && (
-                <div className="bg-gradient-to-r from-navy-900 to-slate-900 text-white rounded-3xl p-6 shadow-xl border-2 border-gold-400/40">
-                  <div className="flex items-center justify-between gap-3 mb-3">
-                    <div className="flex items-center gap-2">
-                      <CalendarDaysIcon className="w-6 h-6 text-gold-400" />
-                      <h3 className="text-base font-black text-white">
-                        موعد الزيارة القادمة
-                      </h3>
+              {/* ══════════════════════════════════════════════════════════
+                  OFFICIAL MEDICAL REPORT DOCUMENT (High-Fidelity Printable)
+              ══════════════════════════════════════════════════════════ */}
+              <div className="bg-white border-2 border-navy-900/20 rounded-3xl p-6 sm:p-10 shadow-xl print:border-0 print:p-2 print:shadow-none space-y-6">
+                {/* ── 1. Official Header with Nabd Logo ── */}
+                <div className="border-b-4 border-navy-900 pb-6 relative">
+                  <div className="flex items-center justify-between gap-4">
+                    {/* Brand Details */}
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="badge bg-gold-500 text-navy-950 text-xs font-black px-3 py-0.5">
+                          مؤسسة رسمية معتمدة
+                        </span>
+                        <span className="text-xs font-bold text-navy-800">دمياط — جمهورية مصر العربية</span>
+                      </div>
+                      <h1 className="text-xl sm:text-2xl font-black text-navy-900 tracking-tight">
+                        نبض للتمريض المنزلي والرعاية الصحية
+                      </h1>
+                      <p className="text-xs font-semibold text-slate-600">
+                        NABD Home Nursing &amp; Medical Healthcare Services
+                      </p>
+                      <p className="text-[11px] text-navy-700 font-bold italic pt-0.5">
+                        &quot;رعايتك الصحية تبدأ من مكانك، ونحن أقرب إليك&quot;
+                      </p>
                     </div>
-                    <span className="badge bg-gold-500 text-navy-950 text-xs font-black px-3 py-1">
-                      مؤكدة ⏰
-                    </span>
+
+                    {/* Official Nabd Logo Image */}
+                    <div className="shrink-0 text-center">
+                      <div className="w-24 h-24 sm:w-28 sm:h-28 relative rounded-2xl overflow-hidden shadow-md border-2 border-gold-400 bg-white">
+                        <Image
+                          src="/nabd-logo-official.png"
+                          alt="شعار نبض للتمريض المنزلي"
+                          fill
+                          sizes="(max-width: 768px) 96px, 112px"
+                          className="object-contain p-1"
+                          priority
+                        />
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="bg-white/10 rounded-2xl p-4 text-sm space-y-1">
-                    <p className="font-bold text-gold-300 text-base">
-                      {patient.nextVisit}
-                    </p>
-                    <p className="text-xs text-slate-200">
-                      📍 مكان الزيارة: {patient.address || patient.city || 'دمياط'}
-                    </p>
+                  {/* Header Gold Bar */}
+                  <div className="flex items-center justify-between bg-gradient-to-r from-navy-950 via-navy-800 to-navy-900 text-white rounded-xl px-4 py-2 mt-4 text-xs font-bold shadow-sm">
+                    <div className="flex items-center gap-2">
+                      <ShieldCheckIcon className="w-4 h-4 text-gold-400" />
+                      <span>السجل الطبي الموحد للمريض (Medical Health Record)</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-gold-300 font-mono text-[11px]">
+                      <span>تاريخ التقرير: {reportDate}</span>
+                    </div>
                   </div>
                 </div>
-              )}
 
-              {/* Grid: Timeline Sections */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* ── Section 1: Vital Signs Timeline ── */}
-                <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-card space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                {/* ── 2. Patient Profile Identification Matrix ── */}
+                <div className="bg-slate-50 border-2 border-navy-900/10 rounded-2xl p-5 space-y-3">
+                  <div className="flex items-center justify-between border-b border-slate-200 pb-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-xl">📊</span>
-                      <h3 className="text-base font-black text-navy-900">
-                        سجل العلامات الحيوية
+                      <UserIcon className="w-5 h-5 text-navy-700" />
+                      <h3 className="text-sm font-black text-navy-900">
+                        بيانات المريض الأساسية (Patient Identification)
                       </h3>
                     </div>
-                    <span className="text-xs text-slate-400">
-                      {parsedVitals.length} قياسات مسجلة
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="badge bg-navy-900 text-gold-300 font-mono text-xs font-black px-3 py-1">
+                        {patient.patientId || 'NABD-0001'}
+                      </span>
+                      <span className="badge bg-emerald-600 text-white text-xs font-bold px-2.5 py-0.5">
+                        {patient.status || 'نشط'}
+                      </span>
+                    </div>
                   </div>
 
-                  {parsedVitals.length === 0 ? (
-                    <div className="p-6 text-center text-xs text-slate-400 bg-slate-50 rounded-2xl">
-                      لا توجد قياسات مسجلة بعد. يتم تسجيل الضغط والسكر والنبض تلقائياً مع كل زيارة تمريضية.
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+                    <div>
+                      <span className="text-slate-500 block text-[11px]">اسم المريض بالكامل:</span>
+                      <strong className="text-navy-900 text-sm font-black">{patient.name}</strong>
                     </div>
-                  ) : (
-                    <div className="space-y-3">
-                      {parsedVitals.map((vEntry, idx) => (
+                    <div>
+                      <span className="text-slate-500 block text-[11px]">اسم الحاجز / العميل:</span>
+                      <strong className="text-slate-800">{patient.customerName || patient.name}</strong>
+                    </div>
+                    <div>
+                      <span className="text-slate-500 block text-[11px]">رقم الهاتف للتواصل:</span>
+                      <strong className="text-navy-900 font-mono text-xs" dir="ltr">{patient.phone}</strong>
+                    </div>
+                    <div>
+                      <span className="text-slate-500 block text-[11px]">المدينة / المحافظة:</span>
+                      <strong className="text-slate-800">دمياط — {patient.city || 'دمياط'}</strong>
+                    </div>
+                    <div className="sm:col-span-2">
+                      <span className="text-slate-500 block text-[11px]">العنوان بالتفصيل:</span>
+                      <strong className="text-slate-800">{patient.address || 'دمياط'}</strong>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ── 3. Next Upcoming Visit & Scheduled Follow-up ── */}
+                {cleanedNextVisit && (
+                  <div className="bg-gradient-to-r from-navy-900 to-slate-900 text-white rounded-2xl p-4 border-2 border-gold-400/50 shadow-md page-break-inside-avoid">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <CalendarDaysIcon className="w-5 h-5 text-gold-400" />
+                        <h4 className="text-xs sm:text-sm font-black text-white">
+                          موعد الزيارة القادمة والمتابعة المجدولة (Upcoming Scheduled Visit)
+                        </h4>
+                      </div>
+                      <span className="badge bg-gold-500 text-navy-950 text-[10px] font-black px-2.5 py-0.5">
+                        مؤكدة ⏰
+                      </span>
+                    </div>
+                    <div className="bg-white/10 rounded-xl p-3 text-xs space-y-1">
+                      <p className="font-black text-gold-300 text-sm whitespace-pre-line">
+                        {cleanedNextVisit}
+                      </p>
+                      <p className="text-slate-200 text-[11px]">
+                        📍 مكان الزيارة: {patient.address || patient.city || 'دمياط'}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── 4. Clinical Matrix: Vital Signs & Visits ── */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 page-break-inside-avoid">
+                  {/* Vital Signs Card */}
+                  <div className="border-2 border-navy-900/10 rounded-2xl p-4 space-y-3 bg-white">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                      <div className="flex items-center gap-2">
+                        <HeartIcon className="w-4 h-4 text-red-500" />
+                        <h4 className="text-xs font-black text-navy-900">
+                          سجل العلامات الحيوية (Vital Signs Log)
+                        </h4>
+                      </div>
+                      <span className="text-[10px] text-slate-400 font-bold">
+                        {parsedVitals.length} قياسات
+                      </span>
+                    </div>
+
+                    {parsedVitals.length === 0 ? (
+                      <p className="text-[11px] text-slate-400 text-center py-4 bg-slate-50 rounded-xl">
+                        لا توجد قياسات مسجلة بعد. يتم تسجيل الضغط والسكر والنبض تلقائياً عند كل زيارة تمريضية.
+                      </p>
+                    ) : (
+                      <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+                        {parsedVitals.map((vEntry, idx) => (
+                          <div
+                            key={idx}
+                            className="bg-slate-50 border border-slate-200 rounded-xl p-3 text-[11px] space-y-1"
+                          >
+                            <p className="font-bold text-navy-900 text-xs">
+                              {vEntry.split('\n')[0]}
+                            </p>
+                            <p className="text-slate-700 font-mono leading-relaxed whitespace-pre-line">
+                              {vEntry.split('\n').slice(1).join('\n')}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Nursing Visits Log Card */}
+                  <div className="border-2 border-navy-900/10 rounded-2xl p-4 space-y-3 bg-white">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                      <div className="flex items-center gap-2">
+                        <ClockIcon className="w-4 h-4 text-navy-700" />
+                        <h4 className="text-xs font-black text-navy-900">
+                          سجل الزيارات والخدمات (Nursing Visits Log)
+                        </h4>
+                      </div>
+                      <span className="text-[10px] text-slate-400 font-bold">
+                        {parsedVisits.length} زيارات
+                      </span>
+                    </div>
+
+                    {parsedVisits.length === 0 ? (
+                      <p className="text-[11px] text-slate-400 text-center py-4 bg-slate-50 rounded-xl">
+                        لا توجد زيارات سابقة مسجلة.
+                      </p>
+                    ) : (
+                      <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+                        {parsedVisits.map((vis, idx) => (
+                          <div
+                            key={idx}
+                            className="bg-slate-50 border border-slate-200 rounded-xl p-3 text-[11px] space-y-1"
+                          >
+                            <div className="flex items-center justify-between text-navy-900 font-black">
+                              <span>{vis.split('\n')[0]}</span>
+                              <span className="text-[9px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">
+                                تم التنفيذ
+                              </span>
+                            </div>
+                            <p className="text-slate-700 whitespace-pre-line leading-relaxed">
+                              {vis.split('\n').slice(1).join('\n')}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* ── 5. Lab Tests & Diagnostic History ── */}
+                {parsedLabs.length > 0 && (
+                  <div className="border-2 border-navy-900/10 rounded-2xl p-4 space-y-3 bg-white page-break-inside-avoid">
+                    <div className="flex items-center gap-2 border-b border-slate-100 pb-2">
+                      <BeakerIcon className="w-4 h-4 text-emerald-600" />
+                      <h4 className="text-xs font-black text-navy-900">
+                        سجل التحاليل والفحوصات المخبرية (Laboratory &amp; Diagnostics)
+                      </h4>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {parsedLabs.map((lab, idx) => (
                         <div
                           key={idx}
-                          className="bg-navy-50/60 border border-navy-100 rounded-2xl p-4 text-xs font-bold text-navy-900 space-y-1"
+                          className="bg-emerald-50/60 border border-emerald-200 rounded-xl p-3 text-[11px] space-y-1"
                         >
-                          <div className="flex items-center gap-2 text-emerald-700 mb-1">
-                            <ClockIcon className="w-3.5 h-3.5" />
-                            <span>{vEntry.split('\n')[0]}</span>
-                          </div>
-                          <p className="text-slate-800 font-mono leading-relaxed">
-                            {vEntry.split('\n').slice(1).join('\n')}
+                          <strong className="text-emerald-900 block font-black">
+                            {lab.split('\n')[0]}
+                          </strong>
+                          <p className="text-slate-700 whitespace-pre-line leading-relaxed">
+                            {lab.split('\n').slice(1).join('\n')}
                           </p>
                         </div>
                       ))}
                     </div>
-                  )}
-                </div>
-
-                {/* ── Section 2: Visits History Timeline ── */}
-                <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-card space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">🩺</span>
-                      <h3 className="text-base font-black text-navy-900">
-                        سجل الزيارات والخدمات
-                      </h3>
-                    </div>
-                    <span className="text-xs text-slate-400">
-                      {parsedVisits.length} زيارات
-                    </span>
                   </div>
+                )}
 
-                  {parsedVisits.length === 0 ? (
-                    <div className="p-6 text-center text-xs text-slate-400 bg-slate-50 rounded-2xl">
-                      لا توجد زيارات سابقة مكتملة بعد.
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      {parsedVisits.map((vis, idx) => (
-                        <div
-                          key={idx}
-                          className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs space-y-1"
-                        >
-                          <div className="flex items-center justify-between text-navy-900 font-black">
-                            <span>{vis.split('\n')[0]}</span>
-                            <span className="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">
-                              تم التنفيذ
-                            </span>
-                          </div>
-                          <div className="text-slate-700 whitespace-pre-line leading-relaxed pt-1">
-                            {vis.split('\n').slice(1).join('\n')}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Lab Tests & Diagnostic Reports Section */}
-              {parsedLabs.length > 0 && (
-                <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-card space-y-4">
-                  <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-                    <BeakerIcon className="w-5 h-5 text-emerald-600" />
-                    <h3 className="text-base font-black text-navy-900">
-                      سجل التحاليل والفحوصات الطبية
-                    </h3>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {parsedLabs.map((lab, idx) => (
-                      <div
-                        key={idx}
-                        className="bg-emerald-50/50 border border-emerald-200 rounded-2xl p-4 text-xs space-y-1"
-                      >
-                        <strong className="text-emerald-900 block font-black">
-                          {lab.split('\n')[0]}
+                {/* ── 6. Medications, Clinical Instructions & Alerts ── */}
+                {(patient.medications || patient.instructions || patient.alerts) && (
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 page-break-inside-avoid">
+                    {patient.medications && (
+                      <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 text-[11px] space-y-1">
+                        <strong className="text-navy-900 block font-black">
+                          💊 الأدوية الحالية والمواعيد:
                         </strong>
                         <p className="text-slate-700 whitespace-pre-line leading-relaxed">
-                          {lab.split('\n').slice(1).join('\n')}
+                          {patient.medications}
                         </p>
                       </div>
-                    ))}
+                    )}
+
+                    {patient.instructions && (
+                      <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 text-[11px] space-y-1">
+                        <strong className="text-navy-900 block font-black">
+                          📝 تعليمات وتوصيات التمريض:
+                        </strong>
+                        <p className="text-slate-700 whitespace-pre-line leading-relaxed">
+                          {patient.instructions}
+                        </p>
+                      </div>
+                    )}
+
+                    {patient.alerts && (
+                      <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-[11px] space-y-1">
+                        <strong className="text-amber-900 block font-black">
+                          ⚠️ التنبيهات والحساسية:
+                        </strong>
+                        <p className="text-amber-800 whitespace-pre-line leading-relaxed">
+                          {patient.alerts}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* ── 7. Official Seal, Signatures & Footer ── */}
+                <div className="pt-6 border-t-2 border-navy-900/20 page-break-inside-avoid space-y-4">
+                  <div className="grid grid-cols-2 gap-6 text-center text-xs">
+                    {/* Attending Nurse Signature */}
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-4">
+                      <p className="font-black text-navy-900">
+                        توقيع المشرف التمريضي / مقدم الخدمة:
+                      </p>
+                      <p className="text-slate-800 font-bold font-serif text-sm">
+                        إبراهيم ماهر
+                      </p>
+                      <p className="text-[10px] text-slate-400">
+                        نبض للتمريض المنزلي — دمياط
+                      </p>
+                    </div>
+
+                    {/* Official Seal / Stamp */}
+                    <div className="p-3 bg-navy-50/50 rounded-xl border-2 border-dashed border-navy-300 flex flex-col items-center justify-center space-y-1">
+                      <span className="text-2xl">🏛️</span>
+                      <p className="font-black text-navy-900 text-xs">
+                        الختم الرسمي لمؤسسة نبض
+                      </p>
+                      <p className="text-[10px] text-navy-600 font-mono">
+                        دمياط • معتمد وموثق
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Legal Medical Disclaimer & Contact */}
+                  <div className="bg-navy-950 text-white rounded-xl p-3 text-center text-[10px] space-y-1">
+                    <p className="font-bold text-gold-300">
+                      نبض للتمريض المنزلي — دمياط | خط الطوارئ والحجوزات: 01001097896 / 01099667065
+                    </p>
+                    <p className="text-slate-300">
+                      هذا التقرير صادر رسميًا عن نظام نبض للسجلات الطبية المنزلية. تُنفذ كافة الإجراءات وفق المعايير الطبية المعتمدة.
+                    </p>
                   </div>
                 </div>
-              )}
-
-              {/* Medications & Medical Instructions */}
-              {(patient.medications || patient.instructions || patient.alerts) && (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {patient.medications && (
-                    <div className="bg-white border border-slate-200 rounded-2xl p-5 text-xs space-y-2">
-                      <h4 className="font-black text-navy-900 flex items-center gap-1.5 text-sm">
-                        💊 الأدوية والمواعيد:
-                      </h4>
-                      <p className="text-slate-700 whitespace-pre-line leading-relaxed">
-                        {patient.medications}
-                      </p>
-                    </div>
-                  )}
-
-                  {patient.instructions && (
-                    <div className="bg-white border border-slate-200 rounded-2xl p-5 text-xs space-y-2">
-                      <h4 className="font-black text-navy-900 flex items-center gap-1.5 text-sm">
-                        📝 تعليمات التمريض:
-                      </h4>
-                      <p className="text-slate-700 whitespace-pre-line leading-relaxed">
-                        {patient.instructions}
-                      </p>
-                    </div>
-                  )}
-
-                  {patient.alerts && (
-                    <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-xs space-y-2">
-                      <h4 className="font-black text-amber-900 flex items-center gap-1.5 text-sm">
-                        ⚠️ تنبيهات خاصة:
-                      </h4>
-                      <p className="text-amber-800 whitespace-pre-line leading-relaxed">
-                        {patient.alerts}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Official Stamp & Contact Footer for Print */}
-              <div className="bg-white border-2 border-dashed border-slate-300 rounded-3xl p-6 text-center space-y-2 text-xs text-slate-500">
-                <p className="font-black text-navy-900 text-sm">
-                  🏥 نبض للتمريض المنزلي — دمياط
-                </p>
-                <p>
-                  رعايتك الصحية تبدأ من مكانك، ونحن أقرب إليك. 💙
-                </p>
-                <p className="font-mono text-[11px] text-slate-400">
-                  للتواصل والاستفسار: 01001097896 / 01099667065
-                </p>
               </div>
             </div>
           )}
