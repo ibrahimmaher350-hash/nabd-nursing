@@ -177,10 +177,12 @@ export async function POST(request: NextRequest) {
     const data = parsed.data
     const bookingId = generateBookingId()
 
-    // 1. Save to Google Sheets & Google Calendar asynchronously
-    saveToGoogleSheets(bookingId, data).catch((err) =>
-      console.error('[Booking API] Google Sheets background sync error:', err)
-    )
+    // 1. Save to Google Sheets & Google Calendar
+    try {
+      await saveToGoogleSheets(bookingId, data)
+    } catch (sheetErr) {
+      console.error('[Booking API] Google Sheets sync error:', sheetErr)
+    }
 
     // 2. Build WhatsApp URL
     const adminPhone = getAdminWhatsAppNumber()
