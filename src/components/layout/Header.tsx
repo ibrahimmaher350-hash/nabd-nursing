@@ -19,7 +19,6 @@ const navLinks = [
   { href: '/prescriptions',  label: 'الروشتات 💊',      badge: 'جديد' },
   { href: '/offers',         label: 'العروض 🎁',        badge: 'خصم' },
   { href: '/first-aid',      label: 'دليل الإسعافات 🚑', badge: null },
-  { href: '/medical-record', label: 'ملفي الطبي',       badge: null },
   { href: '/contact',        label: 'تواصل معنا',       badge: null },
 ]
 
