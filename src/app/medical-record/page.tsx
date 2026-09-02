@@ -26,6 +26,11 @@ import {
   HeartIcon,
   DocumentTextIcon,
   SparklesIcon,
+  ShareIcon,
+  DocumentDuplicateIcon,
+  CheckIcon,
+  XMarkIcon,
+  ClipboardDocumentCheckIcon,
 } from '@heroicons/react/24/solid'
 import { useSettings } from '@/context/SettingsContext'
 import {
@@ -108,11 +113,22 @@ export default function MedicalRecordPage() {
     }
   }
 
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false)
+  const [copiedLink, setCopiedLink] = useState(false)
+  const [copiedSummary, setCopiedSummary] = useState(false)
+  const [shareToast, setShareToast] = useState<string | null>(null)
+
+  function showToast(msg: string) {
+    setShareToast(msg)
+    setTimeout(() => setShareToast(null), 3000)
+  }
+
   function handleLogout() {
     localStorage.removeItem(STORAGE_KEY)
     setPatient(null)
     setPhoneInput('')
     setErrorMsg('')
+    setIsShareModalOpen(false)
   }
 
   function handlePrintPdf() {
@@ -145,6 +161,119 @@ export default function MedicalRecordPage() {
 
   // Clean next visit string
   const cleanedNextVisit = cleanDateAndTimeString(patient?.nextVisit)
+
+  function generateMedicalSummaryText(): string {
+    if (!patient) return ''
+    const baseUrl =
+      typeof window !== 'undefined' && window.location.origin
+        ? window.location.origin
+        : 'https://nabd-nursing.vercel.app'
+    const recordUrl = `${baseUrl}/medical-record`
+
+    let text = `📋 *الملف الطبي الموحد — نبض للتمريض المنزلي*\n`
+    text += `═══════════════════════════\n`
+    text += `👤 *اسم المريض:* ${patient.name}\n`
+    text += `🆔 *المعرف الطبي:* ${patient.patientId || 'NABD-0001'}\n`
+    if (patient.city || patient.address) {
+      text += `📍 *الموقع:* دمياط — ${patient.city || ''} ${patient.address || ''}\n`
+    }
+    if (patient.phone) {
+      text += `📞 *هاتف التواصل:* ${patient.phone}\n`
+    }
+
+    if (parsedVisits.length > 0) {
+      text += `\n🩺 *سجل الزيارات والإجراءات التمريضية:*\n`
+      parsedVisits.slice(-3).forEach((v) => {
+        text += `• ${v.replace(/\n+/g, ' — ')}\n`
+      })
+    }
+
+    if (parsedVitals.length > 0) {
+      text += `\n📊 *العلامات الحيوية الأخيرة:*\n`
+      parsedVitals.slice(-3).forEach((v) => {
+        text += `• ${v.replace(/\n+/g, ' — ')}\n`
+      })
+    }
+
+    if (parsedLabs.length > 0) {
+      text += `\n🧪 *سجل الفحوصات والتحاليل:*\n`
+      parsedLabs.slice(-3).forEach((l) => {
+        text += `• ${l.replace(/\n+/g, ' — ')}\n`
+      })
+    }
+
+    if (patient.medications) {
+      text += `\n💊 *الأدوية والعلاجات:*\n${patient.medications}\n`
+    }
+
+    if (patient.alerts) {
+      text += `\n⚠️ *تنبيهات خاصة:* ${patient.alerts}\n`
+    }
+
+    text += `\n📄 *رابط استعراض وتصدير التقرير الطبي PDF:*\n${recordUrl}\n`
+    text += `\n🏥 *نبض للتمريض المنزلي — دمياط*\n`
+    text += `📞 خط الطوارئ والحجز: 01001097896 / 01099667065`
+
+    return text
+  }
+
+  async function handleNativeShare() {
+    if (!patient) return
+    const text = generateMedicalSummaryText()
+    const baseUrl =
+      typeof window !== 'undefined' && window.location.origin
+        ? window.location.origin
+        : 'https://nabd-nursing.vercel.app'
+
+    if (navigator?.share) {
+      try {
+        await navigator.share({
+          title: `الملف الطبي — ${patient.name} | نبض للتمريض المنزلي`,
+          text: text,
+          url: `${baseUrl}/medical-record`,
+        })
+        return
+      } catch (err) {
+        // Fallback to modal if rejected
+      }
+    }
+    setIsShareModalOpen(true)
+  }
+
+  function handleWhatsAppShare() {
+    if (!patient) return
+    const text = generateMedicalSummaryText()
+    const waUrl = `https://wa.me/?text=${encodeURIComponent(text)}`
+    window.open(waUrl, '_blank', 'noopener,noreferrer')
+  }
+
+  async function handleCopyLink() {
+    const baseUrl =
+      typeof window !== 'undefined' && window.location.origin
+        ? window.location.origin
+        : 'https://nabd-nursing.vercel.app'
+    const recordUrl = `${baseUrl}/medical-record`
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(recordUrl)
+        setCopiedLink(true)
+        showToast('تم نسخ رابط الملف الطبي بنجاح! 📋')
+        setTimeout(() => setCopiedLink(false), 2500)
+      }
+    } catch {}
+  }
+
+  async function handleCopySummary() {
+    const text = generateMedicalSummaryText()
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text)
+        setCopiedSummary(true)
+        showToast('تم نسخ ملخص التقرير الطبي كاملاً! 📋')
+        setTimeout(() => setCopiedSummary(false), 2500)
+      }
+    } catch {}
+  }
 
   return (
     <>
@@ -270,9 +399,9 @@ export default function MedicalRecordPage() {
             ══════════════════════════════════════════════════════════════ */
             <div className="max-w-4xl mx-auto space-y-6 print:m-0 print:p-0 print:max-w-full">
               {/* Screen Top Action Bar (Hidden on print) */}
-              <div className="flex items-center justify-between bg-white border border-slate-200 rounded-2xl p-4 shadow-sm print:hidden">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm print:hidden">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-navy-700 text-white flex items-center justify-center font-black text-sm">
+                  <div className="w-10 h-10 rounded-xl bg-navy-700 text-white flex items-center justify-center font-black text-sm shrink-0">
                     {patient.patientId || 'NABD'}
                   </div>
                   <div>
@@ -285,21 +414,105 @@ export default function MedicalRecordPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
+                  {/* Share Button */}
                   <button
-                    onClick={handlePrintPdf}
-                    className="btn-primary py-2 px-4 bg-navy-700 hover:bg-navy-800 text-white rounded-xl text-xs font-black flex items-center gap-2 shadow-cta"
+                    onClick={handleNativeShare}
+                    className="btn-primary py-2 px-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black flex items-center gap-1.5 shadow-sm transition-transform active:scale-95"
+                    aria-label="مشاركة الملف الطبي"
                   >
-                    <PrinterIcon className="w-4 h-4 text-gold-400" />
-                    طباعة وتصدير PDF 📄
+                    <ShareIcon className="w-4 h-4 text-white" />
+                    <span>مشاركة الملف 📲</span>
                   </button>
 
+                  {/* Print / PDF Button */}
+                  <button
+                    onClick={handlePrintPdf}
+                    className="btn-primary py-2 px-3.5 bg-navy-700 hover:bg-navy-800 text-white rounded-xl text-xs font-black flex items-center gap-1.5 shadow-cta"
+                  >
+                    <PrinterIcon className="w-4 h-4 text-gold-400" />
+                    <span>طباعة وتصدير PDF 📄</span>
+                  </button>
+
+                  {/* Logout Button */}
                   <button
                     onClick={handleLogout}
                     className="btn-secondary py-2 px-3 bg-red-50 hover:bg-red-100 text-red-700 rounded-xl text-xs font-bold flex items-center gap-1"
+                    title="تسجيل الخروج والعودة للبحث"
                   >
                     <ArrowRightOnRectangleIcon className="w-4 h-4" />
-                    خروج
+                    <span>خروج</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* ── Quick Share & Clinical Actions Banner ── */}
+              <div className="bg-gradient-to-r from-navy-950 via-navy-900 to-slate-900 border border-gold-500/30 text-white rounded-2xl p-4 shadow-md flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 print:hidden">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 shrink-0">
+                    <ShareIcon className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs sm:text-sm font-black text-white">
+                      مشاركة التقرير مع الطبيب المعالج أو الأسرة 🩺
+                    </p>
+                    <p className="text-[11px] text-slate-300">
+                      أرسل ملخص الفحوصات والزيارات بضغطة زر عبر واتساب أو انسخ الرابط المباشر
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                  <button
+                    onClick={handleWhatsAppShare}
+                    className="flex-1 sm:flex-none bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 shadow-sm transition-transform active:scale-95"
+                  >
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    <span>واتساب 💬</span>
+                  </button>
+
+                  <button
+                    onClick={handleCopyLink}
+                    className="flex-1 sm:flex-none bg-white/10 hover:bg-white/20 border border-white/20 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    {copiedLink ? (
+                      <>
+                        <CheckIcon className="w-3.5 h-3.5 text-emerald-400" />
+                        <span className="text-emerald-300 font-bold">تم النسخ!</span>
+                      </>
+                    ) : (
+                      <>
+                        <DocumentDuplicateIcon className="w-3.5 h-3.5 text-gold-300" />
+                        <span>نسخ الرابط</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={handleCopySummary}
+                    className="flex-1 sm:flex-none bg-white/10 hover:bg-white/20 border border-white/20 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    {copiedSummary ? (
+                      <>
+                        <CheckIcon className="w-3.5 h-3.5 text-emerald-400" />
+                        <span className="text-emerald-300 font-bold">تم نسخ التقرير!</span>
+                      </>
+                    ) : (
+                      <>
+                        <ClipboardDocumentCheckIcon className="w-3.5 h-3.5 text-gold-300" />
+                        <span>نسخ التقرير 📋</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={() => setIsShareModalOpen(true)}
+                    className="bg-gold-500 hover:bg-gold-600 text-navy-950 px-3.5 py-2 rounded-xl text-xs font-black flex items-center justify-center gap-1 shadow transition-all"
+                  >
+                    <ShareIcon className="w-3.5 h-3.5" />
+                    <span>خيارات المشاركة</span>
                   </button>
                 </div>
               </div>
@@ -613,6 +826,153 @@ export default function MedicalRecordPage() {
             </div>
           )}
         </div>
+
+        {/* ── Share Modal (نافذة مشاركة الملف الطبي) ── */}
+        {isShareModalOpen && patient && (
+          <div
+            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in print:hidden"
+            onClick={() => setIsShareModalOpen(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="share-modal-title"
+          >
+            <div
+              className="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden border border-slate-200 animate-scale-in"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="bg-gradient-to-r from-navy-950 via-navy-900 to-navy-800 text-white p-5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
+                    <ShareIcon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 id="share-modal-title" className="text-base font-black text-white">
+                      مشاركة الملف الطبي الموحد 📋
+                    </h3>
+                    <p className="text-xs text-gold-300">
+                      {patient.name} • {patient.patientId || 'NABD-0001'}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsShareModalOpen(false)}
+                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                  aria-label="إغلاق"
+                >
+                  <XMarkIcon className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+                <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                  اختر الطريقة المناسبة لمشاركة ملخص الحالة والتقرير الطبي مع الطبيب المعالج أو أفراد الأسرة:
+                </p>
+
+                {/* 1. WhatsApp Button */}
+                <button
+                  onClick={() => {
+                    handleWhatsAppShare()
+                    setIsShareModalOpen(false)
+                  }}
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white p-3.5 rounded-2xl font-black text-sm flex items-center justify-between shadow-sm transition-transform active:scale-98"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center">
+                      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                      </svg>
+                    </div>
+                    <div className="text-start">
+                      <span className="block font-black text-sm">مشاركة فورية عبر واتساب</span>
+                      <span className="text-[11px] text-emerald-100">إرسال التقرير والملخص لأي محادثة</span>
+                    </div>
+                  </div>
+                  <span className="text-xs bg-white/20 px-3 py-1 rounded-full">إرسال ↗</span>
+                </button>
+
+                {/* 2. Native Share API */}
+                {typeof navigator !== 'undefined' && typeof navigator.share === 'function' && (
+                  <button
+                    onClick={() => {
+                      handleNativeShare()
+                      setIsShareModalOpen(false)
+                    }}
+                    className="w-full bg-navy-800 hover:bg-navy-900 text-white p-3.5 rounded-2xl font-black text-sm flex items-center justify-between shadow-sm transition-transform active:scale-98"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center">
+                        <ShareIcon className="w-5 h-5 text-gold-400" />
+                      </div>
+                      <div className="text-start">
+                        <span className="block font-black text-sm">مشاركة عبر تطبيقات الهاتف</span>
+                        <span className="text-[11px] text-slate-300">تليجرام، فيسبوك، رسائل، أو إيميل</span>
+                      </div>
+                    </div>
+                    <span className="text-xs bg-white/15 px-3 py-1 rounded-full">تطبيقات ↗</span>
+                  </button>
+                )}
+
+                {/* 3. Copy Link */}
+                <button
+                  onClick={handleCopyLink}
+                  className="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 p-3.5 rounded-2xl font-bold text-sm flex items-center justify-between transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-slate-200 flex items-center justify-center text-slate-700">
+                      <DocumentDuplicateIcon className="w-5 h-5" />
+                    </div>
+                    <div className="text-start">
+                      <span className="block font-black text-xs sm:text-sm">نسخ رابط صفحة الملف الطبي</span>
+                      <span className="text-[11px] text-slate-500">لفتح واستعراض التقرير من أي جهاز</span>
+                    </div>
+                  </div>
+                  <span className="text-xs bg-slate-200 text-slate-700 px-3 py-1 rounded-full font-black">
+                    {copiedLink ? '✓ تم النسخ' : 'نسخ'}
+                  </span>
+                </button>
+
+                {/* 4. Copy Full Summary */}
+                <button
+                  onClick={handleCopySummary}
+                  className="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 p-3.5 rounded-2xl font-bold text-sm flex items-center justify-between transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-slate-200 flex items-center justify-center text-slate-700">
+                      <ClipboardDocumentCheckIcon className="w-5 h-5" />
+                    </div>
+                    <div className="text-start">
+                      <span className="block font-black text-xs sm:text-sm">نسخ نص التقرير الطبي كاملاً</span>
+                      <span className="text-[11px] text-slate-500">يتضمن التشخيص والزيارات والتحاليل</span>
+                    </div>
+                  </div>
+                  <span className="text-xs bg-slate-200 text-slate-700 px-3 py-1 rounded-full font-black">
+                    {copiedSummary ? '✓ تم النسخ' : 'نسخ النص'}
+                  </span>
+                </button>
+
+                {/* Text Preview Box */}
+                <div className="pt-2">
+                  <label className="block text-[11px] font-bold text-slate-500 mb-1">
+                    معاينة نص الرسالة التي ستتم مشاركتها:
+                  </label>
+                  <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3 text-[11px] text-slate-700 whitespace-pre-line leading-relaxed max-h-40 overflow-y-auto font-sans">
+                    {generateMedicalSummaryText()}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Toast Notification ── */}
+        {shareToast && (
+          <div className="fixed bottom-6 start-1/2 -translate-x-1/2 z-50 bg-navy-950 text-white border border-gold-400/50 shadow-2xl px-5 py-3 rounded-2xl text-xs sm:text-sm font-black flex items-center gap-2 animate-bounce print:hidden">
+            <CheckIcon className="w-5 h-5 text-emerald-400" />
+            <span>{shareToast}</span>
+          </div>
+        )}
       </main>
 
       <FloatingActions />
