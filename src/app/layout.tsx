@@ -108,33 +108,99 @@ export const viewport: Viewport = {
 // ── JSON-LD Structured Data ───────────────────────────────────
 const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type': ['LocalBusiness', 'MedicalBusiness'],
+  '@type': ['MedicalBusiness', 'LocalBusiness', 'HealthAndBeautyBusiness'],
   '@id': `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app'}/#organization`,
   name: siteConfig.brand.name,
-  alternateName: siteConfig.brand.shortName,
+  alternateName: ['نبض', 'Nabd Nursing', 'نبض للتمريض المنزلي بدمياط'],
   description: siteConfig.brand.description,
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app',
   logo: {
     '@type': 'ImageObject',
     url: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app'}/logo.jpg`,
+    width: '512',
+    height: '512',
   },
+  image: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app'}/images/nabd-hero-poster.jpg`,
   telephone: siteConfig.contact.phoneE164,
-  areaServed: {
-    '@type': 'City',
-    name: 'دمياط',
-    containedInPlace: {
-      '@type': 'Country',
-      name: 'مصر',
-    },
+  priceRange: '$$',
+  currenciesAccepted: 'EGP',
+  paymentAccepted: 'Cash, Vodafone Cash, InstaPay',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'دمياط',
+    addressRegion: 'دمياط',
+    addressCountry: 'EG',
   },
-  serviceType: 'Home Nursing Services',
-  priceRange: 'حسب الخدمة والحالة',
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 31.4165,
+    longitude: 31.8133,
+  },
+  areaServed: [
+    {
+      '@type': 'City',
+      name: 'دمياط',
+      containedInPlace: {
+        '@type': 'Country',
+        name: 'مصر',
+      },
+    },
+    {
+      '@type': 'AdministrativeArea',
+      name: 'محافظة دمياط',
+    },
+  ],
+  medicalSpecialty: [
+    'Nursing',
+    'Emergency',
+    'PrimaryCare',
+    'Geriatric',
+  ],
+  availableService: [
+    {
+      '@type': 'MedicalProcedure',
+      name: 'تركيب وتغيير القسطرة البولية بالمنزل',
+      procedureType: 'NoninvasiveProcedure',
+    },
+    {
+      '@type': 'MedicalProcedure',
+      name: 'تركيب المحاليل الوريدية والكانيولا',
+      procedureType: 'NoninvasiveProcedure',
+    },
+    {
+      '@type': 'MedicalProcedure',
+      name: 'غيار الجروح والحروق وقرح الفراش',
+      procedureType: 'NoninvasiveProcedure',
+    },
+    {
+      '@type': 'MedicalProcedure',
+      name: 'تركيب أنبوبة التغذية المعوية (الرايل)',
+      procedureType: 'NoninvasiveProcedure',
+    },
+    {
+      '@type': 'MedicalProcedure',
+      name: 'سحب عينات التحاليل الطبية من المنزل',
+      procedureType: 'DiagnosticProcedure',
+    },
+    {
+      '@type': 'MedicalProcedure',
+      name: 'إعطاء كافة أنواع الحقن المنزلية',
+      procedureType: 'NoninvasiveProcedure',
+    },
+  ],
+  founder: {
+    '@type': 'Person',
+    name: 'إبراهيم ماهر',
+    jobTitle: 'المشرف العام وأخصائي التمريض والرعاية الصحية المنزلية',
+    telephone: siteConfig.contact.phoneE164,
+  },
   sameAs: [
     siteConfig.social.facebook,
     siteConfig.social.facebookProfile,
     siteConfig.social.facebookGroup,
     siteConfig.social.blogger,
     siteConfig.social.googleBusiness,
+    siteConfig.social.googleReviews,
     siteConfig.social.cezmaStore,
     siteConfig.social.telegram,
   ],
@@ -220,9 +286,22 @@ export default function RootLayout({
           />
         )}
 
+        {/* Geo & Location Tags for Search Engines & AI */}
+        <meta name="geo.region" content="EG-DT" />
+        <meta name="geo.placename" content="دمياط" />
+        <meta name="geo.position" content="31.4165;31.8133" />
+        <meta name="ICBM" content="31.4165, 31.8133" />
+        <meta name="format-detection" content="telephone=yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="نبض للتمريض" />
+
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://wa.me" />
+        <link rel="dns-prefetch" href="https://script.google.com" />
       </head>
       <body className="font-cairo antialiased">
         <MetaPixel />

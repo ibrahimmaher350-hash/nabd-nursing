@@ -13,14 +13,15 @@ import { useSettings } from '@/context/SettingsContext'
 
 const footerLinks = {
   main: [
-    { href: '/',               label: 'الرئيسية' },
-    { href: '/services',       label: 'خدمات التمريض 🩺' },
-    { href: '/booking',        label: 'طلب ممرض للمنزل 📅' },
-    { href: '/prescriptions',  label: 'الروشتات الطبية 💊' },
-    { href: '/offers',         label: 'عروض التمريض 🎁' },
-    { href: '/first-aid',      label: 'دليل الإسعافات 🚑' },
-    { href: '/medical-record', label: 'ملفي الطبي' },
-    { href: '/contact',        label: 'تواصل معنا' },
+    { href: '/',                                label: 'الرئيسية' },
+    { href: '/services',                        label: 'خدمات التمريض 🩺' },
+    { href: '/booking',                         label: 'طلب ممرض للمنزل 📅' },
+    { href: '/prescriptions',                   label: 'الروشتات الطبية 💊' },
+    { href: '/offers',                          label: 'عروض التمريض 🎁' },
+    { href: '/first-aid',                       label: 'دليل الإسعافات 🚑' },
+    { href: 'https://nabd-damietta.blogspot.com', label: 'المدونة الطبية ✍️', isExternal: true },
+    { href: '/medical-record',                  label: 'ملفي الطبي' },
+    { href: '/contact',                         label: 'تواصل معنا' },
   ],
   legal: [
     { href: '/privacy',            label: 'سياسة الخصوصية' },
@@ -133,12 +134,24 @@ export default function Footer() {
             <ul className="flex flex-col gap-2.5" role="list">
               {footerLinks.main.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-white/70 hover:text-gold-300 text-sm transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
+                  {link.isExternal ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/70 hover:text-gold-300 text-sm transition-colors duration-200 inline-flex items-center gap-1"
+                    >
+                      <span>{link.label}</span>
+                      <span className="text-xs text-gold-400">↗</span>
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-white/70 hover:text-gold-300 text-sm transition-colors duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

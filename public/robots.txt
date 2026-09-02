@@ -1,9 +1,26 @@
 User-agent: *
 Allow: /
-
-# Block admin area from indexing
 Disallow: /admin/
 Disallow: /api/
 
-# Sitemap
-Sitemap: https://nabd-damietta.blogspot.com/sitemap.xml
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+Sitemap: https://nabd-nursing.vercel.app/sitemap.xml
