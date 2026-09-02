@@ -12,13 +12,21 @@ import { siteConfig } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
 import { useSettings } from '@/context/SettingsContext'
 
-const navLinks = [
+interface NavLinkItem {
+  href: string
+  label: string
+  badge: string | null
+  isExternal?: boolean
+}
+
+const navLinks: NavLinkItem[] = [
   { href: '/',               label: 'الرئيسية',         badge: null },
   { href: '/services',       label: 'خدماتنا 🩺',       badge: 'طلب' },
   { href: '/booking',        label: 'احجز ممرض 📅',     badge: 'فوري' },
   { href: '/prescriptions',  label: 'الروشتات 💊',      badge: 'جديد' },
   { href: '/offers',         label: 'العروض 🎁',        badge: 'خصم' },
   { href: '/first-aid',      label: 'دليل الإسعافات 🚑', badge: null },
+  { href: 'https://nabd-damietta.blogspot.com', label: 'المدونة ✍️', badge: null, isExternal: true },
   { href: '/contact',        label: 'تواصل معنا',       badge: null },
 ]
 
@@ -112,7 +120,22 @@ export default function Header() {
               aria-label="القائمة الرئيسية"
             >
               {navLinks.map((link) =>
-                link.href === '/booking' ? null : (
+                link.href === '/booking' ? null : link.isExternal ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-ghost text-[11px] xl:text-xs 2xl:text-sm px-1.5 xl:px-2.5 relative inline-flex items-center gap-1 whitespace-nowrap text-navy-800 hover:text-gold-600 font-bold"
+                  >
+                    {link.label}
+                    {link.badge && (
+                      <span className="bg-gold-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">
+                        {link.badge}
+                      </span>
+                    )}
+                  </a>
+                ) : (
                   <Link
                     key={link.href}
                     href={link.href}
@@ -220,25 +243,39 @@ export default function Header() {
 
             {/* Nav links */}
             <div className="p-4 flex flex-col gap-1 overflow-y-auto flex-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={closeMenu}
-                  className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold transition-colors ${
-                    link.href === '/booking'
-                      ? 'bg-navy-700 text-white mt-2'
-                      : 'text-navy-700 hover:bg-navy-50'
-                  }`}
-                >
-                  {link.label}
-                  {link.badge && (
-                    <span className="bg-gold-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full leading-none ms-2">
-                      {link.badge}
-                    </span>
-                  )}
-                </Link>
-              ))}
+              {navLinks.map((link) =>
+                link.isExternal ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMenu}
+                    className="flex items-center justify-between px-4 py-3 rounded-xl text-base font-bold text-navy-800 hover:bg-navy-50 transition-colors"
+                  >
+                    <span>{link.label}</span>
+                    <span className="text-xs text-medical-muted">↗</span>
+                  </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={closeMenu}
+                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold transition-colors ${
+                      link.href === '/booking'
+                        ? 'bg-navy-700 text-white mt-2'
+                        : 'text-navy-700 hover:bg-navy-50'
+                    }`}
+                  >
+                    {link.label}
+                    {link.badge && (
+                      <span className="bg-gold-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full leading-none ms-2">
+                        {link.badge}
+                      </span>
+                    )}
+                  </Link>
+                )
+              )}
             </div>
 
             {/* Contact in drawer — pinned to bottom */}

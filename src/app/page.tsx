@@ -15,10 +15,8 @@ import OffersSection from '@/components/sections/OffersSection'
 import WhyNabd from '@/components/sections/WhyNabd'
 import HowItWorks from '@/components/sections/HowItWorks'
 import FacebookPostSection from '@/components/sections/FacebookPostSection'
-import BlogSection from '@/components/sections/BlogSection'
 import FAQ from '@/components/sections/FAQ'
 import FinalCTA from '@/components/sections/FinalCTA'
-import { getBlogProvider } from '@/lib/providers/BloggerProvider'
 import { getFeaturedOffers } from '@/data/offers'
 import { siteConfig } from '@/data/siteConfig'
 
@@ -32,9 +30,6 @@ export const metadata: Metadata = {
 export const revalidate = 3600
 
 export default async function HomePage() {
-  // Fetch blog posts server-side (with fallback)
-  const blogProvider = getBlogProvider()
-  const blogPosts = await blogProvider.getPosts(3)
   const featuredOffers = getFeaturedOffers()
 
   return (
@@ -67,9 +62,6 @@ export default async function HomePage() {
 
         {/* 8. Facebook Post Section — المنشور الرسمي والتفاعل الحي */}
         <FacebookPostSection />
-
-        {/* 9. Blog Section */}
-        <BlogSection posts={blogPosts} />
 
         {/* 9. FAQ */}
         <FAQ />

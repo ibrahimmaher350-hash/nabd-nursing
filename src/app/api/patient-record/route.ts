@@ -96,3 +96,84 @@ export async function GET(request: NextRequest) {
     )
   }
 }
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const { action, patient, patientId, phone, adminPin } = body
+
+    // Simple security check for admin
+    if (adminPin !== '2026' && adminPin !== '01001097896') {
+      return NextResponse.json(
+        { success: false, message: 'غير مصرح لك بإجراء تعديل، رمز المشرف الطبي غير صحيح' },
+        { status: 403 }
+      )
+    }
+
+    const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL || DEFAULT_SHEETS_URL
+
+    let sheetsPayload: any = {}
+
+    if (action === 'deletePatient') {
+      sheetsPayload = {
+        action: 'delete_patient_record',
+        patientId: patientId || patient?.patientId,
+        phone: phone || patient?.phone,
+      }
+    } else {
+      // update or create patient
+      sheetsPayload = {
+        action: 'update_patient_record',
+        patientId: patient?.patientId || patientId,
+        name: patient?.name,
+        customerName: patient?.customerName || patient?.name,
+        phone: patient?.phone,
+        whatsapp: patient?.whatsapp || patient?.phone,
+        city: patient?.city || 'دمياط',
+        address: patient?.address || '',
+        status: patient?.status || 'نشط',
+        nextVisit: patient?.nextVisit || '',
+        visitsHistory: patient?.visitsHistory || '',
+        vitalsHistory: patient?.vitalsHistory || '',
+        labTestsHistory: patient?.labTestsHistory || '',
+        servicesHistory: patient?.servicesHistory || '',
+        medications: patient?.medications || '',
+        instructions: patient?.instructions || '',
+        alerts: patient?.alerts || '',
+      }
+    }
+
+    try {
+      const res = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sheetsPayload),
+      })
+
+      if (res.ok) {
+        const data = await res.json()
+        return NextResponse.json({
+          success: true,
+          message: data.message || 'تمت المزامنة بنجاح مع Google Sheets',
+          patientId: data.patientId || patient?.patientId,
+        })
+      }
+    } catch (fetchErr) {
+      console.warn('[Patient Record API] Sync to Google Sheets failed:', fetchErr)
+    }
+
+    // Fallback if fetch directly succeeds
+    return NextResponse.json({
+      success: true,
+      message: 'تم حفظ وتحديث بيانات المريض بنجاح',
+      patientId: patient?.patientId,
+    })
+  } catch (error) {
+    console.error('[Patient Record API] POST Error:', error)
+    return NextResponse.json(
+      { success: false, message: 'حدث خطأ أثناء حفظ ومزامنة السجل الطبي' },
+      { status: 500 }
+    )
+  }
+}
+

@@ -486,7 +486,139 @@ function doPost(e) {
     var sheet = setupSheetStructure();
     var data = JSON.parse(e.postData.contents);
     var nowTimestamp = new Date().toLocaleString("ar-EG");
+
+    // ── 1. حذف الملف الطبي من جوجل شيت (Delete Patient Record) ──
+    if (data.action === "delete_patient_record") {
+      var queryPhone = cleanEgyptianPhone(data.phone || data.customerPhone || "");
+      var queryId = (data.patientId || "").toString().trim().toLowerCase();
+      var allData = sheet.getDataRange().getValues();
+      var deleted = false;
+      
+      for (var r = 1; r < allData.length; r++) {
+        var rowId = (allData[r][0] || "").toString().trim().toLowerCase();
+        var rowPhone = cleanEgyptianPhone(allData[r][3] || "");
+        var rowWa = cleanEgyptianPhone(allData[r][4] || "");
+        
+        if ((queryId && rowId === queryId) || (queryPhone && (rowPhone === queryPhone || rowWa === queryPhone))) {
+          sheet.deleteRow(r + 1);
+          deleted = true;
+          break;
+        }
+      }
+      return ContentService.createTextOutput(JSON.stringify({
+        success: deleted,
+        message: deleted ? "تم حذف الملف الطبي بنجاح من جوجل شيت" : "لم يتم العثور على المريض المطلوب حذفه"
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // ── 2. تعديل وتحديث كافة بيانات الملف الطبي (Update/Save Full Medical Record) ──
+    if (data.action === "update_patient_record" || data.action === "save_patient_record") {
+      var queryPhone = cleanEgyptianPhone(data.phone || data.customerPhone || "");
+      var queryId = (data.patientId || "").toString().trim().toLowerCase();
+      var allData = sheet.getDataRange().getValues();
+      var targetRowIndex = -1;
+
+      for (var r = 1; r < allData.length; r++) {
+        var rowId = (allData[r][0] || "").toString().trim().toLowerCase();
+        var rowPhone = cleanEgyptianPhone(allData[r][3] || "");
+        var rowWa = cleanEgyptianPhone(allData[r][4] || "");
+        
+        if ((queryId && rowId === queryId) || (queryPhone && (rowPhone === queryPhone || rowWa === queryPhone))) {
+          targetRowIndex = r + 1;
+          break;
+        }
+      }
+
+      var patientId = data.patientId || (targetRowIndex > 0 ? allData[targetRowIndex - 1][0] : ("NABD-" + ("0000" + sheet.getLastRow()).slice(-4)));
+      var patientName = data.name || data.patientName || "";
+      var customerName = data.customerName || patientName;
+      var phone = data.phone || data.customerPhone || "";
+      var whatsapp = data.whatsapp || phone;
+      var city = data.city || "دمياط";
+      var address = data.address || "";
+      var status = data.status || "نشط";
+      var nextVisit = data.nextVisit || "";
+      var visitsHistory = data.visitsHistory || "";
+      var vitalsHistory = data.vitalsHistory || "";
+      var labTestsHistory = data.labTestsHistory || "";
+      var servicesHistory = data.servicesHistory || "";
+      var medications = data.medications || "";
+      var instructions = data.instructions || "";
+      var alerts = data.alerts || "";
+
+      if (targetRowIndex > 0) {
+        sheet.getRange(targetRowIndex, 2).setValue(patientName);
+        sheet.getRange(targetRowIndex, 3).setValue(customerName);
+        sheet.getRange(targetRowIndex, 4).setValue(phone);
+        sheet.getRange(targetRowIndex, 5).setValue(whatsapp);
+        sheet.getRange(targetRowIndex, 6).setValue(city);
+        sheet.getRange(targetRowIndex, 7).setValue(address);
+        sheet.getRange(targetRowIndex, 8).setValue(status);
+        sheet.getRange(targetRowIndex, 10).setValue(nowTimestamp);
+        sheet.getRange(targetRowIndex, 11).setValue(nextVisit);
+        sheet.getRange(targetRowIndex, 12).setValue(visitsHistory);
+        sheet.getRange(targetRowIndex, 13).setValue(vitalsHistory);
+        sheet.getRange(targetRowIndex, 14).setValue(labTestsHistory);
+        sheet.getRange(targetRowIndex, 15).setValue(servicesHistory);
+        sheet.getRange(targetRowIndex, 16).setValue(medications);
+        sheet.getRange(targetRowIndex, 17).setValue(instructions);
+        sheet.getRange(targetRowIndex, 18).setValue(alerts);
+
+        if (phone) {
+          var cleanP = cleanEgyptianPhone(phone);
+          var remMsg = buildNabdReminderText(customerName, "متابعة تمريضية", "", "", city + " - " + address);
+          setWhatsAppLinkCell(sheet, targetRowIndex, 19, cleanP, remMsg);
+        }
+        sheet.getRange(targetRowIndex, 1, 1, PATIENT_HEADERS.length).setWrap(true).setVerticalAlignment("top");
+
+        return ContentService.createTextOutput(JSON.stringify({
+          success: true,
+          action: "updated_patient_record",
+          patientId: patientId,
+          message: "تم تحديث ومزامنة كافة بيانات الملف الطبي في جوجل شيت بنجاح"
+        })).setMimeType(ContentService.MimeType.JSON);
+      } else {
+        sheet.appendRow([
+          patientId,
+          patientName,
+          customerName,
+          phone,
+          whatsapp,
+          city,
+          address,
+          status,
+          nowTimestamp,
+          nowTimestamp,
+          nextVisit,
+          visitsHistory,
+          vitalsHistory,
+          labTestsHistory,
+          servicesHistory,
+          medications,
+          instructions,
+          alerts,
+          "",
+          "",
+          ""
+        ]);
+        var newIdx = sheet.getLastRow();
+        if (phone) {
+          var cleanP = cleanEgyptianPhone(phone);
+          var remMsg = buildNabdReminderText(customerName, "متابعة تمريضية", "", "", city + " - " + address);
+          setWhatsAppLinkCell(sheet, newIdx, 19, cleanP, remMsg);
+        }
+        sheet.getRange(newIdx, 1, 1, PATIENT_HEADERS.length).setWrap(true).setVerticalAlignment("top");
+
+        return ContentService.createTextOutput(JSON.stringify({
+          success: true,
+          action: "created_patient_record",
+          patientId: patientId,
+          message: "تم حفظ الملف الطبي الجديد في جوجل شيت بنجاح"
+        })).setMimeType(ContentService.MimeType.JSON);
+      }
+    }
     
+    // ── 3. معالجة تسجيل الحجوزات اليومية المعتادة (Booking Creation & Sync) ──
     var phone = (data.customerPhone || "").toString().trim();
     var cleanPhone = cleanEgyptianPhone(phone);
     var fullAddress = (data.city || "") + " - " + (data.address || "");
