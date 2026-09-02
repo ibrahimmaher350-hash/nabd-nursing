@@ -55,6 +55,75 @@ function setupDatabase() {
 }
 
 /**
+ * دالة لترحيل البيانات من الشيت القديم (الملفات الطبية للمرضى) إلى النظام الجديد
+ */
+function migrateOldData() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var oldSheet = ss.getSheetByName("الملفات الطبية للمرضى");
+  var newPatientsSheet = ss.getSheetByName(SHEETS.PATIENTS);
+  
+  if (!oldSheet) {
+    showAlertSafely("الشيت القديم 'الملفات الطبية للمرضى' غير موجود!");
+    return;
+  }
+  
+  if (!newPatientsSheet) {
+    setupDatabase();
+    newPatientsSheet = ss.getSheetByName(SHEETS.PATIENTS);
+  }
+  
+  var oldData = oldSheet.getDataRange().getValues();
+  if (oldData.length <= 1) {
+    showAlertSafely("الشيت القديم فارغ!");
+    return;
+  }
+  
+  var migratedCount = 0;
+  for (var i = 1; i < oldData.length; i++) {
+    var row = oldData[i];
+    var oldId = row[0]; // Patient ID
+    var oldName = row[1]; // Name
+    var oldPhone = row[3]; // Phone
+    
+    // Check if patient already migrated
+    var existing = getRecordsByField(SHEETS.PATIENTS, "patient_id", oldId);
+    if (existing.length === 0 && oldId && oldName) {
+      var publicToken = Utilities.getUuid().replace(/-/g, '').substring(0, 16);
+      
+      var newPatient = {
+        patient_id: oldId,
+        public_token: publicToken,
+        patient_name: oldName,
+        phone: oldPhone || "",
+        whatsapp: row[4] || oldPhone || "",
+        city: row[5] || "دمياط",
+        address: row[6] || "",
+        status: row[7] || "نشط",
+        registration_date: row[8] || Utilities.formatDate(new Date(), "GMT+2", "yyyy-MM-dd"),
+        notes: "تم ترحيله من النظام القديم",
+        calendar_event_id_next_visit: ""
+      };
+      
+      insertRecord(SHEETS.PATIENTS, newPatient);
+      migratedCount++;
+    }
+  }
+  
+  showAlertSafely("تم بنجاح ترحيل " + migratedCount + " مريض إلى النظام الجديد.");
+}
+
+function showAlertSafely(message) {
+  try {
+    var ui = SpreadsheetApp.getUi();
+    if (ui) {
+      ui.alert(message);
+      return;
+    }
+  } catch (e) {}
+  Logger.log(message);
+}
+
+/**
  * دالة معالجة طلبات الـ HTTP GET & POST
  */
 function doGet(e) {
