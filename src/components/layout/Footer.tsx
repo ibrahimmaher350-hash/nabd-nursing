@@ -20,7 +20,7 @@ const footerLinks = {
     { href: '/offers',                          label: 'عروض التمريض 🎁' },
     { href: '/first-aid',                       label: 'دليل الإسعافات 🚑' },
     { href: 'https://nabd-damietta.blogspot.com', label: 'المدونة الطبية ✍️', isExternal: true },
-    { href: '/admin',                           label: 'لوحة التحكم والإدارة' },
+    { href: '/medical-record',                  label: 'ملفي الطبي' },
     { href: '/contact',                         label: 'تواصل معنا' },
   ],
   legal: [

@@ -188,13 +188,13 @@ export default function BookingSuccess({
             )
           })()}
 
-          {/* Go to Home Button */}
+          {/* 📋 Go to Medical Record Button */}
           <Link
-            href="/"
+            href="/medical-record"
             className="inline-flex items-center justify-center gap-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 font-bold rounded-2xl py-3 px-4 text-xs sm:text-sm transition-all"
           >
-            <span>🏠</span>
-            <span>العودة للصفحة الرئيسية</span>
+            <span>📋</span>
+            <span>متابعة ملفي الطبي والقياسات</span>
           </Link>
 
           <a

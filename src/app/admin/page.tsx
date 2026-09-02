@@ -1,280 +1,1070 @@
 'use client'
+/**
+ * app/admin/page.tsx — لوحة التحكم الشاملة والخاصة لإدارة نبض للتمريض المنزلي
+ * تتيح لمدير الموقع (إبراهيم ماهر) التحكم الكامل واللحظي في:
+ * 1. أسعار وتفاصيل وحالة جميع الخدمات التمريضية الـ 15
+ * 2. أسعار ومخزون الأجهزة والمستلزمات الطبية (جهاز السكر فيفا تشيك + الكتالوج الطبي)
+ * 3. إضافة وتعديل المستلزمات الطبية
+ * 4. أرقام الاتصال وروابط الواتساب والسوشيال ميديا
+ * 5. رمز PIN السري لحماية اللوحة
+ * 6. الشريط الإعلاني ووضع الصيانة
+ */
+
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
-  UsersIcon,
-  MagnifyingGlassIcon,
-  UserPlusIcon,
+  CurrencyDollarIcon,
+  ArchiveBoxIcon,
+  Cog6ToothIcon,
+  ClipboardDocumentListIcon,
+  CheckCircleIcon,
   ArrowPathIcon,
-  LockClosedIcon,
+  PlusIcon,
+  TrashIcon,
+  KeyIcon,
+  MegaphoneIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  MagnifyingGlassIcon,
+  SparklesIcon,
 } from '@heroicons/react/24/solid'
+import { useSettings, type ServiceOverride, type SupplyOverride, type CustomProduct } from '@/context/SettingsContext'
+import { services } from '@/data/services'
+import { FEATURED_GLUCOSE_METER, ADDITIONAL_MEDICAL_SUPPLIES } from '@/data/medicalSuppliesData'
 
-export default function AdminDashboard() {
-  const [pin, setPin] = useState('')
-  const [isAuth, setIsAuth] = useState(false)
-  const [authError, setAuthError] = useState('')
-  const [patients, setPatients] = useState<any[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [search, setSearch] = useState('')
-  const [isAdding, setIsAdding] = useState(false)
-  const [showAddForm, setShowAddForm] = useState(false)
-  const [newPatient, setNewPatient] = useState({ patient_name: '', phone: '', city: 'دمياط' })
+type AdminTab = 'services' | 'supplies' | 'bookings' | 'settings'
 
-  // Check auth on load from session storage
+export default function AdminMasterPage() {
+  const { settings, saveSettings, loading: settingsLoading } = useSettings()
+
+  // Active Tab
+  const [activeTab, setActiveTab] = useState<AdminTab>('services')
+
+  // Form States
+  const [servicesOverrides, setServicesOverrides] = useState<Record<string, ServiceOverride>>({})
+  const [suppliesOverrides, setSuppliesOverrides] = useState<Record<string, SupplyOverride>>({})
+  const [customProducts, setCustomProducts] = useState<CustomProduct[]>([])
+  const [phone, setPhone] = useState(settings.phone)
+  const [whatsapp, setWhatsapp] = useState(settings.whatsapp)
+  const [telegramUrl, setTelegramUrl] = useState(settings.telegramUrl || '')
+  const [facebookUrl, setFacebookUrl] = useState(settings.facebookUrl)
+  const [facebookGroupUrl, setFacebookGroupUrl] = useState(settings.facebookGroupUrl)
+  const [facebookProfileUrl, setFacebookProfileUrl] = useState(settings.facebookProfileUrl || '')
+  const [serviceAreas, setServiceAreas] = useState(settings.serviceAreas)
+  const [adminPin, setAdminPin] = useState(settings.adminPin || '2026')
+  const [announcement, setAnnouncement] = useState(settings.announcement || '')
+  const [announcementActive, setAnnouncementActive] = useState(settings.announcementActive || false)
+  const [maintenanceMode, setMaintenanceMode] = useState(settings.maintenanceMode)
+
+  // Search filter for services
+  const [serviceSearch, setServiceSearch] = useState('')
+
+  // UI state
+  const [saving, setSaving] = useState(false)
+  const [savedSuccess, setSavedSuccess] = useState(false)
+  const [newProductModal, setNewProductModal] = useState(false)
+  const [newProdName, setNewProdName] = useState('')
+  const [newProdPrice, setNewProdPrice] = useState('')
+  const [newProdDesc, setNewProdDesc] = useState('')
+  const [newProdCategory, setNewProdCategory] = useState('مستلزمات طبية')
+
+  // Sync state from settings
   useEffect(() => {
-    try {
-      const savedPin = sessionStorage.getItem('adminPin')
-      if (savedPin) {
-        setPin(savedPin)
-        setIsAuth(true)
-        fetchPatients(savedPin)
-      }
-    } catch (e) {
-      // sessionStorage not available
-    }
-  }, [])
+    setServicesOverrides(settings.servicesOverrides || {})
+    setSuppliesOverrides(settings.suppliesOverrides || {})
+    setCustomProducts(settings.customProducts || [])
+    setPhone(settings.phone)
+    setWhatsapp(settings.whatsapp)
+    setTelegramUrl(settings.telegramUrl || '')
+    setFacebookUrl(settings.facebookUrl)
+    setFacebookGroupUrl(settings.facebookGroupUrl)
+    setFacebookProfileUrl(settings.facebookProfileUrl || '')
+    setServiceAreas(settings.serviceAreas)
+    setAdminPin(settings.adminPin || '2026')
+    setAnnouncement(settings.announcement || '')
+    setAnnouncementActive(settings.announcementActive || false)
+    setMaintenanceMode(settings.maintenanceMode)
+  }, [settings])
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (pin === '2026' || pin === '01001097896') {
-      try {
-        sessionStorage.setItem('adminPin', pin)
-      } catch (e) {}
-      setIsAuth(true)
-      setAuthError('')
-      fetchPatients(pin)
-    } else {
-      setAuthError('الرمز السري غير صحيح')
-    }
-  }
-
-  const fetchPatients = async (currentPin: string) => {
-    setIsLoading(true)
+  // Save All Changes to Server & Local Cache
+  const handleSaveAll = async () => {
+    setSaving(true)
+    setSavedSuccess(false)
     try {
-      const res = await fetch('/api/admin/patients', {
-        headers: { 'x-admin-pin': currentPin }
+      const ok = await saveSettings({
+        servicesOverrides,
+        suppliesOverrides,
+        customProducts,
+        phone,
+        whatsapp,
+        telegramUrl,
+        facebookUrl,
+        facebookGroupUrl,
+        facebookProfileUrl,
+        serviceAreas,
+        adminPin,
+        announcement,
+        announcementActive,
+        maintenanceMode,
       })
-      const data = await res.json()
-      if (data.success) {
-        setPatients(data.data || [])
+      if (ok !== false) {
+        setSavedSuccess(true)
+        setTimeout(() => setSavedSuccess(false), 3500)
       }
-    } catch (err) {
-      console.error('Failed to fetch patients:', err)
     } finally {
-      setIsLoading(false)
+      setSaving(false)
     }
   }
 
-  const handleAddPatient = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsAdding(true)
-    try {
-      const res = await fetch('/api/admin/patients', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-pin': pin
-        },
-        body: JSON.stringify(newPatient)
-      })
-      const data = await res.json()
-      if (data.success) {
-        setNewPatient({ patient_name: '', phone: '', city: 'دمياط' })
-        setShowAddForm(false)
-        fetchPatients(pin)
-      } else {
-        alert(data.message || 'حدث خطأ')
-      }
-    } catch (err) {
-      console.error(err)
-      alert('خطأ في الاتصال')
-    } finally {
-      setIsAdding(false)
+  // Update a single service override
+  const updateServiceOverride = (id: string, updates: Partial<ServiceOverride>) => {
+    setServicesOverrides((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        ...updates,
+      },
+    }))
+  }
+
+  // Update a single supply override
+  const updateSupplyOverride = (id: string, updates: Partial<SupplyOverride>) => {
+    setSuppliesOverrides((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        ...updates,
+      },
+    }))
+  }
+
+  // Add custom medical product
+  const handleAddProduct = () => {
+    if (!newProdName.trim() || !newProdPrice.trim()) return
+    const id = `custom-${Date.now()}`
+    const item: CustomProduct = {
+      id,
+      name: newProdName.trim(),
+      category: 'custom',
+      categoryName: newProdCategory,
+      price: newProdPrice.trim(),
+      shortDesc: newProdDesc.trim() || 'متوفر للتوصيل المنزلي بدمياط',
+      image: '/og-image.jpg',
+      inStock: true,
     }
+    setCustomProducts((prev) => [...prev, item])
+    setNewProdName('')
+    setNewProdPrice('')
+    setNewProdDesc('')
+    setNewProductModal(false)
   }
 
-  if (!isAuth) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-100 max-w-sm w-full text-center">
-          <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 text-blue-700">
-            <LockClosedIcon className="w-8 h-8" />
-          </div>
-          <h2 className="text-xl font-bold text-slate-900 mb-2">تسجيل دخول الإدارة</h2>
-          <p className="text-sm text-slate-500 mb-8">أدخل رمز المشرف للوصول إلى النظام</p>
-          
-          <form onSubmit={handleLogin} className="flex flex-col gap-4">
-            <div>
-              <input
-                type="password"
-                value={pin}
-                onChange={(e) => setPin(e.target.value)}
-                className="w-full text-center text-2xl tracking-widest px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 transition-colors"
-                placeholder="****"
-                autoFocus
-              />
-              {authError && <p className="text-red-500 text-xs mt-2">{authError}</p>}
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-800 text-white font-bold py-3.5 rounded-xl hover:bg-blue-900 transition-all"
-            >
-              دخول
-            </button>
-          </form>
-        </div>
-      </div>
-    )
+  // Delete custom product
+  const handleDeleteProduct = (id: string) => {
+    setCustomProducts((prev) => prev.filter((p) => p.id !== id))
   }
 
-  const filteredPatients = patients.filter(p =>
-    (p.patient_name || '').includes(search) ||
-    (p.phone || '').includes(search) ||
-    (p.patient_id || '').includes(search)
+  // Filtered services
+  const filteredServices = services.filter(
+    (s) =>
+      s.name.includes(serviceSearch) ||
+      s.category.includes(serviceSearch) ||
+      s.shortDescription.includes(serviceSearch)
   )
 
   return (
-    <div className="space-y-6">
-      {/* Stats Row */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-            <UsersIcon className="w-6 h-6" />
-          </div>
+    <div className="min-h-screen bg-navy-950 text-white flex flex-col" dir="rtl">
+      {/* ── Top Header & Global Actions ── */}
+      <header className="sticky top-0 z-40 bg-navy-900/95 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 py-4">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <p className="text-xs text-slate-500 font-medium">إجمالي المرضى</p>
-            <p className="text-2xl font-black text-slate-900">{patients.length}</p>
+            <div className="flex items-center gap-2">
+              <h1 className="text-lg sm:text-xl font-black text-white">
+                لوحة التحكم الإدارية — نبض 🩺
+              </h1>
+              <span className="badge bg-gold-500/20 text-gold-300 text-xs px-2.5 py-0.5">
+                خاصة بالمدير
+              </span>
+            </div>
+            <p className="text-xs text-slate-400 mt-0.5">
+              تعديل أسعار الخدمات والمستلزمات الطبية والتواصل المباشر لحظياً في الموقع
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2.5">
+            {savedSuccess && (
+              <span className="text-xs text-emerald-400 font-bold flex items-center gap-1 bg-emerald-500/15 border border-emerald-500/30 px-3 py-1.5 rounded-xl animate-fade-in">
+                <CheckCircleIcon className="w-4 h-4" />
+                تم حفظ التعديلات ونشرها فوراً! ✅
+              </span>
+            )}
+
+            <button
+              onClick={handleSaveAll}
+              disabled={saving}
+              className="btn-primary py-2 px-5 text-xs sm:text-sm font-black bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-navy-950 shadow-gold rounded-2xl flex items-center gap-2 active:scale-95 disabled:opacity-50"
+            >
+              {saving ? (
+                <>
+                  <ArrowPathIcon className="w-4 h-4 animate-spin" />
+                  <span>جاري الحفظ...</span>
+                </>
+              ) : (
+                <>
+                  <span>💾 حفظ كافة التعديلات</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
-      </div>
 
-      {/* Search + Add */}
-      <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-        <div className="relative w-full sm:max-w-md">
-          <MagnifyingGlassIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-          <input
-            type="text"
-            placeholder="بحث بالاسم أو رقم الهاتف..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-4 pr-11 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-500 transition-all"
-          />
+        {/* ── Navigation Tabs ── */}
+        <div className="max-w-7xl mx-auto flex items-center gap-2 mt-4 overflow-x-auto pb-1 scrollbar-none">
+          <button
+            onClick={() => setActiveTab('services')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 transition-all ${
+              activeTab === 'services'
+                ? 'bg-gold-500 text-navy-950 shadow-sm'
+                : 'bg-white/5 hover:bg-white/10 text-slate-300'
+            }`}
+          >
+            <CurrencyDollarIcon className="w-4 h-4" />
+            <span>أسعار الخدمات التمريضية ({services.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('supplies')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 transition-all ${
+              activeTab === 'supplies'
+                ? 'bg-gold-500 text-navy-950 shadow-sm'
+                : 'bg-white/5 hover:bg-white/10 text-slate-300'
+            }`}
+          >
+            <ArchiveBoxIcon className="w-4 h-4" />
+            <span>المستلزمات والأجهزة وسعر فيفا تشيك</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('settings')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 transition-all ${
+              activeTab === 'settings'
+                ? 'bg-gold-500 text-navy-950 shadow-sm'
+                : 'bg-white/5 hover:bg-white/10 text-slate-300'
+            }`}
+          >
+            <Cog6ToothIcon className="w-4 h-4" />
+            <span>إعدادات التواصل ورمز PIN والأمان</span>
+          </button>
+
+          <Link
+            href="/admin/bookings"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 bg-white/5 hover:bg-white/10 text-slate-300 transition-all"
+          >
+            <ClipboardDocumentListIcon className="w-4 h-4" />
+            <span>سجل الحجوزات 📋</span>
+          </Link>
         </div>
-        <button
-          onClick={() => setShowAddForm(!showAddForm)}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-blue-800 text-white font-bold px-5 py-3 rounded-xl shadow hover:bg-blue-900 transition-all"
-        >
-          <UserPlusIcon className="w-5 h-5" />
-          إضافة مريض جديد
-        </button>
-      </div>
+      </header>
 
-      {/* Add Patient Form */}
-      {showAddForm && (
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-          <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-            <UserPlusIcon className="w-5 h-5 text-blue-600" />
-            تسجيل مريض جديد
-          </h3>
-          <form onSubmit={handleAddPatient} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-xs font-semibold text-slate-500 mb-1.5">اسم المريض</label>
-              <input
-                required
-                type="text"
-                value={newPatient.patient_name}
-                onChange={e => setNewPatient({ ...newPatient, patient_name: e.target.value })}
-                className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-blue-500"
-                placeholder="الاسم ثلاثي"
-              />
+      {/* ── Main Content Area ── */}
+      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+
+        {/* ══════════════════════════════════════════════════════════════
+            TAB 1: SERVICES PRICING & MANAGEMENT
+        ══════════════════════════════════════════════════════════════ */}
+        {activeTab === 'services' && (
+          <div className="space-y-6 animate-fade-in">
+            {/* Search and Helper Info */}
+            <div className="bg-navy-900/80 border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gold-500/15 text-gold-400 flex items-center justify-center">
+                  <CurrencyDollarIcon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-sm sm:text-base font-black text-white">
+                    التحكم في أسعار وتوافر الخدمات التمريضية
+                  </h2>
+                  <p className="text-xs text-slate-400">
+                    أي سعر أو شارة أو حالة تعدلها هنا تظهر فوراً للعميل في الموقع وصفحات الحجز
+                  </p>
+                </div>
+              </div>
+
+              {/* Search */}
+              <div className="relative w-full sm:w-72">
+                <MagnifyingGlassIcon className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={serviceSearch}
+                  onChange={(e) => setServiceSearch(e.target.value)}
+                  placeholder="بحث في الخدمات..."
+                  className="w-full bg-navy-950 border border-white/15 rounded-xl pr-9 pl-4 py-2 text-xs text-white placeholder:text-slate-500 focus:border-gold-400 focus:outline-none"
+                />
+              </div>
             </div>
-            <div>
-              <label className="block text-xs font-semibold text-slate-500 mb-1.5">رقم الهاتف</label>
-              <input
-                required
-                type="tel"
-                value={newPatient.phone}
-                onChange={e => setNewPatient({ ...newPatient, phone: e.target.value })}
-                className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-blue-500"
-                dir="ltr"
-                placeholder="010..."
-              />
+
+            {/* Services Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredServices.map((service) => {
+                const override = servicesOverrides[service.id] || {}
+                const currentPrice = override.price ?? 'حسب الحالة'
+                const currentPriceNote = override.priceNote ?? ''
+                const currentBadge = override.badge ?? ''
+                const isBooking = override.bookingEnabled !== undefined ? override.bookingEnabled : service.bookingEnabled
+                const isActive = override.active !== undefined ? override.active : service.active
+
+                return (
+                  <div
+                    key={service.id}
+                    className={`bg-navy-900 border rounded-2xl p-5 flex flex-col justify-between transition-all ${
+                      isActive ? 'border-white/10 hover:border-gold-400/40' : 'border-red-500/30 opacity-70 bg-navy-950/60'
+                    }`}
+                  >
+                    <div>
+                      {/* Top Header */}
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl">{service.iconEmoji}</span>
+                          <div>
+                            <h3 className="text-sm font-black text-white line-clamp-1">
+                              {service.name}
+                            </h3>
+                            <span className="text-[10px] text-gold-400/80 font-bold block">
+                              {service.category}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Active / Inactive Badge */}
+                        <span
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${
+                            isActive ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-300'
+                          }`}
+                        >
+                          {isActive ? 'ظاهرة بالموقع' : 'مخفية مؤقتاً'}
+                        </span>
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-xs text-slate-400 mb-4 line-clamp-2 leading-relaxed">
+                        {service.shortDescription}
+                      </p>
+
+                      {/* Inputs Group */}
+                      <div className="space-y-3 pt-3 border-t border-white/5">
+                        {/* Price Input */}
+                        <div>
+                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                            💵 السعر المعروض للعميل:
+                          </label>
+                          <input
+                            type="text"
+                            value={currentPrice}
+                            onChange={(e) => updateServiceOverride(service.id, { price: e.target.value })}
+                            placeholder="مثال: 150 ج.م أو حسب الحالة"
+                            className="w-full bg-navy-950 border border-white/15 focus:border-gold-400 rounded-xl px-3 py-1.5 text-xs text-white placeholder:text-slate-600 focus:outline-none"
+                          />
+                        </div>
+
+                        {/* Price Note Input */}
+                        <div>
+                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                            ملاحظة السعر (تظهر تحت السعر):
+                          </label>
+                          <input
+                            type="text"
+                            value={currentPriceNote}
+                            onChange={(e) => updateServiceOverride(service.id, { priceNote: e.target.value })}
+                            placeholder="مثال: شامل السرنجة والمستلزمات"
+                            className="w-full bg-navy-950 border border-white/15 focus:border-gold-400 rounded-xl px-3 py-1.5 text-xs text-white placeholder:text-slate-600 focus:outline-none"
+                          />
+                        </div>
+
+                        {/* Custom Badge Input */}
+                        <div>
+                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                            شارة خاصة (Badge):
+                          </label>
+                          <input
+                            type="text"
+                            value={currentBadge}
+                            onChange={(e) => updateServiceOverride(service.id, { badge: e.target.value })}
+                            placeholder="مثال: الأكثر طلباً 🏆 أو خدمة 24 ساعة"
+                            className="w-full bg-navy-950 border border-white/15 focus:border-gold-400 rounded-xl px-3 py-1.5 text-xs text-white placeholder:text-slate-600 focus:outline-none"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Toggles Footer */}
+                    <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between text-xs">
+                      {/* Booking Enabled Toggle */}
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={isBooking}
+                          onChange={(e) => updateServiceOverride(service.id, { bookingEnabled: e.target.checked })}
+                          className="w-4 h-4 rounded text-gold-500 focus:ring-0 cursor-pointer"
+                        />
+                        <span className="text-[11px] text-slate-300 font-medium">
+                          تفعيل الحجز الأونلاين
+                        </span>
+                      </label>
+
+                      {/* Active Toggle */}
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={isActive}
+                          onChange={(e) => updateServiceOverride(service.id, { active: e.target.checked })}
+                          className="w-4 h-4 rounded text-emerald-500 focus:ring-0 cursor-pointer"
+                        />
+                        <span className="text-[11px] text-slate-300 font-medium">
+                          إظهار بالموقع
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
-            <div className="flex items-end gap-2">
+          </div>
+        )}
+
+        {/* ══════════════════════════════════════════════════════════════
+            TAB 2: MEDICAL SUPPLIES & VIVACHEK PRICING
+        ══════════════════════════════════════════════════════════════ */}
+        {activeTab === 'supplies' && (
+          <div className="space-y-6 animate-fade-in">
+
+            {/* ── Spotlight: VivaChek Ino Blood Glucose Meter ── */}
+            <div className="bg-gradient-to-r from-navy-900 via-slate-900 to-teal-950 border-2 border-gold-500/50 rounded-3xl p-6 sm:p-8 shadow-xl">
+              <div className="flex items-center justify-between gap-3 mb-6 border-b border-white/10 pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-gold-500/20 text-gold-400 flex items-center justify-center text-2xl shadow-inner">
+                    🩸
+                  </div>
+                  <div>
+                    <span className="badge bg-gold-500 text-navy-950 text-xs font-black px-3 py-0.5 mb-1">
+                      المنتج الرئيسي الأول
+                    </span>
+                    <h2 className="text-lg sm:text-xl font-black text-white">
+                      جهاز قياس السكر فيفا تشيك إنو (VivaChek Ino)
+                    </h2>
+                  </div>
+                </div>
+
+                <Link
+                  href="/services/medical-supplies"
+                  target="_blank"
+                  className="text-xs text-gold-300 hover:text-gold-200 underline hidden sm:inline"
+                >
+                  معاينة صفحة الجهاز ↗
+                </Link>
+              </div>
+
+              {/* VivaChek Pricing Form */}
+              {(() => {
+                const vivaOverride = suppliesOverrides['vivachek-ino'] || {}
+                const currentPrice = vivaOverride.price ?? FEATURED_GLUCOSE_METER.price ?? '450 ج.م'
+                const currentOldPrice = vivaOverride.oldPrice ?? FEATURED_GLUCOSE_METER.oldPrice ?? '650 ج.م'
+                const currentBadge = vivaOverride.badge ?? FEATURED_GLUCOSE_METER.badge ?? 'الأكثر مبيعاً 🏆 | عرض خاص 450ج'
+                const inStock = vivaOverride.inStock !== undefined ? vivaOverride.inStock : true
+                const giftStrips = vivaOverride.giftStrips ?? '10 شرائط هدية مجانية'
+
+                return (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {/* Current Price */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                        🏷️ السعر الحالي للبيع:
+                      </label>
+                      <input
+                        type="text"
+                        value={currentPrice}
+                        onChange={(e) => updateSupplyOverride('vivachek-ino', { price: e.target.value })}
+                        placeholder="450 ج.م"
+                        className="w-full bg-navy-950 border border-gold-400/40 rounded-xl px-4 py-2.5 text-sm font-bold text-gold-300 focus:outline-none focus:border-gold-400"
+                      />
+                    </div>
+
+                    {/* Old Price */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                        السعر قبل الخصم (لإظهار التوفير):
+                      </label>
+                      <input
+                        type="text"
+                        value={currentOldPrice}
+                        onChange={(e) => updateSupplyOverride('vivachek-ino', { oldPrice: e.target.value })}
+                        placeholder="650 ج.م"
+                        className="w-full bg-navy-950 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-gold-400"
+                      />
+                    </div>
+
+                    {/* Badge Text */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                        شارة العرض المميز:
+                      </label>
+                      <input
+                        type="text"
+                        value={currentBadge}
+                        onChange={(e) => updateSupplyOverride('vivachek-ino', { badge: e.target.value })}
+                        placeholder="الأكثر مبيعاً 🏆 | عرض خاص 250ج"
+                        className="w-full bg-navy-950 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold-400"
+                      />
+                    </div>
+
+                    {/* Gift Strips */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                        عدد الشرائط الهدية:
+                      </label>
+                      <input
+                        type="text"
+                        value={giftStrips}
+                        onChange={(e) => updateSupplyOverride('vivachek-ino', { giftStrips: e.target.value })}
+                        placeholder="10 شرائط هدية مجانية"
+                        className="w-full bg-navy-950 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold-400"
+                      />
+                    </div>
+
+                    {/* Stock Status Toggle */}
+                    <div className="sm:col-span-2 lg:col-span-4 flex items-center justify-between pt-4 border-t border-white/10">
+                      <label className="flex items-center gap-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={inStock}
+                          onChange={(e) => updateSupplyOverride('vivachek-ino', { inStock: e.target.checked })}
+                          className="w-5 h-5 rounded text-emerald-500 focus:ring-0 cursor-pointer"
+                        />
+                        <span className="text-xs sm:text-sm font-bold text-white">
+                          الجهاز متوفر حالياً في المخزن وجاهز للتوصيل الفوري بدمياط
+                        </span>
+                      </label>
+
+                      <span className={`text-xs font-black px-3 py-1 rounded-full ${inStock ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-300'}`}>
+                        {inStock ? 'جاهز للتوصيل 🛵' : 'نفد مؤقتاً ❌'}
+                      </span>
+                    </div>
+                  </div>
+                )
+              })()}
+            </div>
+
+            {/* ── Header for Catalog Products ── */}
+            <div className="flex items-center justify-between gap-3 pt-4">
+              <div>
+                <h3 className="text-base font-black text-white">
+                  أسعار باقي الأجهزة والمستلزمات الطبية بالكتالوج
+                </h3>
+                <p className="text-xs text-slate-400">
+                  يمكنك تعديل سعر أي جهاز أو تحديد هل هو متوفر أم نفد مخزونه
+                </p>
+              </div>
+
               <button
-                type="submit"
-                disabled={isAdding}
-                className="flex-1 bg-green-600 text-white font-bold py-2.5 rounded-lg hover:bg-green-700 transition-colors disabled:opacity-70"
+                onClick={() => setNewProductModal(true)}
+                className="btn-primary py-2 px-4 text-xs font-bold bg-navy-800 hover:bg-navy-700 text-gold-400 border border-gold-400/30 rounded-xl flex items-center gap-1.5"
               >
-                {isAdding ? 'جاري الحفظ...' : 'حفظ وإنشاء ملف'}
+                <PlusIcon className="w-4 h-4" />
+                <span>إضافة مستلزم طبي جديد</span>
+              </button>
+            </div>
+
+            {/* Catalog Products Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {ADDITIONAL_MEDICAL_SUPPLIES.map((item) => {
+                const override = suppliesOverrides[item.id] || {}
+                const currentPrice = override.price ?? item.price
+                const currentOldPrice = override.oldPrice ?? item.oldPrice ?? ''
+                const currentBadge = override.badge ?? item.badge ?? ''
+                const inStock = override.inStock !== undefined ? override.inStock : true
+
+                return (
+                  <div
+                    key={item.id}
+                    className={`bg-navy-900 border rounded-2xl p-5 flex flex-col justify-between transition-all ${
+                      inStock ? 'border-white/10' : 'border-red-500/30 opacity-75'
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <span className="text-xs font-bold text-gold-400">
+                          {item.categoryName}
+                        </span>
+                        <span
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${
+                            inStock ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-300'
+                          }`}
+                        >
+                          {inStock ? 'متوفر' : 'نفد المخزون'}
+                        </span>
+                      </div>
+
+                      <h4 className="text-sm font-black text-white mb-2">
+                        {item.name}
+                      </h4>
+                      <p className="text-xs text-slate-400 line-clamp-2 mb-4">
+                        {item.shortDesc}
+                      </p>
+
+                      <div className="space-y-2.5 pt-3 border-t border-white/5">
+                        <div>
+                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                            سعر البيع:
+                          </label>
+                          <input
+                            type="text"
+                            value={currentPrice}
+                            onChange={(e) => updateSupplyOverride(item.id, { price: e.target.value })}
+                            placeholder="مثال: 650 ج.م"
+                            className="w-full bg-navy-950 border border-white/15 focus:border-gold-400 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                            السعر قبل الخصم (اختياري):
+                          </label>
+                          <input
+                            type="text"
+                            value={currentOldPrice}
+                            onChange={(e) => updateSupplyOverride(item.id, { oldPrice: e.target.value })}
+                            placeholder="مثال: 750 ج.م"
+                            className="w-full bg-navy-950 border border-white/15 focus:border-gold-400 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                            شارة العرض (Badge):
+                          </label>
+                          <input
+                            type="text"
+                            value={currentBadge}
+                            onChange={(e) => updateSupplyOverride(item.id, { badge: e.target.value })}
+                            placeholder="مثال: ضمان سنتين"
+                            className="w-full bg-navy-950 border border-white/15 focus:border-gold-400 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-3 mt-4 border-t border-white/10 flex items-center justify-between">
+                      <label className="flex items-center gap-2 cursor-pointer text-xs">
+                        <input
+                          type="checkbox"
+                          checked={inStock}
+                          onChange={(e) => updateSupplyOverride(item.id, { inStock: e.target.checked })}
+                          className="w-4 h-4 rounded text-emerald-500 focus:ring-0 cursor-pointer"
+                        />
+                        <span className="text-slate-300 font-medium">متوفر بالمخزن</span>
+                      </label>
+                    </div>
+                  </div>
+                )
+              })}
+
+              {/* Custom Added Products */}
+              {customProducts.map((prod) => (
+                <div
+                  key={prod.id}
+                  className="bg-navy-900 border border-gold-400/30 rounded-2xl p-5 flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      <span className="text-xs font-bold text-gold-400">{prod.categoryName}</span>
+                      <button
+                        onClick={() => handleDeleteProduct(prod.id)}
+                        className="text-red-400 hover:text-red-300 p-1"
+                        title="حذف المنتج"
+                      >
+                        <TrashIcon className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    <h4 className="text-sm font-black text-white mb-2">{prod.name}</h4>
+                    <p className="text-xs text-slate-400 line-clamp-2 mb-4">{prod.shortDesc}</p>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-300 mb-1">السعر:</label>
+                      <input
+                        type="text"
+                        value={prod.price}
+                        onChange={(e) => {
+                          const val = e.target.value
+                          setCustomProducts((prev) =>
+                            prev.map((p) => (p.id === prod.id ? { ...p, price: val } : p))
+                          )
+                        }}
+                        className="w-full bg-navy-950 border border-white/15 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ══════════════════════════════════════════════════════════════
+            TAB 3: SETTINGS, CONTACT & ADMIN PIN
+        ══════════════════════════════════════════════════════════════ */}
+        {activeTab === 'settings' && (
+          <div className="max-w-3xl space-y-6 animate-fade-in">
+
+            {/* Admin PIN Passcode Security */}
+            <div className="bg-navy-900 border-2 border-gold-500/30 rounded-3xl p-6 shadow-card space-y-4">
+              <div className="flex items-center gap-3 border-b border-white/10 pb-3">
+                <div className="w-10 h-10 rounded-xl bg-gold-500/20 text-gold-400 flex items-center justify-center">
+                  <KeyIcon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-black text-white">
+                    رمز PIN السري لحماية لوحة التحكم
+                  </h3>
+                  <p className="text-xs text-slate-400">
+                    هذا الرمز هو الذي يمنع أي عميل أو زائر من الدخول إلى لوحة التحكم
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                  رمز PIN السري الحالي:
+                </label>
+                <div className="flex items-center gap-3 max-w-sm">
+                  <input
+                    type="text"
+                    value={adminPin}
+                    onChange={(e) => setAdminPin(e.target.value)}
+                    placeholder="2026"
+                    className="flex-1 bg-navy-950 border border-white/15 focus:border-gold-400 rounded-xl px-4 py-2.5 text-base font-mono tracking-widest text-white text-center focus:outline-none"
+                  />
+                  <span className="text-xs text-slate-400">
+                    احفظ هذا الرمز ولا تشاركه مع أي شخص.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Announcement Banner */}
+            <div className="bg-navy-900 border border-white/10 rounded-3xl p-6 shadow-card space-y-4">
+              <div className="flex items-center gap-3 border-b border-white/10 pb-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center">
+                  <MegaphoneIcon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-black text-white">
+                    شريط الإعلان العلوي في الموقع (Announcement Bar)
+                  </h3>
+                  <p className="text-xs text-slate-400">
+                    يظهر في أعلى كل صفحات الموقع لجميع الزوار للإعلان عن عروض أو تنبيهات هامة
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-xs font-bold text-slate-300">
+                    نص الإعلان:
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={announcementActive}
+                      onChange={(e) => setAnnouncementActive(e.target.checked)}
+                      className="w-4 h-4 rounded text-gold-500 focus:ring-0 cursor-pointer"
+                    />
+                    <span className="text-xs text-gold-300 font-bold">تفعيل وظهور الشريط</span>
+                  </label>
+                </div>
+                <input
+                  type="text"
+                  value={announcement}
+                  onChange={(e) => setAnnouncement(e.target.value)}
+                  placeholder="مثال: عرض خاص: خصم 20% على باقات كبار السن وفحص السكر هذا الأسبوع!"
+                  className="w-full bg-navy-950 border border-white/15 focus:border-gold-400 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Contact Phone & WhatsApp */}
+            <div className="bg-navy-900 border border-white/10 rounded-3xl p-6 shadow-card space-y-4">
+              <h3 className="text-base font-black text-white border-b border-white/10 pb-3">
+                أرقام الاتصال والتواصل
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                    رقم هاتف الاتصال المباشر:
+                  </label>
+                  <input
+                    type="text"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full bg-navy-950 border border-white/15 focus:border-gold-400 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none text-start"
+                    dir="ltr"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                    رقم الواتساب الرسمي:
+                  </label>
+                  <input
+                    type="text"
+                    value={whatsapp}
+                    onChange={(e) => setWhatsapp(e.target.value)}
+                    className="w-full bg-navy-950 border border-white/15 focus:border-gold-400 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none text-start"
+                    dir="ltr"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                  مناطق التغطية والخدمة بدمياط:
+                </label>
+                <input
+                  type="text"
+                  value={serviceAreas}
+                  onChange={(e) => setServiceAreas(e.target.value)}
+                  className="w-full bg-navy-950 border border-white/15 focus:border-gold-400 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Social Media Links */}
+            <div className="bg-navy-900 border border-white/10 rounded-3xl p-6 shadow-card space-y-4">
+              <h3 className="text-base font-black text-white border-b border-white/10 pb-3">
+                روابط التواصل الاجتماعي
+              </h3>
+
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                    رابط صفحة فيسبوك:
+                  </label>
+                  <input
+                    type="text"
+                    value={facebookUrl}
+                    onChange={(e) => setFacebookUrl(e.target.value)}
+                    className="w-full bg-navy-950 border border-white/15 rounded-xl px-4 py-2 text-xs text-white focus:outline-none"
+                    dir="ltr"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                    رابط جروب فيسبوك:
+                  </label>
+                  <input
+                    type="text"
+                    value={facebookGroupUrl}
+                    onChange={(e) => setFacebookGroupUrl(e.target.value)}
+                    className="w-full bg-navy-950 border border-white/15 rounded-xl px-4 py-2 text-xs text-white focus:outline-none"
+                    dir="ltr"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                    رابط حساب إبراهيم ماهر الشخصي:
+                  </label>
+                  <input
+                    type="text"
+                    value={facebookProfileUrl}
+                    onChange={(e) => setFacebookProfileUrl(e.target.value)}
+                    className="w-full bg-navy-950 border border-white/15 rounded-xl px-4 py-2 text-xs text-white focus:outline-none"
+                    dir="ltr"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                    رابط تليجرام:
+                  </label>
+                  <input
+                    type="text"
+                    value={telegramUrl}
+                    onChange={(e) => setTelegramUrl(e.target.value)}
+                    className="w-full bg-navy-950 border border-white/15 rounded-xl px-4 py-2 text-xs text-white focus:outline-none"
+                    dir="ltr"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Meta Pixel & Facebook Catalog Integration */}
+            <div className="bg-gradient-to-r from-navy-900 via-slate-900 to-blue-950 border-2 border-blue-500/40 rounded-3xl p-6 shadow-card space-y-4">
+              <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold text-lg">
+                    📘
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-black text-white">
+                        ربط بيكسل وكتالوج فيسبوك (Meta Pixel &amp; Catalog)
+                      </h3>
+                      <span className="badge bg-emerald-500/20 text-emerald-300 text-[10px] px-2 py-0.5 font-bold">
+                        متصل ونشط ✅
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-400">
+                      معرف البيكسل: <code className="font-mono text-blue-300 bg-black/30 px-1.5 py-0.5 rounded">2115922919275276</code>
+                    </p>
+                  </div>
+                </div>
+
+                <a
+                  href="https://eventsmanager.facebook.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-blue-300 hover:text-blue-200 underline hidden sm:inline"
+                >
+                  مدير الأحداث ↗
+                </a>
+              </div>
+
+              {/* Data Feed URL for Facebook Commerce Manager */}
+              <div className="bg-navy-950/80 border border-blue-500/30 rounded-2xl p-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold text-blue-200">
+                    🔗 رابط موجز كتالوج الخدمات والمستلزمات (Data Feed URL):
+                  </label>
+                  <span className="text-[10px] text-slate-400">XML / RSS 2.0 القياسي لفيسبوك</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    readOnly
+                    value="https://nabd-nursing.vercel.app/api/facebook-catalog"
+                    className="flex-1 bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-xs font-mono text-slate-200 select-all focus:outline-none"
+                    dir="ltr"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText('https://nabd-nursing.vercel.app/api/facebook-catalog')
+                      alert('تم نسخ رابط كتالوج فيسبوك بنجاح! 📋✅')
+                    }}
+                    className="btn-primary py-2 px-3 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shrink-0"
+                  >
+                    نسخ الرابط 📋
+                  </button>
+                </div>
+                <p className="text-[11px] text-slate-400 leading-relaxed pt-1">
+                  💡 <strong>كيف تربط الكتالوج؟</strong> في <a href="https://business.facebook.com/commerce" target="_blank" rel="noopener noreferrer" className="text-blue-300 underline font-bold">مدير المعاملات (Commerce Manager)</a>، اضغط على <strong>إضافة عناصر &gt; استخدام موجز البيانات (Data Feed) &gt; جدول التحديث اليومي</strong>، ثم الصق هذا الرابط ليقوم فيسبوك بمزامنة كافة الـ 15 خدمة وجهاز السكر والمستلزمات بأسعارها تلقائياً!
+                </p>
+              </div>
+            </div>
+
+            {/* Maintenance Mode */}
+            <div className="bg-navy-900 border border-white/10 rounded-3xl p-6 shadow-card flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-black text-white">
+                  وضع الصيانة (Maintenance Mode)
+                </h3>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  عند تفعيله، يظهر تنبيه صيانة للزوار ولا يمكن تقديم حجوزات جديدة
+                </p>
+              </div>
+
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={maintenanceMode}
+                  onChange={(e) => setMaintenanceMode(e.target.checked)}
+                  className="w-5 h-5 rounded text-red-500 focus:ring-0 cursor-pointer"
+                />
+                <span className="text-xs font-bold text-red-300">تفعيل الصيانة</span>
+              </label>
+            </div>
+
+          </div>
+        )}
+
+      </main>
+
+      {/* ── Modal: Add New Medical Supply Product ── */}
+      {newProductModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/70 backdrop-blur-sm"
+          onClick={() => setNewProductModal(false)}
+        >
+          <div
+            className="w-full max-w-md bg-navy-900 border border-white/15 rounded-3xl p-6 shadow-2xl space-y-4 animate-slide-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-base font-black text-white">إضافة مستلزم أو جهاز طبي جديد</h3>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-300 mb-1">اسم الجهاز / المستلزم:</label>
+              <input
+                type="text"
+                value={newProdName}
+                onChange={(e) => setNewProdName(e.target.value)}
+                placeholder="مثال: جهاز استنشاق بخار (نيبولايزر)"
+                className="w-full bg-navy-950 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-300 mb-1">الفئة:</label>
+              <input
+                type="text"
+                value={newProdCategory}
+                onChange={(e) => setNewProdCategory(e.target.value)}
+                placeholder="أجهزة تنفسية"
+                className="w-full bg-navy-950 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-300 mb-1">السعر المعروض للعميل:</label>
+              <input
+                type="text"
+                value={newProdPrice}
+                onChange={(e) => setNewProdPrice(e.target.value)}
+                placeholder="مثال: 550 ج.م"
+                className="w-full bg-navy-950 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-300 mb-1">وصف مختصر:</label>
+              <textarea
+                value={newProdDesc}
+                onChange={(e) => setNewProdDesc(e.target.value)}
+                placeholder="وصف الجهاز ومميزاته للتوصيل بالمنزل..."
+                rows={2}
+                className="w-full bg-navy-950 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none resize-none"
+              />
+            </div>
+
+            <div className="flex items-center gap-2 pt-2">
+              <button
+                onClick={handleAddProduct}
+                className="flex-1 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-navy-950 font-black text-xs transition-colors"
+              >
+                إضافة وحفظ في الكتالوج
               </button>
               <button
-                type="button"
-                onClick={() => setShowAddForm(false)}
-                className="px-3 py-2.5 border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-50 text-sm"
+                onClick={() => setNewProductModal(false)}
+                className="py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 font-bold text-xs"
               >
                 إلغاء
               </button>
             </div>
-          </form>
+          </div>
         </div>
       )}
-
-      {/* Patients List */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-        <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
-          <h2 className="font-bold text-slate-900">سجل المرضى</h2>
-          <button
-            onClick={() => fetchPatients(pin)}
-            className="p-2 text-slate-400 hover:text-blue-700 hover:bg-slate-100 rounded-lg transition-colors"
-            title="تحديث"
-          >
-            <ArrowPathIcon className={`w-5 h-5 ${isLoading ? 'animate-spin' : ''}`} />
-          </button>
-        </div>
-
-        {isLoading && patients.length === 0 ? (
-          <div className="p-10 text-center text-slate-500 flex flex-col items-center">
-            <ArrowPathIcon className="w-8 h-8 animate-spin text-blue-300 mb-3" />
-            <p>جاري تحميل البيانات...</p>
-          </div>
-        ) : (
-          <div className="divide-y divide-slate-100">
-            {filteredPatients.length > 0 ? (
-              filteredPatients.map((patient: any) => (
-                <div
-                  key={patient.patient_id}
-                  className="p-4 sm:p-5 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between hover:bg-slate-50 transition-colors"
-                >
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold text-slate-900 text-lg">{patient.patient_name}</h3>
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${patient.status === 'نشط' ? 'bg-green-100 text-green-700' : 'bg-slate-200 text-slate-600'}`}>
-                        {patient.status || 'نشط'}
-                      </span>
-                    </div>
-                    <div className="text-sm text-slate-500 flex flex-wrap gap-x-4 gap-y-1">
-                      <span>ملف: <strong className="font-mono text-xs text-blue-700">{patient.patient_id}</strong></span>
-                      <span>هاتف: <span dir="ltr">{patient.phone}</span></span>
-                      {patient.registration_date && <span>تاريخ: {patient.registration_date}</span>}
-                    </div>
-                  </div>
-                  <Link
-                    href={`/admin/patient/${patient.patient_id}`}
-                    className="w-full sm:w-auto text-center px-6 py-2.5 bg-slate-100 hover:bg-blue-50 text-blue-800 font-bold text-sm rounded-xl transition-colors border border-slate-200 hover:border-blue-200"
-                  >
-                    فتح الملف
-                  </Link>
-                </div>
-              ))
-            ) : (
-              <div className="p-10 text-center text-slate-500">
-                {patients.length === 0 ? 'لا يوجد مرضى مسجلين بعد. أضف أول مريض!' : 'لا يوجد مرضى مطابقين للبحث'}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
     </div>
   )
 }

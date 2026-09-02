@@ -57,7 +57,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: `${BASE_URL}/admin`,
+      url: `${BASE_URL}/medical-record`,
       lastModified: currentDate,
       changeFrequency: 'daily',
       priority: 0.7,
