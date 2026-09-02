@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='1.3.0' expr:class='data:blog.languageDirection' expr:dir='data:blog.languageDirection' expr:lang='data:blog.localeUnderscoreDelimited' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='1.4.0' expr:class='data:blog.languageDirection' expr:dir='data:blog.languageDirection' expr:lang='data:blog.localeUnderscoreDelimited' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
 <head>
   <meta charset='utf-8'/>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes' name='viewport'/>
   
   <!-- ══════════════════════════════════════════════════════════════
-       SEO & Meta Tags — نبض للتمريض المنزلي — دمياط
+       SEO & Meta Tags — مدونة نبض للتمريض المنزلي — دمياط
   ══════════════════════════════════════════════════════════════ -->
   <b:if cond='data:blog.pageType == &quot;index&quot;'>
-    <title>مدونة نبض للتمريض المنزلي | نصائح وإرشادات طبية وتمريضية — دمياط</title>
+    <title>مدونة نبض للتمريض المنزلي | نصائح ومقالات طبية وتمريضية موثوقة — دمياط</title>
   <b:else/>
     <title><data:blog.pageName/> | مدونة نبض للتمريض المنزلي</title>
   </b:if>
   
-  <meta content='المدونة الطبية الرسمية لمؤسسة نبض للتمريض المنزلي بدمياط. مقالات وإرشادات صحية موثوقة لرعاية كبار السن، الجروح والقرح، القسطرة، المحاليل، والإسعافات الأولية.' name='description'/>
-  <meta content='تمريض منزلي دمياط, نبض للتمريض, رعاية كبار السن دمياط, غيار جروح دمياط, تركيب قسطرة منزلية, تركيب رايل تغذية, محاليل وحقن بالمنزل, اسعافات اولية, نصائح طبية دمياط, صحة وتمريض' name='keywords'/>
+  <meta content='المدونة الطبية الرسمية لنبض للتمريض المنزلي بدمياط. مقالات وإرشادات صحية موثوقة في رعاية كبار السن، الجروح والقرح، القسطرة البولية، المحاليل والحقن، والإسعافات الأولية.' name='description'/>
+  <meta content='تمريض منزلي دمياط, مقالات طبية, رعاية كبار السن, غيار جروح دمياط, تركيب قسطرة, رايل تغذية, محاليل وحقن, اسعافات اولية دمياط, صحة وتمريض' name='keywords'/>
   <meta content='نبض للتمريض المنزلي — دمياط (إشراف: إبراهيم ماهر)' name='author'/>
   <meta content='Damietta, Egypt' name='geo.placename'/>
   <meta content='EG-DT' name='geo.region'/>
   <meta content='index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' name='robots'/>
   
-  <!-- Open Graph / Facebook / WhatsApp Preview -->
+  <!-- Open Graph / Social Sharing Previews -->
   <meta expr:content='data:blog.title' property='og:site_name'/>
   <meta expr:content='data:blog.pageTitle' property='og:title'/>
-  <meta content='website' property='og:type'/>
+  <meta content='article' property='og:type'/>
   <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
-  <meta content='https://nabd-nursing.vercel.app/og-image.jpg' property='og:image'/>
+  <meta content='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg' property='og:image'/>
   <meta content='المدونة الطبية الرسمية لنبض للتمريض المنزلي بدمياط — مقالات وإرشادات تمريضية وصحية موثوقة.' property='og:description'/>
   <meta content='ar_AR' property='og:locale'/>
 
@@ -44,18 +44,12 @@
   <link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'/>
   <link href='https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&amp;display=swap' rel='stylesheet'/>
   <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css' rel='stylesheet'/>
-
-  <!-- Favicon -->
-  <link href='https://nabd-nursing.vercel.app/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
+  <link href='https://nabd-nursing.vercel.app/images/nabd-official-logo.jpg' rel='shortcut icon' type='image/jpeg'/>
 
   <!-- ══════════════════════════════════════════════════════════════
-       Blogger Skin & CSS (Nabd Navy & Gold Visual Identity)
+       CSS & Theme Styles (Nabd Navy, Gold & Medical Editorial Design)
   ══════════════════════════════════════════════════════════════ -->
   <b:skin><![CDATA[
-    /* ──────────────────────────────────────────────────────────
-       NABD HOME NURSING — THEME VARIABLES & BASE
-       Colors: Navy (#0A192F / #1B2B6B) & Gold (#D4AF37 / #EAB308)
-    ────────────────────────────────────────────────────────── */
     :root {
       --nabd-navy-dark: #0A192F;
       --nabd-navy-primary: #0D2040;
@@ -72,15 +66,11 @@
       --nabd-text-muted: #64748B;
       --nabd-border: #E2E8F0;
       --nabd-shadow: 0 10px 25px -5px rgba(13, 32, 64, 0.08), 0 8px 10px -6px rgba(13, 32, 64, 0.04);
-      --nabd-shadow-lg: 0 20px 30px -10px rgba(13, 32, 64, 0.15);
-      --nabd-radius: 18px;
+      --nabd-shadow-lg: 0 20px 35px -10px rgba(13, 32, 64, 0.16);
+      --nabd-radius: 20px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Cairo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -88,1001 +78,323 @@
       color: var(--nabd-text-main);
       direction: rtl;
       text-align: right;
-      line-height: 1.8;
+      line-height: 1.85;
       font-size: 15px;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-      transition: all 0.25s ease;
-    }
+    a { color: inherit; text-decoration: none; transition: all 0.25s ease; }
+    img { max-width: 100%; height: auto; display: block; }
+    .container { width: 100%; max-width: 1220px; margin: 0 auto; padding: 0 18px; }
 
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
-
-    /* ── Reading Progress Bar ── */
+    /* Reading Progress Bar */
     #reading-progress {
-      position: fixed;
-      top: 0;
-      right: 0;
-      height: 4px;
+      position: fixed; top: 0; right: 0; height: 4px;
       background: linear-gradient(90deg, var(--nabd-gold), var(--nabd-emerald));
-      width: 0%;
-      z-index: 9999;
-      transition: width 0.1s ease;
+      width: 0%; z-index: 9999; transition: width 0.1s ease;
     }
 
     /* ── Top Bar ── */
     .top-bar {
-      background: var(--nabd-navy-dark);
-      color: #E2E8F0;
-      font-size: 12px;
-      padding: 6px 0;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+      background: var(--nabd-navy-dark); color: #E2E8F0; font-size: 12px;
+      padding: 7px 0; border-bottom: 1px solid rgba(212, 175, 55, 0.25);
     }
-    .top-bar-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .top-bar-contact {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
-    .top-bar-contact a {
-      color: #CBD5E1;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-    }
-    .top-bar-contact a:hover {
-      color: var(--nabd-gold);
-    }
+    .top-bar-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .top-bar-contact { display: flex; gap: 16px; align-items: center; }
+    .top-bar-contact a { color: #CBD5E1; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+    .top-bar-contact a:hover { color: var(--nabd-gold); }
     .top-bar-badge {
-      background: rgba(212, 175, 55, 0.2);
-      color: var(--nabd-gold);
-      padding: 2px 10px;
-      border-radius: 20px;
-      font-weight: 700;
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      background: rgba(212, 175, 55, 0.18); color: var(--nabd-gold);
+      padding: 3px 12px; border-radius: 20px; font-weight: 800; border: 1px solid rgba(212, 175, 55, 0.4);
+      display: inline-flex; align-items: center; gap: 6px;
     }
 
     /* ── Main Navigation Header ── */
     .main-header {
       background: linear-gradient(135deg, var(--nabd-navy-primary) 0%, var(--nabd-navy-light) 100%);
-      color: #FFFFFF;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 4px 20px rgba(10, 25, 47, 0.2);
+      color: #FFFFFF; position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 4px 25px rgba(10, 25, 47, 0.25);
+      border-bottom: 2px solid rgba(212, 175, 55, 0.3);
     }
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 0;
-      gap: 16px;
+    .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; gap: 16px; }
+    
+    .brand-logo { display: flex; align-items: center; gap: 12px; }
+    .logo-img-wrapper {
+      width: 48px; height: 48px; border-radius: 14px; overflow: hidden;
+      background: #FFFFFF; padding: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      border: 2px solid var(--nabd-gold); flex-shrink: 0;
     }
-    .brand-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .logo-icon-box {
-      width: 44px;
-      height: 44px;
-      background: linear-gradient(135deg, var(--nabd-gold) 0%, var(--nabd-gold-light) 100%);
-      color: var(--nabd-navy-dark);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      font-weight: 900;
-      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-    }
-    .brand-title-group h1, .brand-title-group .site-title {
-      font-size: 18px;
-      font-weight: 900;
-      color: #FFFFFF;
-      line-height: 1.2;
-    }
-    .brand-title-group p {
-      font-size: 11px;
-      color: #CBD5E1;
-      font-weight: 600;
-    }
+    .logo-img-wrapper img { width: 100%; height: 100%; object-fit: contain; }
+    
+    .brand-title-group h1, .brand-title-group .site-title { font-size: 19px; font-weight: 900; color: #FFFFFF; line-height: 1.2; }
+    .brand-title-group p { font-size: 11px; color: #CBD5E1; font-weight: 600; }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      list-style: none;
-    }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
     .nav-links a {
-      color: #F1F5F9;
-      font-weight: 700;
-      font-size: 13px;
-      padding: 8px 14px;
-      border-radius: 10px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      color: #F1F5F9; font-weight: 700; font-size: 13px; padding: 8px 12px;
+      border-radius: 10px; display: inline-flex; align-items: center; gap: 6px;
     }
-    .nav-links a:hover, .nav-links a.active {
-      background: rgba(255, 255, 255, 0.12);
-      color: var(--nabd-gold);
-    }
+    .nav-links a:hover, .nav-links a.active { background: rgba(255, 255, 255, 0.12); color: var(--nabd-gold); }
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .header-actions { display: flex; align-items: center; gap: 10px; }
     .btn-book-nav {
       background: linear-gradient(135deg, var(--nabd-gold) 0%, var(--nabd-gold-light) 100%);
-      color: var(--nabd-navy-dark) !important;
-      padding: 9px 18px;
-      border-radius: 12px;
-      font-weight: 900;
-      font-size: 13px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      color: var(--nabd-navy-dark) !important; padding: 9px 18px; border-radius: 12px;
+      font-weight: 900; font-size: 13px; display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4); transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .btn-book-nav:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
-    }
+    .btn-book-nav:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6); }
+    .mobile-menu-toggle { display: none; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #FFFFFF; font-size: 18px; padding: 8px 12px; border-radius: 10px; cursor: pointer; }
 
-    .mobile-menu-toggle {
-      display: none;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #FFFFFF;
-      font-size: 18px;
-      padding: 8px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+    .mobile-drawer { display: none; background: var(--nabd-navy-primary); padding: 16px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .mobile-drawer.open { display: block; }
+    .mobile-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .mobile-drawer a { color: #FFFFFF; font-weight: 700; font-size: 14px; padding: 10px 14px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; display: flex; align-items: center; justify-content: space-between; }
 
-    /* ── Mobile Nav Drawer ── */
-    .mobile-drawer {
-      display: none;
-      background: var(--nabd-navy-primary);
-      padding: 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .mobile-drawer.open {
-      display: block;
-    }
-    .mobile-drawer ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .mobile-drawer a {
-      color: #FFFFFF;
-      font-weight: 700;
-      font-size: 14px;
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    /* ── Hero / Welcome Banner ── */
+    /* ── Hero / Editorial Welcome Banner ── */
     .hero-banner {
-      background: linear-gradient(135deg, var(--nabd-navy-dark) 0%, var(--nabd-navy-primary) 60%, var(--nabd-navy-light) 100%);
-      color: #FFFFFF;
-      padding: 40px 0 35px 0;
-      position: relative;
-      overflow: hidden;
-      border-bottom: 3px solid var(--nabd-gold);
+      background: linear-gradient(135deg, var(--nabd-navy-dark) 0%, var(--nabd-navy-primary) 55%, var(--nabd-navy-light) 100%);
+      color: #FFFFFF; padding: 36px 0; position: relative; overflow: hidden; border-bottom: 3px solid var(--nabd-gold);
     }
     .hero-banner::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -20%;
-      width: 500px;
-      height: 500px;
+      content: ''; position: absolute; top: -50%; left: -20%; width: 550px; height: 550px;
       background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0) 70%);
-      border-radius: 50%;
-      pointer-events: none;
+      border-radius: 50%; pointer-events: none;
     }
-    .hero-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 30px;
-      position: relative;
-      z-index: 2;
-    }
-    .hero-text {
-      max-width: 650px;
-    }
+    .hero-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; position: relative; z-index: 2; }
+    .hero-text { max-width: 620px; }
     .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(212, 175, 55, 0.15);
-      border: 1px solid var(--nabd-gold);
-      color: var(--nabd-gold);
-      padding: 4px 12px;
-      border-radius: 30px;
-      font-size: 12px;
-      font-weight: 800;
-      margin-bottom: 12px;
+      display: inline-flex; align-items: center; gap: 6px; background: rgba(212, 175, 55, 0.18);
+      border: 1px solid var(--nabd-gold); color: var(--nabd-gold); padding: 4px 14px; border-radius: 30px;
+      font-size: 12px; font-weight: 800; margin-bottom: 12px;
     }
-    .hero-text h2 {
-      font-size: 26px;
-      font-weight: 900;
-      line-height: 1.3;
-      margin-bottom: 10px;
-      color: #FFFFFF;
-    }
-    .hero-text h2 span {
-      color: var(--nabd-gold);
-    }
-    .hero-text p {
-      font-size: 14px;
-      color: #E2E8F0;
-      margin-bottom: 20px;
-      line-height: 1.7;
-    }
-    .hero-btns {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+    .hero-text h2 { font-size: 27px; font-weight: 900; line-height: 1.35; margin-bottom: 10px; color: #FFFFFF; }
+    .hero-text h2 span { color: var(--nabd-gold); }
+    .hero-text p { font-size: 14px; color: #E2E8F0; margin-bottom: 22px; line-height: 1.75; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
     .btn-hero-primary {
       background: linear-gradient(135deg, var(--nabd-emerald) 0%, var(--nabd-emerald-dark) 100%);
-      color: #FFFFFF;
-      padding: 10px 20px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 13px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+      color: #FFFFFF; padding: 11px 22px; border-radius: 12px; font-weight: 800; font-size: 13px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
     }
     .btn-hero-secondary {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      color: #FFFFFF;
-      padding: 10px 20px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 13px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #FFFFFF; padding: 11px 20px; border-radius: 12px; font-weight: 800; font-size: 13px; display: inline-flex; align-items: center; gap: 8px;
     }
-    .btn-hero-secondary:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    .hero-stats-card {
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      padding: 20px 24px;
-      border-radius: 20px;
-      min-width: 260px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-    .hero-stats-card .stat-icon {
-      font-size: 28px;
-      color: var(--nabd-gold);
-      margin-bottom: 6px;
-    }
-    .hero-stats-card .stat-number {
-      font-size: 22px;
-      font-weight: 900;
-      color: #FFFFFF;
-    }
-    .hero-stats-card .stat-desc {
-      font-size: 12px;
-      color: #CBD5E1;
-      font-weight: 600;
-    }
+    .btn-hero-secondary:hover { background: rgba(255, 255, 255, 0.2); }
 
-    /* ── Categories Bar ── */
-    .categories-bar {
-      background: #FFFFFF;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--nabd-border);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    /* Hero Poster Image Card */
+    .hero-poster-card {
+      width: 320px; flex-shrink: 0; border-radius: 22px; overflow: hidden;
+      border: 3px solid var(--nabd-gold); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+      background: #000; position: relative; transition: transform 0.3s ease;
     }
-    .categories-list {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: thin;
-    }
+    .hero-poster-card:hover { transform: translateY(-4px); }
+    .hero-poster-card img { width: 100%; height: auto; object-fit: cover; display: block; }
+
+    /* ── Search Bar & Category Filter Bar ── */
+    .categories-bar { background: #FFFFFF; padding: 14px 0; border-bottom: 1px solid var(--nabd-border); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .categories-wrapper { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .categories-list { display: flex; align-items: center; gap: 8px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; flex-grow: 1; }
     .cat-pill {
-      background: #F1F5F9;
-      color: var(--nabd-navy-primary);
-      padding: 6px 14px;
-      border-radius: 30px;
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
-      border: 1px solid transparent;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      background: #F1F5F9; color: var(--nabd-navy-primary); padding: 7px 15px; border-radius: 30px;
+      font-size: 12px; font-weight: 800; white-space: nowrap; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px;
     }
-    .cat-pill:hover, .cat-pill.active {
-      background: var(--nabd-navy-primary);
-      color: #FFFFFF;
-      border-color: var(--nabd-gold);
+    .cat-pill:hover, .cat-pill.active { background: var(--nabd-navy-primary); color: #FFFFFF; border-color: var(--nabd-gold); }
+    .cat-pill i { color: var(--nabd-gold); }
+
+    .blog-search-form {
+      display: flex; align-items: center; background: #F1F5F9; border: 1px solid #CBD5E1;
+      border-radius: 30px; padding: 4px 12px; min-width: 240px;
     }
-    .cat-pill i {
-      color: var(--nabd-gold);
+    .blog-search-form input {
+      border: none; background: transparent; font-family: inherit; font-size: 12px;
+      font-weight: 700; color: var(--nabd-navy-primary); outline: none; padding: 4px 6px; width: 100%;
+    }
+    .blog-search-form button {
+      border: none; background: transparent; color: var(--nabd-navy-light); cursor: pointer; font-size: 13px;
     }
 
-    /* ── Main Content & Layout Grid ── */
-    .main-wrapper {
-      padding: 35px 0 60px 0;
-    }
-    .layout-grid {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 28px;
-    }
-    @media (max-width: 991px) {
-      .layout-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    /* ── Main Layout Grid ── */
+    .main-wrapper { padding: 32px 0 60px 0; }
+    .layout-grid { display: grid; grid-template-columns: 1fr 340px; gap: 30px; }
+    @media (max-width: 991px) { .layout-grid { grid-template-columns: 1fr; } }
 
     /* ── Section Title ── */
     .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 22px;
-      border-bottom: 2px solid #E2E8F0;
-      padding-bottom: 10px;
-      position: relative;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 22px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; position: relative;
     }
-    .section-header::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      right: 0;
-      width: 70px;
-      height: 2px;
-      background: var(--nabd-gold);
-    }
-    .section-title {
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--nabd-navy-primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .section-title i {
-      color: var(--nabd-gold);
-    }
+    .section-header::after { content: ''; position: absolute; bottom: -2px; right: 0; width: 80px; height: 2px; background: var(--nabd-gold); }
+    .section-title { font-size: 18px; font-weight: 900; color: var(--nabd-navy-primary); display: flex; align-items: center; gap: 8px; }
+    .section-title i { color: var(--nabd-gold); }
 
-    /* ── Post Cards Grid ── */
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 22px;
-    }
-
+    /* ── Article Cards Grid ── */
+    .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 24px; }
     .nabd-post-card {
-      background: var(--nabd-card-bg);
-      border-radius: var(--nabd-radius);
-      border: 1px solid var(--nabd-border);
-      overflow: hidden;
-      box-shadow: var(--nabd-shadow);
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
+      background: var(--nabd-card-bg); border-radius: var(--nabd-radius); border: 1px solid var(--nabd-border);
+      overflow: hidden; box-shadow: var(--nabd-shadow); transition: all 0.3s ease; display: flex; flex-direction: column;
     }
-    .nabd-post-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--nabd-shadow-lg);
-      border-color: rgba(212, 175, 55, 0.4);
-    }
-    .post-thumb-wrap {
-      position: relative;
-      height: 180px;
-      background: linear-gradient(135deg, var(--nabd-navy-primary) 0%, var(--nabd-navy-surface) 100%);
-      overflow: hidden;
-    }
-    .post-thumb-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-    .nabd-post-card:hover .post-thumb-wrap img {
-      transform: scale(1.05);
-    }
+    .nabd-post-card:hover { transform: translateY(-5px); box-shadow: var(--nabd-shadow-lg); border-color: rgba(212, 175, 55, 0.45); }
+    .post-thumb-wrap { position: relative; height: 190px; background: linear-gradient(135deg, var(--nabd-navy-primary) 0%, var(--nabd-navy-surface) 100%); overflow: hidden; }
+    .post-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .nabd-post-card:hover .post-thumb-wrap img { transform: scale(1.06); }
     .post-category-tag {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: rgba(13, 32, 64, 0.85);
-      backdrop-filter: blur(6px);
-      color: var(--nabd-gold);
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 800;
+      position: absolute; top: 12px; right: 12px; background: rgba(13, 32, 64, 0.88); backdrop-filter: blur(6px);
+      color: var(--nabd-gold); border: 1px solid rgba(212, 175, 55, 0.4); padding: 4px 11px; border-radius: 20px; font-size: 11px; font-weight: 800;
     }
-    .post-body {
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
+    .post-reading-time {
+      position: absolute; bottom: 10px; left: 12px; background: rgba(0,0,0,0.65); backdrop-filter: blur(4px);
+      color: #FFFFFF; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 12px;
     }
-    .post-meta-top {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 11px;
-      color: var(--nabd-text-muted);
-      margin-bottom: 8px;
-    }
-    .post-meta-top span {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
+
+    .post-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+    .post-meta-top { display: flex; align-items: center; gap: 12px; font-size: 11px; color: var(--nabd-text-muted); margin-bottom: 8px; }
+    .post-meta-top span { display: inline-flex; align-items: center; gap: 4px; }
     .post-title {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--nabd-navy-primary);
-      line-height: 1.5;
-      margin-bottom: 10px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      font-size: 16px; font-weight: 800; color: var(--nabd-navy-primary); line-height: 1.5; margin-bottom: 10px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
-    .post-title a:hover {
-      color: var(--nabd-navy-light);
-    }
+    .post-title a:hover { color: var(--nabd-navy-light); }
     .post-snippet {
-      font-size: 12px;
-      color: var(--nabd-text-muted);
-      line-height: 1.6;
-      margin-bottom: 14px;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      flex-grow: 1;
+      font-size: 12.5px; color: var(--nabd-text-muted); line-height: 1.65; margin-bottom: 16px;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1;
     }
-    .post-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid #F1F5F9;
-      padding-top: 12px;
-      margin-top: auto;
-    }
-    .read-more-btn {
-      color: var(--nabd-navy-primary);
-      font-size: 12px;
-      font-weight: 800;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .read-more-btn:hover {
-      color: var(--nabd-gold-light);
-    }
-    .post-author-name {
-      font-size: 11px;
-      color: var(--nabd-text-muted);
-      font-weight: 600;
-    }
+    .post-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #F1F5F9; padding-top: 12px; margin-top: auto; }
+    .read-more-btn { color: var(--nabd-navy-primary); font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; }
+    .read-more-btn:hover { color: var(--nabd-gold-light); }
+    .post-author-name { font-size: 11px; color: var(--nabd-text-muted); font-weight: 700; }
 
-    /* ── Single Post View ── */
+    /* ── Single Post Editorial Design ── */
     .single-post-wrapper {
-      background: var(--nabd-card-bg);
-      border-radius: var(--nabd-radius);
-      border: 1px solid var(--nabd-border);
-      padding: 28px sm:36px;
-      box-shadow: var(--nabd-shadow);
-      margin-bottom: 30px;
+      background: var(--nabd-card-bg); border-radius: var(--nabd-radius); border: 1px solid var(--nabd-border);
+      padding: 32px; box-shadow: var(--nabd-shadow); margin-bottom: 30px;
     }
-    .single-post-header {
-      border-bottom: 2px solid #F1F5F9;
-      padding-bottom: 18px;
-      margin-bottom: 24px;
-    }
-    .single-post-badge {
-      display: inline-block;
-      background: rgba(13, 32, 64, 0.08);
-      color: var(--nabd-navy-primary);
-      padding: 4px 12px;
-      border-radius: 30px;
-      font-size: 12px;
-      font-weight: 800;
-      margin-bottom: 10px;
-      border: 1px solid rgba(13, 32, 64, 0.15);
-    }
-    .single-post-title {
-      font-size: 24px;
-      font-weight: 900;
-      color: var(--nabd-navy-primary);
-      line-height: 1.4;
-      margin-bottom: 14px;
-    }
-    .single-post-meta {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      font-size: 12px;
-      color: var(--nabd-text-muted);
-    }
-    .single-post-meta span {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .single-post-body {
-      font-size: 16px;
-      line-height: 1.9;
-      color: #1E293B;
-    }
-    .single-post-body h2 {
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--nabd-navy-primary);
-      margin: 28px 0 14px 0;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--nabd-gold);
-      display: inline-block;
-    }
-    .single-post-body h3 {
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--nabd-navy-light);
-      margin: 20px 0 10px 0;
-    }
-    .single-post-body p {
-      margin-bottom: 18px;
-    }
-    .single-post-body ul, .single-post-body ol {
-      margin: 16px 24px 20px 0;
-      line-height: 1.8;
-    }
-    .single-post-body li {
-      margin-bottom: 8px;
-    }
-    .single-post-body blockquote {
-      background: #F8FAFC;
-      border-right: 4px solid var(--nabd-gold);
-      padding: 16px 20px;
-      border-radius: 0 12px 12px 0;
-      margin: 20px 0;
-      font-style: italic;
-      color: var(--nabd-navy-primary);
-      font-weight: 600;
-    }
+    .single-post-header { border-bottom: 2px solid #F1F5F9; padding-bottom: 20px; margin-bottom: 24px; }
+    .single-post-badge { display: inline-block; background: rgba(13, 32, 64, 0.08); color: var(--nabd-navy-primary); padding: 4px 14px; border-radius: 30px; font-size: 12px; font-weight: 800; margin-bottom: 12px; border: 1px solid rgba(13, 32, 64, 0.15); }
+    .single-post-title { font-size: 26px; font-weight: 900; color: var(--nabd-navy-primary); line-height: 1.45; margin-bottom: 14px; }
+    .single-post-meta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--nabd-text-muted); font-weight: 600; }
+    .single-post-meta span { display: inline-flex; align-items: center; gap: 6px; }
 
-    /* ── Post Clinical CTA Box ── */
+    .single-post-body { font-size: 16.5px; line-height: 2; color: #1E293B; }
+    .single-post-body h2 { font-size: 21px; font-weight: 900; color: var(--nabd-navy-primary); margin: 30px 0 14px 0; padding-bottom: 8px; border-bottom: 2px solid var(--nabd-gold); display: inline-block; }
+    .single-post-body h3 { font-size: 18px; font-weight: 800; color: var(--nabd-navy-light); margin: 22px 0 10px 0; }
+    .single-post-body p { margin-bottom: 18px; }
+    .single-post-body ul, .single-post-body ol { margin: 16px 24px 22px 0; line-height: 1.9; }
+    .single-post-body li { margin-bottom: 8px; }
+    .single-post-body blockquote { background: #F8FAFC; border-right: 4px solid var(--nabd-gold); padding: 16px 22px; border-radius: 0 14px 14px 0; margin: 22px 0; font-style: italic; color: var(--nabd-navy-primary); font-weight: 700; }
+
+    /* In-Article Callout Cards */
     .post-clinical-cta {
       background: linear-gradient(135deg, var(--nabd-navy-primary) 0%, var(--nabd-navy-light) 100%);
-      color: #FFFFFF;
-      padding: 24px;
-      border-radius: 20px;
-      margin: 35px 0 25px 0;
-      border: 2px solid var(--nabd-gold);
-      box-shadow: var(--nabd-shadow-lg);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
+      color: #FFFFFF; padding: 24px 28px; border-radius: 20px; margin: 35px 0 25px 0; border: 2px solid var(--nabd-gold);
+      box-shadow: var(--nabd-shadow-lg); display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
     }
-    .post-clinical-cta-text h4 {
-      font-size: 17px;
-      font-weight: 900;
-      color: #FFFFFF;
-      margin-bottom: 6px;
-    }
-    .post-clinical-cta-text p {
-      font-size: 13px;
-      color: #CBD5E1;
-      margin: 0;
-    }
-    .post-clinical-cta-btns {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+    .post-clinical-cta-text h4 { font-size: 18px; font-weight: 900; color: #FFFFFF; margin-bottom: 6px; }
+    .post-clinical-cta-text p { font-size: 13px; color: #CBD5E1; margin: 0; }
+    .post-clinical-cta-btns { display: flex; gap: 10px; flex-wrap: wrap; }
 
-    /* ── Author Box ── */
+    /* Author Signature Box */
     .author-box {
-      background: #F1F5F9;
-      border: 1px solid var(--nabd-border);
-      border-radius: var(--nabd-radius);
-      padding: 20px;
-      margin: 30px 0;
-      display: flex;
-      align-items: center;
-      gap: 16px;
+      background: #F8FAFC; border: 1px solid var(--nabd-border); border-radius: var(--nabd-radius);
+      padding: 22px; margin: 30px 0; display: flex; align-items: center; gap: 18px;
     }
     .author-avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: var(--nabd-navy-primary);
-      color: var(--nabd-gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      border: 2px solid var(--nabd-gold);
-      flex-shrink: 0;
+      width: 65px; height: 65px; border-radius: 50%; overflow: hidden;
+      background: #FFFFFF; border: 2px solid var(--nabd-gold); flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    .author-info h5 {
-      font-size: 15px;
-      font-weight: 900;
-      color: var(--nabd-navy-primary);
-      margin-bottom: 4px;
-    }
-    .author-info p {
-      font-size: 12px;
-      color: var(--nabd-text-muted);
-      margin: 0;
-      line-height: 1.5;
-    }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-info h5 { font-size: 15px; font-weight: 900; color: var(--nabd-navy-primary); margin-bottom: 4px; }
+    .author-info p { font-size: 12.5px; color: var(--nabd-text-muted); margin: 0; line-height: 1.6; }
 
-    /* ── Post Share Bar ── */
-    .post-share-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      background: #F8FAFC;
-      border: 1px solid var(--nabd-border);
-      padding: 12px 18px;
-      border-radius: 14px;
-      margin: 25px 0;
-    }
-    .share-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--nabd-navy-primary);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .share-buttons {
-      display: flex;
-      gap: 8px;
-    }
-    .share-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #FFFFFF;
-      font-size: 14px;
-      transition: transform 0.2s ease;
-    }
-    .share-btn:hover {
-      transform: translateY(-2px);
-    }
-    .share-wa { background: #25D366; }
-    .share-fb { background: #1877F2; }
-    .share-tg { background: #0088CC; }
-    .share-copy { background: var(--nabd-navy-primary); cursor: pointer; }
+    /* Share Bar */
+    .post-share-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; background: #F8FAFC; border: 1px solid var(--nabd-border); padding: 14px 20px; border-radius: 14px; margin: 25px 0; }
+    .share-title { font-size: 13.5px; font-weight: 800; color: var(--nabd-navy-primary); display: inline-flex; align-items: center; gap: 6px; }
+    .share-buttons { display: flex; gap: 8px; }
+    .share-btn { width: 38px; height: 38px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 15px; transition: transform 0.2s ease; border: none; }
+    .share-btn:hover { transform: translateY(-2px); }
+    .share-wa { background: #25D366; } .share-fb { background: #1877F2; } .share-tg { background: #0088CC; } .share-copy { background: var(--nabd-navy-primary); cursor: pointer; }
 
     /* ── Sidebar & Widgets ── */
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+    .sidebar-widget { background: var(--nabd-card-bg); border-radius: var(--nabd-radius); border: 1px solid var(--nabd-border); padding: 22px; box-shadow: var(--nabd-shadow); }
+    .widget-title { font-size: 15px; font-weight: 900; color: var(--nabd-navy-primary); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #F1F5F9; position: relative; display: flex; align-items: center; gap: 8px; }
+    .widget-title::after { content: ''; position: absolute; bottom: -2px; right: 0; width: 45px; height: 2px; background: var(--nabd-gold); }
+    .widget-title i { color: var(--nabd-gold); }
+
+    /* Supervisor Card in Sidebar */
+    .supervisor-widget {
+      background: linear-gradient(135deg, #0A192F 0%, #1B2B6B 100%);
+      color: #FFFFFF; border: 2px solid var(--nabd-gold); text-align: center;
     }
-    .sidebar-widget {
-      background: var(--nabd-card-bg);
-      border-radius: var(--nabd-radius);
-      border: 1px solid var(--nabd-border);
-      padding: 22px;
-      box-shadow: var(--nabd-shadow);
+    .supervisor-widget .widget-title { color: #FFFFFF; border-color: rgba(255, 255, 255, 0.2); justify-content: center; }
+    .supervisor-widget .widget-title::after { right: calc(50% - 22px); }
+    .supervisor-img-wrap {
+      width: 110px; height: 110px; border-radius: 50%; overflow: hidden;
+      margin: 0 auto 12px auto; border: 3px solid var(--nabd-gold);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
     }
-    .widget-title {
-      font-size: 15px;
-      font-weight: 900;
-      color: var(--nabd-navy-primary);
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #F1F5F9;
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .widget-title::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      right: 0;
-      width: 40px;
-      height: 2px;
-      background: var(--nabd-gold);
-    }
-    .widget-title i {
-      color: var(--nabd-gold);
-    }
+    .supervisor-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .supervisor-name { font-size: 16px; font-weight: 900; color: #FFFFFF; margin-bottom: 2px; }
+    .supervisor-title { font-size: 12px; color: var(--nabd-gold); font-weight: 700; margin-bottom: 10px; }
+    .supervisor-desc { font-size: 12px; color: #CBD5E1; line-height: 1.6; margin-bottom: 14px; }
 
     /* Emergency Card in Sidebar */
-    .emergency-widget {
-      background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 100%);
-      color: #FFFFFF;
-      border: 2px solid #EF4444;
-    }
-    .emergency-widget .widget-title {
-      color: #FFFFFF;
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-    .emergency-widget .widget-title::after {
-      background: #FCA5A5;
-    }
-    .emergency-call-btn {
-      background: #FFFFFF;
-      color: #991B1B !important;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px;
-      border-radius: 12px;
-      font-weight: 900;
-      font-size: 14px;
-      margin-top: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
+    .emergency-widget { background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 100%); color: #FFFFFF; border: 2px solid #EF4444; }
+    .emergency-widget .widget-title { color: #FFFFFF; border-color: rgba(255, 255, 255, 0.2); }
+    .emergency-widget .widget-title::after { background: #FCA5A5; }
+    .emergency-call-btn { background: #FFFFFF; color: #991B1B !important; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 12px; font-weight: 900; font-size: 14px; margin-top: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
 
-    /* Quick Links list in widget */
-    .sidebar-links-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .sidebar-links-list li a {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      background: #F8FAFC;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--nabd-navy-primary);
-      border: 1px solid #E2E8F0;
-    }
-    .sidebar-links-list li a:hover {
-      background: var(--nabd-navy-primary);
-      color: #FFFFFF;
-      border-color: var(--nabd-gold);
-    }
+    .sidebar-links-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .sidebar-links-list li a { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #F8FAFC; border-radius: 10px; font-size: 13px; font-weight: 700; color: var(--nabd-navy-primary); border: 1px solid #E2E8F0; }
+    .sidebar-links-list li a:hover { background: var(--nabd-navy-primary); color: #FFFFFF; border-color: var(--nabd-gold); }
 
-    /* ── Floating Action Buttons (FAB) ── */
-    .fab-container {
-      position: fixed;
-      bottom: 24px;
-      left: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      z-index: 999;
-    }
-    .fab-btn {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #FFFFFF;
-      font-size: 22px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-      transition: all 0.25s ease;
-      position: relative;
-    }
-    .fab-btn:hover {
-      transform: scale(1.1);
-    }
-    .fab-whatsapp {
-      background: #25D366;
-      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-    }
-    .fab-call {
-      background: var(--nabd-gold);
-      color: var(--nabd-navy-dark) !important;
-      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-    }
-    .fab-book {
-      background: var(--nabd-navy-primary);
-      box-shadow: 0 6px 20px rgba(13, 32, 64, 0.4);
-    }
+    /* Floating Action Buttons */
+    .fab-container { position: fixed; bottom: 24px; left: 24px; display: flex; flex-direction: column; gap: 12px; z-index: 999; }
+    .fab-btn { width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 22px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); transition: all 0.25s ease; }
+    .fab-btn:hover { transform: scale(1.1); }
+    .fab-whatsapp { background: #25D366; } .fab-call { background: var(--nabd-gold); color: var(--nabd-navy-dark) !important; } .fab-book { background: var(--nabd-navy-primary); }
 
-    /* ── Footer ── */
-    .main-footer {
-      background: var(--nabd-navy-dark);
-      color: #FFFFFF;
-      padding: 50px 0 25px 0;
-      border-top: 4px solid var(--nabd-gold);
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1.5fr;
-      gap: 30px;
-      margin-bottom: 40px;
-    }
-    @media (max-width: 991px) {
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    @media (max-width: 575px) {
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .footer-brand h3 {
-      font-size: 18px;
-      font-weight: 900;
-      color: #FFFFFF;
-      margin-bottom: 12px;
-    }
-    .footer-brand p {
-      font-size: 13px;
-      color: #CBD5E1;
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-    .footer-social-links {
-      display: flex;
-      gap: 10px;
-    }
-    .footer-social-links a {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #FFFFFF;
-      font-size: 15px;
-    }
-    .footer-social-links a:hover {
-      background: var(--nabd-gold);
-      color: var(--nabd-navy-dark);
-    }
-    .footer-col h4 {
-      font-size: 15px;
-      font-weight: 900;
-      color: var(--nabd-gold);
-      margin-bottom: 16px;
-    }
-    .footer-links {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .footer-links a {
-      font-size: 13px;
-      color: #CBD5E1;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .footer-links a:hover {
-      color: var(--nabd-gold);
-      padding-right: 4px;
-    }
-    .footer-contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 12px;
-      font-size: 13px;
-      color: #CBD5E1;
-    }
-    .footer-contact-item i {
-      color: var(--nabd-gold);
-      margin-top: 4px;
-    }
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 20px;
-      text-align: center;
-      font-size: 12px;
-      color: #94A3B8;
-    }
+    /* Footer */
+    .main-footer { background: var(--nabd-navy-dark); color: #FFFFFF; padding: 50px 0 25px 0; border-top: 4px solid var(--nabd-gold); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 30px; margin-bottom: 40px; }
+    @media (max-width: 991px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 575px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-brand h3 { font-size: 18px; font-weight: 900; color: #FFFFFF; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .footer-brand p { font-size: 13px; color: #CBD5E1; line-height: 1.7; margin-bottom: 16px; }
+    .footer-social-links { display: flex; gap: 10px; }
+    .footer-social-links a { width: 36px; height: 36px; border-radius: 10px; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 15px; }
+    .footer-social-links a:hover { background: var(--nabd-gold); color: var(--nabd-navy-dark); }
+    .footer-col h4 { font-size: 15px; font-weight: 900; color: var(--nabd-gold); margin-bottom: 16px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 13px; color: #CBD5E1; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+    .footer-links a:hover { color: var(--nabd-gold); padding-right: 4px; }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 13px; color: #CBD5E1; }
+    .footer-contact-item i { color: var(--nabd-gold); margin-top: 4px; }
+    .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 20px; text-align: center; font-size: 12px; color: #94A3B8; }
 
-    /* ── Toast notification ── */
-    #nabd-toast {
-      position: fixed;
-      bottom: 30px;
-      right: 50%;
-      transform: translateX(50%);
-      background: var(--nabd-navy-dark);
-      color: #FFFFFF;
-      border: 1px solid var(--nabd-gold);
-      padding: 10px 22px;
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: 800;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      display: none;
-      z-index: 10000;
-    }
+    #nabd-toast { position: fixed; bottom: 30px; right: 50%; transform: translateX(50%); background: var(--nabd-navy-dark); color: #FFFFFF; border: 1px solid var(--nabd-gold); padding: 10px 22px; border-radius: 30px; font-size: 13px; font-weight: 800; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); display: none; z-index: 10000; }
 
-    /* ── Responsive rules ── */
     @media (max-width: 991px) {
       .nav-links { display: none; }
       .mobile-menu-toggle { display: block; }
       .hero-inner { flex-direction: column; text-align: center; }
-      .hero-stats-card { width: 100%; }
+      .hero-poster-card { width: 100%; max-width: 340px; margin: 0 auto; }
       .hero-btns { justify-content: center; }
     }
     @media (max-width: 575px) {
       .top-bar { display: none; }
       .hero-text h2 { font-size: 21px; }
       .posts-grid { grid-template-columns: 1fr; }
-      .single-post-title { font-size: 20px; }
+      .single-post-title { font-size: 21px; }
       .post-clinical-cta { text-align: center; justify-content: center; }
     }
   ]]></b:skin>
 </head>
 
 <body>
-  <!-- Reading Progress Bar -->
   <div id='reading-progress'/>
-
-  <!-- Toast Notification -->
   <div id='nabd-toast'>تم النسخ بنجاح! 📋</div>
 
   <!-- ══════════════════════════════════════════════════════════════
@@ -1104,25 +416,25 @@
   </header>
 
   <!-- ══════════════════════════════════════════════════════════════
-       2. Main Navigation Header
+       2. Main Navigation Header (With Official Logo)
   ══════════════════════════════════════════════════════════════ -->
   <nav class='main-header'>
     <div class='container'>
       <div class='header-inner'>
-        <!-- Brand Logo -->
+        <!-- Brand Logo with Official Image -->
         <a class='brand-logo' href='/'>
-          <div class='logo-icon-box'>
-            <i class='fa-solid fa-heart-pulse'></i>
+          <div class='logo-img-wrapper'>
+            <img alt='شعار نبض للتمريض المنزلي' src='https://nabd-nursing.vercel.app/images/nabd-official-logo.jpg'/>
           </div>
           <div class='brand-title-group'>
             <h1 class='site-title'>نبض للتمريض المنزلي</h1>
-            <p>المدونة الطبية والصحية المعتمدة — دمياط</p>
+            <p>المدونة والمجلة الطبية المعتمدة — دمياط</p>
           </div>
         </a>
 
         <!-- Desktop Navigation Links -->
         <ul class='nav-links'>
-          <li><a class='active' href='/'><i class='fa-solid fa-house'></i> الرئيسية</a></li>
+          <li><a class='active' href='/'><i class='fa-solid fa-newspaper'></i> المقالات</a></li>
           <li><a href='https://nabd-nursing.vercel.app/services' target='_blank'><i class='fa-solid fa-stethoscope'></i> خدماتنا</a></li>
           <li><a href='https://nabd-nursing.vercel.app/medical-record' target='_blank'><i class='fa-solid fa-file-waveform'></i> ملفي الطبي</a></li>
           <li><a href='https://nabd-nursing.vercel.app/first-aid' target='_blank'><i class='fa-solid fa-kit-medical'></i> الإسعافات</a></li>
@@ -1133,8 +445,7 @@
         <!-- Action CTA & Mobile Toggle -->
         <div class='header-actions'>
           <a class='btn-book-nav' href='https://nabd-nursing.vercel.app/booking' target='_blank'>
-            <i class='fa-solid fa-calendar-check'></i>
-            <span>احجز خدمة الآن</span>
+            <i class='fa-solid fa-calendar-check'></i> <span>احجز خدمة الآن</span>
           </a>
           <button class='mobile-menu-toggle' id='menuToggle' onclick='toggleMobileMenu()'>
             <i class='fa-solid fa-bars'></i>
@@ -1143,10 +454,10 @@
       </div>
     </div>
 
-    <!-- Mobile Drawer Navigation -->
+    <!-- Mobile Drawer -->
     <div class='mobile-drawer' id='mobileDrawer'>
       <ul>
-        <li><a href='/'><i class='fa-solid fa-house'></i> مدونة نبض الرئيسية</a></li>
+        <li><a href='/'><i class='fa-solid fa-newspaper'></i> مدونة نبض الرئيسية</a></li>
         <li><a href='https://nabd-nursing.vercel.app/services' target='_blank'><i class='fa-solid fa-stethoscope'></i> دليل الخدمات التمريضية</a></li>
         <li><a href='https://nabd-nursing.vercel.app/booking' target='_blank'><i class='fa-solid fa-calendar-check'></i> حجز زيارة تمريضية فورية</a></li>
         <li><a href='https://nabd-nursing.vercel.app/medical-record' target='_blank'><i class='fa-solid fa-file-waveform'></i> استعراض وتصدير الملف الطبي PDF</a></li>
@@ -1158,18 +469,16 @@
   </nav>
 
   <!-- ══════════════════════════════════════════════════════════════
-       3. Hero / Welcome Banner (Shown on Index)
+       3. Hero Section (With Nurse Supervisor Official Poster)
   ══════════════════════════════════════════════════════════════ -->
   <b:if cond='data:blog.pageType == &quot;index&quot;'>
     <section class='hero-banner'>
       <div class='container'>
         <div class='hero-inner'>
           <div class='hero-text'>
-            <div class='hero-badge'>
-              <i class='fa-solid fa-sparkles'></i> المدونة الطبية المتخصصة في دمياط
-            </div>
-            <h2>رعايتك الصحية تبدأ من مكانك، <span>ونحن أقرب إليك</span></h2>
-            <p>نصائح وإرشادات طبية وتمريضية موثوقة من أخصائيي ومشرفي التمريض المنزلي. رعاية كبار السن، غيار الجروح والقرح، الحقن والمحاليل، والقسطرة بأعلى معايير الأمان والتعقيم.</p>
+            <div class='hero-badge'><i class='fa-solid fa-sparkles'></i> المدونة الطبية المتخصصة في دمياط</div>
+            <h2>رعاية صحية في منزلك <span>بأمان واحترافية</span></h2>
+            <p>مقالات ونصائح طبية وتمريضية معتمدة من نخبة التمريض المنزلي بدمياط. إرشادات دقيقة لرعاية كبار السن، غيار الجروح والقرح السريرية، الحقن والمحاليل، والقسطرة والرايل بأعلى معايير التعقيم.</p>
             <div class='hero-btns'>
               <a class='btn-hero-primary' href='https://wa.me/201099667065?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D8%AA%D9%85%D8%B1%D9%8A%D8%B6%D9%8A%D8%A9%20%D9%85%D9%86%20%D9%86%D8%A8%D8%B6' target='_blank'>
                 <i class='fa-brands fa-whatsapp'></i> استشارة تمريضية سريعة
@@ -1179,50 +488,55 @@
               </a>
             </div>
           </div>
-          <div class='hero-stats-card'>
-            <div class='stat-icon'><i class='fa-solid fa-user-nurse'></i></div>
-            <div class='stat-number'>15+ خدمة تمريضية</div>
-            <div class='stat-desc'>تغطية شاملة لكافة مناطق دمياط</div>
-            <div style='margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 11px; color: #CBD5E1;'>
-              <i class='fa-solid fa-star' style='color:#D4AF37;'></i> إشراف تمريضي: <strong>إبراهيم ماهر</strong>
-            </div>
+          
+          <!-- Official Poster Card -->
+          <div class='hero-poster-card'>
+            <img alt='نبض للتمريض المنزلي — رعاية صحية في منزلك بأمان واحترافية' src='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg'/>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Categories / Topics Bar -->
+    <!-- Search & Categories Bar -->
     <div class='categories-bar'>
       <div class='container'>
-        <div class='categories-list'>
-          <a class='cat-pill active' href='/'><i class='fa-solid fa-layer-group'></i> جميع المقالات</a>
-          <a class='cat-pill' href='/search/label/%D8%AA%D9%85%D8%B1%D9%8A%D8%B6%20%D9%85%D9%86%D8%B2%D9%84%D9%8A'><i class='fa-solid fa-house-medical'></i> تمريض منزلي</a>
-          <a class='cat-pill' href='/search/label/%D9%83%D8%A8%D8%A7%D8%B1%20%D8%A7%D9%84%D8%B3%D9%86'><i class='fa-solid fa-person-cane'></i> كبار السن</a>
-          <a class='cat-pill' href='/search/label/%D8%A7%D9%84%D8%AC%D8%B1%D9%88%D8%AD%20%D9%88%D8%A7%D9%84%D9%82%D8%B1%D8%AD'><i class='fa-solid fa-bandage'></i> الجروح والقرح</a>
-          <a class='cat-pill' href='/search/label/%D8%A7%D9%84%D9%82%D8%B3%D8%B7%D8%B1%D8%A9%20%D9%88%D8%A7%D9%84%D8%B1%D8%A7%D9%8A%D9%84'><i class='fa-solid fa-syringe'></i> القسطرة والرايل</a>
-          <a class='cat-pill' href='/search/label/%D8%A7%D9%84%D8%AD%D9%82%D9%86%20%D9%88%D8%A7%D9%84%D9%85%D8%AD%D8%A7%D9%84%D9%8A%D9%84'><i class='fa-solid fa-droplet'></i> الحقن والمحاليل</a>
-          <a class='cat-pill' href='/search/label/%D8%A5%D8%B3%D8%B9%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A3%D9%88%D9%84%D9%8A%D8%A9'><i class='fa-solid fa-kit-medical'></i> إسعافات أولية</a>
-          <a class='cat-pill' href='/search/label/%D9%86%D8%B5%D8%A7%D8%A6%D8%AD%20%D8%B7%D8%A8%D9%8A%D8%A9'><i class='fa-solid fa-notes-medical'></i> نصائح طبية</a>
+        <div class='categories-wrapper'>
+          <div class='categories-list'>
+            <a class='cat-pill active' href='/'><i class='fa-solid fa-layer-group'></i> جميع المقالات</a>
+            <a class='cat-pill' href='/search/label/%D8%AA%D9%85%D8%B1%D9%8A%D8%B6%20%D9%85%D9%86%D8%B2%D9%84%D9%8A'><i class='fa-solid fa-house-medical'></i> تمريض منزلي</a>
+            <a class='cat-pill' href='/search/label/%D9%83%D8%A8%D8%A7%D8%B1%20%D8%A7%D9%84%D8%B3%D9%86'><i class='fa-solid fa-person-cane'></i> كبار السن</a>
+            <a class='cat-pill' href='/search/label/%D8%A7%D9%84%D8%AC%D8%B1%D9%88%D8%AD%20%D9%88%D8%A7%D9%84%D9%82%D8%B1%D8%AD'><i class='fa-solid fa-bandage'></i> الجروح والقرح</a>
+            <a class='cat-pill' href='/search/label/%D8%A7%D9%84%D9%82%D8%B3%D8%B7%D8%B1%D8%A9%20%D9%88%D8%A7%D9%84%D8%B1%D8%A7%D9%8A%D9%84'><i class='fa-solid fa-syringe'></i> القسطرة والرايل</a>
+            <a class='cat-pill' href='/search/label/%D8%A7%D9%84%D8%AD%D9%82%D9%86%20%D9%88%D8%A7%D9%84%D9%85%D8%AD%D8%A7%D9%84%D9%8A%D9%84'><i class='fa-solid fa-droplet'></i> الحقن والمحاليل</a>
+            <a class='cat-pill' href='/search/label/%D8%A5%D8%B3%D8%B9%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A3%D9%88%D9%84%D9%8A%D8%A9'><i class='fa-solid fa-kit-medical'></i> إسعافات وطوارئ</a>
+            <a class='cat-pill' href='/search/label/%D9%86%D8%B5%D8%A7%D8%A6%D8%AD%20%D8%B7%D8%A8%D9%8A%D8%A9'><i class='fa-solid fa-notes-medical'></i> نصائح طبية</a>
+          </div>
+
+          <!-- Quick Search in Blog -->
+          <form action='/search' class='blog-search-form' method='get'>
+            <input name='q' placeholder='ابحث في المقالات الطبية...' type='text'/>
+            <button type='submit'><i class='fa-solid fa-magnifying-glass'></i></button>
+          </form>
         </div>
       </div>
     </div>
   </b:if>
 
   <!-- ══════════════════════════════════════════════════════════════
-       4. Main Content Wrapper & Sidebar
+       4. Main Content Area (Focused heavily on Articles & Publishing)
   ══════════════════════════════════════════════════════════════ -->
   <main class='main-wrapper'>
     <div class='container'>
       <div class='layout-grid'>
-        <!-- Left / Center Posts Area -->
+        <!-- Articles Column -->
         <div class='posts-column'>
           <b:section id='main' showaddelement='yes'>
             <b:widget id='Blog1' locked='true' title='رسائل المدونة الإلكترونية' type='Blog' version='2' visible='true'>
               <b:includable id='main'>
-                <!-- Index View (Grid of Posts) -->
+                <!-- Index View (Grid of Rich Article Cards) -->
                 <b:if cond='data:view.isMultipleItems'>
                   <div class='section-header'>
-                    <h3 class='section-title'><i class='fa-solid fa-newspaper'></i> أحدث المقالات والإرشادات الطبية</h3>
+                    <h3 class='section-title'><i class='fa-solid fa-book-medical'></i> أحدث المقالات والإرشادات الطبية المعتمدة</h3>
                   </div>
 
                   <div class='posts-grid'>
@@ -1232,36 +546,32 @@
                           <b:if cond='data:post.featuredImage'>
                             <img alt='data:post.title' expr:src='data:post.featuredImage'/>
                           <b:else/>
-                            <div style='width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0D2040,#1B2B6B);color:#D4AF37;font-size:38px;'>
-                              <i class='fa-solid fa-heart-pulse'></i>
-                            </div>
+                            <img alt='data:post.title' src='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg'/>
                           </b:if>
                           <b:if cond='data:post.labels and not data:post.labels.empty'>
                             <span class='post-category-tag'><data:post.labels.first.name/></span>
                           </b:if>
+                          <span class='post-reading-time'><i class='fa-regular fa-clock'></i> 3 دقائق قراءة</span>
                         </div>
                         <div class='post-body'>
                           <div class='post-meta-top'>
                             <span><i class='fa-regular fa-calendar'></i> <data:post.date/></span>
-                            <span><i class='fa-solid fa-user-doctor'></i> نبض للتمريض</span>
+                            <span><i class='fa-solid fa-user-nurse'></i> نبض للتمريض</span>
                           </div>
-                          <h4 class='post-title'>
-                            <a expr:href='data:post.url'><data:post.title/></a>
-                          </h4>
+                          <h4 class='post-title'><a expr:href='data:post.url'><data:post.title/></a></h4>
                           <p class='post-snippet'><data:post.snippet/></p>
                           <div class='post-footer'>
                             <a class='read-more-btn' expr:href='data:post.url'>
-                              <span>اقرأ المقال كاملاً</span>
-                              <i class='fa-solid fa-arrow-left'></i>
+                              <span>اقرأ المقال كاملاً</span> <i class='fa-solid fa-arrow-left'></i>
                             </a>
-                            <span class='post-author-name'>دمياط 📍</span>
+                            <span class='post-author-name'>إبراهيم ماهر</span>
                           </div>
                         </div>
                       </article>
                     </b:loop>
                   </div>
 
-                <!-- Single Item View (Full Article) -->
+                <!-- Single Article View (Deep Reading Experience) -->
                 <b:else/>
                   <b:loop values='data:posts' var='post'>
                     <article class='single-post-wrapper'>
@@ -1272,8 +582,9 @@
                         <h1 class='single-post-title'><data:post.title/></h1>
                         <div class='single-post-meta'>
                           <span><i class='fa-regular fa-calendar'></i> تاريخ النشر: <data:post.date/></span>
-                          <span><i class='fa-solid fa-user-nurse'></i> إشراف: إبراهيم ماهر</span>
-                          <span><i class='fa-solid fa-location-dot'></i> نبض للتمريض — دمياط</span>
+                          <span><i class='fa-solid fa-user-nurse'></i> إشراف تمريضي: إبراهيم ماهر</span>
+                          <span><i class='fa-solid fa-location-dot'></i> دمياط ومحيطها</span>
+                          <span><i class='fa-solid fa-eye'></i> قراءة طبية موثوقة</span>
                         </div>
                       </div>
 
@@ -1281,11 +592,11 @@
                         <data:post.body/>
                       </div>
 
-                      <!-- In-Article Clinical Call to Action Box -->
+                      <!-- In-Article Medical Consultation & Booking CTA -->
                       <div class='post-clinical-cta'>
                         <div class='post-clinical-cta-text'>
-                          <h4><i class='fa-solid fa-house-medical'></i> محتاج تمريض منزلي معتمد في دمياط؟</h4>
-                          <p>فريق نبض جاهز للوصول إليك في أي مكان داخل دمياط لتقديم الخدمة بأعلى معايير الأمان والتعقيم.</p>
+                          <h4><i class='fa-solid fa-house-medical'></i> محتاج رعاية تمريضية متخصصة في منزلك بدمياط؟</h4>
+                          <p>فريق نبض يوفر لك خدمات التمريض المنزلي بأعلى معايير الأمان والتعقيم وراحة المريض في منزله.</p>
                         </div>
                         <div class='post-clinical-cta-btns'>
                           <a class='btn-hero-primary' href='https://nabd-nursing.vercel.app/booking' target='_blank'>
@@ -1299,23 +610,23 @@
 
                       <!-- Social Share Bar -->
                       <div class='post-share-bar'>
-                        <span class='share-title'><i class='fa-solid fa-share-nodes'></i> مشاركة المقال:</span>
+                        <span class='share-title'><i class='fa-solid fa-share-nodes'></i> مشاركة المقال الطبي:</span>
                         <div class='share-buttons'>
-                          <a class='share-btn share-wa' expr:href='&quot;https://api.whatsapp.com/send?text=&quot; + data:post.title + &quot; &quot; + data:post.url' target='_blank' title='مشاركة على واتساب'><i class='fa-brands fa-whatsapp'></i></a>
-                          <a class='share-btn share-fb' expr:href='&quot;https://www.facebook.com/sharer/sharer.php?u=&quot; + data:post.url' target='_blank' title='مشاركة على فيسبوك'><i class='fa-brands fa-facebook-f'></i></a>
-                          <a class='share-btn share-tg' expr:href='&quot;https://t.me/share/url?url=&quot; + data:post.url + &quot;&amp;text=&quot; + data:post.title' target='_blank' title='مشاركة على تليجرام'><i class='fa-brands fa-telegram'></i></a>
-                          <button class='share-btn share-copy' onclick='copyPostUrl()' title='نسخ رابط المقال'><i class='fa-regular fa-copy'></i></button>
+                          <a class='share-btn share-wa' expr:href='&quot;https://api.whatsapp.com/send?text=&quot; + data:post.title + &quot; &quot; + data:post.url' target='_blank' title='واتساب'><i class='fa-brands fa-whatsapp'></i></a>
+                          <a class='share-btn share-fb' expr:href='&quot;https://www.facebook.com/sharer/sharer.php?u=&quot; + data:post.url' target='_blank' title='فيسبوك'><i class='fa-brands fa-facebook-f'></i></a>
+                          <a class='share-btn share-tg' expr:href='&quot;https://t.me/share/url?url=&quot; + data:post.url + &quot;&amp;text=&quot; + data:post.title' target='_blank' title='تليجرام'><i class='fa-brands fa-telegram'></i></a>
+                          <button class='share-btn share-copy' onclick='copyPostUrl()' title='نسخ الرابط'><i class='fa-regular fa-copy'></i></button>
                         </div>
                       </div>
 
-                      <!-- Author Signature Box -->
+                      <!-- Author Signature Box with Poster Portrait -->
                       <div class='author-box'>
                         <div class='author-avatar'>
-                          <i class='fa-solid fa-user-doctor'></i>
+                          <img alt='إبراهيم ماهر — المشرف العام لمؤسسة نبض' src='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg'/>
                         </div>
                         <div class='author-info'>
-                          <h5>إبراهيم ماهر — المشرف العام لمؤسسة نبض</h5>
-                          <p>متخصص في تقديم ومتابعة خدمات الرعاية الصحية والتمريض المنزلي المعتمد بمحافظة دمياط. نهتم بتوفير الرعاية باحترافية وأمان وراحة تامة للمريض داخل منزله.</p>
+                          <h5>إبراهيم ماهر — المشرف العام لمؤسسة نبض للتمريض المنزلي</h5>
+                          <p>أخصائي تمريض ورعاية صحية منزلية بمحافظة دمياط. نسعى لتقديم خدمة تمريضية متكاملة بأمان، تعقيم فائق، وراحة تامة للمريض وأسرته داخل منازلهم.</p>
                         </div>
                       </div>
                     </article>
@@ -1326,18 +637,32 @@
           </b:section>
         </div>
 
-        <!-- Right / Sidebar Column -->
+        <!-- Sidebar Widgets Column -->
         <aside class='sidebar'>
-          <!-- 1. Emergency Quick Contact Widget -->
+          <!-- 1. Supervisor & Medical Team Card (With Photo) -->
+          <div class='sidebar-widget supervisor-widget'>
+            <h4 class='widget-title'><i class='fa-solid fa-user-doctor'></i> الإشراف التمريضي</h4>
+            <div class='supervisor-img-wrap'>
+              <img alt='إبراهيم ماهر — نبض للتمريض المنزلي' src='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg'/>
+            </div>
+            <h5 class='supervisor-name'>إبراهيم ماهر</h5>
+            <p class='supervisor-title'>المشرف العام لمؤسسة نبض للتمريض</p>
+            <p class='supervisor-desc'>خدمات تمريض ورعاية منزلية بأمان واحترافية متكاملة داخل دمياط ومحيطها.</p>
+            <a href='https://wa.me/201099667065?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%AA%D9%85%D8%B1%D9%8A%D8%B6%20%D9%85%D9%86%D8%B2%D9%84%D9%8A%20%D8%A8%D8%AF%D9%85%D9%8A%D8%A7%D8%B7' style='background: var(--nabd-gold); color: var(--nabd-navy-dark); font-weight: 900; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 16px; border-radius: 20px; width: 100%;' target='_blank'>
+              <i class='fa-brands fa-whatsapp'></i> تواصل مباشر مع المشرف
+            </a>
+          </div>
+
+          <!-- 2. Emergency Quick Contact Widget -->
           <div class='sidebar-widget emergency-widget'>
-            <h4 class='widget-title'><i class='fa-solid fa-triangle-exclamation'></i> حالات الطوارئ والتمريض العاجل</h4>
-            <p style='font-size: 12px; line-height: 1.6;'>إذا كنت بحاجة لتمريض عاجل، تركيب كانيولا، أو سحب عينات تحاليل منزلية فورية داخل دمياط:</p>
+            <h4 class='widget-title'><i class='fa-solid fa-triangle-exclamation'></i> حالات التمريض العاجل والطوارئ</h4>
+            <p style='font-size: 12px; line-height: 1.6;'>إذا كنت بحاجة لتمريض عاجل، تركيب كانيولا، أو سحب عينات تحاليل منزلية فورية بدمياط:</p>
             <a class='emergency-call-btn' href='tel:01001097896'>
               <i class='fa-solid fa-phone-flip'></i> اتصال سريع: 01001097896
             </a>
           </div>
 
-          <!-- 2. Medical Services Quick Directory -->
+          <!-- 3. Medical Services Quick Directory -->
           <div class='sidebar-widget'>
             <h4 class='widget-title'><i class='fa-solid fa-stethoscope'></i> خدمات نبض المعتمدة</h4>
             <ul class='sidebar-links-list'>
@@ -1350,20 +675,20 @@
             </ul>
           </div>
 
-          <!-- 3. Medical Record & PDF Export -->
+          <!-- 4. Medical Record & PDF Export -->
           <div class='sidebar-widget' style='border: 2px solid var(--nabd-navy-primary); background: #F8FAFC;'>
             <h4 class='widget-title'><i class='fa-solid fa-file-waveform'></i> ملف المريض الطبي الموحد</h4>
-            <p style='font-size: 12px; color: #475569; margin-bottom: 12px;'>استعرض سجلك الطبي الموحد، تفاصيل العلامات الحيوية، سجل الزيارات، وقم بتصدير تقريرك PDF بضغطة زر واحدة:</p>
+            <p style='font-size: 12px; color: #475569; margin-bottom: 12px;'>استعرض سجلك الطبي الموحد، تفاصيل العلامات الحيوية، وسجل الزيارات مع تصدير تقريرك PDF بضغطة زر واحدة:</p>
             <a href='https://nabd-nursing.vercel.app/medical-record' style='background: var(--nabd-navy-primary); color: #FFFFFF; display: block; text-align: center; padding: 10px; border-radius: 12px; font-weight: 800; font-size: 12px;' target='_blank'>
               <i class='fa-solid fa-file-pdf' style='color:var(--nabd-gold);'></i> فتح ملفي الطبي وتصدير PDF
             </a>
           </div>
 
-          <!-- 4. Damietta Coverage Widget -->
+          <!-- 5. Damietta Coverage Widget -->
           <div class='sidebar-widget'>
-            <h4 class='widget-title'><i class='fa-solid fa-map-location-dot'></i> نطاق الخدمة في دمياط</h4>
+            <h4 class='widget-title'><i class='fa-solid fa-map-location-dot'></i> نطاق الخدمة بدمياط</h4>
             <p style='font-size: 12px; color: #64748B; line-height: 1.7;'>
-              نغطي كافة مناطق وأحياء دمياط: مدينة دمياط، دمياط الجديدة، رأس البر، كفر سعد، فارسكور، الزرقا، شطا، عزبة البرج، والقرى المجاورة.
+              نغطي كافة أحياء ومراكز دمياط: مدينة دمياط، دمياط الجديدة، رأس البر، كفر سعد، فارسكور، الزرقا، شطا، عزبة البرج، والقرى المجاورة.
             </p>
           </div>
         </aside>
@@ -1375,18 +700,9 @@
        5. Floating Action Buttons (FAB)
   ══════════════════════════════════════════════════════════════ -->
   <div class='fab-container'>
-    <!-- WhatsApp -->
-    <a class='fab-btn fab-whatsapp' href='https://wa.me/201099667065?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%AA%D9%85%D8%B1%D9%8A%D8%B6%20%D9%85%D9%86%D8%B2%D9%84%D9%8A%20%D9%85%D9%86%20%D9%86%D8%A8%D8%B6' target='_blank' title='تواصل معنا عبر واتساب'>
-      <i class='fa-brands fa-whatsapp'></i>
-    </a>
-    <!-- Phone Call -->
-    <a class='fab-btn fab-call' href='tel:01001097896' title='اتصال هاتفي مباشر'>
-      <i class='fa-solid fa-phone'></i>
-    </a>
-    <!-- Booking Link -->
-    <a class='fab-btn fab-book' href='https://nabd-nursing.vercel.app/booking' target='_blank' title='حجز خدمة تمريضية'>
-      <i class='fa-solid fa-calendar-plus' style='color:var(--nabd-gold);'></i>
-    </a>
+    <a class='fab-btn fab-whatsapp' href='https://wa.me/201099667065?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%AA%D9%85%D8%B1%D9%8A%D8%B6%20%D9%85%D9%86%D8%B2%D9%84%D9%8A%20%D9%85%D9%86%20%D9%86%D8%A8%D8%B6' target='_blank' title='تواصل واتساب'><i class='fa-brands fa-whatsapp'></i></a>
+    <a class='fab-btn fab-call' href='tel:01001097896' title='اتصال هاتف'><i class='fa-solid fa-phone'></i></a>
+    <a class='fab-btn fab-book' href='https://nabd-nursing.vercel.app/booking' target='_blank' title='حجز خدمة'><i class='fa-solid fa-calendar-plus' style='color:var(--nabd-gold);'></i></a>
   </div>
 
   <!-- ══════════════════════════════════════════════════════════════
@@ -1395,9 +711,13 @@
   <footer class='main-footer'>
     <div class='container'>
       <div class='footer-grid'>
-        <!-- Col 1: Brand Info -->
         <div class='footer-brand'>
-          <h3>نبض للتمريض المنزلي — دمياط</h3>
+          <h3>
+            <div style='width:32px;height:32px;border-radius:8px;overflow:hidden;background:#FFF;display:inline-block;vertical-align:middle;padding:1px;'>
+              <img alt='شعار نبض' src='https://nabd-nursing.vercel.app/images/nabd-official-logo.jpg' style='width:100%;height:100%;object-fit:contain;'/>
+            </div>
+            نبض للتمريض المنزلي — دمياط
+          </h3>
           <p>المؤسسة المتخصصة في تقديم خدمات التمريض والرعاية الصحية المنزلية وفق أعلى معايير الجودة والتعقيم والراحة للمريض وأسرته داخل دمياط ومحيطها.</p>
           <div class='footer-social-links'>
             <a href='https://www.facebook.com/profile.php?id=61593884400330' target='_blank' title='فيسبوك'><i class='fa-brands fa-facebook-f'></i></a>
@@ -1406,20 +726,16 @@
             <a href='https://cezma.com/store/nabd.nu' target='_blank' title='متجر نبض'><i class='fa-solid fa-bag-shopping'></i></a>
           </div>
         </div>
-
-        <!-- Col 2: Fast Links -->
         <div class='footer-col'>
           <h4>روابط سريعة</h4>
           <ul class='footer-links'>
-            <li><a href='https://nabd-nursing.vercel.app/' target='_blank'><i class='fa-solid fa-angle-left'></i> الموقع الرسمي</a></li>
+            <li><a href='https://nabd-nursing.vercel.app/' target='_blank'><i class='fa-solid fa-angle-left'></i> الموقع الرئيسي</a></li>
             <li><a href='https://nabd-nursing.vercel.app/services' target='_blank'><i class='fa-solid fa-angle-left'></i> كافة الخدمات</a></li>
             <li><a href='https://nabd-nursing.vercel.app/booking' target='_blank'><i class='fa-solid fa-angle-left'></i> حجز خدمة تمريضية</a></li>
             <li><a href='https://nabd-nursing.vercel.app/medical-record' target='_blank'><i class='fa-solid fa-angle-left'></i> ملفي الطبي PDF</a></li>
-            <li><a href='https://nabd-nursing.vercel.app/first-aid' target='_blank'><i class='fa-solid fa-angle-left'></i> دليل الإسعافات الأولية</a></li>
+            <li><a href='https://nabd-nursing.vercel.app/first-aid' target='_blank'><i class='fa-solid fa-angle-left'></i> دليل الإسعافات</a></li>
           </ul>
         </div>
-
-        <!-- Col 3: Categories -->
         <div class='footer-col'>
           <h4>تصنيفات المدونة</h4>
           <ul class='footer-links'>
@@ -1427,39 +743,25 @@
             <li><a href='/search/label/%D9%83%D8%A8%D8%A7%D8%B1%20%D8%A7%D9%84%D8%B3%D9%86'><i class='fa-solid fa-angle-left'></i> رعاية كبار السن</a></li>
             <li><a href='/search/label/%D8%A7%D9%84%D8%AC%D8%B1%D9%88%D8%AD%20%D9%88%D8%A7%D9%84%D9%82%D8%B1%D8%AD'><i class='fa-solid fa-angle-left'></i> الجروح والقرح</a></li>
             <li><a href='/search/label/%D8%A7%D9%84%D9%82%D8%B3%D8%B7%D8%B1%D8%A9%20%D9%88%D8%A7%D9%84%D8%B1%D8%A7%D9%8A%D9%84'><i class='fa-solid fa-angle-left'></i> القسطرة والرايل</a></li>
-            <li><a href='/search/label/%D8%A5%D8%B3%D8%B9%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A3%D9%88%D9%84%D9%8A%D8%A9'><i class='fa-solid fa-angle-left'></i> إسعافات وطوارئ</a></li>
+            <li><a href='/search/label/%D8%A5%D8%B3%D8%B9%D8%A7%D9%81%D8%A7%AA%20%D8%A3%D9%88%D9%84%D9%8A%D8%A9'><i class='fa-solid fa-angle-left'></i> إسعافات وطوارئ</a></li>
           </ul>
         </div>
-
-        <!-- Col 4: Direct Contacts -->
         <div class='footer-col'>
           <h4>تواصل مع نبض</h4>
           <div class='footer-contact-item'>
             <i class='fa-solid fa-phone'></i>
-            <div>
-              <strong>هاتف الحجز والطوارئ:</strong><br/>
-              <a href='tel:01001097896' style='color:#FFFFFF; font-weight:700;'>01001097896</a> / 
-              <a href='tel:01099667065' style='color:#FFFFFF; font-weight:700;'>01099667065</a>
-            </div>
+            <div><strong>هاتف الحجز:</strong><br/><a href='tel:01001097896' style='color:#FFF;font-weight:700;'>01001097896</a> / <a href='tel:01099667065' style='color:#FFF;font-weight:700;'>01099667065</a></div>
           </div>
           <div class='footer-contact-item'>
             <i class='fa-solid fa-location-dot'></i>
-            <div>
-              <strong>العنوان والنطاق:</strong><br/>
-              دمياط ومحيطها — جمهورية مصر العربية
-            </div>
+            <div><strong>العنوان:</strong><br/>دمياط ومحيطها — مصر</div>
           </div>
           <div class='footer-contact-item'>
             <i class='fa-solid fa-user-nurse'></i>
-            <div>
-              <strong>الإشراف التمريضي:</strong><br/>
-              إبراهيم ماهر
-            </div>
+            <div><strong>الإشراف التمريضي:</strong><br/>إبراهيم ماهر</div>
           </div>
         </div>
       </div>
-
-      <!-- Footer Bottom Legal -->
       <div class='footer-bottom'>
         <p>© 2026 نبض للتمريض المنزلي — جميع الحقوق محفوظة. رعايتك الصحية تبدأ من مكانك، ونحن أقرب إليك. 💙</p>
       </div>
@@ -1470,7 +772,6 @@
        7. Interactive Scripts
   ══════════════════════════════════════════════════════════════ -->
   <script>
-    // Reading Progress Indicator
     window.onscroll = function() {
       var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
       var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -1478,34 +779,21 @@
       var pBar = document.getElementById('reading-progress');
       if (pBar) pBar.style.width = scrolled + '%';
     };
-
-    // Mobile Menu Toggle
     function toggleMobileMenu() {
       var drawer = document.getElementById('mobileDrawer');
-      if (drawer) {
-        drawer.classList.toggle('open');
-      }
+      if (drawer) drawer.classList.toggle('open');
     }
-
-    // Copy Post URL
     function copyPostUrl() {
       var url = window.location.href;
       if (navigator.clipboard) {
-        navigator.clipboard.writeText(url).then(function() {
-          showToast('تم نسخ رابط المقال بنجاح! 📋');
-        });
+        navigator.clipboard.writeText(url).then(function() { showToast('تم نسخ رابط المقال بنجاح! 📋'); });
       }
     }
-
-    // Toast Notification Display
     function showToast(text) {
       var toast = document.getElementById('nabd-toast');
       if (toast) {
-        toast.innerText = text;
-        toast.style.display = 'block';
-        setTimeout(function() {
-          toast.style.display = 'none';
-        }, 3000);
+        toast.innerText = text; toast.style.display = 'block';
+        setTimeout(function() { toast.style.display = 'none'; }, 3000);
       }
     }
   </script>
