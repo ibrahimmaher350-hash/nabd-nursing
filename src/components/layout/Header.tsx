@@ -20,14 +20,14 @@ interface NavLinkItem {
 }
 
 const navLinks: NavLinkItem[] = [
-  { href: '/',               label: 'الرئيسية',         badge: null },
-  { href: '/services',       label: 'خدماتنا 🩺',       badge: 'طلب' },
-  { href: '/booking',        label: 'احجز ممرض 📅',     badge: 'فوري' },
-  { href: '/prescriptions',  label: 'الروشتات 💊',      badge: 'جديد' },
-  { href: '/offers',         label: 'العروض 🎁',        badge: 'خصم' },
-  { href: '/first-aid',      label: 'دليل الإسعافات 🚑', badge: null },
+  { href: '/',               label: 'الرئيسية',                 badge: null },
+  { href: '/services',       label: 'خدماتنا 🩺',               badge: 'طلب' },
+  { href: '/reviews',        label: 'آراء العملاء ⭐',           badge: '5.0' },
+  { href: '/booking',        label: 'احجز ممرض 📅',             badge: 'فوري' },
+  { href: '/offers',         label: 'العروض 🎁',                badge: 'خصم' },
+  { href: '/medical-guide',  label: 'الإسعافات والروشتات 🚑💊',  badge: 'شامل' },
   { href: 'https://nabd-damietta.blogspot.com', label: 'المدونة ✍️', badge: null, isExternal: true },
-  { href: '/contact',        label: 'تواصل معنا',       badge: null },
+  { href: '/contact',        label: 'تواصل معنا',               badge: null },
 ]
 
 export default function Header() {

@@ -14,6 +14,7 @@ import NursePromo from '@/components/sections/NursePromo'
 import OffersSection from '@/components/sections/OffersSection'
 import WhyNabd from '@/components/sections/WhyNabd'
 import HowItWorks from '@/components/sections/HowItWorks'
+import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import FacebookPostSection from '@/components/sections/FacebookPostSection'
 import FAQ from '@/components/sections/FAQ'
 import FinalCTA from '@/components/sections/FinalCTA'
@@ -60,13 +61,16 @@ export default async function HomePage() {
         {/* 7. How It Works */}
         <HowItWorks />
 
-        {/* 8. Facebook Post Section — المنشور الرسمي والتفاعل الحي */}
+        {/* 8. Patient Testimonials — آراء وتقييمات مرضانا وعائلاتهم */}
+        <TestimonialsSection />
+
+        {/* 9. Facebook Post Section — المنشور الرسمي والتفاعل الحي */}
         <FacebookPostSection />
 
-        {/* 9. FAQ */}
+        {/* 10. FAQ */}
         <FAQ />
 
-        {/* 10. Final CTA */}
+        {/* 11. Final CTA */}
         <FinalCTA />
       </main>
 

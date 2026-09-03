@@ -15,10 +15,10 @@ const footerLinks = {
   main: [
     { href: '/',                                label: 'الرئيسية' },
     { href: '/services',                        label: 'خدمات التمريض 🩺' },
+    { href: '/reviews',                         label: 'آراء عملائنا ⭐' },
     { href: '/booking',                         label: 'طلب ممرض للمنزل 📅' },
-    { href: '/prescriptions',                   label: 'الروشتات الطبية 💊' },
     { href: '/offers',                          label: 'عروض التمريض 🎁' },
-    { href: '/first-aid',                       label: 'دليل الإسعافات 🚑' },
+    { href: '/medical-guide',                   label: 'الإسعافات والروشتات 🚑💊' },
     { href: 'https://nabd-damietta.blogspot.com', label: 'المدونة الطبية ✍️', isExternal: true },
     { href: '/medical-record',                  label: 'ملفي الطبي' },
     { href: '/contact',                         label: 'تواصل معنا' },
