@@ -13,7 +13,7 @@
   </b:if>
   
   <meta content='المدونة الطبية الرسمية لنبض للتمريض المنزلي بدمياط. مقالات وإرشادات صحية موثوقة في رعاية كبار السن، الجروح والقرح، القسطرة البولية، المحاليل والحقن، والإسعافات الأولية.' name='description'/>
-  <meta content='تمريض منزلي دمياط, مقالات طبية, رعاية كبار السن, غيار جروح دمياط, تركيب قسطرة, رايل تغذية, محاليل وحقن, اسعافات اولية دمياط, صحة وتمريض, إبراهيم ماهر, آراء عملاء نبض' name='keywords'/>
+  <meta content='تمريض منزلي دمياط, مقالات طبية, رعاية كبار السن, غيار جروح دمياط, تركيب قسطرة, رايل تغذية, محاليل وحقن, اسعافات اولية دمياط, صحة وتمريض, إبراهيم ماهر, آراء مرضى نبض' name='keywords'/>
   <meta content='نبض للتمريض المنزلي — (إشراف: إبراهيم ماهر)' name='author'/>
   <meta content='Damietta, Egypt' name='geo.placename'/>
   <meta content='EG-DT' name='geo.region'/>
@@ -25,7 +25,7 @@
   <meta content='article' property='og:type'/>
   <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
   <meta content='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg' property='og:image'/>
-  <meta content='المدونة الطبية الرسمية لنبض للتمريض المنزلي بدمياط — مقالات وإرشادات تمريضية وصحية موثوقة، وآراء وتقييمات عملائنا الكرام.' property='og:description'/>
+  <meta content='المدونة الطبية الرسمية لنبض للتمريض المنزلي بدمياط — مقالات وإرشادات تمريضية وصحية موثوقة، وآراء وتقييمات مرضانا الكرام.' property='og:description'/>
   <meta content='ar_AR' property='og:locale'/>
 
   <!-- Twitter Card Data for AI & Social Crawlers -->
@@ -445,25 +445,25 @@
     }
 
     /* ══════════════════════════════════════════════════════════
-       ✨ 28 PATIENT REVIEWS & TESTIMONIALS LUXURY SECTION ✨
+       ✨ 28 PATIENT REVIEWS & TESTIMONIALS CLEAN LUXURY SECTION ✨
        ══════════════════════════════════════════════════════════ */
     .reviews-section {
-      background: linear-gradient(180deg, #F1F5F9 0%, #FFFFFF 100%);
-      padding: 50px 0 60px 0;
+      background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
+      padding: 55px 0 65px 0;
       border-top: 1px solid #E2E8F0;
-      border-bottom: 2px solid rgba(212, 175, 55, 0.35);
+      border-bottom: 2px solid rgba(212, 175, 55, 0.3);
       position: relative;
     }
     .reviews-section::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; height: 4px;
+      top: 0; left: 0; right: 0; height: 3.5px;
       background: linear-gradient(90deg, var(--nabd-navy-primary), var(--nabd-gold), var(--nabd-emerald));
     }
     .reviews-header-block {
       text-align: center;
       max-width: 780px;
-      margin: 0 auto 32px auto;
+      margin: 0 auto 36px auto;
       padding: 0 10px;
     }
     .reviews-badge {
@@ -473,131 +473,24 @@
       background: #FEF3C7;
       color: #92400E;
       border: 1.5px solid #FCD34D;
-      padding: 5px 15px;
+      padding: 5px 16px;
       border-radius: 30px;
       font-size: 12.5px;
       font-weight: 800;
       margin-bottom: 12px;
-      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.12);
     }
     .reviews-title {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 900;
       color: var(--nabd-navy-primary);
       margin-bottom: 10px;
       line-height: 1.35;
     }
     .reviews-subtitle {
-      font-size: 13.5px;
+      font-size: 14px;
       color: var(--nabd-text-muted);
       line-height: 1.7;
-    }
-
-    /* Stats summary strip */
-    .reviews-stats-strip {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      max-width: 900px;
-      margin: 0 auto 28px auto;
-      padding: 0 4px;
-    }
-    .stat-pill-card {
-      background: #FFFFFF;
-      border: 1.5px solid var(--nabd-border);
-      border-radius: 14px;
-      padding: 12px 14px;
-      text-align: center;
-      box-shadow: var(--nabd-shadow);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .stat-pill-val {
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--nabd-navy-primary);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .stat-pill-lbl {
-      font-size: 11px;
-      color: var(--nabd-text-muted);
-      font-weight: 700;
-      margin-top: 2px;
-    }
-
-    /* Filter tabs & Search */
-    .reviews-toolbar {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      max-width: 900px;
-      margin: 0 auto 26px auto;
-    }
-    .reviews-filter-pills {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .filter-btn {
-      background: #FFFFFF;
-      border: 1.5px solid #E2E8F0;
-      color: var(--nabd-navy-primary);
-      padding: 7px 14px;
-      border-radius: 25px;
-      font-size: 12px;
-      font-weight: 800;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-      font-family: inherit;
-    }
-    .filter-btn:hover, .filter-btn.active {
-      background: var(--nabd-navy-primary);
-      color: #FFFFFF;
-      border-color: var(--nabd-navy-primary);
-      box-shadow: 0 4px 12px rgba(13, 32, 64, 0.2);
-    }
-    .filter-btn.active {
-      background: linear-gradient(135deg, var(--nabd-navy-primary) 0%, var(--nabd-navy-light) 100%);
-      border-color: var(--nabd-gold);
-    }
-
-    .reviews-search-box {
-      position: relative;
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-    .reviews-search-box i {
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #94A3B8;
-      font-size: 14px;
-    }
-    .reviews-search-input {
-      width: 100%;
-      padding: 10px 38px 10px 14px;
-      border: 1.5px solid #CBD5E1;
-      border-radius: 25px;
-      font-size: 13px;
-      font-family: inherit;
-      background: #FFFFFF;
-      outline: none;
-      transition: border-color 0.2s ease;
-    }
-    .reviews-search-input:focus {
-      border-color: var(--nabd-navy-light);
-      box-shadow: 0 0 0 3px rgba(27, 43, 107, 0.12);
     }
 
     /* Cards Grid */
@@ -605,84 +498,70 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 26px;
     }
     .review-item-card {
       background: #FFFFFF;
       border-radius: 18px;
       border: 1.5px solid #E2E8F0;
-      padding: 18px 16px;
-      box-shadow: var(--nabd-shadow);
+      padding: 20px 18px;
+      box-shadow: 0 4px 14px rgba(13, 32, 64, 0.05);
       display: flex;
       flex-direction: column;
       position: relative;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
       overflow: hidden;
     }
     .review-item-card:hover {
       transform: translateY(-3px);
-      box-shadow: var(--nabd-shadow-lg);
+      box-shadow: 0 10px 24px rgba(13, 32, 64, 0.1);
       border-color: rgba(212, 175, 55, 0.6);
     }
     .review-card-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       gap: 8px;
     }
     .reviewer-meta {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 11px;
       min-width: 0;
     }
     .reviewer-avatar-circle {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--nabd-navy-light), var(--nabd-navy-primary));
       color: #FFFFFF;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 900;
       flex-shrink: 0;
       border: 2px solid var(--nabd-gold);
+      box-shadow: 0 2px 8px rgba(13, 32, 64, 0.15);
     }
     .reviewer-name-box h5 {
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 900;
       color: var(--nabd-navy-primary);
       line-height: 1.25;
       margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      flex-wrap: wrap;
-    }
-    .verified-pill {
-      font-size: 10px;
-      background: #ECFDF5;
-      color: #059669;
-      border: 1px solid #A7F3D0;
-      padding: 1px 6px;
-      border-radius: 12px;
-      font-weight: 800;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
     }
     .reviewer-location-tag {
-      font-size: 11px;
+      font-size: 11.5px;
       color: var(--nabd-text-muted);
-      margin-top: 2px;
+      margin-top: 3px;
+      font-weight: 600;
     }
     .stars-badge {
       color: #F59E0B;
-      font-size: 12px;
-      letter-spacing: 1px;
+      font-size: 12.5px;
+      letter-spacing: 1.5px;
       white-space: nowrap;
     }
     .review-quote-body {
@@ -691,12 +570,11 @@
       color: #1E293B;
       font-weight: 600;
       position: relative;
-      margin-bottom: 14px;
-      flex-grow: 1;
+      margin: 0;
     }
     .review-quote-body::before {
       content: '\201C';
-      font-size: 38px;
+      font-size: 40px;
       color: rgba(212, 175, 55, 0.25);
       position: absolute;
       top: -18px;
@@ -704,35 +582,17 @@
       font-family: Georgia, serif;
       pointer-events: none;
     }
-    .review-card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid #F1F5F9;
-      padding-top: 10px;
-      font-size: 11px;
-      color: #94A3B8;
-      font-weight: 700;
-    }
-    .review-tag-pill {
-      background: #F8FAFC;
-      border: 1px solid #E2E8F0;
-      color: var(--nabd-navy-light);
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 10.5px;
-    }
 
     /* Expand / Collapse Button */
     .reviews-load-more-wrap {
       text-align: center;
-      margin: 10px auto 0 auto;
+      margin: 14px auto 0 auto;
     }
     .btn-show-reviews {
       background: linear-gradient(135deg, var(--nabd-navy-primary) 0%, var(--nabd-navy-light) 100%);
       color: #FFFFFF;
       border: 2px solid var(--nabd-gold);
-      padding: 11px 26px;
+      padding: 12px 28px;
       border-radius: 30px;
       font-size: 13.5px;
       font-weight: 900;
@@ -740,13 +600,13 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 16px rgba(13, 32, 64, 0.2);
+      box-shadow: 0 4px 16px rgba(13, 32, 64, 0.18);
       font-family: inherit;
       transition: all 0.2s ease;
     }
     .btn-show-reviews:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(13, 32, 64, 0.3);
+      box-shadow: 0 8px 22px rgba(13, 32, 64, 0.28);
       background: var(--nabd-navy-primary);
     }
 
@@ -755,8 +615,8 @@
       background: linear-gradient(135deg, #0A192F 0%, #1B2B6B 100%);
       color: #FFFFFF;
       border-radius: 20px;
-      padding: 22px 18px;
-      margin-top: 35px;
+      padding: 24px 20px;
+      margin-top: 38px;
       border: 1.5px solid var(--nabd-gold);
       box-shadow: var(--nabd-shadow-lg);
       display: flex;
@@ -766,17 +626,17 @@
       align-items: center;
     }
     .reviews-trust-cta h4 {
-      font-size: 17px;
+      font-size: 17.5px;
       font-weight: 900;
       color: #FFFFFF;
       margin-bottom: 4px;
     }
     .reviews-trust-cta p {
-      font-size: 12.5px;
+      font-size: 13px;
       color: #CBD5E1;
       max-width: 620px;
       margin: 0;
-      line-height: 1.6;
+      line-height: 1.65;
     }
     .reviews-trust-cta-btns {
       display: flex;
@@ -869,7 +729,6 @@
       .brand-title-group h1, .brand-title-group .site-title { font-size: 17px; }
       .single-post-wrapper { padding: 24px 20px; }
       .single-post-title { font-size: 22px; }
-      .reviews-stats-strip { grid-template-columns: repeat(4, 1fr); }
       .reviews-masonry-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
       .reviews-title { font-size: 28px; }
     }
@@ -928,7 +787,7 @@
     <div class='mobile-drawer' id='mobileDrawer'>
       <ul>
         <li><a href='/'><i class='fa-solid fa-newspaper'/> مدونة نبض</a></li>
-        <li><a href='#reviews-section' onclick='toggleMobileMenu()'><i class='fa-solid fa-star' style='color:var(--nabd-gold);'/> ⭐ آراء مرضانا (28 تقييم موثق)</a></li>
+        <li><a href='#reviews-section' onclick='toggleMobileMenu()'><i class='fa-solid fa-star' style='color:var(--nabd-gold);'/> ⭐ آراء مرضانا (28 تقييم)</a></li>
         <li><a href='https://nabd-nursing.vercel.app/' rel='noopener' target='_blank'><i class='fa-solid fa-globe'/> الموقع الإلكتروني الرسمي</a></li>
         <li><a href='https://nabd-nursing.vercel.app/services' rel='noopener' target='_blank'><i class='fa-solid fa-stethoscope'/> الخدمات التمريضية</a></li>
         <li><a href='https://nabd-nursing.vercel.app/booking' rel='noopener' target='_blank'><i class='fa-solid fa-calendar-check'/> حجز زيارة تمريضية</a></li>
@@ -1204,7 +1063,7 @@
     </div>
   </main>
 
-  <!-- 3. ✨ قسم آراء وتقييمات مرضانا وعائلاتهم الغالية (28 تقييم حقيقي وموثق) ✨ -->
+  <!-- 3. ✨ قسم آراء وتقييمات مرضانا وعائلاتهم الغالية (تصميم أنيق، فخم، وخالٍ من أي تفاصيل مشتتة) ✨ -->
   <section class='reviews-section' id='reviews-section'>
     <div class='container'>
       <!-- Header Block -->
@@ -1214,644 +1073,486 @@
         </div>
         <h2 class='reviews-title'>آراء وتقييمات مرضانا وعائلاتهم</h2>
         <p class='reviews-subtitle'>
-          شهادات واقعية وتجارب موثقة تعكس حرصنا على توفير رعاية تمريضية آمنة، معقمة، وبأعلى معايير الأمانة والإنسانية داخل منازلكم في دمياط.
+          شهادات حقيقية وتجارب واقعية موثقة تعكس حرصنا الدائم على تقديم رعاية تمريضية آمنة، معقمة، وبأعلى معايير الإنسانية والأمانة داخل منازلكم.
         </p>
       </div>
 
-      <!-- Trust Stats Strip -->
-      <div class='reviews-stats-strip'>
-        <div class='stat-pill-card'>
-          <div class='stat-pill-val'>5.0 <i class='fa-solid fa-star' style='color:#F59E0B; font-size:15px;'/></div>
-          <div class='stat-pill-lbl'>تقييم عام استثنائي</div>
-        </div>
-        <div class='stat-pill-card'>
-          <div class='stat-pill-val'>100% <i class='fa-solid fa-shield-halved' style='color:#10B981; font-size:15px;'/></div>
-          <div class='stat-pill-lbl'>تعقيم وأمانة طبية</div>
-        </div>
-        <div class='stat-pill-card'>
-          <div class='stat-pill-val'>28+ <i class='fa-solid fa-comment-medical' style='color:#3B82F6; font-size:15px;'/></div>
-          <div class='stat-pill-lbl'>شهادة موثقة بالصور</div>
-        </div>
-        <div class='stat-pill-card'>
-          <div class='stat-pill-val'>دمياط <i class='fa-solid fa-location-dot' style='color:#EF4444; font-size:15px;'/></div>
-          <div class='stat-pill-lbl'>تغطية تمريضية فورية</div>
-        </div>
-      </div>
-
-      <!-- Toolbar: Filter Pills & Search -->
-      <div class='reviews-toolbar'>
-        <div class='reviews-filter-pills'>
-          <button class='filter-btn active' onclick='filterReviews(&quot;all&quot;, this)'>
-            <i class='fa-solid fa-list-check'/> الكل (28)
-          </button>
-          <button class='filter-btn' onclick='filterReviews(&quot;nursing&quot;, this)'>
-            <i class='fa-solid fa-stethoscope'/> خدمات وتمريض
-          </button>
-          <button class='filter-btn' onclick='filterReviews(&quot;ethics&quot;, this)'>
-            <i class='fa-solid fa-shield-heart'/> أمانة وتعقيم وأخلاق
-          </button>
-          <button class='filter-btn' onclick='filterReviews(&quot;lab&quot;, this)'>
-            <i class='fa-solid fa-vial'/> تحاليل وسرعة استجابة
-          </button>
-          <button class='filter-btn' onclick='filterReviews(&quot;prayers&quot;, this)'>
-            <i class='fa-solid fa-hands-praying'/> دعوات وشهادات إنسانية
-          </button>
-        </div>
-
-        <div class='reviews-search-box'>
-          <i class='fa-solid fa-magnifying-glass'/>
-          <input class='reviews-search-input' id='reviewSearch' oninput='searchReviews(this.value)' placeholder='ابحث باسم العميل أو في نص التقييم...' type='text'/>
-        </div>
-      </div>
-
-      <!-- Reviews Masonry Grid (All 28 Testimonials) -->
+      <!-- Reviews Clean Masonry Grid -->
       <div class='reviews-masonry-grid' id='reviewsGrid'>
         
         <!-- 1 -->
-        <div class='review-item-card' data-cat='nursing' data-search='فارس احمد محمد السيالة المنصورة تركيب قسترة اجهزة قسطرة'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'>ف</div>
               <div class='reviewer-name-box'>
-                <h5>فارس احمد محمد <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <h5>فارس أحمد محمد</h5>
                 <div class='reviewer-location-tag'>السيالة (أصلاً من المنصورة)</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            انا شهادتي مش مجروحه فيه لانه مليش اى صلة قرابه ولا صداقه من قبل غير لما جوزى تعب انا من المقيمين في السيالة اصلا من المنصورة وجبت كبير لزوجى تركيب قسترة وأجهزة مرتحش غير في استاد ابراهيم بجد ربنا يباركله ويبلغه آماله وكفاية الأسلوب والتعامل بتفرق كتير
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#تركيب_قسطرة_وأجهزة</span>
-            <span><i class='fa-regular fa-clock'/> تجربة موثقة</span>
+            أنا شهادتي مش مجروحة فيه لأنه ماليش أي صلة قرابة ولا صداقة من قبل غير لما زوجي تعب. أنا من المقيمين في السيالة أصلاً من المنصورة، وجبت كتير لزوجي لتركيب قسطرة وأجهزة ومارتاحش غير مع أستاذ إبراهيم، بجد ربنا يبارك له ويبلغه آماله، وكفاية أسلوبه والتعامل مع المريض بيفرق كتير.
           </div>
         </div>
 
         <!-- 2 -->
-        <div class='review-item-card' data-cat='ethics' data-search='مامو عبدالله دكتور العيله استشارة شاطر محترم'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'>م</div>
               <div class='reviewer-name-box'>
-                <h5>مامو عبدالله <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>عميل دائم &#8212; دكتور العائلة</div>
+                <h5>مامو عبدالله</h5>
+                <div class='reviewer-location-tag'>دكتور العائلة</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            أنا بقي شهادة حق ليه إني بعتبره دكتور العيله لأني بلجأ ليه أخد رأيه في أي حاجة قبل ما اعملها وقبل كل ده هو حد محترم جدا جدا جدا وشاطر جدا جدا في شغله ربنا يباركلك ويجازيك كل خير يارب
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#دكتور_العائلة</span>
-            <span><i class='fa-regular fa-clock'/> متابعة مستمرة</span>
+            أنا بقى شهادة حق له، إني بعتبره دكتور العيلة لأني بلجأ له آخد رأيه في أي حاجة قبل ما أعملها. وقبل كل ده هو إنسان محترم جداً جداً وشاطر جداً في شغله، ربنا يبارك لك ويجازيك كل خير يا رب.
           </div>
         </div>
 
         <!-- 3 -->
-        <div class='review-item-card' data-cat='ethics' data-search='ابراهيم ماهر اعمن منه الاجراءات الاحترازية تعقيم واتس تجربه شخصيه'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'><i class='fa-solid fa-user-shield'/></div>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-shield-heart'/></div>
               <div class='reviewer-name-box'>
-                <h5>عميلة لـ نبض <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>عن تجربة شخصية مباشرة</div>
+                <h5>عميلة لـ نبض</h5>
+                <div class='reviewer-location-tag'>عن تجربة شخصية</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            ابراهيم ماهر مش هتدخلي بيتك اعمن منه وملتزم جدااا بالاجراءات الاحترازية حاجته كلها بتتعقم قبل وبعد وبيفيدك في الحالة ومبيتاخرش علي حد ابعتيله واتس انا بقولك الكلام ده عن تجربه شخصية
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#تعقيم_احترازي_فائق</span>
-            <span><i class='fa-regular fa-clock'/> استجابة فورية</span>
+            إبراهيم ماهر مش هتدخّلي بيتك حد آمن منه؛ ملتزم جداً بالإجراءات الاحترازية، وأدواته كلها بتتعقم قبل وبعد، وبيفيدك جداً في فهم الحالة ومابيتأخرش على حد.. ابعتي له واتساب، أنا بقولك الكلام ده عن تجربة شخصية.
           </div>
         </div>
 
         <!-- 4 -->
-        <div class='review-item-card' data-cat='prayers' data-search='ربنا يرحمها كريم ممتاز محترم موتى المسلمين'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'><i class='fa-solid fa-heart-pulse'/></div>
               <div class='reviewer-name-box'>
-                <h5>أحد أهالي المرضى <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>رعاية حالة حرجة ومسنّة</div>
+                <h5>أحد أهالي المرضى</h5>
+                <div class='reviewer-location-tag'>رعاية كبار السن</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            ربنا يرحمها ويجعل تعباها في ميزان حسناتها ويرحم ابي وامي وجميع موتى المسلمين حضرتك كريم جدا وممتاز في شغلك ومحترم ربنا يبارك في حضرتك
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#رعاية_كبار_السن</span>
-            <span><i class='fa-regular fa-clock'/> إنسانية ووفاء</span>
+            ربنا يرحمها ويجعل تعبها في ميزان حسناتها، ويرحم أبي وأمي وجميع موتى المسلمين.. حضرتك كريم جداً وممتاز في شغلك ومحترم، ربنا يبارك في حضرتك.
           </div>
         </div>
 
         <!-- 5 -->
-        <div class='review-item-card' data-cat='prayers' data-search='طول عمرك ابن اصل وقفت جنبنا كنت اخ'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'><i class='fa-solid fa-hands-holding-child'/></div>
               <div class='reviewer-name-box'>
-                <h5>أحد أقارب مريضة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>شهادة وفاء أخوية</div>
+                <h5>أحد أقارب مريضة</h5>
+                <div class='reviewer-location-tag'>رعاية ووفاء</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            طول عمرك ابن اصل يا ابراهيم ووقفت جنبنا وكنت اخ وكانت بتحبك وتدعيلك يا حبيبي .. ربنا يرحمها ويقعدلك الدعا بتاعها
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#وقفة_أصيلة</span>
-            <span><i class='fa-regular fa-clock'/> رعاية منزلية</span>
+            طول عمرك ابن أصل يا إبراهيم، وقفت جنبنا وكنت نعم الأخ، وكانت بتحبك وتدعي لك.. ربنا يرحمها ويقعد لك دعاها بالخير يا رب.
           </div>
         </div>
 
         <!-- 6 -->
-        <div class='review-item-card' data-cat='ethics' data-search='GrayGuava9742 ممتاز امين ثقه'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'>G</div>
               <div class='reviewer-name-box'>
-                <h5>GrayGuava9742 <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>تقييم عبر المنصات الرقمية</div>
-              </div>
-            </div>
-            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
-          </div>
-          <div class='review-quote-body'>
-            إبراهيم ماهر ممتاز وامين وثقه ربنا يبارك له
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#أمانة_وثقة</span>
-            <span><i class='fa-regular fa-clock'/> تقييم ممتاز</span>
-          </div>
-        </div>
-
-        <!-- 7 -->
-        <div class='review-item-card' data-cat='nursing' data-search='Lamyaa Mousaa لمياء موسى متمكن تمريضية'>
-          <div class='review-card-top'>
-            <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'>L</div>
-              <div class='reviewer-name-box'>
-                <h5>Lamyaa Mousaa <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>عميلة لـ نبض للتمريض</div>
-              </div>
-            </div>
-            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
-          </div>
-          <div class='review-quote-body'>
-            نبض للخدمات التمريضية المنزلية ممتاز ما شاء الله ومتمكن
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#تمكن_ومهنية</span>
-            <span><i class='fa-regular fa-clock'/> جودة معتمدة</span>
-          </div>
-        </div>
-
-        <!-- 8 -->
-        <div class='review-item-card' data-cat='ethics' data-search='ام احمد خلوق نظافه فن في المعامله تربيتهم فيك'>
-          <div class='review-card-top'>
-            <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'>أ</div>
-              <div class='reviewer-name-box'>
-                <h5>أم أحمد <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>خدمة ورعاية منزلية</div>
-              </div>
-            </div>
-            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
-          </div>
-          <div class='review-quote-body'>
-            فعلا حضرتك انسان خلوق وقمه الادب وشغل حضرتك مع اي انسان محتاج خدمه بتعمله له بكل امانه ونظافه وفن في المعامله ومهما كتبت عن حضرتك مش هقدر اوفيك حقك ربنا يبارك فيك وييعدك وتحقق كل ما تتمناه ويبارك لك في إبويك لحسن تربيتهم فيك
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#أخلاق_وأمانة</span>
-            <span><i class='fa-regular fa-clock'/> فن المعاملة</span>
-          </div>
-        </div>
-
-        <!-- 9 -->
-        <div class='review-item-card' data-cat='nursing' data-search='نشوه الزيات والدتي تعبانه الميعاد من غير تكبر'>
-          <div class='review-card-top'>
-            <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'>ن</div>
-              <div class='reviewer-name-box'>
-                <h5>نشوه الزيات <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>رعاية الوالدة الكريمة</div>
-              </div>
-            </div>
-            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
-          </div>
-          <div class='review-quote-body'>
-            حضرتك إنسان محترم وشاطر جدا في مهنتو عمري مالنساني وولدتي تعبانه وتيجي في الميعاد وأي حاجه بنسألك عليها بتقول من غير تكبر ربنا يبارك فيك ياابني
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#التزام_بالمواعيد</span>
-            <span><i class='fa-regular fa-clock'/> تواضع وإتقان</span>
-          </div>
-        </div>
-
-        <!-- 10 -->
-        <div class='review-item-card' data-cat='nursing' data-search='Rana ElShanawy رنا الشناوي اسعارك حلوه ضمير مواعيدك مظبوطه'>
-          <div class='review-card-top'>
-            <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'>R</div>
-              <div class='reviewer-name-box'>
-                <h5>Rana ElShanawy <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>تقييم 5 نجوم كاملة</div>
-              </div>
-            </div>
-            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
-          </div>
-          <div class='review-quote-body'>
-            بصراحه ربنا يباركلك يارب ويجعله في ميزان حسناتك قمه ف الذوق والاخلاق واسعارك حلوه جدا والله انتوا تستاهلوا كل خير وفوق كل دا عندك ضمير في شغلك ومواعيدك مظبوطه
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#أسعار_عادلة_وضمير</span>
-            <span><i class='fa-regular fa-clock'/> مواعيد مظبوطة</span>
-          </div>
-        </div>
-
-        <!-- 11 -->
-        <div class='review-item-card' data-cat='lab' data-search='محمد البيومي نص دقيقة شغله ميه ميه الشارع'>
-          <div class='review-card-top'>
-            <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'>م</div>
-              <div class='reviewer-name-box'>
-                <h5>محمد البيومي <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>خدمة منزلية سريعة</div>
-              </div>
-            </div>
-            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
-          </div>
-          <div class='review-quote-body'>
-            والله انا كلمتكم مره جالي شاب محترم وخلص في نص دقيقة شغله ميه ميه وطلعت اجري وراه ف الشارع عشان احسبه او اوصله حتي 😂❤❤ بصراحه كل الشكر ليكم
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#سرعة_استجابة_فائقة</span>
-            <span><i class='fa-regular fa-clock'/> شغل 100/100</span>
-          </div>
-        </div>
-
-        <!-- 12 -->
-        <div class='review-item-card' data-cat='ethics' data-search='Om Yasser ام ياسر ادب اخلاق كريمه خبره كبيره ضمير'>
-          <div class='review-card-top'>
-            <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'>Y</div>
-              <div class='reviewer-name-box'>
-                <h5>Om Yasser <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>استشارة وتمريض منزلي</div>
-              </div>
-            </div>
-            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
-          </div>
-          <div class='review-quote-body'>
-            ربنا يحفظك ويبارك فيك ادب واخلاق كريمه ورحمه وخبره كبيره وعندك ضمير ربنا يجازيك كل خير ويجعله فى ميزان حسناتك
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#خبرة_وضمير_حي</span>
-            <span><i class='fa-regular fa-clock'/> أخلاق كريمة</span>
-          </div>
-        </div>
-
-        <!-- 13 -->
-        <div class='review-item-card' data-cat='ethics' data-search='علي خلق محترم رحمه غير اي حد'>
-          <div class='review-card-top'>
-            <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'><i class='fa-solid fa-hand-holding-heart'/></div>
-              <div class='reviewer-name-box'>
-                <h5>عميل / عميلة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>خدمة ورعاية تمريضية</div>
-              </div>
-            </div>
-            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
-          </div>
-          <div class='review-quote-body'>
-            ربنا يبارك فيك ويحفظك انسان علي خلق محترم جدا وعندك رحمة غير اي حد
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#رحمة_وإنسانية</span>
-            <span><i class='fa-regular fa-clock'/> تعامل راقي</span>
-          </div>
-        </div>
-
-        <!-- 14 -->
-        <div class='review-item-card' data-cat='nursing' data-search='موكا انا نعم الناس اتقان ومتابعة بعد التركيب'>
-          <div class='review-card-top'>
-            <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'>م</div>
-              <div class='reviewer-name-box'>
-                <h5>موكا انا <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>تركيب ومتابعة دورية</div>
-              </div>
-            </div>
-            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
-          </div>
-          <div class='review-quote-body'>
-            الله يباركلك بجد ونعم الناس انت انسان محترم واخلاق فوق الوصف وعندك ضمير في شغلك واتقان ومتابعة كل شئ حتي بعد التركيب بجد ربنا يبارك في عمرك ويفرحك ويسعدك ويجعله كله في ميزان حسناتك يا رب
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#متابعة_بعد_التركيب</span>
-            <span><i class='fa-regular fa-clock'/> إتقان تام</span>
-          </div>
-        </div>
-
-        <!-- 15 -->
-        <div class='review-item-card' data-cat='ethics' data-search='العيون السود اهتمام بالمريض ونظافه وتعقيم'>
-          <div class='review-card-top'>
-            <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'><i class='fa-solid fa-star'/></div>
-              <div class='reviewer-name-box'>
-                <h5>العيون السود <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>تقييم 5 نجوم موثق</div>
-              </div>
-            </div>
-            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
-          </div>
-          <div class='review-quote-body'>
-            ربنا يحفظكم ويبارك فيكم. بجد قمة في الاخلاق والادب واهتمام بالمريض ونظافه وتعقيم بجد بجد ربنا يكرمكم ويجعل تعبكم في ميزان حسنتكم
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#نظافة_وتعقيم</span>
-            <span><i class='fa-regular fa-clock'/> اهتمام بالمريض</span>
-          </div>
-        </div>
-
-        <!-- 16 -->
-        <div class='review-item-card' data-cat='ethics' data-search='انت ابن اصول ومحترم ونعم الناس الله يحميك'>
-          <div class='review-card-top'>
-            <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'><i class='fa-solid fa-user-check'/></div>
-              <div class='reviewer-name-box'>
-                <h5>عميل / عميلة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>شهادة ثقة وأصل طيب</div>
-              </div>
-            </div>
-            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
-          </div>
-          <div class='review-quote-body'>
-            انت ابن اصول ومحترم وربنا يبارك في عمرك ياابراهيم ويصلح حالك بجد ونعم الناس الله يحميك
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#ابن_أصول_ومحترم</span>
-            <span><i class='fa-regular fa-clock'/> دعوات طيبة</span>
-          </div>
-        </div>
-
-        <!-- 17 -->
-        <div class='review-item-card' data-cat='nursing' data-search='مابتتاخرش عن حد مساعده طبيه يجازيك خير'>
-          <div class='review-card-top'>
-            <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'><i class='fa-solid fa-truck-medical'/></div>
-              <div class='reviewer-name-box'>
-                <h5>عميل / عميلة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>مساعدة طبية فورية</div>
-              </div>
-            </div>
-            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
-          </div>
-          <div class='review-quote-body'>
-            لا والله انت مابتتاخرش عن حد في اي مساعده طبيه ربنا يحازيك خير
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#مساعدة_طبية_عاجلة</span>
-            <span><i class='fa-regular fa-clock'/> التزام تام</span>
-          </div>
-        </div>
-
-        <!-- 18 -->
-        <div class='review-item-card' data-cat='ethics' data-search='ربنا يعينك ويقويك انسان محترم وخلوق'>
-          <div class='review-card-top'>
-            <div class='reviewer-meta'>
-              <div class='reviewer-avatar-circle'><i class='fa-solid fa-heart'/></div>
-              <div class='reviewer-name-box'>
-                <h5>عميل / عميلة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <h5>GrayGuava9742</h5>
                 <div class='reviewer-location-tag'>تقييم موثق</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            ربنا يعينك ويقويك انت انسان محترم وخلوق
+            أستاذ إبراهيم ماهر ممتاز وأمين وثقة، ربنا يبارك له ويجازيه كل خير.
           </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#إنسان_خلوق</span>
-            <span><i class='fa-regular fa-clock'/> خدمة بأمانة</span>
+        </div>
+
+        <!-- 7 -->
+        <div class='review-item-card'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>L</div>
+              <div class='reviewer-name-box'>
+                <h5>Lamyaa Mousaa (لمياء موسى)</h5>
+                <div class='reviewer-location-tag'>خدمات تمريضية منزلية</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            نبض للخدمات التمريضية المنزلية.. ممتاز ما شاء الله ومتمكن جداً في عمله.
+          </div>
+        </div>
+
+        <!-- 8 -->
+        <div class='review-item-card'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>أ</div>
+              <div class='reviewer-name-box'>
+                <h5>أم أحمد</h5>
+                <div class='reviewer-location-tag'>رعاية وأمانة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            فعلاً حضرتك إنسان خلوق وقمة في الأدب، وشغل حضرتك مع أي إنسان محتاج خدمة بتقدمه بكل أمانة ونظافة وفن في المعاملة. ومهما كتبت مش هقدر أوفيك حقك.. ربنا يبارك فيك ويسعدك ويحقق كل ما تتمناه، ويبارك لك في والديك لحسن تربيتهم فيك.
+          </div>
+        </div>
+
+        <!-- 9 -->
+        <div class='review-item-card'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>ن</div>
+              <div class='reviewer-name-box'>
+                <h5>نشوة الزيات</h5>
+                <div class='reviewer-location-tag'>رعاية الوالدة الكريمة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            حضرتك إنسان محترم وشاطر جداً في مهنته، عمري ما أنسى لما والدتي كانت تعبانة؛ بتيجي في الميعاد بالظبط، وأي حاجة بنسألك عليها بتوضحها بكل ذوق ومن غير تكبر.. ربنا يبارك فيك يا ابني.
+          </div>
+        </div>
+
+        <!-- 10 -->
+        <div class='review-item-card'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>R</div>
+              <div class='reviewer-name-box'>
+                <h5>Rana ElShanawy (رنا الشناوي)</h5>
+                <div class='reviewer-location-tag'>تقييم 5 نجوم</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            بصراحة ربنا يبارك لك يا رب ويجعله في ميزان حسناتك، قمة في الذوق والأخلاق وأسعاركم ممتازة جداً والله.. تستاهلوا كل خير، وفوق كل ده عندكم ضمير في الشغل والمواعيد مضبوطة بالثانية.
+          </div>
+        </div>
+
+        <!-- 11 -->
+        <div class='review-item-card'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>م</div>
+              <div class='reviewer-name-box'>
+                <h5>محمد البيومي</h5>
+                <div class='reviewer-location-tag'>سرعة واحترافية</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            والله أنا كلمتكم مرة، جالي ممرض محترم جداً وخلص شغله بإتقان 100% في وقت قياسي، وطلعت أجري وراه في الشارع عشان أحاسبه أو أوصله حتى من كرم أخلاقه! بصراحة كل الشكر والتقدير ليكم.
+          </div>
+        </div>
+
+        <!-- 12 -->
+        <div class='review-item-card'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>Y</div>
+              <div class='reviewer-name-box'>
+                <h5>Om Yasser (أم ياسر)</h5>
+                <div class='reviewer-location-tag'>خبرة وأخلاق</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ربنا يحفظك ويبارك فيك.. أدب وأخلاق كريمة ورحمة وخبرة كبيرة وعندك ضمير حي. ربنا يجازيك كل خير ويجعله في ميزان حسناتك.
+          </div>
+        </div>
+
+        <!-- 13 -->
+        <div class='review-item-card'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-hand-holding-heart'/></div>
+              <div class='reviewer-name-box'>
+                <h5>عميل / عميلة</h5>
+                <div class='reviewer-location-tag'>رحمة وإنسانية</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ربنا يبارك فيك ويحفظك، إنسان على خلق ومحترم جداً، وعندك رحمة وإنسانية مش موجودة عند أي حد.
+          </div>
+        </div>
+
+        <!-- 14 -->
+        <div class='review-item-card'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>م</div>
+              <div class='reviewer-name-box'>
+                <h5>موكا أنا</h5>
+                <div class='reviewer-location-tag'>متابعة مستمرة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            الله يبارك لك بجد ونعم الناس، إنسان محترم وأخلاق فوق الوصف، وعندك ضمير في شغلك وإتقان ومتابعة لكل شيء حتى بعد التركيب. ربنا يبارك في عمرك ويسعدك ويجعله في ميزان حسناتك يا رب.
+          </div>
+        </div>
+
+        <!-- 15 -->
+        <div class='review-item-card'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-star'/></div>
+              <div class='reviewer-name-box'>
+                <h5>العيون السود</h5>
+                <div class='reviewer-location-tag'>نظافة وتعقيم</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ربنا يحفظكم ويبارك فيكم.. بجد قمة في الأخلاق والأدب، واهتمام فائق بالمريض ونظافة وتعقيم احترافي. ربنا يكرمكم ويجعل تعبكم في ميزان حسناتكم.
+          </div>
+        </div>
+
+        <!-- 16 -->
+        <div class='review-item-card'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-user-check'/></div>
+              <div class='reviewer-name-box'>
+                <h5>عميل / عميلة</h5>
+                <div class='reviewer-location-tag'>شهادة ثقة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            أنت ابن أصول ومحترم، وربنا يبارك في عمرك يا إبراهيم ويصلح حالك.. بجد ونعم الناس والله يحميك.
+          </div>
+        </div>
+
+        <!-- 17 -->
+        <div class='review-item-card'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-truck-medical'/></div>
+              <div class='reviewer-name-box'>
+                <h5>عميل / عميلة</h5>
+                <div class='reviewer-location-tag'>مساعدة طبية</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            لا والله أنت مابتتأخرش عن حد في أي مساعدة أو استشارة طبية، ربنا يجازيك كل خير.
+          </div>
+        </div>
+
+        <!-- 18 -->
+        <div class='review-item-card'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-heart'/></div>
+              <div class='reviewer-name-box'>
+                <h5>عميل / عميلة</h5>
+                <div class='reviewer-location-tag'>إخلاص وأمانة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ربنا يعينك ويقويك، أنت إنسان محترم وخلوق وبتراعي ربنا في شغلك.
           </div>
         </div>
 
         <!-- 19 -->
-        <div class='review-item-card' data-cat='ethics' data-search='كريمان محمد الشافعي عن تجربه احسن تعامل'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'>ك</div>
               <div class='reviewer-name-box'>
-                <h5>كريمان محمد الشافعي <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>عن تجربة واقعية</div>
+                <h5>كريمان محمد الشافعي</h5>
+                <div class='reviewer-location-tag'>عن تجربة</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            عن تجربه احسن تعامل منكم جزاك الله خير الجزاء وربي يجعله في ميزان حسناتكم امين
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#أحسن_تعامل</span>
-            <span><i class='fa-regular fa-clock'/> تجربة معتمدة</span>
+            عن تجربة شخصية: أحسن وأرقى تعامل.. جزاكم الله خير الجزاء وربي يجعله في ميزان حسناتكم، آمين.
           </div>
         </div>
 
         <!-- 20 -->
-        <div class='review-item-card' data-cat='prayers' data-search='موقفك مع امي ادعو لك دائما عن ظهر الغيب رحمه ومتربي'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'><i class='fa-solid fa-hands-praying'/></div>
               <div class='reviewer-name-box'>
-                <h5>عميل / عميلة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>موقف إنساني مع الوالدة</div>
+                <h5>عميل / عميلة</h5>
+                <div class='reviewer-location-tag'>موقف إنساني نبيل</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            ربنا يباركلك انت اخلاق وعندك رحمه ومتربي انا اتذكر موقفك مع امي ادعو لك دائما عن ظهر الغيب
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#دعاء_عن_ظهر_غيب</span>
-            <span><i class='fa-regular fa-clock'/> أثر إنساني باقٍ</span>
+            ربنا يبارك لك، أنت صاحب أخلاق وعندك رحمة ومتربي، أنا أتذكر موقفك النبيل مع أمي وأدعو لك دائماً بظهر الغيب.
           </div>
         </div>
 
         <!-- 21 -->
-        <div class='review-item-card' data-cat='lab' data-search='Amir El Laban امير اللبان عملت التحاليل بنص التمن وعرفت عندي اي'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'>A</div>
               <div class='reviewer-name-box'>
-                <h5>Amir El Laban <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>سحب وتوفير تحاليل طبية</div>
+                <h5>Amir El Laban (أمير اللبان)</h5>
+                <div class='reviewer-location-tag'>سحب تحاليل منزلية</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            الله يبارك لك عملت التحاليل احسن من أسعار برا تقريبا كدا بنص التمن وكانت تحاليل غاليه وعرفت عندي أي وبتعالج والحمد لله علي كل حال بجد بشكرك كل الشكر وبدعيلك دايما 💚💚
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#تحاليل_منزلية_بنصف_السعر</span>
-            <span><i class='fa-regular fa-clock'/> تشخيص دقيق</span>
+            الله يبارك لك، عملت التحاليل من البيت بأحسن من أسعار المعامل الخارجية تقريباً بنصف التكلفة مع إنها تحاليل غالية، وفهمت الحالة والتشخيص وبدأت العلاج.. بجد بشكرك كل الشكر وبدعي لك دايماً 💚
           </div>
         </div>
 
         <!-- 22 -->
-        <div class='review-item-card' data-cat='nursing' data-search='ممتااااز وامين مبيسبش حاجة للصدفه منتهي الدقه'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'><i class='fa-solid fa-check-double'/></div>
               <div class='reviewer-name-box'>
-                <h5>عميل / عميلة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>تقييم دقة الشغل والأمانة</div>
+                <h5>عميل / عميلة</h5>
+                <div class='reviewer-location-tag'>دقة متناهية</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            ممتااااز وامين جداا مبيسبش حاجة للصدفه منتهي الدقه ف كل حاجة بصراحة ربنا يباركله
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#منتهى_الدقة</span>
-            <span><i class='fa-regular fa-clock'/> لا مكان للصدفة</span>
+            ممتاز وأمين جداً، مابيسبش أي حاجة للصدفة، منتهى الدقة والنظافة في كل تفصيلة بصراحة.. ربنا يبارك له.
           </div>
         </div>
 
         <!-- 23 -->
-        <div class='review-item-card' data-cat='prayers' data-search='يارب سخر لابراهيم الخير صبا صبا الفردوس الاعلى واتساب'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'><i class='fa-brands fa-whatsapp'/></div>
               <div class='reviewer-name-box'>
-                <h5>رسالة واتساب من عميل <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>دعاء صادق بالبركة</div>
+                <h5>رسالة واتساب من عميل</h5>
+                <div class='reviewer-location-tag'>دعاء بالبركة والخير</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            يارب سخر لابراهيم من حوله ولا تريه خسارة فى أهله وولده وماله وصب عليه الخير صبا صبا ولا تجعل عيشه كدا وارزقه الصحة والعافية واجعله من عبادك الصالحين وارزقه الفردوس الاعلى اللهم امين يارب العالمين
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#دعاء_جامع_للخير</span>
-            <span><i class='fa-regular fa-clock'/> محبة وتوفيق</span>
+            يا رب سخّر لإبراهيم من حوله ولا تُرِه خسارة في أهله وولده وماله، وصُبّ عليه الخير صباً صباً ولا تجعل عيشه كداً، وارزقه الصحة والعافية واجعله من عبادك الصالحين، وارزقه الفردوس الأعلى.. اللهم آمين يا رب العالمين.
           </div>
         </div>
 
         <!-- 24 -->
-        <div class='review-item-card' data-cat='nursing' data-search='MeRna Mahmoud ميرنا محمود مواعيد مظبوطة ذوق احترام الاهتمام بالمريض'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'>M</div>
               <div class='reviewer-name-box'>
-                <h5>MeRna Mahmoud <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>خدمة ورعاية لحالة المريض</div>
+                <h5>MeRna Mahmoud (ميرنا محمود)</h5>
+                <div class='reviewer-location-tag'>اهتمام بحالة المريض</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            مواعيد مظبوطة و ذوق و احترام ف المعاملة و الاهم هو الاهتمام بالمريض و حالته ربنا يعينكم و يجازيكم خير
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#اهتمام_بحالة_المريض</span>
-            <span><i class='fa-regular fa-clock'/> ذوق واحترام</span>
+            مواعيد مضبوطة، وذوق واحترام فائق في المعاملة، والأهم هو الاهتمام الصادق بالمريض وحالته.. ربنا يعينكم ويجازيكم كل خير.
           </div>
         </div>
 
         <!-- 25 -->
-        <div class='review-item-card' data-cat='ethics' data-search='حامد شولح خدمات عظيمة اخلاق كريمة ادب وتربية ورحمة'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'>ح</div>
               <div class='reviewer-name-box'>
-                <h5>حامد شولح <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>عميل لـ نبض للتمريض</div>
+                <h5>حامد شولح</h5>
+                <div class='reviewer-location-tag'>أدب وتربية</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            خدمات عظيمة وأخلاق كريمة... .... وأدب وتربية ورحمة... ربنا يكرمك يا أ/ إبراهيم...
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#خدمات_عظيمة</span>
-            <span><i class='fa-regular fa-clock'/> أدب وتربية</span>
+            خدمات عظيمة، وأخلاق كريمة، وأدب وتربية ورحمة بالمرضى.. ربنا يكرمك يا أستاذ إبراهيم ويوفقك دائماً.
           </div>
         </div>
 
         <!-- 26 -->
-        <div class='review-item-card' data-cat='prayers' data-search='هيجبر خاطرك وهيرضيك ابن حلال تستاهل كل خير والدة'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'><i class='fa-solid fa-kaaba'/></div>
               <div class='reviewer-name-box'>
-                <h5>أم فاضلة (رسالة واتساب) <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>دعاء وجبر خاطر</div>
+                <h5>أم فاضلة (رسالة واتساب)</h5>
+                <div class='reviewer-location-tag'>جبر خاطر ودعاء</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            ان شاء الله هيجبر خاطرك وهيرضيك ونعم بالله العظيم انا متفائله لك الخير يا ابراهيم والله لك ابن حلال تستاهل كل خير والله العظيم ربنا معاك يا ابني
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#جبر_خاطر_ودعاء</span>
-            <span><i class='fa-regular fa-clock'/> ابن حلال</span>
+            إن شاء الله هيجبر خاطرك وهيرضيك، ونعم بالله العظيم.. أنا متفائلة لك بكل خير يا إبراهيم، والله إنك ابن حلال وتستاهل كل خير.. ربنا معاك وينور طريقك يا ابني.
           </div>
         </div>
 
         <!-- 27 -->
-        <div class='review-item-card' data-cat='ethics' data-search='Haytham Elsayed هيثم السيد الامانه والاخلاق استشاره بدون اي مقابل'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'>H</div>
               <div class='reviewer-name-box'>
-                <h5>Haytham Elsayed <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
-                <div class='reviewer-location-tag'>استشارات وتمريض منزلي</div>
+                <h5>Haytham Elsayed (هيثم السيد)</h5>
+                <div class='reviewer-location-tag'>أمانة واستشارات طبية</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            ربنا يوفق ويبارك فيك ويرزقك من واسع فضله وكرمه يارب العالمين .. أ/إبراهيم الامانه والأخلاق ومتيز جدا في شغله مبيخلش علي اي حد في اي استشاره بدون اي مقابل ربنا يجعله في ميزان حسناتك يارب العالمين
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#استشارات_مجانية</span>
-            <span><i class='fa-regular fa-clock'/> أمانة وأخلاق</span>
+            ربنا يوفق ويبارك فيك ويرزقك من واسع فضله وكرمه يا رب العالمين.. أستاذ إبراهيم عنوان الأمانة والأخلاق، ومتميز جداً في شغله ومابيبخلش على أي حد في أي استشارة طبية.. ربنا يجعله في ميزان حسناتك.
           </div>
         </div>
 
         <!-- 28 -->
-        <div class='review-item-card' data-cat='nursing' data-search='السيد الخواجه كفر الهنادوه ابراهيم المحترم مهني طبي'>
+        <div class='review-item-card'>
           <div class='review-card-top'>
             <div class='reviewer-meta'>
               <div class='reviewer-avatar-circle'>س</div>
               <div class='reviewer-name-box'>
-                <h5>السيد الخواجه <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <h5>السيد الخواجه</h5>
                 <div class='reviewer-location-tag'>كفر الهنادوة &#8212; دمياط</div>
               </div>
             </div>
             <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
           </div>
           <div class='review-quote-body'>
-            ابراهيم المحترم مهني طبي
-          </div>
-          <div class='review-card-footer'>
-            <span class='review-tag-pill'>#مهني_طبي_محترم</span>
-            <span><i class='fa-regular fa-clock'/> كفر الهنادوة</span>
+            أستاذ إبراهيم المحترم.. نعم المهني الطبي إتقاناً وأخلاقاً.
           </div>
         </div>
 
@@ -1974,7 +1675,7 @@
     </div>
   </footer>
 
-  <!-- 6. Scripts: Navigation, Filtering & Dynamic Testimonial Display -->
+  <!-- 6. Scripts: Navigation & Clean Progressive Disclosure -->
   <script>
   /*<![CDATA[*/
     window.onscroll = function() {
@@ -2005,30 +1706,15 @@
       }
     }
 
-    // ── Testimonials Filtering & Progressive Disclosure ──
+    // ── Smooth Progressive Disclosure (Show First 6, Expand All 28) ──
     var isReviewsExpanded = false;
-    var currentFilter = 'all';
     var defaultVisibleCount = 6;
 
     function renderReviewsVisibility() {
       var cards = document.querySelectorAll('.review-item-card');
-      var searchVal = (document.getElementById('reviewSearch') ? document.getElementById('reviewSearch').value.trim().toLowerCase() : '');
-      var matchingCount = 0;
-
-      cards.forEach(function(card) {
-        var cardCat = card.getAttribute('data-cat') || '';
-        var searchData = (card.getAttribute('data-search') || '') + ' ' + card.innerText.toLowerCase();
-        
-        var matchesCat = (currentFilter === 'all' || cardCat === currentFilter);
-        var matchesSearch = (!searchVal || searchData.indexOf(searchVal) !== -1);
-
-        if (matchesCat && matchesSearch) {
-          matchingCount++;
-          if (isReviewsExpanded || matchingCount <= defaultVisibleCount) {
-            card.style.display = 'flex';
-          } else {
-            card.style.display = 'none';
-          }
+      cards.forEach(function(card, index) {
+        if (isReviewsExpanded || index < defaultVisibleCount) {
+          card.style.display = 'flex';
         } else {
           card.style.display = 'none';
         }
@@ -2039,7 +1725,7 @@
       var toggleIcon = document.getElementById('toggleReviewsIcon');
 
       if (toggleBtn) {
-        if (matchingCount <= defaultVisibleCount) {
+        if (cards.length <= defaultVisibleCount) {
           toggleBtn.style.display = 'none';
         } else {
           toggleBtn.style.display = 'inline-flex';
@@ -2047,23 +1733,11 @@
             toggleText.innerText = 'عرض أقل (إخفاء باقي التقييمات)';
             toggleIcon.className = 'fa-solid fa-chevron-up';
           } else {
-            toggleText.innerText = 'عرض جميع التقييمات (' + matchingCount + ' رأياً)';
+            toggleText.innerText = 'عرض جميع التقييمات (28 رأياً)';
             toggleIcon.className = 'fa-solid fa-chevron-down';
           }
         }
       }
-    }
-
-    function filterReviews(category, btnElement) {
-      currentFilter = category;
-      var buttons = document.querySelectorAll('.filter-btn');
-      buttons.forEach(function(btn) { btn.classList.remove('active'); });
-      if (btnElement) btnElement.classList.add('active');
-      renderReviewsVisibility();
-    }
-
-    function searchReviews(keyword) {
-      renderReviewsVisibility();
     }
 
     function toggleMoreReviews() {
