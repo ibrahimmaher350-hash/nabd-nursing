@@ -1,0 +1,2081 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='1.4.0' expr:class='data:blog.languageDirection' expr:dir='data:blog.languageDirection' expr:lang='data:blog.localeUnderscoreDelimited' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta charset='utf-8'/>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover' name='viewport'/>
+  
+  <!-- SEO & Meta Tags &#8212; مدونة نبض للتمريض المنزلي &#8212; دمياط -->
+  <b:if cond='data:blog.pageType == &quot;index&quot;'>
+    <title>مدونة نبض للتمريض المنزلي | نصائح ومقالات طبية وتمريضية موثوقة &#8212; دمياط</title>
+  <b:else/>
+    <title><data:blog.pageName/> | مدونة نبض للتمريض المنزلي</title>
+  </b:if>
+  
+  <meta content='المدونة الطبية الرسمية لنبض للتمريض المنزلي بدمياط. مقالات وإرشادات صحية موثوقة في رعاية كبار السن، الجروح والقرح، القسطرة البولية، المحاليل والحقن، والإسعافات الأولية.' name='description'/>
+  <meta content='تمريض منزلي دمياط, مقالات طبية, رعاية كبار السن, غيار جروح دمياط, تركيب قسطرة, رايل تغذية, محاليل وحقن, اسعافات اولية دمياط, صحة وتمريض, إبراهيم ماهر, آراء عملاء نبض' name='keywords'/>
+  <meta content='نبض للتمريض المنزلي — (إشراف: إبراهيم ماهر)' name='author'/>
+  <meta content='Damietta, Egypt' name='geo.placename'/>
+  <meta content='EG-DT' name='geo.region'/>
+  <meta content='index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' name='robots'/>
+  
+  <link expr:href='data:blog.canonicalUrl' rel='canonical'/>
+  <meta expr:content='data:blog.title' property='og:site_name'/>
+  <meta expr:content='data:blog.pageTitle' property='og:title'/>
+  <meta content='article' property='og:type'/>
+  <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
+  <meta content='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg' property='og:image'/>
+  <meta content='المدونة الطبية الرسمية لنبض للتمريض المنزلي بدمياط — مقالات وإرشادات تمريضية وصحية موثوقة، وآراء وتقييمات عملائنا الكرام.' property='og:description'/>
+  <meta content='ar_AR' property='og:locale'/>
+
+  <!-- Twitter Card Data for AI & Social Crawlers -->
+  <meta content='summary_large_image' name='twitter:card'/>
+  <meta expr:content='data:blog.pageTitle' name='twitter:title'/>
+  <meta content='المدونة الطبية الرسمية لنبض للتمريض المنزلي بدمياط — مقالات وإرشادات تمريضية وصحية موثوقة.' name='twitter:description'/>
+  <meta content='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg' name='twitter:image'/>
+
+  <!-- Google & AI Search Engines Schema.org Structured Data (JSON-LD) -->
+  <script type='application/ld+json'>
+  /*<![CDATA[*/
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["MedicalBusiness", "LocalBusiness"],
+        "@id": "https://nabd-nursing.vercel.app/#organization",
+        "name": "نبض للتمريض المنزلي",
+        "alternateName": [
+          "نبض للتمريض المنزلي بدمياط",
+          "Nabd Home Nursing",
+          "مدونة نبض للتمريض المنزلي"
+        ],
+        "url": "https://nabd-nursing.vercel.app/",
+        "logo": "https://nabd-nursing.vercel.app/images/nabd-official-logo.jpg",
+        "image": "https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg",
+        "description": "المؤسسة المتخصصة في تقديم خدمات التمريض والرعاية الصحية المنزلية وفق أعلى معايير الجودة والتعقيم والراحة للمريض وأسرته داخل دمياط.",
+        "telephone": "+201001097896",
+        "priceRange": "$$",
+        "hasMap": "https://2u.pw/AGitWm",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5.0",
+          "reviewCount": "28",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Damietta",
+          "addressRegion": "دمياط",
+          "addressCountry": "EG"
+        },
+        "areaServed": {
+          "@type": "AdministrativeArea",
+          "name": "دمياط"
+        },
+        "founder": {
+          "@type": "Person",
+          "name": "إبراهيم ماهر",
+          "jobTitle": "المشرف العام ومسؤول نبض للتمريض المنزلي",
+          "url": "https://www.facebook.com/share/1BDJwJeW15/",
+          "sameAs": "https://www.facebook.com/share/1BDJwJeW15/"
+        },
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+201001097896",
+            "contactType": "reservations and customer support",
+            "areaServed": "EG",
+            "availableLanguage": ["Arabic"]
+          },
+          {
+            "@type": "ContactPoint",
+            "url": "https://wa.me/201099667065",
+            "contactType": "WhatsApp Support",
+            "areaServed": "EG",
+            "availableLanguage": ["Arabic"]
+          }
+        ],
+        "sameAs": [
+          "https://nabd-nursing.vercel.app/",
+          "https://nabd-damietta.blogspot.com/?m=1",
+          "https://www.facebook.com/profile.php?id=61593884400330",
+          "https://www.facebook.com/share/g/1BmBygobMw/",
+          "https://www.facebook.com/share/1BDJwJeW15/",
+          "https://wa.me/201099667065",
+          "https://t.me/Ibrahim5k",
+          "https://2u.pw/AGitWm",
+          "https://2u.pw/lgOM5v",
+          "https://cezma.com/store/nabd.nu"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://nabd-damietta.blogspot.com/#website",
+        "url": "https://nabd-damietta.blogspot.com/?m=1",
+        "name": "مدونة نبض للتمريض المنزلي",
+        "publisher": {
+          "@id": "https://nabd-nursing.vercel.app/#organization"
+        },
+        "inLanguage": "ar"
+      }
+    ]
+  }
+  /*]]>*/
+  </script>
+
+  <!-- Google Analytics Tag -->
+  <script async='async' src='https://www.googletagmanager.com/gtag/js?id=G-V55R98E3BL'/>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag(&#39;js&#39;, new Date());
+    gtag(&#39;config&#39;, &#39;G-V55R98E3BL&#39;);
+  </script>
+
+  <!-- Google Fonts: Cairo & FontAwesome Icons -->
+  <link href='https://fonts.googleapis.com' rel='preconnect'/>
+  <link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'/>
+  <link href='https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&amp;display=swap' rel='stylesheet'/>
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css' rel='stylesheet'/>
+  <link href='https://nabd-nursing.vercel.app/images/nabd-official-logo.jpg' rel='shortcut icon' type='image/jpeg'/>
+
+  <!-- CSS &#8212; Mobile-First & High Performance Visual Identity -->
+  <b:skin><![CDATA[
+    :root {
+      --nabd-navy-dark: #0A192F;
+      --nabd-navy-primary: #0D2040;
+      --nabd-navy-light: #1B2B6B;
+      --nabd-navy-surface: #243B80;
+      --nabd-gold: #D4AF37;
+      --nabd-gold-light: #F59E0B;
+      --nabd-emerald: #10B981;
+      --nabd-emerald-dark: #059669;
+      --nabd-bg: #F8FAFC;
+      --nabd-card-bg: #FFFFFF;
+      --nabd-text-main: #0F172A;
+      --nabd-text-muted: #64748B;
+      --nabd-border: #E2E8F0;
+      --nabd-shadow: 0 4px 15px rgba(13, 32, 64, 0.06);
+      --nabd-shadow-lg: 0 12px 28px rgba(13, 32, 64, 0.12);
+      --nabd-radius: 16px;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Cairo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--nabd-bg);
+      color: var(--nabd-text-main);
+      direction: rtl;
+      text-align: right;
+      line-height: 1.8;
+      font-size: 15px;
+      overflow-x: hidden;
+      width: 100%;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    a { color: inherit; text-decoration: none; transition: all 0.2s ease; }
+    img { max-width: 100%; height: auto; display: block; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 14px; }
+
+    /* Reading Progress Bar */
+    #reading-progress {
+      position: fixed; top: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--nabd-gold), var(--nabd-emerald));
+      width: 0%; z-index: 99999; transition: width 0.1s ease;
+    }
+
+    /* ── Main Header ── */
+    .main-header {
+      background: linear-gradient(135deg, var(--nabd-navy-primary) 0%, var(--nabd-navy-light) 100%);
+      color: #FFFFFF; position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 3px 18px rgba(10, 25, 47, 0.25);
+      border-bottom: 2px solid rgba(212, 175, 55, 0.35);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 0; gap: 10px; min-height: 60px;
+    }
+    
+    .brand-logo { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .logo-img-wrapper {
+      width: 42px; height: 42px; border-radius: 12px; overflow: hidden;
+      background: #FFFFFF; padding: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      border: 1.5px solid var(--nabd-gold); flex-shrink: 0;
+    }
+    .logo-img-wrapper img { width: 100%; height: 100%; object-fit: contain; }
+    
+    .brand-title-group { min-width: 0; }
+    .brand-title-group h1, .brand-title-group .site-title {
+      font-size: 15px; font-weight: 900; color: #FFFFFF; line-height: 1.25;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .brand-title-group p { font-size: 11px; color: #CBD5E1; font-weight: 600; line-height: 1.2; }
+
+    .nav-links { display: none; align-items: center; gap: 4px; list-style: none; }
+    .nav-links a {
+      color: #F1F5F9; font-weight: 700; font-size: 13px; padding: 7px 11px;
+      border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .nav-links a:hover, .nav-links a.active { background: rgba(255, 255, 255, 0.12); color: var(--nabd-gold); }
+
+    .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .btn-book-nav {
+      background: linear-gradient(135deg, var(--nabd-gold) 0%, var(--nabd-gold-light) 100%);
+      color: var(--nabd-navy-dark) !important; padding: 7px 13px; border-radius: 10px;
+      font-weight: 900; font-size: 12px; display: inline-flex; align-items: center; gap: 5px;
+      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.35); white-space: nowrap;
+    }
+    .mobile-menu-toggle {
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+      color: #FFFFFF; font-size: 17px; padding: 7px 11px; border-radius: 10px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      min-width: 38px; min-height: 38px;
+    }
+
+    /* ── Mobile Drawer ── */
+    .mobile-drawer {
+      display: none; background: var(--nabd-navy-primary);
+      padding: 14px; border-top: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .mobile-drawer.open { display: block; }
+    .mobile-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .mobile-drawer a {
+      color: #FFFFFF; font-weight: 700; font-size: 13.5px; padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.06); border-radius: 10px;
+      display: flex; align-items: center; justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .mobile-drawer a:active { background: rgba(212, 175, 55, 0.2); color: var(--nabd-gold); }
+
+    /* ── Main Layout ── */
+    .main-wrapper { padding: 18px 0 35px 0; }
+    .layout-grid { display: grid; grid-template-columns: 1fr; gap: 22px; }
+
+    /* ── Post Cards Grid ── */
+    .posts-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .nabd-post-card {
+      background: var(--nabd-card-bg); border-radius: var(--nabd-radius);
+      border: 1px solid var(--nabd-border); overflow: hidden;
+      box-shadow: var(--nabd-shadow); display: flex; flex-direction: column;
+    }
+    .post-thumb-wrap {
+      position: relative; width: 100%; aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, var(--nabd-navy-primary) 0%, var(--nabd-navy-surface) 100%);
+      overflow: hidden;
+    }
+    .post-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .post-category-tag {
+      position: absolute; top: 10px; right: 10px; background: rgba(13, 32, 64, 0.9);
+      backdrop-filter: blur(4px); color: var(--nabd-gold);
+      border: 1px solid rgba(212, 175, 55, 0.4); padding: 3px 9px;
+      border-radius: 16px; font-size: 10.5px; font-weight: 800;
+    }
+
+    .post-body { padding: 14px 16px; display: flex; flex-direction: column; flex-grow: 1; }
+    .post-meta-top {
+      display: flex; align-items: center; gap: 10px; font-size: 11px;
+      color: var(--nabd-text-muted); margin-bottom: 6px;
+    }
+    .post-meta-top span { display: inline-flex; align-items: center; gap: 4px; }
+    .post-title {
+      font-size: 15px; font-weight: 800; color: var(--nabd-navy-primary);
+      line-height: 1.45; margin-bottom: 8px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .post-snippet {
+      font-size: 12px; color: var(--nabd-text-muted); line-height: 1.6; margin-bottom: 12px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .post-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid #F1F5F9; padding-top: 10px; margin-top: auto;
+    }
+    .read-more-btn {
+      color: var(--nabd-navy-primary); font-size: 12px; font-weight: 800;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .post-author-name { font-size: 11px; color: var(--nabd-text-muted); font-weight: 700; }
+
+    /* ── Single Post View ── */
+    .single-post-wrapper {
+      background: var(--nabd-card-bg); border-radius: var(--nabd-radius);
+      border: 1px solid var(--nabd-border); padding: 16px 14px;
+      box-shadow: var(--nabd-shadow); margin-bottom: 20px;
+    }
+    .single-post-header { border-bottom: 2px solid #F1F5F9; padding-bottom: 14px; margin-bottom: 16px; }
+    .single-post-badge {
+      display: inline-block; background: rgba(13, 32, 64, 0.08);
+      color: var(--nabd-navy-primary); padding: 3px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 800; margin-bottom: 8px;
+      border: 1px solid rgba(13, 32, 64, 0.15);
+    }
+    .single-post-title {
+      font-size: 19px; font-weight: 900; color: var(--nabd-navy-primary);
+      line-height: 1.4; margin-bottom: 10px;
+    }
+    .single-post-meta {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      font-size: 11px; color: var(--nabd-text-muted); font-weight: 600;
+    }
+    .single-post-meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+    .single-post-body {
+      font-size: 15px; line-height: 1.85; color: #1E293B; word-break: break-word;
+    }
+    .single-post-body h2 {
+      font-size: 17px; font-weight: 900; color: var(--nabd-navy-primary);
+      margin: 22px 0 10px 0; padding-bottom: 6px; border-bottom: 2px solid var(--nabd-gold);
+      display: inline-block;
+    }
+    .single-post-body h3 {
+      font-size: 15.5px; font-weight: 800; color: var(--nabd-navy-light); margin: 18px 0 8px 0;
+    }
+    .single-post-body p { margin-bottom: 14px; }
+    .single-post-body img { border-radius: 12px; margin: 12px auto; max-width: 100%; }
+    .single-post-body ul, .single-post-body ol { margin: 12px 18px 16px 0; line-height: 1.75; }
+    .single-post-body li { margin-bottom: 6px; }
+    .single-post-body blockquote {
+      background: #F8FAFC; border-right: 4px solid var(--nabd-gold);
+      padding: 12px 14px; border-radius: 0 10px 10px 0; margin: 16px 0;
+      font-style: italic; color: var(--nabd-navy-primary); font-weight: 700; font-size: 14px;
+    }
+
+    /* In-Article Clinical CTA */
+    .post-clinical-cta {
+      background: linear-gradient(135deg, var(--nabd-navy-primary) 0%, var(--nabd-navy-light) 100%);
+      color: #FFFFFF; padding: 18px 16px; border-radius: 16px; margin: 24px 0 18px 0;
+      border: 1.5px solid var(--nabd-gold); box-shadow: var(--nabd-shadow);
+      display: flex; flex-direction: column; gap: 14px; text-align: center;
+    }
+    .post-clinical-cta-text h4 { font-size: 15.5px; font-weight: 900; color: #FFFFFF; margin-bottom: 4px; }
+    .post-clinical-cta-text p { font-size: 12px; color: #CBD5E1; margin: 0; line-height: 1.5; }
+    .post-clinical-cta-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .btn-hero-primary {
+      background: linear-gradient(135deg, var(--nabd-emerald) 0%, var(--nabd-emerald-dark) 100%);
+      color: #FFFFFF; padding: 9px 16px; border-radius: 10px; font-weight: 800; font-size: 12px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1; min-width: 130px;
+    }
+    .btn-hero-secondary {
+      background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #FFFFFF; padding: 9px 16px; border-radius: 10px; font-weight: 800; font-size: 12px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1; min-width: 130px;
+    }
+
+    /* Author Signature Box */
+    .author-box {
+      background: #F8FAFC; border: 1px solid var(--nabd-border); border-radius: var(--nabd-radius);
+      padding: 14px; margin: 20px 0; display: flex; align-items: center; gap: 12px;
+    }
+    .author-avatar {
+      width: 52px; height: 52px; border-radius: 50%; overflow: hidden;
+      background: #FFFFFF; border: 2px solid var(--nabd-gold); flex-shrink: 0;
+    }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-info h5 { font-size: 13.5px; font-weight: 900; color: var(--nabd-navy-primary); margin-bottom: 2px; }
+    .author-info p { font-size: 11px; color: var(--nabd-text-muted); margin: 0; line-height: 1.5; }
+
+    /* Share Bar */
+    .post-share-bar {
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+      background: #F8FAFC; border: 1px solid var(--nabd-border); padding: 10px 14px;
+      border-radius: 12px; margin: 18px 0;
+    }
+    .share-title { font-size: 12px; font-weight: 800; color: var(--nabd-navy-primary); }
+    .share-buttons { display: flex; gap: 6px; }
+    .share-btn {
+      width: 34px; height: 34px; border-radius: 8px; display: inline-flex;
+      align-items: center; justify-content: center; color: #FFFFFF; font-size: 14px; border: none;
+    }
+    .share-wa { background: #25D366; } .share-fb { background: #1877F2; }
+    .share-tg { background: #0088CC; } .share-copy { background: var(--nabd-navy-primary); cursor: pointer; }
+
+    /* ── Sidebar & Widgets ── */
+    .sidebar { display: flex; flex-direction: column; gap: 16px; }
+    .sidebar-widget {
+      background: var(--nabd-card-bg); border-radius: var(--nabd-radius);
+      border: 1px solid var(--nabd-border); padding: 16px; box-shadow: var(--nabd-shadow);
+    }
+    .widget-title {
+      font-size: 14px; font-weight: 900; color: var(--nabd-navy-primary);
+      margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #F1F5F9;
+      display: flex; align-items: center; gap: 6px; position: relative;
+    }
+    .widget-title::after {
+      content: ''; position: absolute; bottom: -2px; right: 0; width: 35px; height: 2px; background: var(--nabd-gold);
+    }
+    .widget-title i { color: var(--nabd-gold); }
+
+    .supervisor-widget {
+      background: linear-gradient(135deg, #0A192F 0%, #1B2B6B 100%);
+      color: #FFFFFF; border: 1.5px solid var(--nabd-gold); text-align: center;
+    }
+    .supervisor-widget .widget-title { color: #FFFFFF; border-color: rgba(255, 255, 255, 0.2); justify-content: center; }
+    .supervisor-widget .widget-title::after { right: calc(50% - 18px); }
+    .supervisor-img-wrap {
+      width: 85px; height: 85px; border-radius: 50%; overflow: hidden;
+      margin: 0 auto 10px auto; border: 2.5px solid var(--nabd-gold);
+    }
+    .supervisor-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .supervisor-name { font-size: 15px; font-weight: 900; color: #FFFFFF; margin-bottom: 2px; }
+    .supervisor-title { font-size: 11.5px; color: var(--nabd-gold); font-weight: 700; margin-bottom: 10px; }
+
+    .emergency-widget { background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 100%); color: #FFFFFF; border: 1.5px solid #EF4444; }
+    .emergency-widget .widget-title { color: #FFFFFF; border-color: rgba(255, 255, 255, 0.2); }
+    .emergency-widget .widget-title::after { background: #FCA5A5; }
+    .emergency-call-btn {
+      background: #FFFFFF; color: #991B1B !important; display: flex;
+      align-items: center; justify-content: center; gap: 8px; padding: 10px;
+      border-radius: 10px; font-weight: 900; font-size: 13px; margin-top: 10px;
+    }
+
+    .sidebar-links-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .sidebar-links-list li a {
+      display: flex; align-items: center; justify-content: space-between; padding: 8px 10px;
+      background: #F8FAFC; border-radius: 8px; font-size: 12px; font-weight: 700;
+      color: var(--nabd-navy-primary); border: 1px solid #E2E8F0;
+    }
+    .sidebar-links-list li a:hover, .sidebar-links-list li a:active {
+      background: var(--nabd-navy-primary); color: #FFFFFF; border-color: var(--nabd-gold);
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       ✨ 28 PATIENT REVIEWS & TESTIMONIALS LUXURY SECTION ✨
+       ══════════════════════════════════════════════════════════ */
+    .reviews-section {
+      background: linear-gradient(180deg, #F1F5F9 0%, #FFFFFF 100%);
+      padding: 50px 0 60px 0;
+      border-top: 1px solid #E2E8F0;
+      border-bottom: 2px solid rgba(212, 175, 55, 0.35);
+      position: relative;
+    }
+    .reviews-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--nabd-navy-primary), var(--nabd-gold), var(--nabd-emerald));
+    }
+    .reviews-header-block {
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto 32px auto;
+      padding: 0 10px;
+    }
+    .reviews-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #FEF3C7;
+      color: #92400E;
+      border: 1.5px solid #FCD34D;
+      padding: 5px 15px;
+      border-radius: 30px;
+      font-size: 12.5px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+    }
+    .reviews-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--nabd-navy-primary);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+    .reviews-subtitle {
+      font-size: 13.5px;
+      color: var(--nabd-text-muted);
+      line-height: 1.7;
+    }
+
+    /* Stats summary strip */
+    .reviews-stats-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      max-width: 900px;
+      margin: 0 auto 28px auto;
+      padding: 0 4px;
+    }
+    .stat-pill-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--nabd-border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      text-align: center;
+      box-shadow: var(--nabd-shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .stat-pill-val {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--nabd-navy-primary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .stat-pill-lbl {
+      font-size: 11px;
+      color: var(--nabd-text-muted);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    /* Filter tabs & Search */
+    .reviews-toolbar {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 900px;
+      margin: 0 auto 26px auto;
+    }
+    .reviews-filter-pills {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      color: var(--nabd-navy-primary);
+      padding: 7px 14px;
+      border-radius: 25px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--nabd-navy-primary);
+      color: #FFFFFF;
+      border-color: var(--nabd-navy-primary);
+      box-shadow: 0 4px 12px rgba(13, 32, 64, 0.2);
+    }
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--nabd-navy-primary) 0%, var(--nabd-navy-light) 100%);
+      border-color: var(--nabd-gold);
+    }
+
+    .reviews-search-box {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .reviews-search-box i {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94A3B8;
+      font-size: 14px;
+    }
+    .reviews-search-input {
+      width: 100%;
+      padding: 10px 38px 10px 14px;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 25px;
+      font-size: 13px;
+      font-family: inherit;
+      background: #FFFFFF;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .reviews-search-input:focus {
+      border-color: var(--nabd-navy-light);
+      box-shadow: 0 0 0 3px rgba(27, 43, 107, 0.12);
+    }
+
+    /* Cards Grid */
+    .reviews-masonry-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .review-item-card {
+      background: #FFFFFF;
+      border-radius: 18px;
+      border: 1.5px solid #E2E8F0;
+      padding: 18px 16px;
+      box-shadow: var(--nabd-shadow);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+    }
+    .review-item-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--nabd-shadow-lg);
+      border-color: rgba(212, 175, 55, 0.6);
+    }
+    .review-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+    .reviewer-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .reviewer-avatar-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--nabd-navy-light), var(--nabd-navy-primary));
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 900;
+      flex-shrink: 0;
+      border: 2px solid var(--nabd-gold);
+    }
+    .reviewer-name-box h5 {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--nabd-navy-primary);
+      line-height: 1.25;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .verified-pill {
+      font-size: 10px;
+      background: #ECFDF5;
+      color: #059669;
+      border: 1px solid #A7F3D0;
+      padding: 1px 6px;
+      border-radius: 12px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .reviewer-location-tag {
+      font-size: 11px;
+      color: var(--nabd-text-muted);
+      margin-top: 2px;
+    }
+    .stars-badge {
+      color: #F59E0B;
+      font-size: 12px;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+    .review-quote-body {
+      font-size: 13.5px;
+      line-height: 1.85;
+      color: #1E293B;
+      font-weight: 600;
+      position: relative;
+      margin-bottom: 14px;
+      flex-grow: 1;
+    }
+    .review-quote-body::before {
+      content: '\201C';
+      font-size: 38px;
+      color: rgba(212, 175, 55, 0.25);
+      position: absolute;
+      top: -18px;
+      right: -6px;
+      font-family: Georgia, serif;
+      pointer-events: none;
+    }
+    .review-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #F1F5F9;
+      padding-top: 10px;
+      font-size: 11px;
+      color: #94A3B8;
+      font-weight: 700;
+    }
+    .review-tag-pill {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      color: var(--nabd-navy-light);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 10.5px;
+    }
+
+    /* Expand / Collapse Button */
+    .reviews-load-more-wrap {
+      text-align: center;
+      margin: 10px auto 0 auto;
+    }
+    .btn-show-reviews {
+      background: linear-gradient(135deg, var(--nabd-navy-primary) 0%, var(--nabd-navy-light) 100%);
+      color: #FFFFFF;
+      border: 2px solid var(--nabd-gold);
+      padding: 11px 26px;
+      border-radius: 30px;
+      font-size: 13.5px;
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(13, 32, 64, 0.2);
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+    .btn-show-reviews:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(13, 32, 64, 0.3);
+      background: var(--nabd-navy-primary);
+    }
+
+    /* Reviews Trust CTA Bar */
+    .reviews-trust-cta {
+      background: linear-gradient(135deg, #0A192F 0%, #1B2B6B 100%);
+      color: #FFFFFF;
+      border-radius: 20px;
+      padding: 22px 18px;
+      margin-top: 35px;
+      border: 1.5px solid var(--nabd-gold);
+      box-shadow: var(--nabd-shadow-lg);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+      align-items: center;
+    }
+    .reviews-trust-cta h4 {
+      font-size: 17px;
+      font-weight: 900;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .reviews-trust-cta p {
+      font-size: 12.5px;
+      color: #CBD5E1;
+      max-width: 620px;
+      margin: 0;
+      line-height: 1.6;
+    }
+    .reviews-trust-cta-btns {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+    .btn-trust-book {
+      background: linear-gradient(135deg, var(--nabd-gold) 0%, var(--nabd-gold-light) 100%);
+      color: var(--nabd-navy-dark) !important;
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-weight: 900;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+    }
+    .btn-trust-wa {
+      background: #25D366;
+      color: #FFFFFF !important;
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-weight: 900;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+    }
+
+    /* ── Floating Action Buttons ── */
+    .fab-container {
+      position: fixed; bottom: calc(16px + var(--safe-bottom)); left: 16px;
+      display: flex; flex-direction: column; gap: 10px; z-index: 9999;
+    }
+    .fab-btn {
+      width: 48px; height: 48px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; color: #FFFFFF; font-size: 19px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25); transition: transform 0.2s ease;
+    }
+    .fab-btn:active { transform: scale(0.92); }
+    .fab-whatsapp { background: #25D366; }
+    .fab-call { background: var(--nabd-gold); color: var(--nabd-navy-dark) !important; }
+    .fab-book { background: var(--nabd-navy-primary); }
+
+    /* ── Footer ── */
+    .main-footer {
+      background: var(--nabd-navy-dark); color: #FFFFFF; padding: 35px 0 20px 0;
+      border-top: 3px solid var(--nabd-gold);
+    }
+    .footer-grid { display: flex; flex-direction: column; gap: 24px; margin-bottom: 25px; }
+    .footer-brand h3 {
+      font-size: 15.5px; font-weight: 900; color: #FFFFFF; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .footer-brand p { font-size: 12px; color: #CBD5E1; line-height: 1.6; margin-bottom: 14px; }
+    .footer-social-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .footer-social-links a {
+      width: 36px; height: 36px; border-radius: 8px; background: rgba(255, 255, 255, 0.1);
+      display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.15); transition: all 0.2s ease;
+    }
+    .footer-social-links a:hover {
+      background: var(--nabd-gold); color: var(--nabd-navy-dark); transform: translateY(-2px);
+    }
+    .footer-col h4 { font-size: 14px; font-weight: 900; color: var(--nabd-gold); margin-bottom: 12px; }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 9px; font-size: 12px; color: #CBD5E1; }
+    .footer-contact-item i { color: var(--nabd-gold); margin-top: 3px; min-width: 14px; }
+    .footer-contact-item a { color: #CBD5E1; }
+    .footer-contact-item a:hover { color: var(--nabd-gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 14px;
+      text-align: center; font-size: 11px; color: #94A3B8;
+    }
+
+    #nabd-toast {
+      position: fixed; bottom: calc(25px + var(--safe-bottom)); right: 50%; transform: translateX(50%);
+      background: var(--nabd-navy-dark); color: #FFFFFF; border: 1px solid var(--nabd-gold);
+      padding: 8px 18px; border-radius: 25px; font-size: 12px; font-weight: 800;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35); display: none; z-index: 100000;
+      white-space: nowrap;
+    }
+
+    /* ── Desktop Media Queries ── */
+    @media (min-width: 640px) {
+      .posts-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .brand-title-group h1, .brand-title-group .site-title { font-size: 17px; }
+      .single-post-wrapper { padding: 24px 20px; }
+      .single-post-title { font-size: 22px; }
+      .reviews-stats-strip { grid-template-columns: repeat(4, 1fr); }
+      .reviews-masonry-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .reviews-title { font-size: 28px; }
+    }
+    @media (min-width: 992px) {
+      .nav-links { display: flex; }
+      .mobile-menu-toggle { display: none; }
+      .layout-grid { grid-template-columns: 1fr 320px; gap: 26px; }
+      .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 28px; }
+      .post-clinical-cta { flex-direction: row; text-align: right; justify-content: space-between; }
+      .post-clinical-cta-btns { justify-content: flex-start; }
+      .btn-hero-primary, .btn-hero-secondary { flex: initial; }
+      .reviews-masonry-grid { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+      .reviews-trust-cta { flex-direction: row; text-align: right; justify-content: space-between; }
+      .reviews-trust-cta-btns { width: auto; }
+    }
+  ]]></b:skin>
+</head>
+
+<body>
+  <div id='reading-progress'/>
+  <div id='nabd-toast'>تم النسخ بنجاح! 📋</div>
+
+  <!-- 1. Main Navigation -->
+  <nav class='main-header'>
+    <div class='container'>
+      <div class='header-inner'>
+        <a class='brand-logo' href='/'>
+          <div class='logo-img-wrapper'>
+            <img alt='شعار نبض للتمريض المنزلي' src='https://nabd-nursing.vercel.app/images/nabd-official-logo.jpg'/>
+          </div>
+          <div class='brand-title-group'>
+            <h1 class='site-title'>نبض للتمريض المنزلي - دمياط</h1>
+            <p>المدونة والمجلة الطبية</p>
+          </div>
+        </a>
+        <ul class='nav-links'>
+          <li><a class='active' href='/'><i class='fa-solid fa-newspaper'/> المقالات</a></li>
+          <li><a href='#reviews-section'><i class='fa-solid fa-star' style='color:var(--nabd-gold);'/> آراء عملائنا</a></li>
+          <li><a href='https://nabd-nursing.vercel.app/' rel='noopener' target='_blank'><i class='fa-solid fa-globe'/> الموقع الرسمي</a></li>
+          <li><a href='https://nabd-nursing.vercel.app/services' rel='noopener' target='_blank'><i class='fa-solid fa-stethoscope'/> خدماتنا</a></li>
+          <li><a href='https://nabd-nursing.vercel.app/first-aid' rel='noopener' target='_blank'><i class='fa-solid fa-kit-medical'/> الإسعافات</a></li>
+          <li><a href='https://nabd-nursing.vercel.app/contact' rel='noopener' target='_blank'><i class='fa-solid fa-phone-volume'/> اتصل بنا</a></li>
+        </ul>
+        <div class='header-actions'>
+          <a class='btn-book-nav' href='https://nabd-nursing.vercel.app/booking' rel='noopener' target='_blank'>
+            <i class='fa-solid fa-calendar-check'/> <span>احجز الآن</span>
+          </a>
+          <button class='mobile-menu-toggle' id='menuToggle' onclick='toggleMobileMenu()'>
+            <i class='fa-solid fa-bars'/>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class='mobile-drawer' id='mobileDrawer'>
+      <ul>
+        <li><a href='/'><i class='fa-solid fa-newspaper'/> مدونة نبض</a></li>
+        <li><a href='#reviews-section' onclick='toggleMobileMenu()'><i class='fa-solid fa-star' style='color:var(--nabd-gold);'/> ⭐ آراء مرضانا (28 تقييم موثق)</a></li>
+        <li><a href='https://nabd-nursing.vercel.app/' rel='noopener' target='_blank'><i class='fa-solid fa-globe'/> الموقع الإلكتروني الرسمي</a></li>
+        <li><a href='https://nabd-nursing.vercel.app/services' rel='noopener' target='_blank'><i class='fa-solid fa-stethoscope'/> الخدمات التمريضية</a></li>
+        <li><a href='https://nabd-nursing.vercel.app/booking' rel='noopener' target='_blank'><i class='fa-solid fa-calendar-check'/> حجز زيارة تمريضية</a></li>
+        <li><a href='https://wa.me/201099667065' rel='noopener' target='_blank'><i class='fa-brands fa-whatsapp'/> واتساب مباشر: 201099667065+</a></li>
+        <li><a href='https://t.me/Ibrahim5k' rel='noopener' target='_blank'><i class='fa-brands fa-telegram'/> تليجرام نبض</a></li>
+        <li><a href='tel:01001097896'><i class='fa-solid fa-phone'/> الاتصال والحجز: 01001097896</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 2. Main Body & Sidebar Grid -->
+  <main class='main-wrapper'>
+    <div class='container'>
+      <div class='layout-grid'>
+        <!-- Posts Column -->
+        <div class='posts-column'>
+          <b:section id='main' showaddelement='yes'>
+            <b:widget id='Blog1' locked='true' title='رسائل المدونة الإلكترونية' type='Blog' version='2' visible='true'>
+              <b:widget-settings>
+                <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+                <b:widget-setting name='commentLabel'>$type={blogger}</b:widget-setting>
+                <b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
+                <b:widget-setting name='showShareButtons'>true</b:widget-setting>
+                <b:widget-setting name='authorLabel'>الناشر :</b:widget-setting>
+                <b:widget-setting name='showCommentLink'>true</b:widget-setting>
+                <b:widget-setting name='style.urlcolor'>#ffffff</b:widget-setting>
+                <b:widget-setting name='showAuthor'>true</b:widget-setting>
+                <b:widget-setting name='style.linkcolor'>#ffffff</b:widget-setting>
+                <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+                <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
+                <b:widget-setting name='timestampLabel'>-</b:widget-setting>
+                <b:widget-setting name='reactionsLabel'/>
+                <b:widget-setting name='showAuthorProfile'>true</b:widget-setting>
+                <b:widget-setting name='style.layout'>1x1</b:widget-setting>
+                <b:widget-setting name='showLabels'>true</b:widget-setting>
+                <b:widget-setting name='showLocation'>false</b:widget-setting>
+                <b:widget-setting name='postLabelsLabel'>التسميات</b:widget-setting>
+                <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+                <b:widget-setting name='postsPerAd'>1</b:widget-setting>
+                <b:widget-setting name='showBacklinks'>false</b:widget-setting>
+                <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
+                <b:widget-setting name='showInlineAds'>false</b:widget-setting>
+                <b:widget-setting name='showReactions'>false</b:widget-setting>
+              </b:widget-settings>
+              <b:includable id='main'>
+                <b:if cond='data:view.isMultipleItems'>
+                  <div class='posts-grid'>
+                    <b:loop values='data:posts' var='post'>
+                      <article class='nabd-post-card'>
+                        <div class='post-thumb-wrap'>
+                          <b:if cond='data:post.featuredImage'>
+                            <img alt='data:post.title' expr:src='data:post.featuredImage'/>
+                          <b:else/>
+                            <img alt='data:post.title' src='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg'/>
+                          </b:if>
+                          <b:if cond='data:post.labels and not data:post.labels.empty'>
+                            <span class='post-category-tag'><data:post.labels.first.name/></span>
+                          </b:if>
+                        </div>
+                        <div class='post-body'>
+                          <div class='post-meta-top'>
+                            <span><i class='fa-regular fa-calendar'/> <data:post.date/></span>
+                            <span><i class='fa-solid fa-user-nurse'/> نبض للتمريض</span>
+                          </div>
+                          <h4 class='post-title'><a expr:href='data:post.url'><data:post.title/></a></h4>
+                          <p class='post-snippet'><data:post.snippet/></p>
+                          <div class='post-footer'>
+                            <a class='read-more-btn' expr:href='data:post.url'>
+                              <span>اقرأ المقال كاملا&#1611;</span> <i class='fa-solid fa-arrow-left'/>
+                            </a>
+                            <span class='post-author-name'>إبراهيم ماهر</span>
+                          </div>
+                        </div>
+                      </article>
+                    </b:loop>
+                  </div>
+
+                <b:else/>
+                  <b:loop values='data:posts' var='post'>
+                    <article class='single-post-wrapper'>
+                      <div class='single-post-header'>
+                        <b:if cond='data:post.labels and not data:post.labels.empty'>
+                          <span class='single-post-badge'><i class='fa-solid fa-tag'/> <data:post.labels.first.name/></span>
+                        </b:if>
+                        <h1 class='single-post-title'><data:post.title/></h1>
+                        <div class='single-post-meta'>
+                          <span><i class='fa-regular fa-calendar'/> تاريخ النشر: <data:post.date/></span>
+                          <span><i class='fa-solid fa-user-nurse'/> الناشر: إبراهيم ماهر</span>
+                          <span><i class='fa-solid fa-location-dot'/> دمياط</span>
+                          <span><i class='fa-solid fa-eye'/> نبض للتمريض المنزلي</span>
+                        </div>
+                      </div>
+
+                      <div class='single-post-body'>
+                        <data:post.body/>
+                      </div>
+
+                      <!-- In-Article CTA -->
+                      <div class='post-clinical-cta'>
+                        <div class='post-clinical-cta-text'>
+                          <h4><i class='fa-solid fa-house-medical'/> محتاج رعاية تمريضية متخصصة في منزلك بدمياط&#1567;</h4>
+                          <p>فريق نبض يوفر لك خدمات التمريض المنزلي بأعلى معايير الأمان والتعقيم وراحة المريض في منزله.</p>
+                        </div>
+                        <div class='post-clinical-cta-btns'>
+                          <a class='btn-hero-primary' href='https://nabd-nursing.vercel.app/booking' rel='noopener' target='_blank'>
+                            <i class='fa-solid fa-calendar-check'/> احجز خدمة الآن
+                          </a>
+                          <a class='btn-hero-secondary' expr:href='&quot;https://wa.me/201099667065?text=&quot; + data:post.title' rel='noopener' target='_blank'>
+                            <i class='fa-brands fa-whatsapp'/> استفسر عبر واتساب
+                          </a>
+                        </div>
+                      </div>
+
+                      <!-- Share Bar -->
+                      <div class='post-share-bar'>
+                        <span class='share-title'><i class='fa-solid fa-share-nodes'/> مشاركة المقال:</span>
+                        <div class='share-buttons'>
+                          <a class='share-btn share-wa' expr:href='&quot;https://api.whatsapp.com/send?text=&quot; + data:post.title + &quot; &quot; + data:post.url' rel='noopener' target='_blank' title='واتساب'><i class='fa-brands fa-whatsapp'/></a>
+                          <a class='share-btn share-fb' expr:href='&quot;https://www.facebook.com/sharer/sharer.php?u=&quot; + data:post.url' rel='noopener' target='_blank' title='فيسبوك'><i class='fa-brands fa-facebook-f'/></a>
+                          <a class='share-btn share-tg' expr:href='&quot;https://t.me/share/url?url=&quot; + data:post.url + &quot;&amp;text=&quot; + data:post.title' rel='noopener' target='_blank' title='تليجرام'><i class='fa-brands fa-telegram'/></a>
+                          <button class='share-btn share-copy' onclick='copyPostUrl()' title='نسخ الرابط'><i class='fa-regular fa-copy'/></button>
+                        </div>
+                      </div>
+
+                      <!-- Author Box -->
+                      <div class='author-box'>
+                        <div class='author-avatar'>
+                          <img alt='إبراهيم ماهر — المشرف العام لـ نبض' src='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg'/>
+                        </div>
+                        <div class='author-info'>
+                          <h5>إبراهيم ماهر &#8212; المشرف العام لـ نبض للتمريض المنزلي</h5>
+                          <p>أخصائي تمريض ورعاية صحية منزلية بمحافظة دمياط. نسعى لتقديم خدمة تمريضية متكاملة بأمان&#1548; تعقيم فائق&#1548; وراحة تامة للمريض وأسرته داخل منازلهم. <a href='https://www.facebook.com/share/1BDJwJeW15/' rel='noopener' style='color:var(--nabd-navy-light); font-weight:700; text-decoration:underline;' target='_blank'><i class='fa-brands fa-facebook'/> الملف الشخصي للمسؤول</a></p>
+                        </div>
+                      </div>
+                    </article>
+                  </b:loop>
+                </b:if>
+              </b:includable>
+              <b:includable id='aboutPostAuthor'/>
+              <b:includable id='addComments'/>
+              <b:includable id='blogThisShare'/>
+              <b:includable id='bylineByName'/>
+              <b:includable id='bylineRegion'/>
+              <b:includable id='commentAuthorAvatar'/>
+              <b:includable id='commentDeleteIcon'/>
+              <b:includable id='commentForm'/>
+              <b:includable id='commentFormIframeSrc'/>
+              <b:includable id='commentItem'/>
+              <b:includable id='commentList'/>
+              <b:includable id='commentPicker'/>
+              <b:includable id='comments'/>
+              <b:includable id='commentsLink'/>
+              <b:includable id='commentsLinkIframe'/>
+              <b:includable id='commentsTitle'/>
+              <b:includable id='defaultAdUnit'/>
+              <b:includable id='emailPostIcon'/>
+              <b:includable id='facebookShare'/>
+              <b:includable id='feedLinks'/>
+              <b:includable id='feedLinksBody'/>
+              <b:includable id='footerBylines'/>
+              <b:includable id='googlePlusShare'/>
+              <b:includable id='headerByline'/>
+              <b:includable id='homePageLink'/>
+              <b:includable id='iframeComments'/>
+              <b:includable id='inlineAd'/>
+              <b:includable id='linkShare'/>
+              <b:includable id='nextPageLink'/>
+              <b:includable id='otherSharingButton'/>
+              <b:includable id='platformShare'/>
+              <b:includable id='post'/>
+              <b:includable id='postAuthor'/>
+              <b:includable id='postBody'/>
+              <b:includable id='postBodySnippet'/>
+              <b:includable id='postCommentsAndAd'/>
+              <b:includable id='postCommentsLink'/>
+              <b:includable id='postFooter'/>
+              <b:includable id='postFooterAuthorProfile'/>
+              <b:includable id='postHeader'/>
+              <b:includable id='postJumpLink'/>
+              <b:includable id='postLabels'/>
+              <b:includable id='postLocation'/>
+              <b:includable id='postMeta'/>
+              <b:includable id='postMetadataJSONImage'/>
+              <b:includable id='postMetadataJSONPublisher'/>
+              <b:includable id='postPagination'/>
+              <b:includable id='postReactions'/>
+              <b:includable id='postShareButtons'/>
+              <b:includable id='postTimestamp'/>
+              <b:includable id='postTitle'/>
+              <b:includable id='previousPageLink'/>
+              <b:includable id='sharingButton'/>
+              <b:includable id='sharingButtonContent'/>
+              <b:includable id='sharingButtons'/>
+              <b:includable id='sharingButtonsMenu'/>
+              <b:includable id='sharingPlatformIcon'/>
+              <b:includable id='threadedCommentForm'/>
+              <b:includable id='threadedCommentJs'/>
+              <b:includable id='threadedComments'/>
+              <b:includable id='tooltipCss'/>
+            </b:widget>
+          </b:section>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class='sidebar'>
+          <!-- Supervisor Widget -->
+          <div class='sidebar-widget supervisor-widget'>
+            <h4 class='widget-title'><i class='fa-solid fa-user-doctor'/> الإشراف التمريضي</h4>
+            <div class='supervisor-img-wrap'>
+              <img alt='إبراهيم ماهر — نبض للتمريض المنزلي' src='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg'/>
+            </div>
+            <h5 class='supervisor-name'>إبراهيم ماهر</h5>
+            <p class='supervisor-title'>المشرف العام لـ نبض للتمريض المنزلي</p>
+            <div style='display:flex; flex-direction:column; gap:7px; margin-top:8px;'>
+              <a href='https://wa.me/201099667065?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%AA%D9%85%D8%B1%D9%8A%D8%B6%20%D9%85%D9%86%D8%B2%D9%84%D9%8A%20%D8%A8%D8%AF%D9%85%D9%8A%D8%A7%D8%B7' rel='noopener' style='background: var(--nabd-gold); color: var(--nabd-navy-dark); font-weight: 900; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 16px; border-radius: 20px; width: 100%;' target='_blank'>
+                <i class='fa-brands fa-whatsapp'/> تواصل مباشر مع المشرف
+              </a>
+              <a href='https://www.facebook.com/share/1BDJwJeW15/' rel='noopener' style='background: rgba(255,255,255,0.15); color: #FFFFFF; font-weight: 700; font-size: 11.5px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 7px 12px; border-radius: 20px; width: 100%; border: 1px solid rgba(255,255,255,0.25);' target='_blank'>
+                <i class='fa-brands fa-facebook'/> الملف الشخصي للمسؤول
+              </a>
+            </div>
+          </div>
+
+          <!-- Emergency Widget -->
+          <div class='sidebar-widget emergency-widget'>
+            <h4 class='widget-title'><i class='fa-solid fa-triangle-exclamation'/> حالات التمريض العاجل والطوارئ</h4>
+            <p style='font-size: 12px; line-height: 1.6;'>إذا كنت بحاجة لتمريض عاجل&#1548; تركيب كانيولا&#1548; أو سحب عينات تحاليل منزلية فورية :</p>
+            <a class='emergency-call-btn' href='tel:01001097896'>
+              <i class='fa-solid fa-phone-flip'/> الاتصال والحجز: 01001097896
+            </a>
+          </div>
+
+          <!-- Official Platforms Widget -->
+          <div class='sidebar-widget'>
+            <h4 class='widget-title'><i class='fa-solid fa-globe'/> تابع نبض عبر منصاتنا الرسمية</h4>
+            <ul class='sidebar-links-list'>
+              <li><a href='tel:01001097896'><span><i class='fa-solid fa-phone' style='color:var(--nabd-gold); margin-left:6px;'/> الاتصال والحجز: 01001097896</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://wa.me/201099667065' rel='noopener' target='_blank'><span><i class='fa-brands fa-whatsapp' style='color:#25D366; margin-left:6px;'/> واتساب مباشر</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://t.me/Ibrahim5k' rel='noopener' target='_blank'><span><i class='fa-brands fa-telegram' style='color:#0088cc; margin-left:6px;'/> تليجرام نبض</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://www.facebook.com/share/1BDJwJeW15/' rel='noopener' target='_blank'><span><i class='fa-solid fa-user-check' style='color:var(--nabd-navy-light); margin-left:6px;'/> الملف الشخصي &#8211; إبراهيم ماهر</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://www.facebook.com/share/g/1BmBygobMw/' rel='noopener' target='_blank'><span><i class='fa-solid fa-users' style='color:#1877f2; margin-left:6px;'/> جروب نبض على فيسبوك</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://www.facebook.com/profile.php?id=61593884400330' rel='noopener' target='_blank'><span><i class='fa-brands fa-facebook' style='color:#1877f2; margin-left:6px;'/> الصفحة الرسمية لنبض</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://nabd-nursing.vercel.app/' rel='noopener' target='_blank'><span><i class='fa-solid fa-laptop-medical' style='color:var(--nabd-navy-primary); margin-left:6px;'/> الموقع الإلكتروني الرسمي</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://nabd-damietta.blogspot.com/?m=1'><span><i class='fa-brands fa-blogger-b' style='color:#E65100; margin-left:6px;'/> مدونة نبض &#8211; Blogger</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://2u.pw/AGitWm' rel='noopener' target='_blank'><span><i class='fa-solid fa-map-location-dot' style='color:#EA4335; margin-left:6px;'/> نبض على Google</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://2u.pw/lgOM5v' rel='noopener' target='_blank'><span><i class='fa-solid fa-star' style='color:#FBBC05; margin-left:6px;'/> آراؤكم وتقييمكم على Google</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://cezma.com/store/nabd.nu' rel='noopener' target='_blank'><span><i class='fa-solid fa-cart-shopping' style='color:#10B981; margin-left:6px;'/> متجر نبض على Cezma</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+            </ul>
+          </div>
+
+          <!-- Services List -->
+          <div class='sidebar-widget'>
+            <h4 class='widget-title'><i class='fa-solid fa-stethoscope'/> خدمات نبض</h4>
+            <ul class='sidebar-links-list'>
+              <li><a href='https://nabd-nursing.vercel.app/services' rel='noopener' target='_blank'><span>تركيب وتغيير القسطرة البولية</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://nabd-nursing.vercel.app/services' rel='noopener' target='_blank'><span>غيار الجروح والحروق والقرح</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://nabd-nursing.vercel.app/services' rel='noopener' target='_blank'><span>تركيب الكانيولا والمحاليل الوريدية</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://nabd-nursing.vercel.app/services' rel='noopener' target='_blank'><span>تركيب أنبوبة التغذية (الرايل)</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://nabd-nursing.vercel.app/services' rel='noopener' target='_blank'><span>سحب عينات التحاليل من المنزل</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+              <li><a href='https://nabd-nursing.vercel.app/services' rel='noopener' target='_blank'><span>رعاية كبار السن والمتابعة الدورية</span> <i class='fa-solid fa-chevron-left' style='font-size:10px;'/></a></li>
+            </ul>
+          </div>
+
+          <!-- Damietta Coverage -->
+          <div class='sidebar-widget'>
+            <h4 class='widget-title'><i class='fa-solid fa-map-location-dot'/> نطاق الخدمة</h4>
+            <p style='font-size: 12px; color: #64748B; line-height: 1.7;'>
+              مركز وبندر دمياط وضواحيها.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- 3. ✨ قسم آراء وتقييمات مرضانا وعائلاتهم الغالية (28 تقييم حقيقي وموثق) ✨ -->
+  <section class='reviews-section' id='reviews-section'>
+    <div class='container'>
+      <!-- Header Block -->
+      <div class='reviews-header-block'>
+        <div class='reviews-badge'>
+          <i class='fa-solid fa-heart' style='color:#E11D48;'/> <span>ثقة نعتز بها من أهالي دمياط الكرام</span>
+        </div>
+        <h2 class='reviews-title'>آراء وتقييمات مرضانا وعائلاتهم</h2>
+        <p class='reviews-subtitle'>
+          شهادات واقعية وتجارب موثقة تعكس حرصنا على توفير رعاية تمريضية آمنة، معقمة، وبأعلى معايير الأمانة والإنسانية داخل منازلكم في دمياط.
+        </p>
+      </div>
+
+      <!-- Trust Stats Strip -->
+      <div class='reviews-stats-strip'>
+        <div class='stat-pill-card'>
+          <div class='stat-pill-val'>5.0 <i class='fa-solid fa-star' style='color:#F59E0B; font-size:15px;'/></div>
+          <div class='stat-pill-lbl'>تقييم عام استثنائي</div>
+        </div>
+        <div class='stat-pill-card'>
+          <div class='stat-pill-val'>100% <i class='fa-solid fa-shield-halved' style='color:#10B981; font-size:15px;'/></div>
+          <div class='stat-pill-lbl'>تعقيم وأمانة طبية</div>
+        </div>
+        <div class='stat-pill-card'>
+          <div class='stat-pill-val'>28+ <i class='fa-solid fa-comment-medical' style='color:#3B82F6; font-size:15px;'/></div>
+          <div class='stat-pill-lbl'>شهادة موثقة بالصور</div>
+        </div>
+        <div class='stat-pill-card'>
+          <div class='stat-pill-val'>دمياط <i class='fa-solid fa-location-dot' style='color:#EF4444; font-size:15px;'/></div>
+          <div class='stat-pill-lbl'>تغطية تمريضية فورية</div>
+        </div>
+      </div>
+
+      <!-- Toolbar: Filter Pills & Search -->
+      <div class='reviews-toolbar'>
+        <div class='reviews-filter-pills'>
+          <button class='filter-btn active' onclick='filterReviews(&quot;all&quot;, this)'>
+            <i class='fa-solid fa-list-check'/> الكل (28)
+          </button>
+          <button class='filter-btn' onclick='filterReviews(&quot;nursing&quot;, this)'>
+            <i class='fa-solid fa-stethoscope'/> خدمات وتمريض
+          </button>
+          <button class='filter-btn' onclick='filterReviews(&quot;ethics&quot;, this)'>
+            <i class='fa-solid fa-shield-heart'/> أمانة وتعقيم وأخلاق
+          </button>
+          <button class='filter-btn' onclick='filterReviews(&quot;lab&quot;, this)'>
+            <i class='fa-solid fa-vial'/> تحاليل وسرعة استجابة
+          </button>
+          <button class='filter-btn' onclick='filterReviews(&quot;prayers&quot;, this)'>
+            <i class='fa-solid fa-hands-praying'/> دعوات وشهادات إنسانية
+          </button>
+        </div>
+
+        <div class='reviews-search-box'>
+          <i class='fa-solid fa-magnifying-glass'/>
+          <input class='reviews-search-input' id='reviewSearch' oninput='searchReviews(this.value)' placeholder='ابحث باسم العميل أو في نص التقييم...' type='text'/>
+        </div>
+      </div>
+
+      <!-- Reviews Masonry Grid (All 28 Testimonials) -->
+      <div class='reviews-masonry-grid' id='reviewsGrid'>
+        
+        <!-- 1 -->
+        <div class='review-item-card' data-cat='nursing' data-search='فارس احمد محمد السيالة المنصورة تركيب قسترة اجهزة قسطرة'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>ف</div>
+              <div class='reviewer-name-box'>
+                <h5>فارس احمد محمد <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>السيالة (أصلاً من المنصورة)</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            انا شهادتي مش مجروحه فيه لانه مليش اى صلة قرابه ولا صداقه من قبل غير لما جوزى تعب انا من المقيمين في السيالة اصلا من المنصورة وجبت كبير لزوجى تركيب قسترة وأجهزة مرتحش غير في استاد ابراهيم بجد ربنا يباركله ويبلغه آماله وكفاية الأسلوب والتعامل بتفرق كتير
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#تركيب_قسطرة_وأجهزة</span>
+            <span><i class='fa-regular fa-clock'/> تجربة موثقة</span>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class='review-item-card' data-cat='ethics' data-search='مامو عبدالله دكتور العيله استشارة شاطر محترم'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>م</div>
+              <div class='reviewer-name-box'>
+                <h5>مامو عبدالله <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>عميل دائم &#8212; دكتور العائلة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            أنا بقي شهادة حق ليه إني بعتبره دكتور العيله لأني بلجأ ليه أخد رأيه في أي حاجة قبل ما اعملها وقبل كل ده هو حد محترم جدا جدا جدا وشاطر جدا جدا في شغله ربنا يباركلك ويجازيك كل خير يارب
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#دكتور_العائلة</span>
+            <span><i class='fa-regular fa-clock'/> متابعة مستمرة</span>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class='review-item-card' data-cat='ethics' data-search='ابراهيم ماهر اعمن منه الاجراءات الاحترازية تعقيم واتس تجربه شخصيه'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-user-shield'/></div>
+              <div class='reviewer-name-box'>
+                <h5>عميلة لـ نبض <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>عن تجربة شخصية مباشرة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ابراهيم ماهر مش هتدخلي بيتك اعمن منه وملتزم جدااا بالاجراءات الاحترازية حاجته كلها بتتعقم قبل وبعد وبيفيدك في الحالة ومبيتاخرش علي حد ابعتيله واتس انا بقولك الكلام ده عن تجربه شخصية
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#تعقيم_احترازي_فائق</span>
+            <span><i class='fa-regular fa-clock'/> استجابة فورية</span>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class='review-item-card' data-cat='prayers' data-search='ربنا يرحمها كريم ممتاز محترم موتى المسلمين'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-heart-pulse'/></div>
+              <div class='reviewer-name-box'>
+                <h5>أحد أهالي المرضى <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>رعاية حالة حرجة ومسنّة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ربنا يرحمها ويجعل تعباها في ميزان حسناتها ويرحم ابي وامي وجميع موتى المسلمين حضرتك كريم جدا وممتاز في شغلك ومحترم ربنا يبارك في حضرتك
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#رعاية_كبار_السن</span>
+            <span><i class='fa-regular fa-clock'/> إنسانية ووفاء</span>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class='review-item-card' data-cat='prayers' data-search='طول عمرك ابن اصل وقفت جنبنا كنت اخ'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-hands-holding-child'/></div>
+              <div class='reviewer-name-box'>
+                <h5>أحد أقارب مريضة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>شهادة وفاء أخوية</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            طول عمرك ابن اصل يا ابراهيم ووقفت جنبنا وكنت اخ وكانت بتحبك وتدعيلك يا حبيبي .. ربنا يرحمها ويقعدلك الدعا بتاعها
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#وقفة_أصيلة</span>
+            <span><i class='fa-regular fa-clock'/> رعاية منزلية</span>
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class='review-item-card' data-cat='ethics' data-search='GrayGuava9742 ممتاز امين ثقه'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>G</div>
+              <div class='reviewer-name-box'>
+                <h5>GrayGuava9742 <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>تقييم عبر المنصات الرقمية</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            إبراهيم ماهر ممتاز وامين وثقه ربنا يبارك له
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#أمانة_وثقة</span>
+            <span><i class='fa-regular fa-clock'/> تقييم ممتاز</span>
+          </div>
+        </div>
+
+        <!-- 7 -->
+        <div class='review-item-card' data-cat='nursing' data-search='Lamyaa Mousaa لمياء موسى متمكن تمريضية'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>L</div>
+              <div class='reviewer-name-box'>
+                <h5>Lamyaa Mousaa <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>عميلة لـ نبض للتمريض</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            نبض للخدمات التمريضية المنزلية ممتاز ما شاء الله ومتمكن
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#تمكن_ومهنية</span>
+            <span><i class='fa-regular fa-clock'/> جودة معتمدة</span>
+          </div>
+        </div>
+
+        <!-- 8 -->
+        <div class='review-item-card' data-cat='ethics' data-search='ام احمد خلوق نظافه فن في المعامله تربيتهم فيك'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>أ</div>
+              <div class='reviewer-name-box'>
+                <h5>أم أحمد <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>خدمة ورعاية منزلية</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            فعلا حضرتك انسان خلوق وقمه الادب وشغل حضرتك مع اي انسان محتاج خدمه بتعمله له بكل امانه ونظافه وفن في المعامله ومهما كتبت عن حضرتك مش هقدر اوفيك حقك ربنا يبارك فيك وييعدك وتحقق كل ما تتمناه ويبارك لك في إبويك لحسن تربيتهم فيك
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#أخلاق_وأمانة</span>
+            <span><i class='fa-regular fa-clock'/> فن المعاملة</span>
+          </div>
+        </div>
+
+        <!-- 9 -->
+        <div class='review-item-card' data-cat='nursing' data-search='نشوه الزيات والدتي تعبانه الميعاد من غير تكبر'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>ن</div>
+              <div class='reviewer-name-box'>
+                <h5>نشوه الزيات <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>رعاية الوالدة الكريمة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            حضرتك إنسان محترم وشاطر جدا في مهنتو عمري مالنساني وولدتي تعبانه وتيجي في الميعاد وأي حاجه بنسألك عليها بتقول من غير تكبر ربنا يبارك فيك ياابني
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#التزام_بالمواعيد</span>
+            <span><i class='fa-regular fa-clock'/> تواضع وإتقان</span>
+          </div>
+        </div>
+
+        <!-- 10 -->
+        <div class='review-item-card' data-cat='nursing' data-search='Rana ElShanawy رنا الشناوي اسعارك حلوه ضمير مواعيدك مظبوطه'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>R</div>
+              <div class='reviewer-name-box'>
+                <h5>Rana ElShanawy <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>تقييم 5 نجوم كاملة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            بصراحه ربنا يباركلك يارب ويجعله في ميزان حسناتك قمه ف الذوق والاخلاق واسعارك حلوه جدا والله انتوا تستاهلوا كل خير وفوق كل دا عندك ضمير في شغلك ومواعيدك مظبوطه
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#أسعار_عادلة_وضمير</span>
+            <span><i class='fa-regular fa-clock'/> مواعيد مظبوطة</span>
+          </div>
+        </div>
+
+        <!-- 11 -->
+        <div class='review-item-card' data-cat='lab' data-search='محمد البيومي نص دقيقة شغله ميه ميه الشارع'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>م</div>
+              <div class='reviewer-name-box'>
+                <h5>محمد البيومي <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>خدمة منزلية سريعة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            والله انا كلمتكم مره جالي شاب محترم وخلص في نص دقيقة شغله ميه ميه وطلعت اجري وراه ف الشارع عشان احسبه او اوصله حتي 😂❤❤ بصراحه كل الشكر ليكم
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#سرعة_استجابة_فائقة</span>
+            <span><i class='fa-regular fa-clock'/> شغل 100/100</span>
+          </div>
+        </div>
+
+        <!-- 12 -->
+        <div class='review-item-card' data-cat='ethics' data-search='Om Yasser ام ياسر ادب اخلاق كريمه خبره كبيره ضمير'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>Y</div>
+              <div class='reviewer-name-box'>
+                <h5>Om Yasser <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>استشارة وتمريض منزلي</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ربنا يحفظك ويبارك فيك ادب واخلاق كريمه ورحمه وخبره كبيره وعندك ضمير ربنا يجازيك كل خير ويجعله فى ميزان حسناتك
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#خبرة_وضمير_حي</span>
+            <span><i class='fa-regular fa-clock'/> أخلاق كريمة</span>
+          </div>
+        </div>
+
+        <!-- 13 -->
+        <div class='review-item-card' data-cat='ethics' data-search='علي خلق محترم رحمه غير اي حد'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-hand-holding-heart'/></div>
+              <div class='reviewer-name-box'>
+                <h5>عميل / عميلة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>خدمة ورعاية تمريضية</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ربنا يبارك فيك ويحفظك انسان علي خلق محترم جدا وعندك رحمة غير اي حد
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#رحمة_وإنسانية</span>
+            <span><i class='fa-regular fa-clock'/> تعامل راقي</span>
+          </div>
+        </div>
+
+        <!-- 14 -->
+        <div class='review-item-card' data-cat='nursing' data-search='موكا انا نعم الناس اتقان ومتابعة بعد التركيب'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>م</div>
+              <div class='reviewer-name-box'>
+                <h5>موكا انا <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>تركيب ومتابعة دورية</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            الله يباركلك بجد ونعم الناس انت انسان محترم واخلاق فوق الوصف وعندك ضمير في شغلك واتقان ومتابعة كل شئ حتي بعد التركيب بجد ربنا يبارك في عمرك ويفرحك ويسعدك ويجعله كله في ميزان حسناتك يا رب
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#متابعة_بعد_التركيب</span>
+            <span><i class='fa-regular fa-clock'/> إتقان تام</span>
+          </div>
+        </div>
+
+        <!-- 15 -->
+        <div class='review-item-card' data-cat='ethics' data-search='العيون السود اهتمام بالمريض ونظافه وتعقيم'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-star'/></div>
+              <div class='reviewer-name-box'>
+                <h5>العيون السود <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>تقييم 5 نجوم موثق</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ربنا يحفظكم ويبارك فيكم. بجد قمة في الاخلاق والادب واهتمام بالمريض ونظافه وتعقيم بجد بجد ربنا يكرمكم ويجعل تعبكم في ميزان حسنتكم
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#نظافة_وتعقيم</span>
+            <span><i class='fa-regular fa-clock'/> اهتمام بالمريض</span>
+          </div>
+        </div>
+
+        <!-- 16 -->
+        <div class='review-item-card' data-cat='ethics' data-search='انت ابن اصول ومحترم ونعم الناس الله يحميك'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-user-check'/></div>
+              <div class='reviewer-name-box'>
+                <h5>عميل / عميلة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>شهادة ثقة وأصل طيب</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            انت ابن اصول ومحترم وربنا يبارك في عمرك ياابراهيم ويصلح حالك بجد ونعم الناس الله يحميك
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#ابن_أصول_ومحترم</span>
+            <span><i class='fa-regular fa-clock'/> دعوات طيبة</span>
+          </div>
+        </div>
+
+        <!-- 17 -->
+        <div class='review-item-card' data-cat='nursing' data-search='مابتتاخرش عن حد مساعده طبيه يجازيك خير'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-truck-medical'/></div>
+              <div class='reviewer-name-box'>
+                <h5>عميل / عميلة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>مساعدة طبية فورية</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            لا والله انت مابتتاخرش عن حد في اي مساعده طبيه ربنا يحازيك خير
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#مساعدة_طبية_عاجلة</span>
+            <span><i class='fa-regular fa-clock'/> التزام تام</span>
+          </div>
+        </div>
+
+        <!-- 18 -->
+        <div class='review-item-card' data-cat='ethics' data-search='ربنا يعينك ويقويك انسان محترم وخلوق'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-heart'/></div>
+              <div class='reviewer-name-box'>
+                <h5>عميل / عميلة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>تقييم موثق</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ربنا يعينك ويقويك انت انسان محترم وخلوق
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#إنسان_خلوق</span>
+            <span><i class='fa-regular fa-clock'/> خدمة بأمانة</span>
+          </div>
+        </div>
+
+        <!-- 19 -->
+        <div class='review-item-card' data-cat='ethics' data-search='كريمان محمد الشافعي عن تجربه احسن تعامل'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>ك</div>
+              <div class='reviewer-name-box'>
+                <h5>كريمان محمد الشافعي <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>عن تجربة واقعية</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            عن تجربه احسن تعامل منكم جزاك الله خير الجزاء وربي يجعله في ميزان حسناتكم امين
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#أحسن_تعامل</span>
+            <span><i class='fa-regular fa-clock'/> تجربة معتمدة</span>
+          </div>
+        </div>
+
+        <!-- 20 -->
+        <div class='review-item-card' data-cat='prayers' data-search='موقفك مع امي ادعو لك دائما عن ظهر الغيب رحمه ومتربي'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-hands-praying'/></div>
+              <div class='reviewer-name-box'>
+                <h5>عميل / عميلة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>موقف إنساني مع الوالدة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ربنا يباركلك انت اخلاق وعندك رحمه ومتربي انا اتذكر موقفك مع امي ادعو لك دائما عن ظهر الغيب
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#دعاء_عن_ظهر_غيب</span>
+            <span><i class='fa-regular fa-clock'/> أثر إنساني باقٍ</span>
+          </div>
+        </div>
+
+        <!-- 21 -->
+        <div class='review-item-card' data-cat='lab' data-search='Amir El Laban امير اللبان عملت التحاليل بنص التمن وعرفت عندي اي'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>A</div>
+              <div class='reviewer-name-box'>
+                <h5>Amir El Laban <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>سحب وتوفير تحاليل طبية</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            الله يبارك لك عملت التحاليل احسن من أسعار برا تقريبا كدا بنص التمن وكانت تحاليل غاليه وعرفت عندي أي وبتعالج والحمد لله علي كل حال بجد بشكرك كل الشكر وبدعيلك دايما 💚💚
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#تحاليل_منزلية_بنصف_السعر</span>
+            <span><i class='fa-regular fa-clock'/> تشخيص دقيق</span>
+          </div>
+        </div>
+
+        <!-- 22 -->
+        <div class='review-item-card' data-cat='nursing' data-search='ممتااااز وامين مبيسبش حاجة للصدفه منتهي الدقه'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-check-double'/></div>
+              <div class='reviewer-name-box'>
+                <h5>عميل / عميلة <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>تقييم دقة الشغل والأمانة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ممتااااز وامين جداا مبيسبش حاجة للصدفه منتهي الدقه ف كل حاجة بصراحة ربنا يباركله
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#منتهى_الدقة</span>
+            <span><i class='fa-regular fa-clock'/> لا مكان للصدفة</span>
+          </div>
+        </div>
+
+        <!-- 23 -->
+        <div class='review-item-card' data-cat='prayers' data-search='يارب سخر لابراهيم الخير صبا صبا الفردوس الاعلى واتساب'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-brands fa-whatsapp'/></div>
+              <div class='reviewer-name-box'>
+                <h5>رسالة واتساب من عميل <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>دعاء صادق بالبركة</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            يارب سخر لابراهيم من حوله ولا تريه خسارة فى أهله وولده وماله وصب عليه الخير صبا صبا ولا تجعل عيشه كدا وارزقه الصحة والعافية واجعله من عبادك الصالحين وارزقه الفردوس الاعلى اللهم امين يارب العالمين
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#دعاء_جامع_للخير</span>
+            <span><i class='fa-regular fa-clock'/> محبة وتوفيق</span>
+          </div>
+        </div>
+
+        <!-- 24 -->
+        <div class='review-item-card' data-cat='nursing' data-search='MeRna Mahmoud ميرنا محمود مواعيد مظبوطة ذوق احترام الاهتمام بالمريض'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>M</div>
+              <div class='reviewer-name-box'>
+                <h5>MeRna Mahmoud <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>خدمة ورعاية لحالة المريض</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            مواعيد مظبوطة و ذوق و احترام ف المعاملة و الاهم هو الاهتمام بالمريض و حالته ربنا يعينكم و يجازيكم خير
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#اهتمام_بحالة_المريض</span>
+            <span><i class='fa-regular fa-clock'/> ذوق واحترام</span>
+          </div>
+        </div>
+
+        <!-- 25 -->
+        <div class='review-item-card' data-cat='ethics' data-search='حامد شولح خدمات عظيمة اخلاق كريمة ادب وتربية ورحمة'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>ح</div>
+              <div class='reviewer-name-box'>
+                <h5>حامد شولح <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>عميل لـ نبض للتمريض</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            خدمات عظيمة وأخلاق كريمة... .... وأدب وتربية ورحمة... ربنا يكرمك يا أ/ إبراهيم...
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#خدمات_عظيمة</span>
+            <span><i class='fa-regular fa-clock'/> أدب وتربية</span>
+          </div>
+        </div>
+
+        <!-- 26 -->
+        <div class='review-item-card' data-cat='prayers' data-search='هيجبر خاطرك وهيرضيك ابن حلال تستاهل كل خير والدة'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'><i class='fa-solid fa-kaaba'/></div>
+              <div class='reviewer-name-box'>
+                <h5>أم فاضلة (رسالة واتساب) <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>دعاء وجبر خاطر</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ان شاء الله هيجبر خاطرك وهيرضيك ونعم بالله العظيم انا متفائله لك الخير يا ابراهيم والله لك ابن حلال تستاهل كل خير والله العظيم ربنا معاك يا ابني
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#جبر_خاطر_ودعاء</span>
+            <span><i class='fa-regular fa-clock'/> ابن حلال</span>
+          </div>
+        </div>
+
+        <!-- 27 -->
+        <div class='review-item-card' data-cat='ethics' data-search='Haytham Elsayed هيثم السيد الامانه والاخلاق استشاره بدون اي مقابل'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>H</div>
+              <div class='reviewer-name-box'>
+                <h5>Haytham Elsayed <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>استشارات وتمريض منزلي</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ربنا يوفق ويبارك فيك ويرزقك من واسع فضله وكرمه يارب العالمين .. أ/إبراهيم الامانه والأخلاق ومتيز جدا في شغله مبيخلش علي اي حد في اي استشاره بدون اي مقابل ربنا يجعله في ميزان حسناتك يارب العالمين
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#استشارات_مجانية</span>
+            <span><i class='fa-regular fa-clock'/> أمانة وأخلاق</span>
+          </div>
+        </div>
+
+        <!-- 28 -->
+        <div class='review-item-card' data-cat='nursing' data-search='السيد الخواجه كفر الهنادوه ابراهيم المحترم مهني طبي'>
+          <div class='review-card-top'>
+            <div class='reviewer-meta'>
+              <div class='reviewer-avatar-circle'>س</div>
+              <div class='reviewer-name-box'>
+                <h5>السيد الخواجه <span class='verified-pill'><i class='fa-solid fa-circle-check'/> موثق</span></h5>
+                <div class='reviewer-location-tag'>كفر الهنادوة &#8212; دمياط</div>
+              </div>
+            </div>
+            <div class='stars-badge'><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/><i class='fa-solid fa-star'/></div>
+          </div>
+          <div class='review-quote-body'>
+            ابراهيم المحترم مهني طبي
+          </div>
+          <div class='review-card-footer'>
+            <span class='review-tag-pill'>#مهني_طبي_محترم</span>
+            <span><i class='fa-regular fa-clock'/> كفر الهنادوة</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Load More / Show Less Toggle Button -->
+      <div class='reviews-load-more-wrap'>
+        <button class='btn-show-reviews' id='toggleReviewsBtn' onclick='toggleMoreReviews()'>
+          <span id='toggleReviewsText'>عرض جميع التقييمات (28 رأياً)</span> <i class='fa-solid fa-chevron-down' id='toggleReviewsIcon'/>
+        </button>
+      </div>
+
+      <!-- Trust CTA Box -->
+      <div class='reviews-trust-cta'>
+        <div>
+          <h4><i class='fa-solid fa-shield-heart' style='color:var(--nabd-gold);'/> انضم لأكثر من مئات العائلات المطمئنة مع نبض</h4>
+          <p>جاهزون لتقديم أفضل خدمة تمريضية منزلية لمعالجة مريضك داخل منزلك بدمياط وضواحيها بكل أمان وراحة ضمير.</p>
+        </div>
+        <div class='reviews-trust-cta-btns'>
+          <a class='btn-trust-book' href='https://nabd-nursing.vercel.app/booking' rel='noopener' target='_blank'>
+            <i class='fa-solid fa-calendar-check'/> احجز زيارة الآن
+          </a>
+          <a class='btn-trust-wa' href='https://wa.me/201099667065?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%AE%D8%AF%D9%85%D8%A9%20%D8%AA%D9%85%D8%B1%D9%8A%D8%B6%20%D9%85%D9%86%D8%B2%D9%84%D9%8A' rel='noopener' target='_blank'>
+            <i class='fa-brands fa-whatsapp'/> استفسر عبر واتساب
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Floating Action Buttons -->
+  <div class='fab-container'>
+    <a class='fab-btn fab-whatsapp' href='https://wa.me/201099667065?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%AA%D9%85%D8%B1%D9%8A%D8%B6%20%D9%85%D9%86%D8%B2%D9%84%D9%8A%20%D9%85%D9%86%20%D9%86%D8%A8%D8%B6' rel='noopener' target='_blank' title='تواصل واتساب مباشر'><i class='fa-brands fa-whatsapp'/></a>
+    <a class='fab-btn fab-call' href='tel:01001097896' title='الاتصال والحجز'><i class='fa-solid fa-phone'/></a>
+    <a class='fab-btn fab-book' href='https://nabd-nursing.vercel.app/booking' rel='noopener' target='_blank' title='حجز خدمة تمريضية'><i class='fa-solid fa-calendar-plus' style='color:var(--nabd-gold);'/></a>
+  </div>
+
+  <!-- 5. Footer -->
+  <footer class='main-footer'>
+    <div class='container'>
+      <div class='footer-grid'>
+        <!-- Column 1: Brand & Official Platforms -->
+        <div class='footer-brand'>
+          <h3>
+            <div style='width:28px;height:28px;border-radius:6px;overflow:hidden;background:#FFF;display:inline-block;vertical-align:middle;padding:1px;'>
+              <img alt='شعار نبض' src='https://nabd-nursing.vercel.app/images/nabd-official-logo.jpg' style='width:100%;height:100%;object-fit:contain;'/>
+            </div>
+            نبض للتمريض المنزلي &#8212; دمياط
+          </h3>
+          <p>المؤسسة المتخصصة في تقديم خدمات التمريض والرعاية الصحية المنزلية وفق أعلى معايير الجودة والتعقيم والراحة للمريض وأسرته داخل دمياط .</p>
+          <div class='footer-social-links'>
+            <a href='https://www.facebook.com/profile.php?id=61593884400330' rel='noopener' target='_blank' title='الصفحة الرسمية لنبض للتمريض المنزلي'><i class='fa-brands fa-facebook-f'/></a>
+            <a href='https://www.facebook.com/share/g/1BmBygobMw/' rel='noopener' target='_blank' title='جروب نبض على فيسبوك'><i class='fa-solid fa-users'/></a>
+            <a href='https://www.facebook.com/share/1BDJwJeW15/' rel='noopener' target='_blank' title='الملف الشخصي المسؤول عن نبض – إبراهيم ماهر'><i class='fa-solid fa-user-tie'/></a>
+            <a href='https://wa.me/201099667065' rel='noopener' target='_blank' title='واتساب مباشر'><i class='fa-brands fa-whatsapp'/></a>
+            <a href='https://t.me/Ibrahim5k' rel='noopener' target='_blank' title='تليجرام'><i class='fa-brands fa-telegram'/></a>
+            <a href='https://cezma.com/store/nabd.nu' rel='noopener' target='_blank' title='متجر نبض على Cezma'><i class='fa-solid fa-bag-shopping'/></a>
+            <a href='https://2u.pw/AGitWm' rel='noopener' target='_blank' title='نبض على Google'><i class='fa-solid fa-map-location-dot'/></a>
+            <a href='https://2u.pw/lgOM5v' rel='noopener' target='_blank' title='آراؤكم وتقييمكم على Google'><i class='fa-solid fa-star'/></a>
+          </div>
+        </div>
+
+        <!-- Column 2: Official Platforms Links -->
+        <div class='footer-col'>
+          <h4>منصات نبض الرسمية</h4>
+          <div class='footer-contact-item'>
+            <i class='fa-solid fa-globe'/>
+            <div><a href='https://nabd-nursing.vercel.app/' rel='noopener' target='_blank'>الموقع الإلكتروني الرسمي</a></div>
+          </div>
+          <div class='footer-contact-item'>
+            <i class='fa-brands fa-blogger-b'/>
+            <div><a href='https://nabd-damietta.blogspot.com/?m=1'>مدونة نبض &#8211; Blogger</a></div>
+          </div>
+          <div class='footer-contact-item'>
+            <i class='fa-brands fa-facebook'/>
+            <div><a href='https://www.facebook.com/profile.php?id=61593884400330' rel='noopener' target='_blank'>الصفحة الرسمية لنبض</a></div>
+          </div>
+          <div class='footer-contact-item'>
+            <i class='fa-solid fa-users'/>
+            <div><a href='https://www.facebook.com/share/g/1BmBygobMw/' rel='noopener' target='_blank'>جروب نبض على فيسبوك</a></div>
+          </div>
+          <div class='footer-contact-item'>
+            <i class='fa-solid fa-user-check'/>
+            <div><a href='https://www.facebook.com/share/1BDJwJeW15/' rel='noopener' target='_blank'>الملف الشخصي &#8211; إبراهيم ماهر</a></div>
+          </div>
+          <div class='footer-contact-item'>
+            <i class='fa-solid fa-store'/>
+            <div><a href='https://cezma.com/store/nabd.nu' rel='noopener' target='_blank'>متجر نبض على Cezma</a></div>
+          </div>
+        </div>
+
+        <!-- Column 3: Contact & Google Listing -->
+        <div class='footer-col'>
+          <h4>الاتصال والحجز</h4>
+          <div class='footer-contact-item'>
+            <i class='fa-solid fa-phone'/>
+            <div><strong>الاتصال والحجز &#9742;&#65039;:</strong><br/><a href='tel:01001097896' style='color:#FFF;font-weight:800;font-size:13px;'>01001097896</a></div>
+          </div>
+          <div class='footer-contact-item'>
+            <i class='fa-brands fa-whatsapp'/>
+            <div><strong>واتساب مباشر:</strong><br/><a href='https://wa.me/201099667065' rel='noopener' style='color:#25D366;font-weight:700;' target='_blank'>201099667065+</a></div>
+          </div>
+          <div class='footer-contact-item'>
+            <i class='fa-brands fa-telegram'/>
+            <div><strong>تليجرام:</strong><br/><a href='https://t.me/Ibrahim5k' rel='noopener' style='color:#64B5F6;font-weight:700;' target='_blank'>@Ibrahim5k</a></div>
+          </div>
+          <div class='footer-contact-item'>
+            <i class='fa-solid fa-location-dot'/>
+            <div><a href='https://2u.pw/AGitWm' rel='noopener' target='_blank'><strong>نبض على Google (الخريطة والموقع)</strong></a></div>
+          </div>
+          <div class='footer-contact-item'>
+            <i class='fa-solid fa-star' style='color:var(--nabd-gold);'/>
+            <div><a href='https://2u.pw/lgOM5v' rel='noopener' target='_blank'><strong>آراؤكم وتقييمكم على Google &#11088;</strong></a></div>
+          </div>
+        </div>
+      </div>
+      <div class='footer-bottom'>
+        <p>&#169; 2026 نبض للتمريض المنزلي &#8212; جميع الحقوق محفوظة. إشراف: إبراهيم ماهر. دمياط &#8212; مصر. 💙</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 6. Scripts: Navigation, Filtering & Dynamic Testimonial Display -->
+  <script>
+  /*<![CDATA[*/
+    window.onscroll = function() {
+      var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var scrolled = (winScroll / height) * 100;
+      var pBar = document.getElementById('reading-progress');
+      if (pBar) pBar.style.width = scrolled + '%';
+    };
+
+    function toggleMobileMenu() {
+      var drawer = document.getElementById('mobileDrawer');
+      if (drawer) drawer.classList.toggle('open');
+    }
+
+    function copyPostUrl() {
+      var url = window.location.href;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(function() { showToast('تم نسخ رابط المقال بنجاح! 📋'); });
+      }
+    }
+
+    function showToast(text) {
+      var toast = document.getElementById('nabd-toast');
+      if (toast) {
+        toast.innerText = text; toast.style.display = 'block';
+        setTimeout(function() { toast.style.display = 'none'; }, 3000);
+      }
+    }
+
+    // ── Testimonials Filtering & Progressive Disclosure ──
+    var isReviewsExpanded = false;
+    var currentFilter = 'all';
+    var defaultVisibleCount = 6;
+
+    function renderReviewsVisibility() {
+      var cards = document.querySelectorAll('.review-item-card');
+      var searchVal = (document.getElementById('reviewSearch') ? document.getElementById('reviewSearch').value.trim().toLowerCase() : '');
+      var matchingCount = 0;
+
+      cards.forEach(function(card) {
+        var cardCat = card.getAttribute('data-cat') || '';
+        var searchData = (card.getAttribute('data-search') || '') + ' ' + card.innerText.toLowerCase();
+        
+        var matchesCat = (currentFilter === 'all' || cardCat === currentFilter);
+        var matchesSearch = (!searchVal || searchData.indexOf(searchVal) !== -1);
+
+        if (matchesCat && matchesSearch) {
+          matchingCount++;
+          if (isReviewsExpanded || matchingCount <= defaultVisibleCount) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      var toggleBtn = document.getElementById('toggleReviewsBtn');
+      var toggleText = document.getElementById('toggleReviewsText');
+      var toggleIcon = document.getElementById('toggleReviewsIcon');
+
+      if (toggleBtn) {
+        if (matchingCount <= defaultVisibleCount) {
+          toggleBtn.style.display = 'none';
+        } else {
+          toggleBtn.style.display = 'inline-flex';
+          if (isReviewsExpanded) {
+            toggleText.innerText = 'عرض أقل (إخفاء باقي التقييمات)';
+            toggleIcon.className = 'fa-solid fa-chevron-up';
+          } else {
+            toggleText.innerText = 'عرض جميع التقييمات (' + matchingCount + ' رأياً)';
+            toggleIcon.className = 'fa-solid fa-chevron-down';
+          }
+        }
+      }
+    }
+
+    function filterReviews(category, btnElement) {
+      currentFilter = category;
+      var buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(function(btn) { btn.classList.remove('active'); });
+      if (btnElement) btnElement.classList.add('active');
+      renderReviewsVisibility();
+    }
+
+    function searchReviews(keyword) {
+      renderReviewsVisibility();
+    }
+
+    function toggleMoreReviews() {
+      isReviewsExpanded = !isReviewsExpanded;
+      renderReviewsVisibility();
+    }
+
+    // Initialize display on DOM ready
+    document.addEventListener('DOMContentLoaded', function() {
+      renderReviewsVisibility();
+    });
+  /*]]>*/
+  </script>
+</body>
+</html>
