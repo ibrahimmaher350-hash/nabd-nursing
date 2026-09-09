@@ -22,6 +22,7 @@ interface NavLinkItem {
 const navLinks: NavLinkItem[] = [
   { href: '/',               label: 'الرئيسية',                 badge: null },
   { href: '/services',       label: 'خدماتنا 🩺',               badge: 'طلب' },
+  { href: '/wound-care-gallery', label: 'توثيق الجروح 🩹',       badge: 'حالات حية' },
   { href: '/reviews',        label: 'آراء العملاء ⭐',           badge: '5.0' },
   { href: '/booking',        label: 'احجز ممرض 📅',             badge: 'فوري' },
   { href: '/offers',         label: 'العروض 🎁',                badge: 'خصم' },

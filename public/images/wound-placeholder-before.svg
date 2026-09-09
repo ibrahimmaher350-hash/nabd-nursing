@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgBefore" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="glowRed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="450" fill="url(#bgBefore)" rx="16"/>
+
+  <!-- Medical Grid Pattern -->
+  <g opacity="0.08" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="75" x2="600" y2="75"/>
+    <line x1="0" y1="150" x2="600" y2="150"/>
+    <line x1="0" y1="225" x2="600" y2="225"/>
+    <line x1="0" y1="300" x2="600" y2="300"/>
+    <line x1="0" y1="375" x2="600" y2="375"/>
+    <line x1="100" y1="0" x2="100" y2="450"/>
+    <line x1="200" y1="0" x2="200" y2="450"/>
+    <line x1="300" y1="0" x2="300" y2="450"/>
+    <line x1="400" y1="0" x2="400" y2="450"/>
+    <line x1="500" y1="0" x2="500" y2="450"/>
+  </g>
+
+  <!-- Glow effect -->
+  <circle cx="300" cy="210" r="140" fill="url(#glowRed)"/>
+
+  <!-- Badge Top -->
+  <rect x="200" y="32" width="200" height="34" rx="17" fill="#ef4444" fill-opacity="0.15" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="300" y="54" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#fca5a5" text-anchor="middle">
+    حالة الجرح قبل الغيار والتعقيم
+  </text>
+
+  <!-- Center Medical Icon / Camera Frame -->
+  <circle cx="300" cy="200" r="60" fill="#334155" stroke="#475569" stroke-width="2"/>
+  <path d="M275 185 L285 170 L315 170 L325 185 L345 185 A 10 10 0 0 1 355 195 L355 225 A 10 10 0 0 1 345 235 L255 235 A 10 10 0 0 1 245 225 L245 195 A 10 10 0 0 1 255 185 Z" fill="none" stroke="#94a3b8" stroke-width="3"/>
+  <circle cx="300" cy="210" r="18" fill="none" stroke="#94a3b8" stroke-width="3"/>
+
+  <!-- Watermark / Privacy Info -->
+  <text x="300" y="295" font-family="'Cairo', sans-serif" font-size="16" font-weight="bold" fill="#e2e8f0" text-anchor="middle">
+    صورة الزيارة السريرية الموثقة 📸
+  </text>
+  <text x="300" y="325" font-family="'Cairo', sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">
+    تم حجب أي معالم شخصية حفاظاً على الخصوصية الطبية
+  </text>
+
+  <!-- Bottom Brand -->
+  <rect x="180" y="375" width="240" height="32" rx="8" fill="#1e293b" stroke="#334155"/>
+  <text x="300" y="396" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">
+    نبض للتمريض المنزلي — دمياط
+  </text>
+</svg>

@@ -15,6 +15,7 @@ const footerLinks = {
   main: [
     { href: '/',                                label: 'الرئيسية' },
     { href: '/services',                        label: 'خدمات التمريض 🩺' },
+    { href: '/wound-care-gallery',              label: 'توثيق حالات الجروح 🩹' },
     { href: '/reviews',                         label: 'آراء عملائنا ⭐' },
     { href: '/booking',                         label: 'طلب ممرض للمنزل 📅' },
     { href: '/offers',                          label: 'عروض التمريض 🎁' },
