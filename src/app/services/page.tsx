@@ -68,23 +68,6 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* Wound Care Gallery Spotlight Banner */}
-        <section className="bg-amber-50 border-b border-amber-200 py-3.5 px-4">
-          <div className="section-container flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm font-bold text-amber-950">
-            <div className="flex items-center gap-2">
-              <span className="text-base">🩹</span>
-              <span>هل تبحث عن توثيق سريري لحالات غيار الجروح والقرح والعمليات ومراحل التئامها؟</span>
-            </div>
-            <Link
-              href="/wound-care-gallery"
-              className="bg-navy-900 hover:bg-navy-800 text-white px-4 py-1.5 rounded-xl font-black text-xs inline-flex items-center gap-1.5 shadow-sm transition-all"
-            >
-              <span>مشاهدة توثيق الحالات الحية 📸</span>
-              <span className="text-gold-400">⬅️</span>
-            </Link>
-          </div>
-        </section>
-
         {/* Filter + Grid */}
         <ServicesFilter />
       </main>

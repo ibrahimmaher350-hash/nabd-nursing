@@ -11,14 +11,12 @@ import HeroSection from '@/components/sections/HeroSection'
 import QuickActions from '@/components/sections/QuickActions'
 import ServicesGrid from '@/components/sections/ServicesGrid'
 import NursePromo from '@/components/sections/NursePromo'
-import OffersSection from '@/components/sections/OffersSection'
 import WhyNabd from '@/components/sections/WhyNabd'
 import HowItWorks from '@/components/sections/HowItWorks'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import FacebookPostSection from '@/components/sections/FacebookPostSection'
 import FAQ from '@/components/sections/FAQ'
 import FinalCTA from '@/components/sections/FinalCTA'
-import { getFeaturedOffers } from '@/data/offers'
 import { siteConfig } from '@/data/siteConfig'
 
 export const metadata: Metadata = {
@@ -31,8 +29,6 @@ export const metadata: Metadata = {
 export const revalidate = 3600
 
 export default async function HomePage() {
-  const featuredOffers = getFeaturedOffers()
-
   return (
     <>
       <Header />
@@ -44,12 +40,7 @@ export default async function HomePage() {
         {/* 2. Quick Actions */}
         <QuickActions />
 
-        {/* 3. Offers — يظهر مباشرة بعد QuickActions إذا توجد عروض */}
-        {featuredOffers.length > 0 && (
-          <OffersSection offers={featuredOffers} />
-        )}
-
-        {/* 4. Featured Services */}
+        {/* 3. Featured Services */}
         <ServicesGrid featured />
 
         {/* 5. Nurse Promo — صورة الممرض الاحترافية */}

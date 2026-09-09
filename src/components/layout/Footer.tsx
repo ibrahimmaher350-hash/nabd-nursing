@@ -15,10 +15,8 @@ const footerLinks = {
   main: [
     { href: '/',                                label: 'الرئيسية' },
     { href: '/services',                        label: 'خدمات التمريض 🩺' },
-    { href: '/wound-care-gallery',              label: 'توثيق حالات الجروح 🩹' },
     { href: '/reviews',                         label: 'آراء عملائنا ⭐' },
     { href: '/booking',                         label: 'طلب ممرض للمنزل 📅' },
-    { href: '/offers',                          label: 'عروض التمريض 🎁' },
     { href: '/medical-guide',                   label: 'الإسعافات والروشتات 🚑💊' },
     { href: 'https://nabd-damietta.blogspot.com', label: 'المدونة الطبية ✍️', isExternal: true },
     { href: '/medical-record',                  label: 'ملفي الطبي' },
