@@ -20,7 +20,6 @@ interface NavLinkItem {
 }
 
 const navLinks: NavLinkItem[] = [
-  { href: '/',               label: 'الرئيسية',                 badge: null },
   { href: '/services',       label: 'خدماتنا 🩺',               badge: 'طلب' },
   { href: '/reviews',        label: 'آراء العملاء ⭐',           badge: '5.0' },
   { href: '/booking',        label: 'احجز ممرض 📅',             badge: 'فوري' },
@@ -80,14 +79,15 @@ export default function Header() {
         <div className="section-container">
           <div className="flex items-center justify-between h-16">
 
-            {/* ── Logo ── */}
+            {/* ── Logo & Home Button (مدمج بالضغط على اسم نبض واللوجو) ── */}
             <Link
               href="/"
-              className="flex items-center gap-2 shrink-0 min-w-0"
+              className="flex items-center gap-2.5 shrink-0 min-w-0 group hover:opacity-90 transition-opacity"
               aria-label={`${siteConfig.brand.name} — الصفحة الرئيسية`}
+              title="العودة للصفحة الرئيسية"
               onClick={closeMenu}
             >
-              <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-md shrink-0">
+              <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-md shrink-0 group-hover:scale-105 transition-transform">
                 <Image
                   src="/logo.jpg"
                   alt={siteConfig.brand.logoAlt}
@@ -97,20 +97,22 @@ export default function Header() {
                   sizes="40px"
                 />
               </div>
-              {/* Brand name — shown only on sm (640px+) to prevent cramping on phones */}
-              <div className="hidden sm:block min-w-0">
-                <p className="text-sm font-extrabold text-navy-700 leading-tight truncate">
-                  نبض للتمريض
-                </p>
-                <p className="text-xs font-medium text-medical-muted leading-tight">
+              {/* Brand name — shown cleanly on mobile and desktop */}
+              <div className="flex flex-col min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <p className="text-sm font-extrabold text-navy-700 leading-tight truncate group-hover:text-gold-600 transition-colors">
+                    نبض للتمريض
+                  </p>
+                  {/* Location badge — desktop only */}
+                  <span className="badge-navy text-[10px] py-0 px-1.5 hidden lg:inline-flex shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse-slow me-1" />
+                    دمياط
+                  </span>
+                </div>
+                <p className="text-[11px] font-medium text-medical-muted leading-tight">
                   المنزلي
                 </p>
               </div>
-              {/* Location badge — desktop only */}
-              <span className="badge-navy text-xs hidden lg:inline-flex shrink-0">
-                <span className="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse-slow" />
-                دمياط
-              </span>
             </Link>
 
             {/* ── Desktop Nav ── */}
@@ -216,7 +218,12 @@ export default function Header() {
           >
             {/* Drawer header */}
             <div className="flex items-center justify-between p-4 border-b border-medical-border shrink-0">
-              <div className="flex items-center gap-2.5 min-w-0">
+              <Link
+                href="/"
+                onClick={closeMenu}
+                className="flex items-center gap-2.5 min-w-0 flex-1 hover:opacity-85 transition-opacity"
+                title="الذهاب للرئيسية"
+              >
                 <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-md shrink-0">
                   <Image
                     src="/logo.jpg"
@@ -230,7 +237,7 @@ export default function Header() {
                   <p className="text-sm font-extrabold text-navy-700 truncate">نبض للتمريض المنزلي</p>
                   <p className="text-xs text-medical-muted">دمياط — مصر</p>
                 </div>
-              </div>
+              </Link>
               <button
                 onClick={closeMenu}
                 className="flex items-center justify-center w-9 h-9 rounded-xl bg-medical-gray text-medical-muted shrink-0 ms-2"
