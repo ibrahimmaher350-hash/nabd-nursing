@@ -13,7 +13,6 @@ import { useSettings } from '@/context/SettingsContext'
 
 const footerLinks = {
   main: [
-    { href: '/',                                label: 'الرئيسية' },
     { href: '/services',                        label: 'خدمات التمريض 🩺' },
     { href: '/reviews',                         label: 'آراء عملائنا ⭐' },
     { href: '/booking',                         label: 'طلب ممرض للمنزل 📅' },
@@ -104,8 +103,12 @@ export default function Footer() {
 
           {/* Brand Column */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-white/10 border border-white/20">
+            <Link
+              href="/"
+              className="flex items-center gap-3 mb-5 group hover:opacity-90 transition-opacity"
+              title="العودة للصفحة الرئيسية"
+            >
+              <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-white/10 border border-white/20 group-hover:scale-105 transition-transform">
                 <Image
                   src="/logo.jpg"
                   alt={siteConfig.brand.logoAlt}
@@ -115,10 +118,10 @@ export default function Footer() {
                 />
               </div>
               <div>
-                <p className="font-extrabold text-lg leading-tight">{settings.businessName || 'نبض للتمريض المنزلي'}</p>
+                <p className="font-extrabold text-lg leading-tight group-hover:text-gold-300 transition-colors">{settings.businessName || 'نبض للتمريض المنزلي'}</p>
                 <p className="text-white/60 text-sm">{siteConfig.location.addressDisplay}</p>
               </div>
-            </div>
+            </Link>
             <p className="text-white/70 text-sm leading-relaxed mb-5">
               {siteConfig.brand.description}
             </p>
