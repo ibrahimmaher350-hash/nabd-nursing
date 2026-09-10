@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 /**
  * components/sections/NursePromo.tsx — قسم الترويج بصورة الممرض المحترف
  * تصميم محسّن مع Social Proof وبطاقات ثقة وحركات Framer Motion
@@ -58,7 +58,7 @@ export default function NursePromo() {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
           >
-            <div className="relative w-full max-w-sm sm:max-w-md">
+            <div className="relative w-full max-w-sm sm:max-w-md p-2 sm:p-4">
               {/* Glow ring */}
               <motion.div
                 className="absolute inset-0 rounded-3xl bg-gradient-to-br from-gold-400/25 to-navy-400/20 blur-2xl scale-105"

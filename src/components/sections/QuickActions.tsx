@@ -1,14 +1,13 @@
 ﻿'use client'
 /**
  * components/sections/QuickActions.tsx — نبض للتمريض المنزلي
- * CareHub-style spacious action cards with micro-animations
+ * CareHub-style spacious action cards without negative margins or collisions
  */
 
 import Link from 'next/link'
 import {
   CalendarDaysIcon,
   PhoneIcon,
-  SparklesIcon,
   ListBulletIcon,
 } from '@heroicons/react/24/solid'
 import { analytics } from '@/lib/analytics'
@@ -25,7 +24,7 @@ export default function QuickActions() {
 
   return (
     <section
-      className="relative -mt-6 sm:-mt-8 z-20 pb-8 no-print"
+      className="bg-slate-50 py-8 sm:py-10 border-b border-slate-200/80 no-print"
       aria-label="إجراءات سريعة"
     >
       <div className="section-container">
@@ -35,14 +34,14 @@ export default function QuickActions() {
           <Link
             href="/booking"
             onClick={() => analytics.startBooking('quick_action', 'general')}
-            className="group relative bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-[0_8px_30px_rgba(11,27,61,0.08)] hover:shadow-[0_16px_40px_rgba(11,27,61,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
+            className="group relative bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-[0_6px_20px_rgba(11,27,61,0.06)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 rounded-2xl bg-navy-50 text-navy-800 flex items-center justify-center group-hover:scale-110 group-hover:bg-navy-700 group-hover:text-white transition-all shadow-sm">
                 <CalendarDaysIcon className="w-6 h-6" />
               </div>
               <span className="text-[11px] font-bold text-navy-600 bg-navy-50 px-2.5 py-1 rounded-full">
-                فوري
+                حجز فوري
               </span>
             </div>
             <div>
@@ -61,7 +60,7 @@ export default function QuickActions() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => analytics.clickWhatsApp('quick_actions')}
-            className="group relative bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-[0_8px_30px_rgba(11,27,61,0.08)] hover:shadow-[0_16px_40px_rgba(11,27,61,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
+            className="group relative bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-[0_6px_20px_rgba(11,27,61,0.06)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all shadow-sm">
@@ -85,7 +84,7 @@ export default function QuickActions() {
           <a
             href={getCallUrl()}
             onClick={() => analytics.clickCall('quick_actions')}
-            className="group relative bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-[0_8px_30px_rgba(11,27,61,0.08)] hover:shadow-[0_16px_40px_rgba(11,27,61,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
+            className="group relative bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-[0_6px_20px_rgba(11,27,61,0.06)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-gold-500 group-hover:text-white transition-all shadow-sm">
@@ -105,28 +104,28 @@ export default function QuickActions() {
             </div>
           </a>
 
-          {/* 4. AI Consultation */}
-          <a
-            href="#ai-consultant"
-            className="group relative bg-gradient-to-br from-navy-900 to-[#0B1E48] rounded-3xl p-5 sm:p-6 border border-gold-400/40 shadow-[0_8px_30px_rgba(11,27,61,0.15)] hover:shadow-[0_16px_40px_rgba(245,158,11,0.25)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden text-white"
+          {/* 4. Services List */}
+          <Link
+            href="/services"
+            className="group relative bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-[0_6px_20px_rgba(11,27,61,0.06)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-white/10 text-gold-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-gold-500 group-hover:text-navy-950 transition-all shadow-sm">
-                <SparklesIcon className="w-6 h-6 animate-pulse" />
+              <div className="w-12 h-12 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center group-hover:scale-110 group-hover:bg-sky-600 group-hover:text-white transition-all shadow-sm">
+                <ListBulletIcon className="w-6 h-6" />
               </div>
-              <span className="text-[11px] font-black text-gold-300 bg-white/10 px-2.5 py-1 rounded-full border border-gold-400/30">
-                ذكاء اصطناعي
+              <span className="text-[11px] font-bold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full">
+                15+ خدمة
               </span>
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-extrabold text-white group-hover:text-gold-300 transition-colors">
-                استشر الذكاء الاصطناعي
+              <h3 className="text-sm sm:text-base font-extrabold text-navy-900 group-hover:text-sky-600 transition-colors">
+                قائمة الخدمات
               </h3>
-              <p className="text-xs text-white/70 mt-1 leading-relaxed">
-                توجيه طبي فوري لحالة المريض
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                استعرض تفاصيل وأسعار جميع الخدمات
               </p>
             </div>
-          </a>
+          </Link>
 
         </div>
       </div>

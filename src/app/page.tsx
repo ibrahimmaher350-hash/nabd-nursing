@@ -7,11 +7,8 @@ import type { Metadata } from 'next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import FloatingActions from '@/components/layout/FloatingActions'
-import MobileBottomBar from '@/components/layout/MobileBottomBar'
-import SectionIndicator from '@/components/ui/SectionIndicator'
 import HeroSection from '@/components/sections/HeroSection'
 import QuickActions from '@/components/sections/QuickActions'
-import AIHomeConsultant from '@/components/sections/AIHomeConsultant'
 import ServicesGrid from '@/components/sections/ServicesGrid'
 import NursePromo from '@/components/sections/NursePromo'
 import WhyNabd from '@/components/sections/WhyNabd'
@@ -35,46 +32,41 @@ export default async function HomePage() {
   return (
     <>
       <Header />
-      <SectionIndicator />
 
       <main id="main-content">
-        {/* 1. Hero with In-Hero AI Bar & Live Nurse Badge */}
+        {/* 1. Hero with CareHub Live Nurse Badge */}
         <HeroSection />
 
-        {/* 2. Quick Actions (CareHub Style) */}
+        {/* 2. Quick Actions */}
         <QuickActions />
 
-        {/* 3. Interactive In-Page AI Medical Consultant Hub */}
-        <AIHomeConsultant />
-
-        {/* 4. Featured Services */}
+        {/* 3. Featured Services */}
         <ServicesGrid featured />
 
-        {/* 5. Nurse Promo — صورة الممرض الاحترافية */}
+        {/* 4. Nurse Promo — صورة الممرض الاحترافية */}
         <NursePromo />
 
-        {/* 6. Why Nabd */}
+        {/* 5. Why Nabd */}
         <WhyNabd />
 
-        {/* 7. How It Works */}
+        {/* 6. How It Works */}
         <HowItWorks />
 
-        {/* 8. Patient Testimonials — آراء وتقييمات مرضانا وعائلاتهم */}
+        {/* 7. Patient Testimonials — آراء وتقييمات مرضانا وعائلاتهم */}
         <TestimonialsSection />
 
-        {/* 9. Facebook Post Section — المنشور الرسمي والتفاعل الحي */}
+        {/* 8. Facebook Post Section — المنشور الرسمي والتفاعل الحي */}
         <FacebookPostSection />
 
-        {/* 10. FAQ */}
+        {/* 9. FAQ */}
         <FAQ />
 
-        {/* 11. Final CTA */}
+        {/* 10. Final CTA */}
         <FinalCTA />
       </main>
 
       <Footer />
       <FloatingActions />
-      <MobileBottomBar />
     </>
   )
 }

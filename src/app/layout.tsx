@@ -254,7 +254,6 @@ const aggregateRatingSchema = {
 import NotificationPrompt from '@/components/ui/NotificationPrompt'
 import { SettingsProvider } from '@/context/SettingsContext'
 import MetaPixel from '@/components/analytics/MetaPixel'
-import AIChat from '@/components/ui/AIChat'
 
 // ── Root Layout ───────────────────────────────────────────────
 export default function RootLayout({
@@ -360,7 +359,6 @@ export default function RootLayout({
         <SettingsProvider>
           {children}
           <NotificationPrompt />
-          <AIChat />
         </SettingsProvider>
       </body>
     </html>

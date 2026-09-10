@@ -1,62 +1,33 @@
 ﻿'use client'
 /**
  * components/sections/HeroSection.tsx — نبض للتمريض المنزلي
- * CareHub-grade cinematic hero with live doctor/nurse badge and in-hero AI consultation bar
+ * CareHub-grade cinematic hero with live nurse badge and spacious typography
  */
 
-import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
   ExclamationTriangleIcon,
-  SparklesIcon,
   CheckBadgeIcon,
   ArrowRightIcon,
-  BoltIcon,
+  ShieldCheckIcon,
 } from '@heroicons/react/24/solid'
 import { analytics } from '@/lib/analytics'
 import { useSettings } from '@/context/SettingsContext'
-import { motion } from 'framer-motion'
-
-const quickSuggestions = [
-  'تغيير قسطرة بولية بالمنزل',
-  'غيار جروح وقرح فراش',
-  'تركيب كانيولا ومحاليل وريدية',
-  'إعطاء حقن عضل ومسكنات',
-]
 
 export default function HeroSection() {
   const { getWhatsAppUrl, getCallUrl, settings } = useSettings()
-  const [aiQuery, setAiQuery] = useState('')
-
-  const handleAiConsult = (queryText?: string) => {
-    const q = queryText || aiQuery
-    if (!q.trim()) {
-      const el = document.getElementById('ai-consultant')
-      el?.scrollIntoView({ behavior: 'smooth' })
-      return
-    }
-    // Scroll to AI section and dispatch custom event
-    const el = document.getElementById('ai-consultant')
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' })
-      window.dispatchEvent(new CustomEvent('nabd_ai_ask', { detail: { query: q } }))
-    }
-  }
 
   return (
     <section
       id="hero"
-      className="relative bg-gradient-to-b from-[#050D24] via-[#091A3E] to-[#0E285C] text-white overflow-hidden pt-8 pb-16 sm:pt-14 sm:pb-24 border-b border-navy-800"
+      className="relative bg-gradient-to-b from-[#050D24] via-[#091A3E] to-[#0E285C] text-white overflow-hidden pt-10 pb-16 sm:pt-16 sm:pb-24 border-b border-navy-800"
       aria-label="القسم الرئيسي"
     >
-      {/* ── CareHub Ambient Glow Background ── */}
+      {/* ── Ambient Background Glow ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {/* Gold ambient radial */}
-        <div className="absolute top-1/4 start-1/4 w-[500px] h-[500px] rounded-full bg-gold-500/10 blur-[130px]" />
-        {/* Cyan/Navy ambient radial */}
-        <div className="absolute bottom-10 end-10 w-[450px] h-[450px] rounded-full bg-blue-500/10 blur-[120px]" />
-        {/* Geometric grid */}
+        <div className="absolute top-1/4 start-1/4 w-[500px] h-[500px] rounded-full bg-gold-500/10 blur-[140px]" />
+        <div className="absolute bottom-10 end-10 w-[450px] h-[450px] rounded-full bg-blue-500/10 blur-[130px]" />
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -67,14 +38,14 @@ export default function HeroSection() {
       </div>
 
       <div className="section-container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
 
-          {/* ── Right Column: Text Content & AI Input (7 cols) ── */}
+          {/* ── Right Column: Text Content (7 cols) ── */}
           <div className="lg:col-span-7 text-center lg:text-start">
 
-            {/* CareHub-style pill badge */}
+            {/* Pill Badge */}
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-500/20 via-white/10 to-transparent border border-gold-400/40 rounded-full px-4 py-1.5 mb-6 backdrop-blur-md shadow-sm">
-              <SparklesIcon className="w-4 h-4 text-gold-400 animate-pulse shrink-0" />
+              <ShieldCheckIcon className="w-4 h-4 text-gold-400 shrink-0" />
               <span className="text-white/95 text-xs sm:text-sm font-bold tracking-wide">
                 المستشفى في منزلك — محافظة دمياط
               </span>
@@ -82,7 +53,7 @@ export default function HeroSection() {
             </div>
 
             {/* Giant Title */}
-            <h1 className="!text-3xl sm:!text-4xl lg:!text-5xl xl:!text-[3.4rem] font-black text-white leading-[1.25] sm:leading-[1.2] mb-5 tracking-tight">
+            <h1 className="!text-3xl sm:!text-4xl lg:!text-5xl xl:!text-[3.3rem] font-black text-white leading-[1.3] mb-6 tracking-tight">
               الرعاية التمريضية الفائقة…{' '}
               <br className="hidden sm:inline" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-amber-200 to-gold-400">
@@ -91,56 +62,33 @@ export default function HeroSection() {
               بأعلى معايير الأمان
             </h1>
 
-            {/* Subtitle with spacious line height */}
+            {/* Subtitle */}
             <p className="text-white/80 text-sm sm:text-base lg:text-lg leading-[1.8] mb-8 max-w-2xl mx-auto lg:mx-0 font-normal">
               منظومة تمريض منزلي ورعاية طبية متكاملة تقدمها كوادر تمريضية مرخصة ومعقمة على مدار الساعة داخل كافة مدن وقرى محافظة دمياط، لراحة المريض وأسرته.
             </p>
 
-            {/* ── 🔥 CareHub-Inspired In-Hero AI Consultation Bar ── */}
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-3 sm:p-4 mb-7 shadow-2xl max-w-2xl mx-auto lg:mx-0">
-              <div className="flex items-center gap-2 mb-2 text-xs font-bold text-gold-300">
-                <SparklesIcon className="w-4 h-4 text-gold-400 shrink-0" />
-                <span>استشر مساعد نبض الطبي الذكي فوراً (مجاناً):</span>
-              </div>
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                <input
-                  type="text"
-                  value={aiQuery}
-                  onChange={(e) => setAiQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleAiConsult()}
-                  placeholder="اكتب حالة المريض أو استفسارك (مثال: محتاج غيار جرح سكر في البيت)..."
-                  className="w-full bg-white/90 text-navy-950 placeholder:text-slate-500 text-xs sm:text-sm rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-gold-400 transition-all font-cairo shadow-inner"
-                  dir="rtl"
-                />
-                <button
-                  onClick={() => handleAiConsult()}
-                  className="bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 text-white font-black text-xs sm:text-sm px-6 py-3 rounded-2xl shrink-0 transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5"
+            {/* Feature Pills */}
+            <div className="flex flex-wrap justify-center lg:justify-start gap-2.5 mb-8">
+              {[
+                { icon: '🛡️', text: 'تعقيم كامل ومكافحة عدوى' },
+                { icon: '👨‍⚕️', text: 'طاقم تمريضي متخصص' },
+                { icon: '🏠', text: 'رعاية تامة في منزلك' },
+              ].map((pill) => (
+                <span
+                  key={pill.text}
+                  className="inline-flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-3.5 py-1.5 text-xs sm:text-sm text-white/90 font-medium"
                 >
-                  <span>استشارة AI</span>
-                  <BoltIcon className="w-4 h-4 text-gold-200" />
-                </button>
-              </div>
-
-              {/* Suggestion Chips */}
-              <div className="flex items-center gap-1.5 flex-wrap mt-3 pt-2.5 border-t border-white/10 text-[11px]">
-                <span className="text-white/60 font-medium shrink-0">أمثلة سريعة:</span>
-                {quickSuggestions.map((sug) => (
-                  <button
-                    key={sug}
-                    onClick={() => handleAiConsult(sug)}
-                    className="bg-white/10 hover:bg-white/20 text-white/90 px-2.5 py-1 rounded-full transition-colors truncate max-w-[200px]"
-                  >
-                    💡 {sug}
-                  </button>
-                ))}
-              </div>
+                  <span>{pill.icon}</span>
+                  <span>{pill.text}</span>
+                </span>
+              ))}
             </div>
 
             {/* CTAs Row */}
             <div className="flex flex-col xs:flex-row items-stretch xs:items-center justify-center lg:justify-start gap-3.5 mb-8">
               <Link
                 href="/booking"
-                className="btn-primary text-sm sm:text-base px-7 py-4 rounded-2xl shadow-[0_8px_25px_rgba(245,158,11,0.35)] bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 border border-gold-300/40 text-white font-black"
+                className="btn-primary text-sm sm:text-base px-8 py-4 rounded-2xl shadow-[0_8px_25px_rgba(245,158,11,0.35)] bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 border border-gold-300/40 text-white font-black transition-all"
                 onClick={() => analytics.startBooking('hero', 'general')}
               >
                 <span>احجز خدمة تمريض الآن</span>
@@ -151,7 +99,7 @@ export default function HeroSection() {
                 href={getWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-whatsapp text-sm sm:text-base px-6 py-4 rounded-2xl shadow-[0_8px_25px_rgba(37,211,102,0.35)] font-black"
+                className="btn-whatsapp text-sm sm:text-base px-7 py-4 rounded-2xl shadow-[0_8px_25px_rgba(37,211,102,0.35)] font-black transition-all"
                 onClick={() => analytics.clickWhatsApp('hero')}
               >
                 <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
@@ -196,10 +144,10 @@ export default function HeroSection() {
 
           </div>
 
-          {/* ── Left Column: Live Doctor/Nurse Card (CareHub Screenshot 1 style) (5 cols) ── */}
-          <div className="lg:col-span-5 relative flex justify-center">
+          {/* ── Left Column: Live Nurse Card (CareHub Style) (5 cols) ── */}
+          <div className="lg:col-span-5 flex flex-col items-center justify-center">
 
-            {/* Big Nurse/Doctor Showcase Card */}
+            {/* Main Card */}
             <div className="relative w-full max-w-md rounded-[2.5rem] bg-gradient-to-b from-white/10 to-white/5 border border-white/15 p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.6)]">
 
               {/* Main Image Container */}
@@ -217,7 +165,7 @@ export default function HeroSection() {
                 {/* Dark Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#07132B] via-transparent to-transparent opacity-90" />
 
-                {/* Live Online Badge (CareHub screenshot 1 feature) */}
+                {/* Live Online Badge */}
                 <div className="absolute top-4 end-4 bg-navy-950/85 backdrop-blur-md border border-white/20 rounded-full py-1.5 px-3.5 flex items-center gap-2 shadow-lg">
                   <span className="relative flex h-2.5 w-2.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -226,7 +174,7 @@ export default function HeroSection() {
                   <span className="text-xs font-extrabold text-white">مباشر • طاقم متاح الآن</span>
                 </div>
 
-                {/* Bottom Card Info inside Image */}
+                {/* Bottom Card Info */}
                 <div className="absolute bottom-4 inset-x-4">
                   <div className="bg-navy-900/90 backdrop-blur-md border border-white/15 rounded-2xl p-4 shadow-xl">
                     <div className="flex items-center justify-between mb-2">
@@ -257,12 +205,12 @@ export default function HeroSection() {
 
               </div>
 
-              {/* Floating Quality Stamp */}
-              <div className="absolute -bottom-4 -start-4 bg-white text-navy-900 rounded-2xl p-3 shadow-2xl border border-slate-200 hidden sm:flex items-center gap-2.5">
-                <CheckBadgeIcon className="w-8 h-8 text-emerald-500 shrink-0" />
+              {/* Quality Stamp inside card bottom */}
+              <div className="mt-4 bg-white/10 border border-white/15 rounded-2xl p-3 flex items-center gap-3">
+                <CheckBadgeIcon className="w-6 h-6 text-emerald-400 shrink-0" />
                 <div className="text-start">
-                  <p className="text-xs font-extrabold">معايير مكافحة العدوى</p>
-                  <p className="text-[10px] text-slate-500">أدوات أحادية الاستخدام معقمة</p>
+                  <p className="text-xs font-extrabold text-white">أعلى معايير مكافحة العدوى والتعقيم</p>
+                  <p className="text-[11px] text-white/70">أدوات أحادية الاستخدام معتمدة طبياً</p>
                 </div>
               </div>
 
