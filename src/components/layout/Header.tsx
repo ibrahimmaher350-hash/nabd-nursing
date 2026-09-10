@@ -1,13 +1,19 @@
-'use client'
+﻿'use client'
 /**
  * components/layout/Header.tsx — نبض للتمريض المنزلي
- * Sticky RTL header with mobile menu.
+ * CareHub-inspired floating island header with 24/7 emergency top bar
  */
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Bars3Icon, XMarkIcon, PhoneIcon } from '@heroicons/react/24/outline'
+import {
+  Bars3Icon,
+  XMarkIcon,
+  PhoneIcon,
+  SparklesIcon,
+  ShieldCheckIcon,
+} from '@heroicons/react/24/outline'
 import { siteConfig } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
 import { useSettings } from '@/context/SettingsContext'
@@ -17,15 +23,16 @@ interface NavLinkItem {
   label: string
   badge: string | null
   isExternal?: boolean
+  highlight?: boolean
 }
 
 const navLinks: NavLinkItem[] = [
-  { href: '/services',       label: 'خدماتنا 🩺',               badge: 'طلب' },
-  { href: '/reviews',        label: 'آراء العملاء ⭐',           badge: '5.0' },
-  { href: '/booking',        label: 'احجز ممرض 📅',             badge: 'فوري' },
-  { href: '/medical-guide',  label: 'الإسعافات والروشتات 🚑💊',  badge: 'شامل' },
+  { href: '/#services',         label: 'خدماتنا 🩺',               badge: null },
+  { href: '/#ai-consultant',    label: 'المساعد الذكي 🤖',          badge: 'جديد', highlight: true },
+  { href: '/reviews',           label: 'آراء المرضى ⭐',           badge: '5.0' },
+  { href: '/medical-guide',     label: 'الإسعافات والروشتات 🚑',   badge: null },
   { href: 'https://nabd-damietta.blogspot.com', label: 'المدونة ✍️', badge: null, isExternal: true },
-  { href: '/contact',        label: 'تواصل معنا',               badge: null },
+  { href: '/contact',           label: 'تواصل معنا',               badge: null },
 ]
 
 export default function Header() {
@@ -34,19 +41,17 @@ export default function Header() {
   const { settings, getCallUrl, getWhatsAppUrl } = useSettings()
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 16)
+    const onScroll = () => setIsScrolled(window.scrollY > 20)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close menu on resize to desktop
   useEffect(() => {
     const onResize = () => { if (window.innerWidth >= 1024) setIsMenuOpen(false) }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  // Lock body scroll when menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden'
@@ -60,91 +65,158 @@ export default function Header() {
 
   return (
     <>
-      {/* Dynamic Announcement Banner from Admin */}
+      {/* ── 1. CareHub-style Top Bar (Emergency & Social Bar) ── */}
+      <div className="bg-[#07132B] text-white text-xs border-b border-white/10 no-print transition-all">
+        <div className="section-container">
+          <div className="flex items-center justify-between h-9 px-1">
+            {/* Right: Emergency Line with glowing pulse */}
+            <div className="flex items-center gap-3">
+              <a
+                href={getCallUrl()}
+                className="flex items-center gap-1.5 text-gold-300 font-bold hover:text-white transition-colors"
+                title="خط الطوارئ والاستجابة الفورية"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                </span>
+                <span className="text-white/80 font-medium hidden sm:inline">طوارئ 24/7:</span>
+                <span className="text-xs sm:text-sm tracking-wider font-extrabold text-gold-300">{settings.phone}</span>
+              </a>
+
+              <span className="text-white/20 hidden md:inline">|</span>
+
+              <div className="hidden md:flex items-center gap-1.5 text-white/70">
+                <ShieldCheckIcon className="w-3.5 h-3.5 text-emerald-400" />
+                <span>رعاية معتمدة داخل محافظة دمياط بالكامل</span>
+              </div>
+            </div>
+
+            {/* Left: Social & AI direct link */}
+            <div className="flex items-center gap-3">
+              <Link
+                href="/#ai-consultant"
+                className="inline-flex items-center gap-1 bg-white/10 hover:bg-white/20 text-gold-300 px-2.5 py-0.5 rounded-full text-[11px] font-bold transition-all"
+              >
+                <SparklesIcon className="w-3 h-3 text-gold-400 animate-pulse" />
+                <span>استشارة الذكاء الاصطناعي</span>
+              </Link>
+
+              <div className="hidden sm:flex items-center gap-2 text-white/60">
+                <a
+                  href={getWhatsAppUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-emerald-400 transition-colors"
+                  aria-label="واتساب"
+                  title="واتساب"
+                >
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://www.facebook.com/profile.php?id=61593884400330"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-blue-400 transition-colors"
+                  aria-label="فيسبوك"
+                  title="صفحتنا على فيسبوك"
+                >
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Dynamic Announcement Banner if active */}
       {settings.announcementActive && settings.announcement && (
-        <div className="bg-gradient-to-r from-navy-950 via-navy-900 to-teal-950 text-white text-xs font-bold py-2 px-4 text-center border-b border-gold-500/30 flex items-center justify-center gap-2 shadow-sm animate-fade-in no-print">
+        <div className="bg-gradient-to-r from-navy-950 via-navy-900 to-teal-950 text-white text-xs font-bold py-2 px-4 text-center border-b border-gold-500/30 flex items-center justify-center gap-2 shadow-sm no-print">
           <span className="text-gold-400 animate-pulse">📢</span>
           <span className="leading-snug">{settings.announcement}</span>
         </div>
       )}
 
+      {/* ── 2. CareHub-style Floating Pill Header ── */}
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-          isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-card border-b border-medical-border'
-            : 'bg-white border-b border-transparent'
-        }`}
+        className={`sticky top-2 z-50 w-full transition-all duration-300 px-3 sm:px-6 no-print`}
         role="banner"
       >
-        <div className="section-container">
-          <div className="flex items-center justify-between h-16">
+        <div
+          className={`max-w-7xl mx-auto rounded-2xl sm:rounded-full transition-all duration-300 ${
+            isScrolled
+              ? 'bg-white/95 backdrop-blur-md shadow-[0_12px_40px_rgba(11,27,61,0.15)] border border-slate-200/90 py-2 sm:py-2.5 px-4 sm:px-6'
+              : 'bg-white/95 backdrop-blur-sm shadow-[0_6px_25px_rgba(11,27,61,0.08)] border border-slate-100 py-3 sm:py-3.5 px-4 sm:px-6'
+          }`}
+        >
+          <div className="flex items-center justify-between">
 
-            {/* ── Logo & Home Button (مدمج بالضغط على اسم نبض واللوجو) ── */}
+            {/* ── Logo + Brand Name (CareHub style) ── */}
             <Link
               href="/"
-              className="flex items-center gap-2.5 shrink-0 min-w-0 group hover:opacity-90 transition-opacity"
+              className="flex items-center gap-2.5 shrink-0 group"
               aria-label={`${siteConfig.brand.name} — الصفحة الرئيسية`}
-              title="العودة للصفحة الرئيسية"
+              title="نبض للتمريض المنزلي"
               onClick={closeMenu}
             >
-              <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-md shrink-0 group-hover:scale-105 transition-transform">
+              <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden shadow-md shrink-0 border-2 border-gold-400/80 group-hover:scale-105 transition-transform">
                 <Image
                   src="/logo.jpg"
                   alt={siteConfig.brand.logoAlt}
                   fill
                   className="object-contain"
                   priority
-                  sizes="40px"
+                  sizes="44px"
                 />
               </div>
-              {/* Brand name — shown cleanly on mobile and desktop */}
               <div className="flex flex-col min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <p className="text-sm font-extrabold text-navy-700 leading-tight truncate group-hover:text-gold-600 transition-colors">
-                    نبض للتمريض
-                  </p>
-                  {/* Location badge — desktop only */}
-                  <span className="badge-navy text-[10px] py-0 px-1.5 hidden lg:inline-flex shrink-0">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse-slow me-1" />
+                  <span className="text-base sm:text-lg font-black text-navy-900 leading-none group-hover:text-gold-600 transition-colors">
+                    نبض
+                  </span>
+                  <span className="badge-navy text-[10px] py-0 px-2 rounded-full font-bold hidden xs:inline-flex">
                     دمياط
                   </span>
                 </div>
-                <p className="text-[11px] font-medium text-medical-muted leading-tight">
-                  المنزلي
-                </p>
+                <span className="text-[11px] font-semibold text-slate-500 leading-tight">
+                  التمريض المنزلي
+                </span>
               </div>
             </Link>
 
-            {/* ── Desktop Nav ── */}
-            <nav
-              className="hidden lg:flex items-center gap-1"
-              aria-label="القائمة الرئيسية"
-            >
+            {/* ── Desktop Navigation Links (Pill Style) ── */}
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5" aria-label="القائمة الرئيسية">
               {navLinks.map((link) =>
-                link.href === '/booking' ? null : link.isExternal ? (
+                link.isExternal ? (
                   <a
                     key={link.href}
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-ghost text-[11px] xl:text-xs 2xl:text-sm px-1.5 xl:px-2.5 relative inline-flex items-center gap-1 whitespace-nowrap text-navy-800 hover:text-gold-600 font-bold"
+                    className="text-xs xl:text-sm font-bold text-slate-700 hover:text-navy-900 hover:bg-slate-100/80 px-3 py-2 rounded-full transition-all inline-flex items-center gap-1"
                   >
-                    {link.label}
-                    {link.badge && (
-                      <span className="bg-gold-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">
-                        {link.badge}
-                      </span>
-                    )}
+                    <span>{link.label}</span>
+                    <span className="text-xs text-slate-400">↗</span>
                   </a>
                 ) : (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="btn-ghost text-[11px] xl:text-xs 2xl:text-sm px-1.5 xl:px-2.5 relative inline-flex items-center gap-1 whitespace-nowrap"
+                    className={`text-xs xl:text-sm font-bold px-3 py-2 rounded-full transition-all inline-flex items-center gap-1.5 ${
+                      link.highlight
+                        ? 'bg-amber-50 text-amber-900 border border-amber-200/80 hover:bg-amber-100 shadow-xs'
+                        : 'text-slate-700 hover:text-navy-900 hover:bg-slate-100/80'
+                    }`}
                   >
-                    {link.label}
+                    <span>{link.label}</span>
                     {link.badge && (
-                      <span className="bg-gold-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">
+                      <span className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded-full leading-none ${
+                        link.highlight ? 'bg-amber-500 text-white' : 'bg-gold-500 text-white'
+                      }`}>
                         {link.badge}
                       </span>
                     )}
@@ -153,49 +225,56 @@ export default function Header() {
               )}
             </nav>
 
-            {/* ── Desktop Actions ── */}
-            <div className="hidden lg:flex items-center gap-2">
+            {/* ── Desktop CTA Buttons (CareHub Style) ── */}
+            <div className="hidden lg:flex items-center gap-2.5">
               <a
                 href={getCallUrl()}
-                className="btn-ghost text-sm flex items-center gap-1.5"
-                aria-label="اتصل بنا"
+                className="inline-flex items-center gap-1.5 text-xs xl:text-sm font-extrabold text-navy-800 bg-slate-100 hover:bg-slate-200 px-3.5 py-2.5 rounded-full transition-all border border-slate-200"
                 onClick={() => analytics.clickCall('header')}
               >
-                <PhoneIcon className="w-4 h-4" aria-hidden="true" />
-                {settings.phone}
+                <PhoneIcon className="w-4 h-4 text-gold-600" />
+                <span dir="ltr">{settings.phone}</span>
               </a>
+
               <Link
                 href="/booking"
-                className="btn-primary text-xs xl:text-sm px-4 xl:px-5 py-2.5 whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 text-xs xl:text-sm font-black text-white bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 px-5 py-2.5 rounded-full shadow-[0_4px_16px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all"
               >
-                احجز ممرض لمنزلك 🩺
+                <span>احجز زيارة الآن</span>
+                <span className="text-xs">🩺</span>
               </Link>
             </div>
 
-            {/* ── Mobile: Call + Menu toggle ── */}
+            {/* ── Mobile Action Icons ── */}
             <div className="flex lg:hidden items-center gap-2">
+              <Link
+                href="/booking"
+                className="bg-gold-500 hover:bg-gold-600 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-xs"
+              >
+                احجز 🩺
+              </Link>
               <a
                 href={getCallUrl()}
-                className="flex items-center justify-center w-10 h-10 rounded-xl bg-gold-50 text-gold-600 shrink-0"
+                className="flex items-center justify-center w-10 h-10 rounded-xl bg-gold-50 text-gold-600 border border-gold-200"
                 aria-label="اتصل بنا"
                 onClick={() => analytics.clickCall('header_mobile')}
               >
-                <PhoneIcon className="w-5 h-5" aria-hidden="true" />
+                <PhoneIcon className="w-5 h-5" />
               </a>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="flex items-center justify-center w-10 h-10 rounded-xl bg-navy-50 text-navy-700 shrink-0"
+                className="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100 text-navy-800 border border-slate-200"
                 aria-label={isMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
                 aria-expanded={isMenuOpen}
-                aria-controls="mobile-menu"
               >
                 {isMenuOpen ? (
-                  <XMarkIcon className="w-5 h-5" aria-hidden="true" />
+                  <XMarkIcon className="w-6 h-6" />
                 ) : (
-                  <Bars3Icon className="w-5 h-5" aria-hidden="true" />
+                  <Bars3Icon className="w-6 h-6" />
                 )}
               </button>
             </div>
+
           </div>
         </div>
       </header>
@@ -203,51 +282,37 @@ export default function Header() {
       {/* ── Mobile Menu Drawer ── */}
       {isMenuOpen && (
         <>
-          {/* Backdrop */}
           <div
-            className="fixed inset-0 z-40 bg-navy-950/60 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-navy-950/70 backdrop-blur-sm lg:hidden"
             onClick={closeMenu}
             aria-hidden="true"
           />
 
-          {/* Drawer */}
           <nav
             id="mobile-menu"
-            className="fixed top-0 end-0 z-50 h-full w-72 max-w-[85vw] bg-white shadow-card-lg lg:hidden animate-slide-in-right flex flex-col transition-transform"
+            className="fixed top-0 end-0 z-50 h-full w-80 max-w-[85vw] bg-white shadow-2xl lg:hidden flex flex-col transition-transform"
             aria-label="القائمة المحمولة"
           >
-            {/* Drawer header */}
-            <div className="flex items-center justify-between p-4 border-b border-medical-border shrink-0">
-              <Link
-                href="/"
-                onClick={closeMenu}
-                className="flex items-center gap-2.5 min-w-0 flex-1 hover:opacity-85 transition-opacity"
-                title="الذهاب للرئيسية"
-              >
-                <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-md shrink-0">
-                  <Image
-                    src="/logo.jpg"
-                    alt={siteConfig.brand.logoAlt}
-                    fill
-                    className="object-contain"
-                    sizes="40px"
-                  />
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-slate-100 bg-slate-50/50">
+              <Link href="/" onClick={closeMenu} className="flex items-center gap-2.5">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border border-gold-400">
+                  <Image src="/logo.jpg" alt={siteConfig.brand.logoAlt} fill className="object-contain" sizes="40px" />
                 </div>
-                <div className="min-w-0">
-                  <p className="text-sm font-extrabold text-navy-700 truncate">نبض للتمريض المنزلي</p>
-                  <p className="text-xs text-medical-muted">دمياط — مصر</p>
+                <div>
+                  <p className="text-sm font-black text-navy-900">نبض للتمريض المنزلي</p>
+                  <p className="text-xs text-slate-500">المستشفى في منزلك — دمياط</p>
                 </div>
               </Link>
               <button
                 onClick={closeMenu}
-                className="flex items-center justify-center w-9 h-9 rounded-xl bg-medical-gray text-medical-muted shrink-0 ms-2"
-                aria-label="إغلاق القائمة"
+                className="w-9 h-9 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center"
               >
-                <XMarkIcon className="w-5 h-5" aria-hidden="true" />
+                <XMarkIcon className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Nav links */}
+            {/* Links */}
             <div className="p-4 flex flex-col gap-1 overflow-y-auto flex-1">
               {navLinks.map((link) =>
                 link.isExternal ? (
@@ -257,25 +322,25 @@ export default function Header() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={closeMenu}
-                    className="flex items-center justify-between px-4 py-3 rounded-xl text-base font-bold text-navy-800 hover:bg-navy-50 transition-colors"
+                    className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold text-slate-800 hover:bg-slate-100 transition-colors"
                   >
                     <span>{link.label}</span>
-                    <span className="text-xs text-medical-muted">↗</span>
+                    <span className="text-xs text-slate-400">↗</span>
                   </a>
                 ) : (
                   <Link
                     key={link.href}
                     href={link.href}
                     onClick={closeMenu}
-                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold transition-colors ${
-                      link.href === '/booking'
-                        ? 'bg-navy-700 text-white mt-2'
-                        : 'text-navy-700 hover:bg-navy-50'
+                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-colors ${
+                      link.highlight
+                        ? 'bg-amber-50 text-amber-900 border border-amber-200'
+                        : 'text-slate-800 hover:bg-slate-100'
                     }`}
                   >
-                    {link.label}
+                    <span>{link.label}</span>
                     {link.badge && (
-                      <span className="bg-gold-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full leading-none ms-2">
+                      <span className="bg-gold-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
                         {link.badge}
                       </span>
                     )}
@@ -284,38 +349,28 @@ export default function Header() {
               )}
             </div>
 
-            {/* Contact in drawer — pinned to bottom */}
-            <div className="p-4 border-t border-medical-border bg-medical-gray shrink-0">
+            {/* Bottom Actions in Drawer */}
+            <div className="p-4 border-t border-slate-100 bg-slate-50 flex flex-col gap-2">
+              <Link
+                href="/booking"
+                onClick={closeMenu}
+                className="btn-primary w-full justify-center text-sm py-3"
+              >
+                احجز ممرض لمنزلك 🩺
+              </Link>
               <a
                 href={getWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-whatsapp w-full mb-2 text-sm"
-                onClick={() => analytics.clickWhatsApp('mobile_menu')}
+                className="btn-whatsapp w-full justify-center text-sm py-3"
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                </svg>
-                واتساب
-              </a>
-              <a
-                href="https://t.me/Ibrahim5k"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full mb-2 py-2.5 rounded-xl bg-[#229ED9] text-white font-bold text-xs sm:text-sm shadow transition-colors"
-              >
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
-                </svg>
-                <span>تليجرام: t.me/Ibrahim5k</span>
+                تواصل عبر واتساب 💬
               </a>
               <a
                 href={getCallUrl()}
-                className="btn-call w-full text-sm"
-                onClick={() => analytics.clickCall('mobile_menu')}
+                className="btn-call w-full justify-center text-sm py-3"
               >
-                <PhoneIcon className="w-5 h-5" aria-hidden="true" />
-                اتصل الآن
+                اتصال هاتفي سريع 📞
               </a>
             </div>
           </nav>

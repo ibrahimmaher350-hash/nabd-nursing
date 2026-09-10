@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 /**
  * components/sections/HowItWorks.tsx — نبض للتمريض المنزلي
  * Steps section with scroll-triggered stagger animations
@@ -51,7 +51,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="bg-white" aria-labelledby="how-heading">
+    <section id="how-it-works" className="bg-white" aria-labelledby="how-heading">
       <div className="section-container section-padding">
         <AnimatedSection direction="up" delay={0} className="text-center mb-10">
           <h2 id="how-heading" className="section-title">

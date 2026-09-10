@@ -144,6 +144,7 @@ export default function ServicesGrid({
 
   return (
     <section
+      id="services"
       className={`${featured ? 'bg-gradient-section' : 'bg-white'}`}
       aria-labelledby="services-heading"
     >

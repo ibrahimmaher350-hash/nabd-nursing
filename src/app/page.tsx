@@ -7,8 +7,11 @@ import type { Metadata } from 'next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import FloatingActions from '@/components/layout/FloatingActions'
+import MobileBottomBar from '@/components/layout/MobileBottomBar'
+import SectionIndicator from '@/components/ui/SectionIndicator'
 import HeroSection from '@/components/sections/HeroSection'
 import QuickActions from '@/components/sections/QuickActions'
+import AIHomeConsultant from '@/components/sections/AIHomeConsultant'
 import ServicesGrid from '@/components/sections/ServicesGrid'
 import NursePromo from '@/components/sections/NursePromo'
 import WhyNabd from '@/components/sections/WhyNabd'
@@ -32,15 +35,19 @@ export default async function HomePage() {
   return (
     <>
       <Header />
+      <SectionIndicator />
 
       <main id="main-content">
-        {/* 1. Hero */}
+        {/* 1. Hero with In-Hero AI Bar & Live Nurse Badge */}
         <HeroSection />
 
-        {/* 2. Quick Actions */}
+        {/* 2. Quick Actions (CareHub Style) */}
         <QuickActions />
 
-        {/* 3. Featured Services */}
+        {/* 3. Interactive In-Page AI Medical Consultant Hub */}
+        <AIHomeConsultant />
+
+        {/* 4. Featured Services */}
         <ServicesGrid featured />
 
         {/* 5. Nurse Promo — صورة الممرض الاحترافية */}
@@ -67,6 +74,7 @@ export default async function HomePage() {
 
       <Footer />
       <FloatingActions />
+      <MobileBottomBar />
     </>
   )
 }

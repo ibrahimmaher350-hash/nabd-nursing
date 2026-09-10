@@ -93,12 +93,52 @@ export default function Footer() {
 
   return (
     <footer
-      className="bg-gradient-primary text-white"
+      className="relative bg-gradient-to-b from-[#060E24] via-[#091738] to-[#040A1A] text-white overflow-hidden border-t border-navy-800"
       role="contentinfo"
       aria-label="تذييل الصفحة"
     >
+      {/* CareHub-style subtle giant background watermark */}
+      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden opacity-[0.03] flex items-center justify-center" aria-hidden="true">
+        <span className="text-[14vw] font-black tracking-widest text-white uppercase whitespace-nowrap">
+          NABD CARE
+        </span>
+      </div>
+
+      {/* CareHub-style Big Impact Counter Banner */}
+      <div className="border-b border-white/10 bg-white/5 backdrop-blur-sm">
+        <div className="section-container py-8 sm:py-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-start">
+            <div>
+              <p className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-amber-200 to-gold-400">
+                5,000+ ساعة
+              </p>
+              <p className="text-white/80 text-sm sm:text-base font-semibold mt-1">
+                رعاية تمريضية وطبية منزلية موثقة ومعقمة داخل محافظة دمياط
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Link
+                href="/booking"
+                className="bg-gold-500 hover:bg-gold-600 text-navy-950 font-black text-xs sm:text-sm px-6 py-3.5 rounded-2xl shadow-gold transition-all"
+              >
+                طلب زيارة ممرض 🩺
+              </Link>
+              <a
+                href={getWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm px-5 py-3.5 rounded-2xl transition-all border border-white/15"
+              >
+                تواصل واتساب
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ── Main Footer ── */}
-      <div className="section-container py-12 sm:py-16">
+      <div className="section-container py-12 sm:py-16 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
           {/* Brand Column */}

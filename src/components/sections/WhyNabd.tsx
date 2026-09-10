@@ -1,4 +1,4 @@
-﻿/**
+/**
  * components/sections/WhyNabd.tsx — نبض للتمريض المنزلي
  * تصميم محسّن بعدادات متحركة وبطاقات احترافية
  */
@@ -116,7 +116,7 @@ export default function WhyNabd() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="bg-gradient-section" aria-labelledby="why-heading">
+    <section id="why-nabd" ref={sectionRef} className="bg-gradient-section" aria-labelledby="why-heading">
       <div className="section-container section-padding">
         {/* Header */}
         <AnimatedSection direction="up" className="text-center mb-10">

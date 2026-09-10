@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 /**
  * components/sections/TestimonialsSection.tsx — نبض للتمريض المنزلي
  * آراء العملاء مع scroll-triggered animations
@@ -20,7 +20,7 @@ export default function TestimonialsSection() {
   const featuredReviews = testimonialsData.filter((t) => t.isFeatured).slice(0, 6)
 
   return (
-    <section className="section-padding bg-gradient-to-b from-white via-slate-50 to-white border-y border-medical-border relative overflow-hidden">
+    <section id="testimonials" className="section-padding bg-gradient-to-b from-white via-slate-50 to-white border-y border-medical-border relative overflow-hidden">
       <div className="section-container">
         {/* Header */}
         <AnimatedSection direction="up" className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
