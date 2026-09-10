@@ -1,10 +1,12 @@
-/**
+﻿/**
  * components/sections/WhyNabd.tsx — نبض للتمريض المنزلي
  * تصميم محسّن بعدادات متحركة وبطاقات احترافية
  */
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { StaggerContainer, StaggerItem, fadeInUp } from '@/components/ui/AnimatedSection'
+import AnimatedSection from '@/components/ui/AnimatedSection'
 
 const stats = [
   { value: 15, suffix: '+', label: 'خدمة تمريضية' },
@@ -91,8 +93,8 @@ function StatCounter({ value, suffix, label, delay = 0, active }: {
     }
   }, [active, delay])
   return (
-    <div className="text-center">
-      <p className="text-3xl sm:text-4xl font-black text-gold-300 leading-none animate-count-up">
+    <div className="text-center group">
+      <p className="text-3xl sm:text-4xl font-black text-gold-300 leading-none group-hover:text-gold-200 transition-colors">
         {count}{suffix}
       </p>
       <p className="text-white/60 text-xs sm:text-sm mt-1 font-medium">{label}</p>
@@ -114,59 +116,60 @@ export default function WhyNabd() {
   }, [])
 
   return (
-    <section
-      ref={sectionRef}
-      className="bg-gradient-section"
-      aria-labelledby="why-heading"
-    >
+    <section ref={sectionRef} className="bg-gradient-section" aria-labelledby="why-heading">
       <div className="section-container section-padding">
         {/* Header */}
-        <div className="text-center mb-10">
+        <AnimatedSection direction="up" className="text-center mb-10">
           <h2 id="why-heading" className="section-title">
             ليه تختار نبض؟
           </h2>
           <p className="section-subtitle">
             خدمات تمريضية منزلية بشكل مهني وإنساني
           </p>
-        </div>
+        </AnimatedSection>
 
         {/* Feature Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {features.map((feature, i) => (
-            <div
-              key={feature.title}
-              className={`rounded-2xl bg-gradient-to-br ${feature.color} border p-5 flex items-start gap-4 hover:shadow-card-md transition-all duration-300 hover:-translate-y-0.5`}
-              style={{ animationDelay: `${i * 80}ms` }}
-            >
+        <StaggerContainer
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          amount={0.08}
+        >
+          {features.map((feature) => (
+            <StaggerItem key={feature.title} variants={fadeInUp}>
               <div
-                className={`w-12 h-12 rounded-2xl ${feature.iconBg} flex items-center justify-center text-2xl shrink-0 shadow-sm`}
-                aria-hidden="true"
+                className={`rounded-2xl bg-gradient-to-br ${feature.color} border p-5 flex items-start gap-4 hover:shadow-card-md transition-all duration-300 hover:-translate-y-1 h-full`}
               >
-                {feature.emoji}
+                <div
+                  className={`w-12 h-12 rounded-2xl ${feature.iconBg} flex items-center justify-center text-2xl shrink-0 shadow-sm`}
+                  aria-hidden="true"
+                >
+                  {feature.emoji}
+                </div>
+                <div>
+                  <h3 className="font-bold text-navy-700 text-base mb-1">{feature.title}</h3>
+                  <p className="text-medical-muted text-sm leading-relaxed">{feature.description}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-bold text-navy-700 text-base mb-1">{feature.title}</h3>
-                <p className="text-medical-muted text-sm leading-relaxed">{feature.description}</p>
-              </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
         {/* Stats strip */}
-        <div className="mt-10 rounded-3xl bg-gradient-primary p-6 sm:p-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-            {stats.map((stat, i) => (
-              <StatCounter
-                key={stat.label}
-                value={stat.value}
-                suffix={stat.suffix}
-                label={stat.label}
-                delay={i * 150}
-                active={statsVisible}
-              />
-            ))}
+        <AnimatedSection direction="up" delay={0.1} className="mt-10">
+          <div className="rounded-3xl bg-gradient-primary p-6 sm:p-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+              {stats.map((stat, i) => (
+                <StatCounter
+                  key={stat.label}
+                  value={stat.value}
+                  suffix={stat.suffix}
+                  label={stat.label}
+                  delay={i * 150}
+                  active={statsVisible}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        </AnimatedSection>
       </div>
     </section>
   )

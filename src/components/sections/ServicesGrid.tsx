@@ -10,6 +10,8 @@ import { getWhatsAppUrl } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
 import { ChevronLeftIcon } from '@heroicons/react/24/outline'
 import SocialShareButton from '@/components/ui/SocialShareButton'
+import { StaggerContainer, StaggerItem, fadeInUp } from '@/components/ui/AnimatedSection'
+import AnimatedSection from '@/components/ui/AnimatedSection'
 
 import { useSettings } from '@/context/SettingsContext'
 
@@ -147,25 +149,30 @@ export default function ServicesGrid({
     >
       <div className="section-container section-padding">
         {/* Header */}
-        <div className="text-center mb-10">
+        <AnimatedSection direction="up" className="text-center mb-10">
           <h2 id="services-heading" className="section-title">
             {featured ? 'أهم خدمات نبض' : 'خدمات نبض للتمريض المنزلي'}
           </h2>
           <p className="section-subtitle">
             خدمات تمريضية وطبية منزلية حسب احتياج المريض وحالته.
           </p>
-        </div>
+        </AnimatedSection>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <StaggerContainer
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
+          amount={0.06}
+        >
           {displayedServices.map((service) => (
-            <ServiceCard key={service.id} service={service} />
+            <StaggerItem key={service.id} variants={fadeInUp}>
+              <ServiceCard service={service} />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
         {/* View all link (homepage only) */}
         {featured && (
-          <div className="text-center mt-10">
+          <AnimatedSection direction="up" delay={0.1} className="text-center mt-10">
             <Link
               href="/services"
               className="btn-secondary inline-flex items-center gap-2"
@@ -173,7 +180,7 @@ export default function ServicesGrid({
               عرض جميع الخدمات (15 خدمة)
               <ChevronLeftIcon className="w-4 h-4" aria-hidden="true" />
             </Link>
-          </div>
+          </AnimatedSection>
         )}
       </div>
     </section>

@@ -328,6 +328,68 @@
   }
 }
 
+/* ─── Mobile-first improvements ──────────────────────────── */
+
+/* Better Arabic text rendering & line-height */
+@layer base {
+  p, li, span, div {
+    text-size-adjust: 100%;
+  }
+
+  /* Larger tap targets on mobile */
+  @media (max-width: 640px) {
+    .nabd-card {
+      @apply p-4;
+    }
+    .section-padding {
+      @apply py-8;
+    }
+    .section-title {
+      @apply text-xl;
+    }
+    /* Increase line-height for Arabic */
+    p, li {
+      line-height: 1.75;
+    }
+  }
+}
+
+/* ─── Enhanced animations ────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+  50%       { box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
+}
+
+@keyframes shimmerGold {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes slideInFromRight {
+  from { opacity: 0; transform: translateX(100%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@layer utilities {
+  .animate-float-gentle { animation: floatGentle 3.5s ease-in-out infinite; }
+  .animate-glow-pulse   { animation: glowPulse 2.5s ease-in-out infinite; }
+  .animate-shimmer-gold {
+    background: linear-gradient(90deg, transparent 25%, rgba(245,158,11,0.15) 50%, transparent 75%);
+    background-size: 200% 100%;
+    animation: shimmerGold 2s linear infinite;
+  }
+}
+
 /* ─── Entrance animation for feature cards ──────────────────── */
 @supports (animation-timeline: scroll()) {
   @keyframes appear {
@@ -345,4 +407,22 @@
   main > section:nth-child(3)  { animation-delay: 0.10s; }
   main > section:nth-child(4)  { animation-delay: 0.15s; }
   main > section:nth-child(5)  { animation-delay: 0.20s; }
+}
+
+/* ─── Improved RTL card hover ────────────────────────────── */
+.nabd-card {
+  will-change: transform;
+}
+
+/* ─── Service icon hover bounce ─────────────────────────── */
+.service-icon {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.group:hover .service-icon {
+  transform: scale(1.12) rotate(-3deg);
+}
+
+/* ─── AI Chat button accessibility ──────────────────────── */
+.ai-chat-pulse {
+  animation: glowPulse 2s ease-in-out infinite;
 }

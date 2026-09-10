@@ -222,9 +222,39 @@ const websiteSchema = {
   },
 }
 
+const aggregateRatingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalBusiness',
+  name: siteConfig.brand.name,
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5.0',
+    ratingCount: '28',
+    bestRating: '5',
+    worstRating: '1',
+    reviewCount: '28',
+  },
+  review: [
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'أم عبدالرحمن' },
+      reviewBody: 'خدمة ممتازة وأخ إبراهيم محترف جداً في شغله.',
+    },
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'أحمد السيد' },
+      reviewBody: 'الاستجابة فورية والخدمة بجودة عالية داخل دمياط.',
+    },
+  ],
+}
+
 import NotificationPrompt from '@/components/ui/NotificationPrompt'
 import { SettingsProvider } from '@/context/SettingsContext'
 import MetaPixel from '@/components/analytics/MetaPixel'
+import AIChat from '@/components/ui/AIChat'
 
 // ── Root Layout ───────────────────────────────────────────────
 export default function RootLayout({
@@ -251,6 +281,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(websiteSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(aggregateRatingSchema),
           }}
         />
 
@@ -297,6 +333,22 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="نبض للتمريض" />
 
+        {/* Facebook Algorithm Compliance */}
+        {process.env.NEXT_PUBLIC_FB_APP_ID && (
+          <meta property="fb:app_id" content={process.env.NEXT_PUBLIC_FB_APP_ID} />
+        )}
+        <meta property="article:author" content="https://www.facebook.com/profile.php?id=61593884400330" />
+        <meta property="article:publisher" content="https://www.facebook.com/profile.php?id=61593884400330" />
+        <meta property="og:locale" content="ar_EG" />
+        <meta property="og:site_name" content="نبض للتمريض المنزلي — دمياط" />
+        <meta property="og:type" content="website" />
+        <meta name="author" content="إبراهيم ماهر — نبض للتمريض المنزلي" />
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="rating" content="general" />
+        <meta name="revisit-after" content="7 days" />
+        <meta name="language" content="Arabic" />
+
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -308,6 +360,7 @@ export default function RootLayout({
         <SettingsProvider>
           {children}
           <NotificationPrompt />
+          <AIChat />
         </SettingsProvider>
       </body>
     </html>

@@ -1,6 +1,7 @@
-'use client'
+﻿'use client'
 /**
  * components/sections/HeroSection.tsx — نبض للتمريض المنزلي
+ * Hero section with Framer Motion entrance animations
  */
 
 import Link from 'next/link'
@@ -8,6 +9,33 @@ import Image from 'next/image'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import { analytics } from '@/lib/analytics'
 import { useSettings } from '@/context/SettingsContext'
+import { motion } from 'framer-motion'
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+}
+
+const imageVariants = {
+  hidden: { opacity: 0, x: -40, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 },
+  },
+}
 
 export default function HeroSection() {
   const { getWhatsAppUrl } = useSettings()
@@ -17,56 +45,99 @@ export default function HeroSection() {
       className="relative bg-gradient-primary overflow-hidden"
       aria-label="القسم الرئيسي"
     >
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-5" aria-hidden="true">
-        <div className="absolute top-0 end-0 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-gold-400 blur-3xl" />
-        <div className="absolute bottom-0 start-0 w-48 sm:w-64 h-48 sm:h-64 rounded-full bg-navy-300 blur-2xl" />
+      {/* Animated background decorations */}
+      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+        <motion.div
+          className="absolute top-0 end-0 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-gold-400 opacity-[0.07] blur-3xl"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.07, 0.1, 0.07] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute bottom-0 start-0 w-48 sm:w-64 h-48 sm:h-64 rounded-full bg-navy-300 opacity-[0.06] blur-2xl"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.06, 0.09, 0.06] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        />
+        {/* Grid overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: 'linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px)',
+            backgroundSize: '40px 40px',
+          }}
+        />
       </div>
 
       <div className="section-container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 py-10 sm:py-16 lg:py-20 items-center">
 
           {/* ── Text Content ── */}
-          <div className="text-center lg:text-start">
-
+          <motion.div
+            className="text-center lg:text-start"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-4 sm:mb-6">
-              <span className="w-2 h-2 rounded-full bg-gold-400 animate-pulse-slow shrink-0" aria-hidden="true" />
+            <motion.div
+              variants={itemVariants}
+              className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-4 sm:mb-6"
+            >
+              <motion.span
+                className="w-2 h-2 rounded-full bg-gold-400 shrink-0"
+                animate={{ scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                aria-hidden="true"
+              />
               <span className="text-white/90 text-xs sm:text-sm font-medium">
                 خدمات تمريضية منزلية — دمياط
               </span>
-            </div>
+            </motion.div>
 
             {/* H1 */}
-            <h1 className="!text-2xl sm:!text-3xl lg:!text-5xl font-extrabold text-white leading-tight mb-3 sm:mb-4">
+            <motion.h1
+              variants={itemVariants}
+              className="!text-2xl sm:!text-3xl lg:!text-5xl font-extrabold text-white leading-tight mb-3 sm:mb-4"
+            >
               الرعاية التمريضية اللي محتاجها…{' '}
               <span className="text-gold-300">لحد باب بيتك</span>
-            </h1>
+            </motion.h1>
 
             {/* Subtitle */}
-            <p className="text-white/75 text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8 max-w-lg mx-auto lg:mx-0">
+            <motion.p
+              variants={itemVariants}
+              className="text-white/75 text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8 max-w-lg mx-auto lg:mx-0"
+            >
               خدمات تمريض ورعاية منزلية باهتمام، أمان، ومهنية داخل دمياط.
-            </p>
+            </motion.p>
 
             {/* Feature pills */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-6 sm:mb-8">
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap justify-center lg:justify-start gap-2 mb-6 sm:mb-8"
+            >
               {[
                 { icon: '🛡️', text: 'رعاية آمنة' },
                 { icon: '👨‍⚕️', text: 'فريق متخصص' },
                 { icon: '🏠', text: 'راحة في بيتك' },
-              ].map((pill) => (
-                <span
+              ].map((pill, i) => (
+                <motion.span
                   key={pill.text}
-                  className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5 text-xs sm:text-sm text-white/90 font-medium"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.4 + i * 0.08, duration: 0.4 }}
+                  className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1.5 text-xs sm:text-sm text-white/90 font-medium hover:bg-white/15 transition-colors cursor-default"
                 >
                   <span>{pill.icon}</span>
                   {pill.text}
-                </span>
+                </motion.span>
               ))}
-            </div>
+            </motion.div>
 
             {/* CTAs */}
-            <div className="flex flex-col xs:flex-row items-stretch xs:items-center justify-center lg:justify-start gap-3 mb-5 sm:mb-6">
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col xs:flex-row items-stretch xs:items-center justify-center lg:justify-start gap-3 mb-5 sm:mb-6"
+            >
               <Link
                 href="/booking"
                 className="btn-primary w-full xs:w-auto px-6 sm:px-8 py-3 sm:py-4"
@@ -87,10 +158,13 @@ export default function HeroSection() {
                 </svg>
                 تواصل عبر واتساب
               </a>
-            </div>
+            </motion.div>
 
             {/* Emergency notice */}
-            <div className="flex items-center justify-between gap-2 bg-red-900/30 border border-red-400/30 rounded-xl p-3 max-w-lg mx-auto lg:mx-0 text-start">
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center justify-between gap-2 bg-red-900/30 border border-red-400/30 rounded-xl p-3 max-w-lg mx-auto lg:mx-0 text-start"
+            >
               <div className="flex items-start gap-2">
                 <ExclamationTriangleIcon
                   className="w-4 h-4 text-red-400 shrink-0 mt-0.5"
@@ -106,32 +180,45 @@ export default function HeroSection() {
               >
                 دليل الإسعافات 🚑
               </Link>
-            </div>
+            </motion.div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-6 sm:mt-8 max-w-sm sm:max-w-lg mx-auto lg:mx-0">
+            <motion.div
+              variants={itemVariants}
+              className="grid grid-cols-3 gap-2 sm:gap-3 mt-6 sm:mt-8 max-w-sm sm:max-w-lg mx-auto lg:mx-0"
+            >
               {[
                 { value: '15+', label: 'خدمة تمريضية' },
                 { value: 'دمياط', label: 'منطقة الخدمة' },
                 { value: 'متابعة', label: 'مستمرة للمريض' },
-              ].map((stat) => (
-                <div
+              ].map((stat, i) => (
+                <motion.div
                   key={stat.value}
-                  className="bg-white/10 border border-white/15 rounded-xl sm:rounded-2xl p-2 sm:p-3 text-center"
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.7 + i * 0.1, duration: 0.45, ease: [0.34, 1.56, 0.64, 1] }}
+                  className="bg-white/10 border border-white/15 rounded-xl sm:rounded-2xl p-2 sm:p-3 text-center hover:bg-white/15 transition-colors"
                 >
                   <p className="text-gold-300 font-extrabold text-sm sm:text-lg leading-tight">{stat.value}</p>
                   <p className="text-white/60 text-xs mt-0.5 leading-tight">{stat.label}</p>
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* ── Hero Image — Desktop ── */}
-          <div className="hidden lg:flex items-center justify-center">
+          <motion.div
+            className="hidden lg:flex items-center justify-center"
+            variants={imageVariants}
+            initial="hidden"
+            animate="visible"
+          >
             <div className="relative w-full max-w-md xl:max-w-lg">
               {/* Glow ring behind image */}
-              <div
+              <motion.div
                 className="absolute inset-0 rounded-3xl bg-gradient-to-br from-gold-400/20 to-navy-500/20 blur-2xl scale-110"
+                animate={{ scale: [1.1, 1.15, 1.1], opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
                 aria-hidden="true"
               />
               {/* Image container */}
@@ -148,7 +235,11 @@ export default function HeroSection() {
                 {/* Overlay badge — bottom */}
                 <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-navy-950/90 to-transparent p-5">
                   <div className="flex items-center gap-3">
-                    <span className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                    <motion.span
+                      className="w-3 h-3 rounded-full bg-emerald-400 shrink-0"
+                      animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
                     <div>
                       <p className="text-white font-bold text-sm">فريق نبض متاح الآن</p>
                       <p className="text-white/60 text-xs">تمريض منزلي داخل دمياط</p>
@@ -157,7 +248,7 @@ export default function HeroSection() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>
