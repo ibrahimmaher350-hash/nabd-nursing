@@ -36,10 +36,11 @@ export default function LoginPage() {
       <div className="flex items-center justify-between">
         <Link
           href="/blood-bank"
-          className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-colors"
-          aria-label="رجوع"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold transition-all shadow-2xs"
+          aria-label="رجوع لبنك الدم"
         >
-          <ArrowRight className="w-5 h-5" />
+          <ArrowRight className="w-4 h-4 text-[#C0392B]" />
+          <span>رجوع لبنك الدم</span>
         </Link>
         <span className="text-xs font-bold text-gray-400">بنك الدم — نبض</span>
       </div>

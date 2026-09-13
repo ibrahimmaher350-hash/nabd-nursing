@@ -6,6 +6,7 @@
  */
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Phone, AlertCircle, CheckCircle2, Droplet, Building2, User, Hash } from 'lucide-react';
 import TopBar from '@/components/blood-bank/TopBar';
@@ -26,9 +27,14 @@ export default function BloodRequestPage() {
   const [notes, setNotes] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [pledged, setPledged] = useState(true);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!pledged) {
+      alert('يرجى الموافقة على إقرار نبض الأخلاقي بعدم وجود أي مقابل مادي للمتابعة.');
+      return;
+    }
     setIsLoading(true);
     try {
       await createBloodRequest({
@@ -53,8 +59,8 @@ export default function BloodRequestPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50" dir="rtl">
-      {/* Top Header */}
-      <TopBar title="طلب دم عاجل" showBack />
+      {/* Top Header with explicit back to Blood Bank */}
+      <TopBar title="طلب دم عاجل" subtitle="حالات الطوارئ والمستشفيات" showBack backHref="/blood-bank" />
 
       <div className="p-4 space-y-4">
         {/* Emergency Alert Banner */}
@@ -208,16 +214,43 @@ export default function BloodRequestPage() {
               />
             </div>
 
+            {/* Ethical Non-Profit Pledge Checkbox */}
+            <div className="bg-amber-50/80 border border-amber-300 rounded-xl p-3">
+              <label className="flex items-start gap-2.5 cursor-pointer">
+                <input
+                  type="checkbox"
+                  required
+                  checked={pledged}
+                  onChange={(e) => setPledged(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 rounded text-[#C0392B] focus:ring-[#C0392B] border-gray-300"
+                />
+                <span className="text-[11px] text-amber-900 font-bold leading-relaxed">
+                  <strong>إقرار نبض الأخلاقي:</strong> أتعهد بأن هذا الطلب إنساني لإنقاذ حياة مريض، وأقر بعدم دفع أو طلب أي مقابل مادي أو مكافأة مالية أو التعامل مع أي وسيط تجاري.
+                </span>
+              </label>
+            </div>
+
             {/* Submit CTA */}
             <button
               type="submit"
-              className="w-full py-3.5 bg-[#C0392B] hover:bg-[#A93226] text-white font-black text-base rounded-xl shadow-md transition-all active:scale-[0.98] flex items-center justify-center gap-2 pt-3"
+              disabled={isLoading}
+              className="w-full py-3.5 bg-[#C0392B] hover:bg-[#A93226] text-white font-black text-base rounded-xl shadow-md transition-all active:scale-[0.98] flex items-center justify-center gap-2 pt-3 disabled:opacity-60"
             >
               <Droplet className="w-5 h-5 fill-current" />
-              <span>نشر طلب التبرع الآن</span>
+              <span>{isLoading ? 'جارٍ تسجيل الطلب...' : 'نشر طلب التبرع الآن'}</span>
             </button>
           </form>
         )}
+
+        {/* Bottom Back Button */}
+        <div className="text-center pt-2 pb-6">
+          <Link
+            href="/blood-bank"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-800 transition-colors"
+          >
+            <span>← الرجوع لقائمة بنك الدم</span>
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -363,7 +363,7 @@ export default function OnboardingPage() {
         )}
 
         {/* Sticky Bottom Actions */}
-        <div className="pt-6 pb-2">
+        <div className="pt-6 pb-2 space-y-2">
           {currentStep < 4 ? (
             <div className="flex items-center gap-2.5">
               <button
@@ -407,6 +407,17 @@ export default function OnboardingPage() {
               </button>
             </div>
           )}
+
+          {/* Explicit Back / Cancel Button */}
+          <div className="text-center pt-1">
+            <button
+              type="button"
+              onClick={handleBack}
+              className="text-xs font-bold text-gray-400 hover:text-gray-700 transition-colors"
+            >
+              {currentStep > 1 ? '← الرجوع للخطوة السابقة' : '← إلغاء والرجوع لرئيسية بنك الدم'}
+            </button>
+          </div>
         </div>
       </div>
     </div>

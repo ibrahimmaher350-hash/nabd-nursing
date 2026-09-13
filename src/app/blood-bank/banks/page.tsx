@@ -44,8 +44,8 @@ export default function NearbyBanksPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50" dir="rtl">
-      {/* Top Header */}
-      <TopBar title="بنوك الدم القريبة" showBack />
+      {/* Top Header with Back Affordance */}
+      <TopBar title="بنوك ومراكز الدم الإقليمية" subtitle="المراكز الرسمية المعتمدة بدمياط والدلتا" showBack backHref="/blood-bank" />
 
       <div className="p-4 space-y-4">
         {/* Search Bar */}
@@ -109,6 +109,16 @@ export default function NearbyBanksPage() {
               <p className="text-xs text-gray-500">جرب البحث بكلمات أخرى أو مسح نص البحث</p>
             </div>
           )}
+        </div>
+
+        {/* Bottom Back Button */}
+        <div className="text-center pt-3 pb-6">
+          <Link
+            href="/blood-bank"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-800 transition-colors"
+          >
+            <span>← الرجوع لرئيسية بنك الدم</span>
+          </Link>
         </div>
       </div>
     </div>

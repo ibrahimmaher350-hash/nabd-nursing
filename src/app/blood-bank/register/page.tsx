@@ -70,13 +70,14 @@ export default function RegisterPage() {
       {/* Top Header / Back */}
       <div className="flex items-center justify-between">
         <Link
-          href="/blood-bank/login"
-          className="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-colors"
-          aria-label="رجوع"
+          href="/blood-bank"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold transition-all shadow-2xs"
+          aria-label="رجوع لبنك الدم"
         >
-          <ArrowRight className="w-5 h-5" />
+          <ArrowRight className="w-4 h-4 text-[#C0392B]" />
+          <span>رجوع</span>
         </Link>
-        <h1 className="text-sm font-black text-gray-900">إنشاء حساب متبرع</h1>
+        <h1 className="text-sm font-black text-gray-900">تسجيل متبرع جديد لدى نبض</h1>
         <div className="w-9" /> {/* Spacer */}
       </div>
 
@@ -262,21 +263,43 @@ export default function RegisterPage() {
           <Lock className="w-4 h-4 text-gray-400 absolute end-3.5 top-1/2 -translate-y-1/2" />
         </div>
 
+        {/* Voluntary Pledge Checkbox */}
+        <div className="bg-amber-50/80 border border-amber-300 rounded-xl p-3 text-start">
+          <label className="flex items-start gap-2.5 cursor-pointer">
+            <input
+              type="checkbox"
+              required
+              defaultChecked
+              className="mt-0.5 w-4 h-4 rounded text-[#C0392B] focus:ring-[#C0392B] border-gray-300"
+            />
+            <span className="text-[11px] text-amber-950 font-bold leading-relaxed">
+              <strong>ميثاق المتبرع الإنساني:</strong> أتعهد بأن تسجيلي كمتبرع هو عمل تطوعي إنساني خالص لوجه الله وبدون أي مقابل مادي أو سمسرة مالية.
+            </span>
+          </label>
+        </div>
+
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-[#C0392B] hover:bg-[#A93226] text-white font-black text-sm py-3.5 rounded-xl shadow-md transition-all active:scale-[0.98] mt-4"
+          className="w-full bg-[#C0392B] hover:bg-[#A93226] text-white font-black text-sm py-3.5 rounded-xl shadow-md transition-all active:scale-[0.98] mt-2"
         >
-          إنشاء حساب
+          إنشاء حساب متبرع موثق
         </button>
       </form>
 
       {/* Footer */}
-      <div className="text-center py-3 text-xs text-gray-500">
-        <span>لديك حساب بالفعل؟ </span>
-        <Link href="/blood-bank/login" className="font-bold text-[#C0392B] hover:underline">
-          تسجيل الدخول
-        </Link>
+      <div className="text-center py-3 text-xs text-gray-500 space-y-2">
+        <div>
+          <span>لديك حساب بالفعل؟ </span>
+          <Link href="/blood-bank/login" className="font-bold text-[#C0392B] hover:underline">
+            تسجيل الدخول
+          </Link>
+        </div>
+        <div>
+          <Link href="/blood-bank" className="font-bold text-gray-500 hover:text-gray-800">
+            ← الرجوع لرئيسية بنك الدم
+          </Link>
+        </div>
       </div>
     </div>
   );

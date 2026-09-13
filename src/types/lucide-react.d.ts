@@ -28,6 +28,8 @@ declare module 'lucide-react' {
   export const Droplet: LucideIcon;
   export const ArrowRight: LucideIcon;
   export const ArrowLeft: LucideIcon;
+  export const ArrowUpRight: LucideIcon;
+  export const ArrowDownLeft: LucideIcon;
   export const Mail: LucideIcon;
   export const Lock: LucideIcon;
   export const Eye: LucideIcon;
@@ -52,6 +54,11 @@ declare module 'lucide-react' {
   export const Heart: LucideIcon;
   export const Megaphone: LucideIcon;
   export const Shield: LucideIcon;
+  export const ShieldCheck: LucideIcon;
+  export const ShieldAlert: LucideIcon;
+  export const BadgeCheck: LucideIcon;
+  export const Sparkles: LucideIcon;
+  export const Share2: LucideIcon;
   export const Stethoscope: LucideIcon;
   export const X: LucideIcon;
 

@@ -1,12 +1,8 @@
 'use client';
 
-/**
- * app/blood-bank/profile/page.tsx
- * Donor profile page with donation toggle, blood type summary, and quick action grid.
- */
-
 import React from 'react';
-import { Camera, Droplet, Star, LogOut } from 'lucide-react';
+import Link from 'next/link';
+import { Camera, Droplet, Star, LogOut, ShieldCheck } from 'lucide-react';
 import { useDonorStore } from '@/lib/blood-bank/useDonorStore';
 import { toArabicDigits } from '@/lib/blood-bank/mockData';
 import TopBar from '@/components/blood-bank/TopBar';
@@ -22,10 +18,12 @@ export default function ProfilePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50" dir="rtl">
-      {/* Top Bar with title */}
+      {/* Top Bar with title and Back link */}
       <TopBar
-        title="الملف الشخصي"
+        title="الملف الشخصي للمتبرع"
+        subtitle="بيانات الحساب والتوثيق"
         showBack
+        backHref="/blood-bank"
         rightAction={
           <button
             onClick={logout}
@@ -82,6 +80,12 @@ export default function ProfilePage() {
           <div className="inline-flex items-center gap-1.5 mt-2.5 px-3 py-1 rounded-full bg-[#FDECEC] text-[#C0392B] text-xs font-bold border border-[#FADBD8]">
             <Droplet className="w-3.5 h-3.5 fill-current" />
             <span>{toArabicDigits(donationCount)} تبرعات موثقة</span>
+          </div>
+
+          {/* Verified Donor Trust Badge */}
+          <div className="inline-flex items-center gap-1.5 mt-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-extrabold border border-emerald-300 shadow-2xs">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 stroke-[2.5]" />
+            <span>متبرع معتمد وموثق لدى نبض 🛡️</span>
           </div>
         </div>
 
@@ -149,6 +153,16 @@ export default function ProfilePage() {
 
           {/* Quick Action Grid */}
           <QuickActionGrid />
+        </div>
+
+        {/* Bottom Back Button */}
+        <div className="text-center pt-3 pb-6">
+          <Link
+            href="/blood-bank"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-800 transition-colors"
+          >
+            <span>← الرجوع لرئيسية بنك الدم</span>
+          </Link>
         </div>
       </div>
     </div>
