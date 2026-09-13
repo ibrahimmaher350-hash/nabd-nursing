@@ -277,10 +277,10 @@ drop policy if exists "Allow update notification_log" on public.notification_log
 
 -- Re-create policies cleanly
 create policy "Allow users to view own profile" on public.profiles
-  for select using (auth.uid() = id or (select role from public.profiles where id = auth.uid()) = 'admin' or true);
+  for select using (true);
 
 create policy "Allow users to update own profile" on public.profiles
-  for update using (auth.uid() = id or (select role from public.profiles where id = auth.uid()) = 'admin' or true);
+  for update using (true);
 
 create policy "Allow insert for new profile" on public.profiles
   for insert with check (true);

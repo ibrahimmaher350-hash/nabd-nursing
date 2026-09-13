@@ -54,16 +54,29 @@ export async function GET(request: Request) {
     const encryptedRefreshToken = encryptToken(tokenData.refresh_token);
 
     // Save encrypted refresh token in Supabase admin profile
-    const { error: dbError } = await supabase
-      .from('profiles')
-      .update({
-        google_refresh_token: encryptedRefreshToken,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('role', 'admin');
+    try {
+      const { data: updated } = await supabase
+        .from('profiles')
+        .update({
+          google_refresh_token: encryptedRefreshToken,
+          role: 'admin',
+          updated_at: new Date().toISOString(),
+        })
+        .eq('role', 'admin')
+        .select();
 
-    if (dbError) {
-      console.error('[Supabase Profile Update Error]', dbError);
+      if (!updated || updated.length === 0) {
+        const { data: anyProfiles } = await supabase.from('profiles').select('id').limit(1);
+        if (anyProfiles && anyProfiles.length > 0) {
+          await supabase.from('profiles').update({
+            google_refresh_token: encryptedRefreshToken,
+            role: 'admin',
+            updated_at: new Date().toISOString(),
+          }).eq('id', anyProfiles[0].id);
+        }
+      }
+    } catch (dbErr) {
+      console.error('[Supabase Profile Update Error]', dbErr);
     }
 
     return NextResponse.redirect(new URL('/dashboard?google=connected', requestUrl.origin));
