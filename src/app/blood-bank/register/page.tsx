@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { useDonorStore } from '@/lib/blood-bank/useDonorStore';
 import { BloodType } from '@/lib/blood-bank/types';
+import SelfieCapture from '@/components/blood-bank/SelfieCapture';
 
 const bloodTypes: BloodType[] = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
@@ -30,6 +31,7 @@ export default function RegisterPage() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
   const [gender, setGender] = useState<'male' | 'female'>('male');
   const [birthDate, setBirthDate] = useState('1998-01-01');
   const [bloodType, setBloodType] = useState<BloodType>('A+');
@@ -45,6 +47,10 @@ export default function RegisterPage() {
       setError('يرجى ملء جميع الحقول المطلوبة');
       return;
     }
+    if (!avatarUrl) {
+      setError('يرجى التقاط صورة سيلفي مباشرة للوجه بالكاميرا قبل استكمال التسجيل للتوثيق الإنساني 🤳');
+      return;
+    }
     if (password && confirmPassword && password !== confirmPassword) {
       setError('كلمات المرور غير متطابقة');
       return;
@@ -54,6 +60,7 @@ export default function RegisterPage() {
       firstName,
       lastName,
       username,
+      avatarUrl,
       gender,
       birthDate,
       bloodType,
@@ -81,20 +88,15 @@ export default function RegisterPage() {
         <div className="w-9" /> {/* Spacer */}
       </div>
 
-      {/* Avatar with Camera Badge */}
-      <div className="flex justify-center">
-        <div className="relative">
-          <div className="w-24 h-24 rounded-full bg-[#FDECEC] border-2 border-[#C0392B] flex items-center justify-center text-gray-400 overflow-hidden shadow-sm">
-            <User className="w-12 h-12 text-[#C0392B]/60" />
-          </div>
-          <button
-            type="button"
-            className="absolute bottom-0 start-0 w-7 h-7 rounded-full bg-[#C0392B] text-white flex items-center justify-center shadow-md border-2 border-white transition-transform active:scale-95"
-            aria-label="تحميل صورة شخصية"
-          >
-            <Camera className="w-3.5 h-3.5" />
-          </button>
-        </div>
+      {/* Direct Selfie Capture Component */}
+      <div className="py-1">
+        <SelfieCapture
+          value={avatarUrl}
+          onChange={(url) => {
+            setAvatarUrl(url);
+            setError('');
+          }}
+        />
       </div>
 
       {error && (

@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, MapPin, Navigation, ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import OnboardingStepper from '@/components/blood-bank/OnboardingStepper';
+import InteractiveMap from '@/components/blood-bank/InteractiveMap';
 import { useDonorStore } from '@/lib/blood-bank/useDonorStore';
 import { BloodType } from '@/lib/blood-bank/types';
 
@@ -34,7 +35,9 @@ export default function OnboardingPage() {
 
   // Step 4: Location
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [address, setAddress] = useState<string>(donor?.region || 'مصر, محافظة دمياط, CRM7+C52');
+  const [address, setAddress] = useState<string>(donor?.region || 'مصر، محافظة دمياط - الأعصر');
+  const [lat, setLat] = useState<number>(donor?.lat || 31.4165);
+  const [lng, setLng] = useState<number>(donor?.lng || 31.8133);
 
   const handleNext = () => {
     if (currentStep < 4) {
@@ -57,6 +60,8 @@ export default function OnboardingPage() {
       bloodType: selectedBloodType,
       donationCount: hasDonatedBefore ? Number(donationCount) : 0,
       region: address,
+      lat,
+      lng,
       profileComplete: true,
     });
     router.push('/blood-bank');
@@ -305,54 +310,19 @@ export default function OnboardingPage() {
               </button>
             </div>
 
-            {/* Map Preview Placeholder */}
-            {/* TODO: replace with real Google Maps / Mapbox embed */}
-            <div className="relative w-full h-56 rounded-2xl overflow-hidden border border-gray-200 bg-[#EEF2F6] flex items-center justify-center shadow-inner">
-              {/* Map grid pattern simulation */}
-              <div
-                className="absolute inset-0 opacity-40"
-                style={{
-                  backgroundImage: `
-                    linear-gradient(to right, #CBD5E1 1px, transparent 1px),
-                    linear-gradient(to bottom, #CBD5E1 1px, transparent 1px)
-                  `,
-                  backgroundSize: '24px 24px',
-                }}
-              />
-              {/* Roads simulation */}
-              <div className="absolute w-full h-4 bg-white/70 -rotate-12 top-20 shadow-xs" />
-              <div className="absolute w-full h-3 bg-amber-100/80 rotate-45 bottom-12 shadow-xs" />
-              <div className="absolute h-full w-5 bg-white/70 rotate-6 right-24 shadow-xs" />
-
-              {/* Red MapPin centered */}
-              <div className="relative z-10 flex flex-col items-center animate-bounce">
-                <div className="w-10 h-10 rounded-full bg-[#C0392B] text-white flex items-center justify-center shadow-lg ring-4 ring-white">
-                  <MapPin className="w-6 h-6 fill-current text-white" />
-                </div>
-                <div className="w-3 h-1.5 bg-black/30 rounded-full mt-1 blur-[1px]" />
-              </div>
-
-              {/* Blue user dot nearby */}
-              <div className="absolute top-14 start-16 z-10 flex items-center justify-center">
-                <div className="w-3.5 h-3.5 rounded-full bg-[#2D6CDF] ring-4 ring-[#2D6CDF]/30 animate-pulse" />
-              </div>
-
-              {/* Floating circular locate button */}
-              <button
-                type="button"
-                onClick={() => setAddress('مصر, محافظة دمياط, CRM7+C52')}
-                className="absolute top-3 end-3 z-20 w-9 h-9 rounded-full bg-white text-[#C0392B] shadow-md border border-gray-200 flex items-center justify-center hover:bg-gray-50 active:scale-95 transition-transform"
-                title="موقعي الحالي"
-                aria-label="تحديد موقعي"
-              >
-                <Navigation className="w-4 h-4 fill-[#C0392B]" />
-              </button>
-
-              {/* Google watermark text */}
-              <div className="absolute bottom-2 end-3 text-[11px] font-sans font-bold text-gray-500/80 select-none pointer-events-none">
-                Google
-              </div>
-            </div>
+            {/* Real Interactive OpenStreetMap & Leaflet Map */}
+            <InteractiveMap
+              mode="picker"
+              initialLat={lat}
+              initialLng={lng}
+              height="280px"
+              showQuickPills={true}
+              onLocationChange={(loc) => {
+                setLat(loc.lat);
+                setLng(loc.lng);
+                setAddress(loc.address);
+              }}
+            />
 
             {/* Address line below map */}
             <div className="flex items-center gap-2 text-xs text-gray-700 bg-gray-50 p-3 rounded-xl border border-gray-200">

@@ -44,18 +44,31 @@ export default function ProfilePage() {
   const [firstName, setFirstName] = useState(donor?.firstName || 'إبراهيم');
   const [lastName, setLastName] = useState(donor?.lastName || 'ماهر');
   const [username, setUsername] = useState(donor?.username || 'ibrahim_maher');
+  const [avatarUrl, setAvatarUrl] = useState(donor?.avatarUrl || '');
   const [phone, setPhone] = useState(donor?.phone || '01001097896');
   const [email, setEmail] = useState(donor?.email || 'ibrahim@nabd.eg');
   const [selectedBloodType, setSelectedBloodType] = useState<any>(bloodType || 'A+');
   const [region, setRegion] = useState(donor?.region || 'دمياط، مصر');
   const [birthDate, setBirthDate] = useState(donor?.birthDate || '1995-05-15');
 
-  // Settings states
-  const [notifyUrgent, setNotifyUrgent] = useState(true);
-  const [showPhonePublic, setShowPhonePublic] = useState(false);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const isAvailable = donor?.availableToDonate ?? true;
   const donationCount = donor?.donationCount ?? 0;
+
+  const handleSelfieChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      setAvatarUrl(result);
+      updateProfile({ avatarUrl: result });
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,6 +78,7 @@ export default function ProfilePage() {
         firstName,
         lastName,
         username,
+        avatarUrl,
         phone,
         email,
         bloodType: selectedBloodType,
@@ -84,10 +98,20 @@ export default function ProfilePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900" dir="rtl">
+      {/* Hidden selfie input */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        accept="image/*"
+        capture="user"
+        onChange={handleSelfieChange}
+        className="hidden"
+      />
+
       {/* Top Bar with title and Back link */}
       <TopBar
-        title="الملف الشخصي والإعدادات"
-        subtitle="إدارة بيانات الحساب والتبرع بالدم"
+        title="الملف الشخصي للمتبرع"
+        subtitle="بيانات الحساب وتوثيق التبرع بالدم"
         showBack
         backHref="/blood-bank"
         rightAction={
@@ -115,14 +139,22 @@ export default function ProfilePage() {
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-5 flex flex-col items-center text-center">
           <div className="relative">
             <div className="w-22 h-22 rounded-full bg-slate-100 border-[3px] border-[#C0392B] flex items-center justify-center text-slate-400 shadow-sm overflow-hidden">
-              <User className="w-12 h-12 text-[#07132B]" />
+              {avatarUrl || donor?.avatarUrl ? (
+                <img
+                  src={avatarUrl || donor?.avatarUrl}
+                  alt={firstName}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <User className="w-12 h-12 text-[#07132B]" />
+              )}
             </div>
             <button
               type="button"
-              onClick={() => alert('يمكنك تغيير الصورة الشخصية من خلال حساب Supabase الخاص بك.')}
+              onClick={() => fileInputRef.current?.click()}
               className="absolute bottom-0 start-0 w-7 h-7 rounded-full bg-[#C0392B] text-white flex items-center justify-center shadow-md ring-2 ring-white hover:bg-[#A93226] transition-transform active:scale-95"
-              aria-label="تغيير الصورة الشخصية"
-              title="تغيير الصورة"
+              aria-label="تحديث صورة السيلفي"
+              title="تحديث صورة السيلفي"
             >
               <Camera className="w-3.5 h-3.5" />
             </button>
@@ -327,34 +359,6 @@ export default function ProfilePage() {
             </div>
           </div>
         )}
-
-        {/* Card 2: Notification & Privacy Settings */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs p-4 space-y-3">
-          <h3 className="text-xs font-black text-slate-900 flex items-center gap-1.5">
-            <Bell className="w-3.5 h-3.5 text-amber-500" />
-            <span>تفضيلات الإشعارات والخصوصية</span>
-          </h3>
-
-          <label className="flex items-center justify-between cursor-pointer pt-1">
-            <span className="text-xs font-bold text-slate-700">تنبيهي عند وجود طلب دم عاجل في نطاق دمياط</span>
-            <input
-              type="checkbox"
-              checked={notifyUrgent}
-              onChange={(e) => setNotifyUrgent(e.target.checked)}
-              className="w-4 h-4 rounded text-[#C0392B] focus:ring-[#C0392B]"
-            />
-          </label>
-
-          <label className="flex items-center justify-between cursor-pointer pt-1 border-t border-slate-100">
-            <span className="text-xs font-bold text-slate-700">إظهار رقم هاتفي للمرضى المحتاجين فقط</span>
-            <input
-              type="checkbox"
-              checked={showPhonePublic}
-              onChange={(e) => setShowPhonePublic(e.target.checked)}
-              className="w-4 h-4 rounded text-[#C0392B] focus:ring-[#C0392B]"
-            />
-          </label>
-        </div>
 
         {/* Quick Action Grid */}
         <div className="pt-2">

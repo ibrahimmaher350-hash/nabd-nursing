@@ -23,6 +23,7 @@ export interface Donor {
   profileComplete: boolean;
   verifiedDonations: number;
   rating: number;
+  avatarUrl?: string;
 }
 
 export interface BloodBank {
@@ -31,6 +32,9 @@ export interface BloodBank {
   address: string;
   distanceKm: number;
   availableTypes: BloodType[];
+  lat?: number;
+  lng?: number;
+  phone?: string;
 }
 
 export interface BloodRequest {
