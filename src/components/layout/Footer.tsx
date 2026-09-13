@@ -15,6 +15,7 @@ const footerLinks = {
   main: [
     { href: '/services',                        label: 'خدمات التمريض 🩺' },
     { href: '/reviews',                         label: 'آراء عملائنا ⭐' },
+    { href: '/blood-bank',                      label: 'بنك الدم والتبرع 🩸' },
     { href: '/booking',                         label: 'طلب ممرض للمنزل 📅' },
     { href: '/medical-guide',                   label: 'الإسعافات والروشتات 🚑💊' },
     { href: 'https://nabd-damietta.blogspot.com', label: 'المدونة الطبية ✍️', isExternal: true },

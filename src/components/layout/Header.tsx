@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 /**
  * components/layout/Header.tsx — نبض للتمريض المنزلي
  * CareHub-inspired floating island header with 24/7 emergency top bar
@@ -27,6 +27,7 @@ interface NavLinkItem {
 const navLinks: NavLinkItem[] = [
   { href: '/#services',      label: 'خدماتنا 🩺',             badge: null },
   { href: '/reviews',        label: 'آراء المرضى ⭐',         badge: '5.0' },
+  { href: '/blood-bank',     label: 'بنك الدم 🩸',             badge: 'جديد' },
   { href: '/medical-guide',  label: 'الإسعافات والروشتات 🚑', badge: null },
   { href: 'https://nabd-damietta.blogspot.com', label: 'المدونة ✍️', badge: null, isExternal: true },
   { href: '/contact',        label: 'تواصل معنا',             badge: null },
