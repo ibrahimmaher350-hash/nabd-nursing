@@ -5,10 +5,12 @@
  * Nearby blood banks page with instant client-side search and distance sorting.
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Search, MapPin, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { bloodBanks } from '@/lib/blood-bank/mockData';
+import { bloodBanks as defaultMockBanks } from '@/lib/blood-bank/mockData';
+import { BloodBank } from '@/lib/blood-bank/types';
+import { getBloodBanks } from '@/lib/blood-bank/supabaseService';
 import { useDonorStore } from '@/lib/blood-bank/useDonorStore';
 import BloodBankCard from '@/components/blood-bank/BloodBankCard';
 import TopBar from '@/components/blood-bank/TopBar';
@@ -16,20 +18,29 @@ import TopBar from '@/components/blood-bank/TopBar';
 export default function NearbyBanksPage() {
   const { bloodType } = useDonorStore();
   const [searchQuery, setSearchQuery] = useState('');
+  const [banksList, setBanksList] = useState<BloodBank[]>(defaultMockBanks);
+
+  useEffect(() => {
+    getBloodBanks().then((data) => {
+      if (data && data.length > 0) {
+        setBanksList(data);
+      }
+    });
+  }, []);
 
   // Filter and sort blood banks ascending by distance
   const filteredBanks = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
     const list = query
-      ? bloodBanks.filter(
+      ? banksList.filter(
           (bank) =>
             bank.name.toLowerCase().includes(query) ||
             bank.address.toLowerCase().includes(query)
         )
-      : [...bloodBanks];
+      : [...banksList];
 
     return list.sort((a, b) => a.distanceKm - b.distanceKm);
-  }, [searchQuery]);
+  }, [searchQuery, banksList]);
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50" dir="rtl">

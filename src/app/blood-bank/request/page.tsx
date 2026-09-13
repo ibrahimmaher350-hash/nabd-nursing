@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { Phone, AlertCircle, CheckCircle2, Droplet, Building2, User, Hash } from 'lucide-react';
 import TopBar from '@/components/blood-bank/TopBar';
 import { BloodType } from '@/lib/blood-bank/types';
+import { createBloodRequest } from '@/lib/blood-bank/supabaseService';
 
 const bloodTypes: BloodType[] = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
@@ -24,14 +25,30 @@ export default function BloodRequestPage() {
   const [phone, setPhone] = useState('');
   const [notes, setNotes] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: replace with real API call to submit blood request
-    setIsSubmitted(true);
-    setTimeout(() => {
-      router.push('/blood-bank');
-    }, 2000);
+    setIsLoading(true);
+    try {
+      await createBloodRequest({
+        patientName,
+        hospital,
+        bloodType,
+        bagsCount: Number(bagsCount) || 1,
+        urgency,
+        phone,
+        notes,
+      });
+    } catch (err) {
+      console.error('Request submission error:', err);
+    } finally {
+      setIsLoading(false);
+      setIsSubmitted(true);
+      setTimeout(() => {
+        router.push('/blood-bank');
+      }, 2000);
+    }
   };
 
   return (

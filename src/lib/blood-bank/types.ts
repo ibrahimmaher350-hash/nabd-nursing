@@ -37,7 +37,7 @@ export interface BloodRequest {
   id: string;
   requesterName: string;
   bloodType: BloodType;
-  urgency: 'urgent' | 'normal' | 'emergency';
+  urgency: 'urgent' | 'normal' | 'emergency' | 'critical';
   distanceKm: number;
   createdAt: string;
   hospital?: string;

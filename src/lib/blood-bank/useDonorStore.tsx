@@ -7,6 +7,7 @@
 
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { Donor, BloodType } from './types';
+import { saveDonorToSupabase } from './supabaseService';
 
 const STORAGE_KEY = 'nabd-blood-bank-donor';
 
@@ -86,6 +87,10 @@ export function DonorProvider({ children }: { children: React.ReactNode }) {
       );
     } catch {
       // Storage quota or private mode error
+    }
+
+    if (donor) {
+      saveDonorToSupabase(donor).catch(() => {});
     }
   }, [donor, isLoggedIn, locationPermission, isInitialized]);
 
