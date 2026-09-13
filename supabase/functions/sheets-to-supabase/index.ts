@@ -1,5 +1,5 @@
-// supabase/functions/process-reminders/index.ts
-// Runs every 5 minutes: Selects due reminder jobs, sends Arabic RTL emails via Resend, and logs to Supabase and Sheets
+// supabase/functions/sheets-to-supabase/index.ts
+// Polling / Webhook receiver that reads changed rows in Google Sheets and updates Supabase + Calendar
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.0';
@@ -15,22 +15,24 @@ serve(async (req) => {
   }
 
   try {
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const siteUrl = Deno.env.get('SITE_URL') || 'https://nabd-nursing.vercel.app';
 
-    // Trigger internal Next.js reminders cron
-    const res = await fetch(`${siteUrl}/api/cron/reminders`, {
+    // Trigger Next.js bidirectional sync endpoint
+    const response = await fetch(`${siteUrl}/api/sync/sheets`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${supabaseKey}`,
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${supabaseKey}`,
       },
+      body: JSON.stringify({
+        action: 'poll_sheets_to_supabase',
+      }),
     });
 
-    const data = await res.json();
+    const data = await response.json();
 
-    return new Response(JSON.stringify({ success: true, processed: data }), {
+    return new Response(JSON.stringify({ success: true, synced: data }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });

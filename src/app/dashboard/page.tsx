@@ -315,23 +315,63 @@ function DashboardContent() {
         </div>
 
         {/* 2. Integrations Card */}
-        <div className="bg-gradient-to-r from-[#07132B] to-[#162E5B] text-white p-5 rounded-2xl shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-gold-500/20">
+        <div className="bg-gradient-to-r from-[#07132B] to-[#162E5B] text-white p-5 rounded-2xl shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border border-gold-500/20">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <FileSpreadsheet className="w-5 h-5 text-gold-400" />
-              <span className="font-black text-base">منظومة المزامنة الآلية (Google Calendar & Sheets)</span>
+              <span className="font-black text-base">لوحة تحكم جوجل شيت (Google Sheets Control Panel)</span>
             </div>
             <p className="text-xs text-slate-300 leading-relaxed">
-              يتم إنشاء مواعيد Google تلقائياً مع رابط Meet وإضافة صف فوري في تقرير Google Sheets اليومي لكل حجز جديد.
+              تحكّم في الحجوزات، ملفات المرضى، بنك الدم، التذكيرات، وساعات العمل مباشرة من جدول جوجل الخاص بك. المزامنة ثنائية الاتجاه ولحظية!
             </p>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 flex-wrap shrink-0">
+            {/* Open Google Sheet Direct Link */}
+            <a
+              href="https://docs.google.com/spreadsheets/d/19Xv5QOgi0Qn78Q6ypv6PM7sU74khLEtHy7T49T_vUjo/edit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-4 py-2.5 rounded-xl shadow-xs flex items-center gap-1.5 transition-all active:scale-95"
+            >
+              <FileSpreadsheet className="w-4 h-4" />
+              <span>فتح شيت التحكم 📊</span>
+              <ExternalLink className="w-3 h-3 opacity-70" />
+            </a>
+
+            {/* Run Full Sync */}
+            <button
+              type="button"
+              onClick={async () => {
+                try {
+                  setIsLoading(true);
+                  const res = await fetch('/api/admin/full-sync', { method: 'POST' });
+                  const data = await res.json();
+                  if (res.ok) {
+                    alert('تمت المزامنة الكاملة مع الأوراق الخمس بنجاح! ✅\n' + JSON.stringify(data.stats));
+                    await fetchData();
+                  } else {
+                    alert('خطأ أثناء المزامنة: ' + (data.error || 'تأكد من ربط حساب Google'));
+                  }
+                } catch (e: any) {
+                  alert('خطأ: ' + e.message);
+                } finally {
+                  setIsLoading(false);
+                }
+              }}
+              className="bg-gold-500 hover:bg-gold-600 text-slate-900 text-xs font-black px-4 py-2.5 rounded-xl shadow-xs flex items-center gap-1.5 transition-all active:scale-95"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>مزامنة الشيت الآن 🔄</span>
+            </button>
+
+            {/* Google OAuth Connect */}
             <a
               href="/api/auth/google"
-              className="bg-white text-[#07132B] hover:bg-gold-50 text-xs font-black px-4 py-2.5 rounded-xl shadow-xs flex items-center gap-1.5 transition-colors"
+              className="bg-white/15 hover:bg-white/25 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition-colors"
+              title="إعادة ربط أو تحديث إذن Google"
             >
-              <span>ربط أو تحديث حساب Google 📅</span>
+              <span>ربط Google 📅</span>
             </a>
           </div>
         </div>

@@ -46,6 +46,11 @@ export default function NewAppointmentPage() {
   const [patientPhone, setPatientPhone] = useState(profile?.phone || '');
   const [patientEmail, setPatientEmail] = useState(user?.email || '');
   const [visitType, setVisitType] = useState('home_visit');
+  const [bloodType, setBloodType] = useState('A+');
+  const [allergies, setAllergies] = useState('');
+  const [chronicDiseases, setChronicDiseases] = useState('');
+  const [currentMedications, setCurrentMedications] = useState('');
+  const [wantsToDonate, setWantsToDonate] = useState(false);
   const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date();
     today.setDate(today.getDate() + 1);
@@ -75,11 +80,17 @@ export default function NewAppointmentPage() {
           patientName,
           patientPhone,
           patientEmail,
-          visitType,
-          title: VISIT_TYPES.find((v) => v.id === visitType)?.label || 'زيارة تمريضية',
+          visitType: wantsToDonate ? 'blood_donation' : visitType,
+          title: wantsToDonate
+            ? 'زيارة تبرع بالدم وتنسيق طبي'
+            : VISIT_TYPES.find((v) => v.id === visitType)?.label || 'زيارة تمريضية',
           startAt,
           location,
           notes,
+          bloodType,
+          allergies,
+          chronicDiseases,
+          currentMedications,
           patientId: user?.id || null,
         }),
       });
@@ -344,18 +355,91 @@ export default function NewAppointmentPage() {
 
               <div className="space-y-1.5">
                 <label className="block text-xs font-bold text-slate-800">
-                  ملاحظات إضافية أو وصف الحالة الطبية (اختياري)
+                  ملاحظات إضافية أو وصف الحالة (اختياري)
                 </label>
                 <div className="relative">
                   <textarea
-                    rows={3}
-                    placeholder="أي توجيهات طبية، حساسية أدوية، أو متطلبات خاصة..."
+                    rows={2}
+                    placeholder="أي توجيهات طبية أو متطلبات خاصة بالزيارة..."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     className="w-full pl-4 pr-10 py-3 bg-slate-50 rounded-xl border border-slate-200 text-sm font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#07132B]/20"
                   />
                   <FileText className="w-4 h-4 text-slate-400 absolute right-3.5 top-3.5" />
                 </div>
+              </div>
+            </div>
+
+            {/* 5. Medical Profile (for Tab 2: ملفات المرضى) */}
+            <div className="space-y-4 pt-2 border-t border-slate-100">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-black text-slate-900">5. الملف الطبي الأولي (يُحفظ في شيت ملفات المرضى)</h3>
+                <span className="text-[11px] font-bold text-slate-400">اختياري</span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700">فصيلة الدم</label>
+                  <select
+                    value={bloodType}
+                    onChange={(e) => setBloodType(e.target.value)}
+                    className="w-full p-3 bg-slate-50 rounded-xl border border-slate-200 text-sm font-bold"
+                  >
+                    {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map((bt) => (
+                      <option key={bt} value={bt}>{bt}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700">أي حساسية دوائية معروفة؟</label>
+                  <input
+                    type="text"
+                    placeholder="مثال: حساسية بنسلين أو أسبرين..."
+                    value={allergies}
+                    onChange={(e) => setAllergies(e.target.value)}
+                    className="w-full p-3 bg-slate-50 rounded-xl border border-slate-200 text-sm font-bold placeholder:text-slate-400"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700">الأمراض المزمنة (إن وجدت)</label>
+                  <input
+                    type="text"
+                    placeholder="مثال: ضغط، سكر، حساسية صدر..."
+                    value={chronicDiseases}
+                    onChange={(e) => setChronicDiseases(e.target.value)}
+                    className="w-full p-3 bg-slate-50 rounded-xl border border-slate-200 text-sm font-bold placeholder:text-slate-400"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700">الأدوية المستخدمة حالياً</label>
+                  <input
+                    type="text"
+                    placeholder="أدوية الضغط أو السيولة أو الإنسولين..."
+                    value={currentMedications}
+                    onChange={(e) => setCurrentMedications(e.target.value)}
+                    className="w-full p-3 bg-slate-50 rounded-xl border border-slate-200 text-sm font-bold placeholder:text-slate-400"
+                  />
+                </div>
+              </div>
+
+              {/* Blood Donation Checkbox */}
+              <div className="p-3 bg-red-50/80 border border-red-200 rounded-xl">
+                <label className="flex items-center gap-2.5 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={wantsToDonate}
+                    onChange={(e) => setWantsToDonate(e.target.checked)}
+                    className="w-4 h-4 rounded text-[#C0392B] focus:ring-[#C0392B]"
+                  />
+                  <span className="text-xs font-bold text-red-900">
+                    أرغب في تسجيل هذا الموعد أيضاً للتبرع الطوعي بالدم في بنك دم نبض 🩸
+                  </span>
+                </label>
               </div>
             </div>
 
