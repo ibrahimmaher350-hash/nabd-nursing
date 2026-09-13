@@ -93,28 +93,6 @@ export default function TopBar({
   // Dashboard top bar mode (Unified with Nabd Identity)
   return (
     <header className="sticky top-0 z-30 bg-[#07132B] text-white border-b border-white/10" dir="rtl">
-      {/* 1. Nabd Brand & Emergency Ribbon */}
-      <div className="px-4 py-1.5 bg-[#040A1A] border-b border-white/5 flex items-center justify-between text-[11px] text-gray-300">
-        <div className="flex items-center gap-2">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
-          </span>
-          <span className="font-bold text-amber-400">طوارئ نبض 24/7:</span>
-          <a href="tel:01099667065" className="font-extrabold text-white hover:text-amber-300 tracking-wider">
-            01099667065
-          </a>
-        </div>
-
-        {/* Return to main site button */}
-        <Link
-          href="/"
-          className="flex items-center gap-1 text-[11px] font-bold text-amber-300 hover:text-white transition-colors bg-white/10 hover:bg-white/15 px-2.5 py-0.5 rounded-full"
-        >
-          <span>موقع نبض 🩺</span>
-          <ChevronRight className="w-3.5 h-3.5" />
-        </Link>
-      </div>
 
       {/* 2. Main App Bar with User Greeting & Search */}
       <div className="px-4 py-2.5 flex items-center justify-between">
@@ -137,7 +115,15 @@ export default function TopBar({
         </Link>
 
         {/* Action icons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <Link
+            href="/"
+            className="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-amber-300 hover:text-white flex items-center justify-center transition-colors active:scale-95"
+            aria-label="العودة لموقع نبض الرئيسي"
+            title="موقع نبض الرئيسي 🩺"
+          >
+            <Home className="w-4 h-4" />
+          </Link>
           <Link
             href="/blood-bank/banks"
             className="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors active:scale-95"

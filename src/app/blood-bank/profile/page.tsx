@@ -1,170 +1,387 @@
 'use client';
 
-import React from 'react';
+/**
+ * src/app/blood-bank/profile/page.tsx
+ * Complete Donor Profile & Settings Center with full user control.
+ * Edit profile, update blood type, toggle donation availability, notifications, and save to Supabase.
+ */
+
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Camera, Droplet, Star, LogOut, ShieldCheck } from 'lucide-react';
+import {
+  Camera,
+  Droplet,
+  Star,
+  LogOut,
+  ShieldCheck,
+  Edit2,
+  Check,
+  CheckCircle2,
+  Bell,
+  Phone,
+  Mail,
+  MapPin,
+  Calendar,
+  User,
+  Heart,
+  ArrowRight,
+} from 'lucide-react';
 import { useDonorStore } from '@/lib/blood-bank/useDonorStore';
 import { toArabicDigits } from '@/lib/blood-bank/mockData';
 import TopBar from '@/components/blood-bank/TopBar';
 import QuickActionGrid from '@/components/blood-bank/modals/QuickActionGrid';
 
+const BLOOD_TYPES = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] as const;
+
 export default function ProfilePage() {
-  const { donor, bloodType, setAvailable, logout } = useDonorStore();
+  const { donor, bloodType, setAvailable, updateProfile, logout } = useDonorStore();
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
+  // Form states
+  const [firstName, setFirstName] = useState(donor?.firstName || 'إبراهيم');
+  const [lastName, setLastName] = useState(donor?.lastName || 'ماهر');
+  const [username, setUsername] = useState(donor?.username || 'ibrahim_maher');
+  const [phone, setPhone] = useState(donor?.phone || '01001097896');
+  const [email, setEmail] = useState(donor?.email || 'ibrahim@nabd.eg');
+  const [selectedBloodType, setSelectedBloodType] = useState<any>(bloodType || 'A+');
+  const [region, setRegion] = useState(donor?.region || 'دمياط، مصر');
+  const [birthDate, setBirthDate] = useState(donor?.birthDate || '1995-05-15');
+
+  // Settings states
+  const [notifyUrgent, setNotifyUrgent] = useState(true);
+  const [showPhonePublic, setShowPhonePublic] = useState(false);
 
   const isAvailable = donor?.availableToDonate ?? true;
-  const username = donor?.username || 'ibrahim_maher';
-  const region = donor?.region || 'مصر, محافظة دمياط, CRM7+C52';
   const donationCount = donor?.donationCount ?? 0;
 
+  const handleSaveProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSaving(true);
+    try {
+      updateProfile({
+        firstName,
+        lastName,
+        username,
+        phone,
+        email,
+        bloodType: selectedBloodType,
+        region,
+        birthDate,
+      });
+
+      setSaveSuccess(true);
+      setIsEditing(false);
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50" dir="rtl">
+    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900" dir="rtl">
       {/* Top Bar with title and Back link */}
       <TopBar
-        title="الملف الشخصي للمتبرع"
-        subtitle="بيانات الحساب والتوثيق"
+        title="الملف الشخصي والإعدادات"
+        subtitle="إدارة بيانات الحساب والتبرع بالدم"
         showBack
         backHref="/blood-bank"
         rightAction={
           <button
-            onClick={logout}
-            className="p-1.5 text-gray-400 hover:text-red-600 transition-colors"
-            title="تسجيل الخروج"
-            aria-label="تسجيل الخروج"
+            onClick={() => setIsEditing(!isEditing)}
+            className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all active:scale-95"
+            title="تعديل الملف"
           >
-            <LogOut className="w-5 h-5" />
+            <Edit2 className="w-3.5 h-3.5" />
+            <span>{isEditing ? 'إلغاء' : 'تعديل'}</span>
           </button>
         }
       />
 
-      <div className="p-4 space-y-5">
-        {/* Profile Header: Avatar, Username, Rating, Badge */}
-        <div className="flex flex-col items-center text-center pt-2">
-          {/* Circular Avatar with RED ring border and Camera badge */}
+      <main className="max-w-xl mx-auto w-full p-4 space-y-4 pb-16">
+        {/* Success Alert */}
+        {saveSuccess && (
+          <div className="p-3.5 bg-emerald-50 border border-emerald-300 rounded-2xl flex items-center gap-2 text-emerald-800 text-xs font-bold shadow-2xs animate-in fade-in">
+            <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>تم حفظ وتحديث بياناتك بنجاح في المنظومة السحابية! ✅</span>
+          </div>
+        )}
+
+        {/* Profile Header: Avatar, Username, Badge */}
+        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-5 flex flex-col items-center text-center">
           <div className="relative">
-            <div className="w-24 h-24 rounded-full bg-gray-200 border-[3px] border-[#C0392B] flex items-center justify-center text-gray-400 shadow-sm overflow-hidden">
-              <svg
-                className="w-16 h-16 text-gray-400 fill-current translate-y-2"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-              </svg>
+            <div className="w-22 h-22 rounded-full bg-slate-100 border-[3px] border-[#C0392B] flex items-center justify-center text-slate-400 shadow-sm overflow-hidden">
+              <User className="w-12 h-12 text-[#07132B]" />
             </div>
-            {/* Camera badge at bottom-start */}
             <button
               type="button"
+              onClick={() => alert('يمكنك تغيير الصورة الشخصية من خلال حساب Supabase الخاص بك.')}
               className="absolute bottom-0 start-0 w-7 h-7 rounded-full bg-[#C0392B] text-white flex items-center justify-center shadow-md ring-2 ring-white hover:bg-[#A93226] transition-transform active:scale-95"
               aria-label="تغيير الصورة الشخصية"
+              title="تغيير الصورة"
             >
               <Camera className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          {/* Username */}
-          <h2 className="mt-3 text-lg font-black text-gray-900 leading-snug">
-            {username}
+          <h2 className="mt-3 text-lg font-black text-slate-900 leading-snug">
+            {firstName} {lastName}
           </h2>
+          <p className="text-xs font-bold text-slate-500" dir="ltr">@{username}</p>
 
-          {/* Rating Row: "٠,٠" + 5 empty gray stars */}
-          <div className="flex items-center gap-1.5 mt-1">
-            <span className="text-xs font-bold text-gray-500">
-              {toArabicDigits(0)},{toArabicDigits(0)}
-            </span>
-            <div className="flex items-center gap-0.5 text-gray-300">
-              {[1, 2, 3, 4, 5].map((s) => (
-                <Star key={s} className="w-3.5 h-3.5 fill-current text-gray-300" />
-              ))}
+          <div className="flex items-center gap-2 mt-2.5 flex-wrap justify-center">
+            {/* Pill Badge: "٠ تبرعات موثقة" */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-[#C0392B] text-xs font-bold border border-red-200">
+              <Droplet className="w-3.5 h-3.5 fill-current" />
+              <span>{toArabicDigits(donationCount)} تبرعات موثقة</span>
             </div>
-          </div>
 
-          {/* Pill Badge: "٠ تبرعات موثقة" */}
-          <div className="inline-flex items-center gap-1.5 mt-2.5 px-3 py-1 rounded-full bg-[#FDECEC] text-[#C0392B] text-xs font-bold border border-[#FADBD8]">
-            <Droplet className="w-3.5 h-3.5 fill-current" />
-            <span>{toArabicDigits(donationCount)} تبرعات موثقة</span>
-          </div>
-
-          {/* Verified Donor Trust Badge */}
-          <div className="inline-flex items-center gap-1.5 mt-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-extrabold border border-emerald-300 shadow-2xs">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 stroke-[2.5]" />
-            <span>متبرع معتمد وموثق لدى نبض 🛡️</span>
+            {/* Verified Donor Trust Badge */}
+            <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-extrabold border border-emerald-300">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 stroke-[2.5]" />
+              <span>متبرع معتمد لدى نبض 🛡️</span>
+            </div>
           </div>
         </div>
 
-        {/* Card 1: Donation Availability & Blood Info */}
-        <div className="bg-white rounded-2xl border border-gray-200/90 shadow-xs p-4 space-y-3">
-          {/* Row 1: Status + Toggle */}
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-xs text-gray-400 font-bold mb-0.5">الحالة الحالية</p>
-              <p
-                className={`text-sm font-black ${
-                  isAvailable ? 'text-[#27AE60]' : 'text-gray-400'
-                }`}
+        {/* Edit Profile Form (When isEditing is true) */}
+        {isEditing ? (
+          <form onSubmit={handleSaveProfile} className="bg-white rounded-2xl border border-slate-200 shadow-2xs p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 className="text-sm font-black text-slate-900 flex items-center gap-1.5">
+                <Edit2 className="w-4 h-4 text-[#C0392B]" />
+                <span>تعديل البيانات الشخصية</span>
+              </h3>
+              <button
+                type="button"
+                onClick={() => setIsEditing(false)}
+                className="text-xs font-bold text-slate-500 hover:text-slate-800"
               >
-                {isAvailable ? 'متاح للتبرع' : 'غير متاح للتبرع حالياً'}
-              </p>
+                إلغاء
+              </button>
             </div>
 
-            {/* Accessible Toggle Switch (Red when ON) */}
-            <button
-              type="button"
-              role="switch"
-              aria-checked={isAvailable}
-              onClick={() => setAvailable(!isAvailable)}
-              className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#C0392B]/30 ${
-                isAvailable ? 'bg-[#C0392B]' : 'bg-gray-300'
-              }`}
-            >
-              <span className="sr-only">تفعيل أو إيقاف التوفر للتبرع</span>
-              <span
-                className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
-                  isAvailable ? '-translate-x-5' : 'translate-x-0'
-                }`}
-              />
-            </button>
-          </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700">الاسم الأول</label>
+                <input
+                  type="text"
+                  required
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="w-full p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs font-bold"
+                />
+              </div>
 
-          <hr className="border-gray-100" />
-
-          {/* Row 2: Blood Type & Region */}
-          <div className="grid grid-cols-2 gap-4 pt-1">
-            {/* Blood type */}
-            <div>
-              <p className="text-xs text-gray-400 font-bold mb-1">فصيلة الدم</p>
-              <div className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-[#C0392B] text-white font-black text-sm shadow-xs">
-                {bloodType}
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700">اسم العائلة</label>
+                <input
+                  type="text"
+                  required
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="w-full p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs font-bold"
+                />
               </div>
             </div>
 
-            {/* Region */}
-            <div>
-              <p className="text-xs text-gray-400 font-bold mb-1">المنطقة</p>
-              <p className="text-xs font-bold text-gray-700 leading-snug truncate" title={region}>
-                {region}
-              </p>
+            <div className="space-y-1">
+              <label className="block text-xs font-bold text-slate-700">فصيلة الدم</label>
+              <div className="grid grid-cols-4 gap-2">
+                {BLOOD_TYPES.map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setSelectedBloodType(type)}
+                    className={`py-2 rounded-xl text-xs font-black transition-all ${
+                      selectedBloodType === type
+                        ? 'bg-[#C0392B] text-white shadow-2xs'
+                        : 'bg-slate-50 text-slate-700 border border-slate-200 hover:bg-slate-100'
+                    }`}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700">رقم الهاتف (واتساب)</label>
+                <input
+                  type="tel"
+                  dir="ltr"
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs font-bold text-left"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700">البريد الإلكتروني</label>
+                <input
+                  type="email"
+                  dir="ltr"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs font-bold text-left"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="block text-xs font-bold text-slate-700">المنطقة السكنية (دمياط)</label>
+              <input
+                type="text"
+                required
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
+                placeholder="مثال: الأعصر، دمياط"
+                className="w-full p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs font-bold"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="block text-xs font-bold text-slate-700">تاريخ الميلاد</label>
+              <input
+                type="date"
+                value={birthDate}
+                onChange={(e) => setBirthDate(e.target.value)}
+                className="w-full p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs font-bold"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSaving}
+              className="w-full py-3 bg-[#07132B] hover:bg-navy-800 text-white font-black text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5"
+            >
+              <CheckCircle2 className="w-4 h-4 text-amber-400" />
+              <span>{isSaving ? 'جارٍ الحفظ...' : 'حفظ التعديلات في الحساب'}</span>
+            </button>
+          </form>
+        ) : (
+          /* Card 1: Donation Availability & Blood Info */
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-4 space-y-4">
+            {/* Availability Toggle */}
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-slate-500 font-bold mb-0.5">جاهزية واستعداد التبرع</p>
+                <p
+                  className={`text-sm font-black ${
+                    isAvailable ? 'text-emerald-600' : 'text-slate-400'
+                  }`}
+                >
+                  {isAvailable ? 'متاح للتبرع الفوري لإنقاذ حياة' : 'غير متاح للتبرع حالياً'}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                role="switch"
+                aria-checked={isAvailable}
+                onClick={() => setAvailable(!isAvailable)}
+                className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                  isAvailable ? 'bg-[#C0392B]' : 'bg-slate-300'
+                }`}
+              >
+                <span
+                  className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                    isAvailable ? '-translate-x-5' : 'translate-x-0'
+                  }`}
+                />
+              </button>
+            </div>
+
+            <hr className="border-slate-100" />
+
+            {/* Info Grid */}
+            <div className="grid grid-cols-2 gap-4 text-xs">
+              <div>
+                <span className="text-slate-400 font-bold block mb-1">فصيلة الدم</span>
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#C0392B] text-white font-black text-xs shadow-2xs">
+                  {bloodType}
+                </span>
+              </div>
+
+              <div>
+                <span className="text-slate-400 font-bold block mb-1">المنطقة</span>
+                <span className="font-black text-slate-800 line-clamp-1">{region}</span>
+              </div>
+
+              <div>
+                <span className="text-slate-400 font-bold block mb-1">رقم الهاتف</span>
+                <span className="font-bold text-slate-800" dir="ltr">{phone}</span>
+              </div>
+
+              <div>
+                <span className="text-slate-400 font-bold block mb-1">البريد الإلكتروني</span>
+                <span className="font-bold text-slate-800 line-clamp-1" dir="ltr">{email}</span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
-        {/* Section Heading: إجراءات سريعة */}
-        <div className="pt-2">
-          <h3 className="text-sm font-black text-gray-900 mb-3 text-right">
-            إجراءات سريعة
+        {/* Card 2: Notification & Privacy Settings */}
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs p-4 space-y-3">
+          <h3 className="text-xs font-black text-slate-900 flex items-center gap-1.5">
+            <Bell className="w-3.5 h-3.5 text-amber-500" />
+            <span>تفضيلات الإشعارات والخصوصية</span>
           </h3>
 
-          {/* Quick Action Grid */}
+          <label className="flex items-center justify-between cursor-pointer pt-1">
+            <span className="text-xs font-bold text-slate-700">تنبيهي عند وجود طلب دم عاجل في نطاق دمياط</span>
+            <input
+              type="checkbox"
+              checked={notifyUrgent}
+              onChange={(e) => setNotifyUrgent(e.target.checked)}
+              className="w-4 h-4 rounded text-[#C0392B] focus:ring-[#C0392B]"
+            />
+          </label>
+
+          <label className="flex items-center justify-between cursor-pointer pt-1 border-t border-slate-100">
+            <span className="text-xs font-bold text-slate-700">إظهار رقم هاتفي للمرضى المحتاجين فقط</span>
+            <input
+              type="checkbox"
+              checked={showPhonePublic}
+              onChange={(e) => setShowPhonePublic(e.target.checked)}
+              className="w-4 h-4 rounded text-[#C0392B] focus:ring-[#C0392B]"
+            />
+          </label>
+        </div>
+
+        {/* Quick Action Grid */}
+        <div className="pt-2">
+          <h3 className="text-sm font-black text-slate-900 mb-3 text-right">
+            إجراءات سريعة
+          </h3>
           <QuickActionGrid />
         </div>
 
-        {/* Bottom Back Button */}
-        <div className="text-center pt-3 pb-6">
+        {/* Logout and Exit */}
+        <div className="flex items-center justify-between pt-2">
+          <button
+            onClick={logout}
+            className="inline-flex items-center gap-1 text-xs font-bold text-red-600 hover:text-red-700 p-2"
+          >
+            <LogOut className="w-4 h-4" />
+            <span>تسجيل الخروج من بنك الدم</span>
+          </button>
+
           <Link
             href="/blood-bank"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-800 transition-colors"
+            className="inline-flex items-center gap-1 text-xs font-bold text-slate-500 hover:text-slate-800"
           >
-            <span>← الرجوع لرئيسية بنك الدم</span>
+            <span>← رئيسية بنك الدم</span>
           </Link>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

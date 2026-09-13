@@ -268,13 +268,17 @@ export async function appendToGoogleSheet({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          date: dateStr,
-          time: timeStr,
-          patientName: appointment.patientName,
-          phone: appointment.patientPhone,
-          service: appointment.visitType,
-          status: appointment.status,
-          appointmentId: appointment.id,
+          action: 'add_visit',
+          data: {
+            patient_id: appointment.id,
+            patient_name: appointment.patientName,
+            date: appointment.startAt.split('T')[0],
+            time: timeStr,
+            service: appointment.visitType,
+            nurse: 'طاقم نبض للتمريض',
+            status: appointment.status === 'scheduled' ? 'مؤكدة ومجدولة' : appointment.status,
+            notes: `الهاتف: ${appointment.patientPhone} | حجز مؤكد عبر منصة نبض`,
+          },
         }),
       });
       return res.ok;
