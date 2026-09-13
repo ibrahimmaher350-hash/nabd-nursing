@@ -11,6 +11,10 @@ import fs from 'fs'
 import path from 'path'
 import { siteConfig } from '@/data/siteConfig'
 import { formatTo12HourArabic, formatArabicDateWithDay, buildCustomerReminderMessage } from '@/lib/timeUtils'
+import { supabase } from '@/lib/supabase/client'
+import { decryptToken } from '@/lib/crypto'
+import { refreshGoogleAccessToken, createCalendarEvent } from '@/lib/google/calendar-and-sheets'
+import { sendEmail } from '@/lib/email/resend'
 
 const bookingSchema = z.object({
   serviceId:         z.string().min(1),
@@ -108,45 +112,24 @@ async function saveToGoogleSheets(bookingId: string, data: z.infer<typeof bookin
     const formattedDayDate = formatArabicDateWithDay(data.preferredDate)
     const formattedTime12 = formatTo12HourArabic(data.preferredTime)
 
-    // Pre-calculated reminder message
-    const reminderMsg = buildCustomerReminderMessage({
-      customerName: data.customerName,
-      serviceName: data.serviceName,
-      preferredDate: data.preferredDate,
-      preferredTime: data.preferredTime,
-      address: `${data.city} - ${data.address}`,
-    })
-
+    // Send payload using active action 'add_visit'
     const payload = {
-      action: 'addBooking',
-      bookingId,
-      timestamp: new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' }),
-      serviceName:      data.serviceName,
-      customerName:     data.customerName,
-      customerPhone:    data.customerPhone,
-      whatsapp:         data.whatsapp ?? '',
-      patientName:      data.patientName ?? '',
-      governorate:      data.governorate,
-      city:             data.city,
-      address:          data.address,
-      landmark:         data.landmark ?? '',
-      preferredDate:    data.preferredDate,
-      formattedDayDate: formattedDayDate,
-      preferredTime:    data.preferredTime,
-      formattedTime12:  formattedTime12,
-      followUpInterval: data.followUpInterval ?? 'none',
-      nextFollowUpDate: data.nextFollowUpDate ?? '',
-      notes:            data.notes ?? '',
-      selectedLabTests: data.selectedLabTests ?? [],
-      labNotes:         data.labNotes ?? '',
-      reminderMessage:  reminderMsg,
-      status:           'قيد الانتظار',
+      action: 'add_visit',
+      data: {
+        patient_id: bookingId,
+        patient_name: data.patientName || data.customerName,
+        date: data.preferredDate,
+        time: formattedTime12,
+        service: data.serviceName,
+        nurse: 'طاقم نبض للتمريض المنزلي',
+        status: 'مؤكدة ومجدولة',
+        notes: `الهاتف: ${data.customerPhone} | العنوان: ${data.city} - ${data.address} | الملاحظات: ${data.notes || 'لا يوجد'} | اليوم: ${formattedDayDate}`,
+      },
     }
 
     const res = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      redirect: 'follow',
       body: JSON.stringify(payload),
     })
 
@@ -177,11 +160,88 @@ export async function POST(request: NextRequest) {
     const data = parsed.data
     const bookingId = generateBookingId()
 
-    // 1. Save to Google Sheets & Google Calendar
+    // 1. Save to Google Sheets
     try {
       await saveToGoogleSheets(bookingId, data)
     } catch (sheetErr) {
       console.error('[Booking API] Google Sheets sync error:', sheetErr)
+    }
+
+    // 2. Sync to Supabase & Google Calendar & Email
+    const timeClean = data.preferredTime.includes(':') ? data.preferredTime : '10:00'
+    const startAtIso = `${data.preferredDate}T${timeClean.length === 4 ? '0' + timeClean : timeClean}:00+02:00`
+    const endDate = new Date(new Date(startAtIso).getTime() + 60 * 60 * 1000)
+    const endAtIso = endDate.toISOString()
+
+    let calendarEventId: string | null = null
+    let meetLink: string | null = null
+
+    // Sync with Google Calendar if admin is connected
+    try {
+      const { data: adminProfile } = await supabase
+        .from('profiles')
+        .select('google_refresh_token')
+        .not('google_refresh_token', 'is', null)
+        .limit(1)
+        .maybeSingle()
+
+      if (adminProfile?.google_refresh_token) {
+        const refreshToken = decryptToken(adminProfile.google_refresh_token)
+        const accessToken = await refreshGoogleAccessToken(refreshToken)
+        const calRes = await createCalendarEvent({
+          accessToken,
+          title: `${data.serviceName} — ${data.customerName}`,
+          description: `حجز خدمة: ${data.serviceName}\nالعميل: ${data.customerName}\nالهاتف: ${data.customerPhone}\nالعنوان: ${data.city} - ${data.address}\nملاحظات: ${data.notes || 'لا يوجد'}`,
+          startAt: startAtIso,
+          endAt: endAtIso,
+          patientEmail: `${data.customerPhone}@nabd.eg`,
+          patientName: data.customerName,
+        })
+        calendarEventId = calRes.eventId
+        meetLink = calRes.meetLink || null
+      }
+    } catch (gErr) {
+      console.warn('[Booking API] Google Calendar sync note:', gErr)
+    }
+
+    // Save to Supabase appointments table
+    try {
+      await supabase.from('appointments').insert([
+        {
+          title: data.serviceName,
+          notes: `العميل: ${data.customerName} | هاتف: ${data.customerPhone} | ${data.notes || ''}`,
+          start_at: startAtIso,
+          end_at: endAtIso,
+          location: `${data.city} - ${data.address}`,
+          status: 'scheduled',
+          meet_link: meetLink,
+          google_event_id: calendarEventId,
+        },
+      ])
+    } catch (sbErr) {
+      console.warn('[Booking API] Supabase insert note:', sbErr)
+    }
+
+    // Send immediate email notification to clinic owner via Resend
+    try {
+      const ownerEmail = process.env.OWNER_EMAIL || 'ibrahim.maher350@gmail.com'
+      await sendEmail({
+        to: ownerEmail,
+        subject: `🩺 حجز تمريض جديد: ${data.serviceName} — ${data.customerName}`,
+        html: `<div dir="rtl" style="font-family:sans-serif;padding:20px;background:#f8fafc;border-radius:12px;">
+          <h2 style="color:#07132B;">🔔 طلب حجز تمريض جديد — نبض للتمريض المنزلي</h2>
+          <p><strong>رقم الحجز:</strong> ${bookingId}</p>
+          <p><strong>الخدمة:</strong> ${data.serviceName}</p>
+          <p><strong>اسم العميل:</strong> ${data.customerName}</p>
+          <p><strong>الهاتف:</strong> ${data.customerPhone}</p>
+          <p><strong>المكان:</strong> ${data.city} - ${data.address}</p>
+          <p><strong>الموعد:</strong> ${formatArabicDateWithDay(data.preferredDate)} الساعة ${formatTo12HourArabic(data.preferredTime)}</p>
+          ${data.notes ? `<p><strong>الملاحظات:</strong> ${data.notes}</p>` : ''}
+          ${meetLink ? `<p><a href="${meetLink}" style="display:inline-block;padding:8px 16px;background:#07132B;color:white;text-decoration:none;border-radius:8px;">رابط Google Meet</a></p>` : ''}
+        </div>`,
+      })
+    } catch (emailErr) {
+      console.warn('[Booking API] Resend email note:', emailErr)
     }
 
     // 2. Build WhatsApp URL
