@@ -29,6 +29,15 @@ export default function BloodRequestPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [pledged, setPledged] = useState(true);
 
+  // Optional appointment scheduling state
+  const [scheduleAppointment, setScheduleAppointment] = useState(false);
+  const [appointmentDate, setAppointmentDate] = useState(() => {
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+    return today.toISOString().split('T')[0];
+  });
+  const [appointmentTime, setAppointmentTime] = useState('11:00');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!pledged) {
@@ -37,6 +46,7 @@ export default function BloodRequestPage() {
     }
     setIsLoading(true);
     try {
+      // 1. Create Blood Request
       await createBloodRequest({
         patientName,
         hospital,
@@ -46,6 +56,25 @@ export default function BloodRequestPage() {
         phone,
         notes,
       });
+
+      // 2. If appointment requested, create appointment row in Supabase & Google Calendar
+      if (scheduleAppointment) {
+        const startAt = `${appointmentDate}T${appointmentTime}:00+02:00`;
+        await fetch('/api/appointments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            patientName: `مرافق/مريض: ${patientName}`,
+            patientPhone: phone,
+            patientEmail: 'donor@nabd.eg',
+            visitType: 'blood_donation',
+            title: `تبرع دم عاجل (${bloodType}) - ${hospital}`,
+            startAt,
+            location: hospital,
+            notes: `عدد الأكياس: ${bagsCount} - فصيلة: ${bloodType} - ملاحظات: ${notes}`,
+          }),
+        }).catch((e) => console.warn('Appointment booking error:', e));
+      }
     } catch (err) {
       console.error('Request submission error:', err);
     } finally {
@@ -212,6 +241,48 @@ export default function BloodRequestPage() {
                 placeholder="أي تفاصيل أخرى تخص الحالة أو اسم المرافق..."
                 className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C0392B]/20 resize-none"
               />
+            </div>
+
+            {/* Schedule Donation Visit Checkbox (Clinic Integration) */}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-3">
+              <label className="flex items-center gap-2.5 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={scheduleAppointment}
+                  onChange={(e) => setScheduleAppointment(e.target.checked)}
+                  className="w-4 h-4 rounded text-[#07132B] focus:ring-[#07132B] border-gray-300"
+                />
+                <span className="text-xs font-bold text-slate-800">
+                  🗓️ أريد تحديد موعد للتبرع ومرافقة تمريضية من نبض داخل المستشفى
+                </span>
+              </label>
+
+              {scheduleAppointment && (
+                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200/60 animate-in fade-in duration-150">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-600 mb-1">تاريخ الموعد</label>
+                    <input
+                      type="date"
+                      min={new Date().toISOString().split('T')[0]}
+                      value={appointmentDate}
+                      onChange={(e) => setAppointmentDate(e.target.value)}
+                      className="w-full p-2.5 bg-white rounded-lg border border-slate-200 text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-600 mb-1">التوقيت (9 ص - 9 م)</label>
+                    <select
+                      value={appointmentTime}
+                      onChange={(e) => setAppointmentTime(e.target.value)}
+                      className="w-full p-2.5 bg-white rounded-lg border border-slate-200 text-xs font-bold"
+                    >
+                      {['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00'].map((t) => (
+                        <option key={t} value={t}>الساعة {t}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Ethical Non-Profit Pledge Checkbox */}

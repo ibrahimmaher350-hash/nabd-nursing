@@ -60,6 +60,17 @@ declare module 'lucide-react' {
   export const Sparkles: LucideIcon;
   export const Share2: LucideIcon;
   export const Stethoscope: LucideIcon;
+  export const Clock: LucideIcon;
+  export const Video: LucideIcon;
+  export const XCircle: LucideIcon;
+  export const Edit2: LucideIcon;
+  export const Edit3: LucideIcon;
+  export const FileText: LucideIcon;
+  export const RefreshCw: LucideIcon;
+  export const Filter: LucideIcon;
+  export const FileSpreadsheet: LucideIcon;
+  export const CalendarCheck: LucideIcon;
+  export const ExternalLink: LucideIcon;
   export const X: LucideIcon;
 
   export const icons: Record<string, LucideIcon>;

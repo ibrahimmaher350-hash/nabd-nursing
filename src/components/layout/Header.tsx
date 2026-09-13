@@ -12,7 +12,9 @@ import {
   XMarkIcon,
   PhoneIcon,
   ShieldCheckIcon,
+  BellIcon,
 } from '@heroicons/react/24/outline'
+import { supabase } from '@/lib/supabase/client'
 import { siteConfig } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
 import { useSettings } from '@/context/SettingsContext'
@@ -36,7 +38,23 @@ const navLinks: NavLinkItem[] = [
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [unreadNotifications, setUnreadNotifications] = useState(0)
   const { settings, getCallUrl, getWhatsAppUrl } = useSettings()
+
+  useEffect(() => {
+    async function loadNotifications() {
+      try {
+        const { count } = await supabase
+          .from('notification_log')
+          .select('*', { count: 'exact', head: true })
+          .eq('read', false)
+        if (count) setUnreadNotifications(count)
+      } catch {
+        // ignore error
+      }
+    }
+    loadNotifications()
+  }, [])
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 20)
@@ -208,6 +226,19 @@ export default function Header() {
 
             {/* ── Desktop Action Buttons ── */}
             <div className="hidden lg:flex items-center gap-2.5">
+              <Link
+                href="/dashboard"
+                className="relative flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                title="لوحة المواعيد والإشعارات"
+              >
+                <BellIcon className="w-5 h-5" />
+                {unreadNotifications > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center animate-pulse">
+                    {unreadNotifications > 9 ? '9+' : unreadNotifications}
+                  </span>
+                )}
+              </Link>
+
               <a
                 href={getCallUrl()}
                 className="inline-flex items-center gap-1.5 text-xs xl:text-sm font-extrabold text-navy-800 bg-slate-100 hover:bg-slate-200 px-3.5 py-2.5 rounded-full transition-all border border-slate-200"
@@ -218,7 +249,7 @@ export default function Header() {
               </a>
 
               <Link
-                href="/booking"
+                href="/appointments/new"
                 className="inline-flex items-center gap-1.5 text-xs xl:text-sm font-black text-white bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 px-5 py-2.5 rounded-full shadow-[0_4px_16px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all"
               >
                 <span>احجز زيارة الآن</span>
@@ -228,6 +259,19 @@ export default function Header() {
 
             {/* ── Mobile Action Icons (Clean & Uncrowded) ── */}
             <div className="flex lg:hidden items-center gap-2">
+              <Link
+                href="/appointments/mine"
+                className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100 text-slate-700 border border-slate-200 shadow-xs"
+                title="المواعيد"
+              >
+                <BellIcon className="w-5 h-5" />
+                {unreadNotifications > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-black rounded-full flex items-center justify-center">
+                    {unreadNotifications > 9 ? '9+' : unreadNotifications}
+                  </span>
+                )}
+              </Link>
+
               <a
                 href={getCallUrl()}
                 className="flex items-center justify-center w-10 h-10 rounded-xl bg-gold-50 text-gold-600 border border-gold-200 shadow-xs"
