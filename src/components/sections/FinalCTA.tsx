@@ -7,14 +7,6 @@ import { PhoneIcon } from '@heroicons/react/24/solid'
 import { analytics } from '@/lib/analytics'
 import { useSettings } from '@/context/SettingsContext'
 
-const socialProof = [
-  { label: 'فيسبوك', icon: '📘' },
-  { label: 'إنستغرام', icon: '📷' },
-  { label: 'تيك توك', icon: '🎵' },
-  { label: 'يوتيوب', icon: '▶️' },
-  { label: 'جوجل', icon: '🔍' },
-]
-
 export default function FinalCTA() {
   const { settings, getCallUrl, getWhatsAppUrl } = useSettings()
 
@@ -37,20 +29,6 @@ export default function FinalCTA() {
           {settings.businessName || 'نبض للتمريض المنزلي'} جاهز لاستقبال طلبك.{' '}
           <span className="text-gold-300 font-semibold">{settings.tagline || 'رعاية تبدأ من بيتك.'}</span>
         </p>
-
-        {/* Social proof row */}
-        <div className="flex items-center justify-center gap-3 mb-8 flex-wrap">
-          <span className="text-white/40 text-xs font-bold">متواجدون على:</span>
-          {socialProof.map((s) => (
-            <span
-              key={s.label}
-              className="inline-flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-3 py-1 text-xs text-white/70 font-medium"
-            >
-              <span aria-hidden="true">{s.icon}</span>
-              {s.label}
-            </span>
-          ))}
-        </div>
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
