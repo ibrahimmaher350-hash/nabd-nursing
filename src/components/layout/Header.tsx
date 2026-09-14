@@ -226,19 +226,6 @@ export default function Header() {
 
             {/* ── Desktop Action Buttons ── */}
             <div className="hidden lg:flex items-center gap-2.5">
-              <Link
-                href="/dashboard"
-                className="relative flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
-                title="لوحة المواعيد والإشعارات"
-              >
-                <BellIcon className="w-5 h-5" />
-                {unreadNotifications > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center animate-pulse">
-                    {unreadNotifications > 9 ? '9+' : unreadNotifications}
-                  </span>
-                )}
-              </Link>
-
               <a
                 href={getCallUrl()}
                 className="inline-flex items-center gap-1.5 text-xs xl:text-sm font-extrabold text-navy-800 bg-slate-100 hover:bg-slate-200 px-3.5 py-2.5 rounded-full transition-all border border-slate-200"

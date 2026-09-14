@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin/', '/api/'],
+        disallow: ['/admin/', '/api/', '/dashboard', '/settings', '/patients/'],
       },
       // AI & LLM Search Engine Bots
       {
@@ -26,7 +26,7 @@ export default function robots(): MetadataRoute.Robots {
           'OAI-SearchBot',
         ],
         allow: '/',
-        disallow: ['/admin/', '/api/'],
+        disallow: ['/admin/', '/api/', '/dashboard', '/settings', '/patients/'],
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,

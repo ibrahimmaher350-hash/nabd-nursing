@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase/client';
 import { useAuth } from '@/lib/auth/useAuthStore';
+import AdminGuard from '@/components/admin/AdminGuard';
 
 interface Appointment {
   id: string;
@@ -624,8 +625,10 @@ function DashboardContent() {
 
 export default function DashboardPage() {
   return (
-    <React.Suspense fallback={<div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 font-bold text-slate-500" dir="rtl">جارٍ تحميل لوحة التحكم...</div>}>
-      <DashboardContent />
-    </React.Suspense>
+    <AdminGuard>
+      <React.Suspense fallback={<div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 font-bold text-slate-500" dir="rtl">جارٍ تحميل لوحة التحكم...</div>}>
+        <DashboardContent />
+      </React.Suspense>
+    </AdminGuard>
   );
 }
