@@ -12,7 +12,7 @@ const ALGORITHM = 'aes-256-gcm';
 const IV_LENGTH = 12;
 
 function getKey(): Buffer {
-  const secret = process.env.ENCRYPTION_KEY || 'nabd-secret-encryption-key-32-chars-min-length-safe!';
+  const secret = process.env.ENCRYPTION_KEY || 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2';
   if (secret.length === 64 && /^[0-9a-fA-F]+$/.test(secret)) {
     return Buffer.from(secret, 'hex');
   }

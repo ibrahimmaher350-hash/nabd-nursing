@@ -205,7 +205,7 @@ export async function deleteCalendarEvent({
  */
 export async function appendToGoogleSheet({
   accessToken,
-  sheetId = process.env.GOOGLE_SHEET_ID,
+  sheetId = process.env.GOOGLE_SHEET_ID || '19Xv5QOgi0Qn78Q6ypv6PM7sU74khLEtHy7T49T_vUjo',
   appointment,
 }: {
   accessToken?: string;

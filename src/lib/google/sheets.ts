@@ -17,6 +17,8 @@ import { supabase } from '@/lib/supabase/client';
 import { decryptToken } from '@/lib/crypto';
 import { refreshGoogleAccessToken } from './calendar-and-sheets';
 
+export const DEFAULT_GOOGLE_SHEET_ID = '19Xv5QOgi0Qn78Q6ypv6PM7sU74khLEtHy7T49T_vUjo';
+
 export const SHEET_TABS = {
   BOOKINGS: 'الحجوزات',
   PATIENTS: 'ملفات المرضى',
@@ -109,7 +111,7 @@ export async function getValidAccessToken(): Promise<string> {
 export async function appendRow({
   tabName,
   values,
-  sheetId = process.env.GOOGLE_SHEET_ID,
+  sheetId = process.env.GOOGLE_SHEET_ID || DEFAULT_GOOGLE_SHEET_ID,
   accessToken,
 }: {
   tabName: string;
@@ -159,7 +161,7 @@ export async function updateRow({
   tabName,
   rowNumber,
   values,
-  sheetId = process.env.GOOGLE_SHEET_ID,
+  sheetId = process.env.GOOGLE_SHEET_ID || DEFAULT_GOOGLE_SHEET_ID,
   accessToken,
 }: {
   tabName: string;
@@ -200,7 +202,7 @@ export async function updateRow({
 export async function getRows({
   tabName,
   range = 'A1:Z500',
-  sheetId = process.env.GOOGLE_SHEET_ID,
+  sheetId = process.env.GOOGLE_SHEET_ID || DEFAULT_GOOGLE_SHEET_ID,
   accessToken,
 }: {
   tabName: string;
@@ -237,7 +239,7 @@ export async function findRowByValue({
   tabName,
   columnIndex = 0,
   value,
-  sheetId = process.env.GOOGLE_SHEET_ID,
+  sheetId = process.env.GOOGLE_SHEET_ID || DEFAULT_GOOGLE_SHEET_ID,
   accessToken,
 }: {
   tabName: string;
@@ -259,7 +261,7 @@ export async function findRowByValue({
  * Ensures the Google Sheet has all 5 tabs and sets row 1 frozen headers
  */
 export async function initializeSheetTabsAndHeaders({
-  sheetId = process.env.GOOGLE_SHEET_ID,
+  sheetId = process.env.GOOGLE_SHEET_ID || DEFAULT_GOOGLE_SHEET_ID,
   accessToken,
 }: {
   sheetId?: string;
@@ -273,22 +275,25 @@ export async function initializeSheetTabsAndHeaders({
   const metaRes = await fetch(metaUrl, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  const metadata = await metaRes.json();
+  const metaData = await metaRes.json();
+
   if (!metaRes.ok) {
-    throw new Error(metadata.error?.message || 'Failed to inspect Google Sheet');
+    console.error('[Sheets Error] Metadata fetch failed:', metaData);
+    return { success: false, message: metaData?.error?.message || 'Failed to fetch spreadsheet' };
   }
 
-  const existingSheetTitles = metadata.sheets?.map((s: any) => s.properties.title) || [];
-  const requiredTabs = Object.values(SHEET_TABS);
+  const existingSheetTitles: string[] = (metaData.sheets || []).map(
+    (s: any) => s.properties?.title
+  );
 
-  // 2. Add missing sheets if any
+  // 2. Create missing tabs
   const requests: any[] = [];
-  for (const tabName of requiredTabs) {
-    if (!existingSheetTitles.includes(tabName)) {
+  for (const tab of Object.values(SHEET_TABS)) {
+    if (!existingSheetTitles.includes(tab)) {
       requests.push({
         addSheet: {
           properties: {
-            title: tabName,
+            title: tab,
             rightToLeft: true, // RTL for Arabic
             gridProperties: {
               frozenRowCount: 1, // Freeze header row
@@ -300,7 +305,8 @@ export async function initializeSheetTabsAndHeaders({
   }
 
   if (requests.length > 0) {
-    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(sheetId)}:batchUpdate`, {
+    const batchUrl = `https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(sheetId)}:batchUpdate`;
+    await fetch(batchUrl, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -310,38 +316,37 @@ export async function initializeSheetTabsAndHeaders({
     });
   }
 
-  // 3. Write row 1 headers for all tabs
-  const valueData = requiredTabs.map((tabName) => ({
-    range: `${encodeURIComponent(tabName)}!A1:${String.fromCharCode(65 + TAB_HEADERS[tabName].length - 1)}1`,
-    values: [TAB_HEADERS[tabName]],
-  }));
+  // 3. Set header rows for each tab
+  for (const [tab, headers] of Object.entries(TAB_HEADERS)) {
+    const headerRange = `${encodeURIComponent(tab)}!A1:${String.fromCharCode(64 + headers.length)}1`;
+    const updateUrl = `https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(sheetId)}/values/${headerRange}?valueInputOption=USER_ENTERED`;
+    await fetch(updateUrl, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        values: [headers],
+      }),
+    });
+  }
 
-  await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(sheetId)}/values:batchUpdate`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      valueInputOption: 'USER_ENTERED',
-      data: valueData,
-    }),
-  });
-
-  return { success: true, message: 'تم تجهيز وتنسيق كافة أوراق جدول جوجل بنجاح' };
+  return { success: true, message: 'All tabs initialized successfully with Arabic headers' };
 }
 
 /**
- * Performs a complete sync of all Supabase tables into the 5 Google Sheets tabs
+ * Full One-Click Sync: Exports all Supabase tables into Google Sheets tabs
  */
 export async function syncAllTabsFromSupabase(): Promise<{
+  success: boolean;
   bookingsCount: number;
   patientsCount: number;
   bloodCount: number;
   remindersCount: number;
 }> {
   const token = await getValidAccessToken();
-  const sheetId = process.env.GOOGLE_SHEET_ID;
+  const sheetId = process.env.GOOGLE_SHEET_ID || DEFAULT_GOOGLE_SHEET_ID;
   if (!sheetId) throw new Error('GOOGLE_SHEET_ID is missing');
 
   // Ensure tabs and headers
@@ -470,9 +475,13 @@ export async function syncAllTabsFromSupabase(): Promise<{
   });
 
   return {
+    success: true,
     bookingsCount: bookingRows.length,
     patientsCount: patientRows.length,
     bloodCount: bloodRows.length,
     remindersCount: reminderRows.length,
   };
 }
+
+export const fullSyncToSheets = syncAllTabsFromSupabase;
+
