@@ -271,7 +271,7 @@ export async function POST(request: NextRequest) {
     try {
       await supabase.from('appointments').insert([
         {
-          patient_id: patientId || null,
+          patient_id: null,
           patient_name: data.patientName || data.customerName,
           patient_phone: data.customerPhone,
           patient_email: `${data.customerPhone}@nabd.eg`,
