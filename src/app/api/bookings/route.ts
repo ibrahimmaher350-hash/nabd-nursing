@@ -19,22 +19,22 @@ import { sendEmail } from '@/lib/email/resend'
 const bookingSchema = z.object({
   serviceId:         z.string().min(1),
   serviceName:       z.string().min(1),
-  customServiceName: z.string().optional(),
+  customServiceName: z.string().nullable().optional(),
   customerName:      z.string().min(2),
-  customerPhone:     z.string().regex(/^01[0-9]{9}$/),
-  whatsapp:          z.string().optional(),
-  patientName:       z.string().optional(),
-  governorate:       z.string().min(1),
-  city:              z.string().min(2),
-  address:           z.string().min(5),
-  landmark:          z.string().optional(),
+  customerPhone:     z.string().min(10),
+  whatsapp:          z.string().nullable().optional(),
+  patientName:       z.string().nullable().optional(),
+  governorate:       z.string().nullable().optional(),
+  city:              z.string().nullable().optional(),
+  address:           z.string().min(1),
+  landmark:          z.string().nullable().optional(),
   preferredDate:     z.string().min(1),
   preferredTime:     z.string().min(1),
-  notes:             z.string().max(500).optional(),
-  labNotes:          z.string().max(500).optional(),
-  selectedLabTests:  z.array(z.string()).optional(),
-  followUpInterval:  z.string().optional(),
-  nextFollowUpDate:  z.string().optional(),
+  notes:             z.string().nullable().optional(),
+  labNotes:          z.string().nullable().optional(),
+  selectedLabTests:  z.array(z.string()).nullable().optional(),
+  followUpInterval:  z.string().nullable().optional(),
+  nextFollowUpDate:  z.string().nullable().optional(),
 })
 
 /** Get dynamic admin WhatsApp number */
@@ -123,17 +123,26 @@ async function saveToGoogleSheets(bookingId: string, data: z.infer<typeof bookin
         service: data.serviceName,
         nurse: 'طاقم نبض للتمريض المنزلي',
         status: 'مؤكدة ومجدولة',
-        notes: `الهاتف: ${data.customerPhone} | العنوان: ${data.city} - ${data.address} | الملاحظات: ${data.notes || 'لا يوجد'} | اليوم: ${formattedDayDate}`,
+        notes: `الهاتف: ${data.customerPhone} | العنوان: ${data.city || 'دمياط'} - ${data.address} | الملاحظات: ${data.notes || 'لا يوجد'} | اليوم: ${formattedDayDate}`,
       },
     }
+
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 3500)
 
     const res = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
+      signal: controller.signal,
+    }).catch((err) => {
+      console.warn('[Google Sheets] Webhook non-fatal timeout/warning:', err.message)
+      return null
+    }).finally(() => {
+      clearTimeout(timeoutId)
     })
 
-    if (!res.ok) {
+    if (res && !res.ok) {
       console.warn(`[Google Sheets] Webhook responded with status: ${res.status}`)
     }
   } catch (err) {
@@ -191,7 +200,7 @@ export async function POST(request: NextRequest) {
         const calRes = await createCalendarEvent({
           accessToken,
           title: `${data.serviceName} — ${data.customerName}`,
-          description: `حجز خدمة: ${data.serviceName}\nالعميل: ${data.customerName}\nالهاتف: ${data.customerPhone}\nالعنوان: ${data.city} - ${data.address}\nملاحظات: ${data.notes || 'لا يوجد'}`,
+          description: `حجز خدمة: ${data.serviceName}\nالعميل: ${data.customerName}\nالهاتف: ${data.customerPhone}\nالعنوان: ${data.city || 'دمياط'} - ${data.address}\nملاحظات: ${data.notes || 'لا يوجد'}`,
           startAt: startAtIso,
           endAt: endAtIso,
           patientEmail: `${data.customerPhone}@nabd.eg`,
@@ -209,10 +218,14 @@ export async function POST(request: NextRequest) {
       await supabase.from('appointments').insert([
         {
           title: data.serviceName,
+          patient_name: data.patientName || data.customerName,
+          patient_phone: data.customerPhone,
+          patient_email: data.whatsapp ? `${data.whatsapp}@nabd.eg` : `${data.customerPhone}@nabd.eg`,
+          visit_type: data.serviceId || 'home_visit',
           notes: `العميل: ${data.customerName} | هاتف: ${data.customerPhone} | ${data.notes || ''}`,
           start_at: startAtIso,
           end_at: endAtIso,
-          location: `${data.city} - ${data.address}`,
+          location: `${data.city || 'دمياط'} - ${data.address}`,
           status: 'scheduled',
           meet_link: meetLink,
           google_event_id: calendarEventId,
