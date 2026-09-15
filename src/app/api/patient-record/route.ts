@@ -7,7 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const DEFAULT_SHEETS_URL =
-  'https://script.google.com/macros/s/AKfycbxBR6fJaq5_9yOGh7ISdEOL1tQNvmyf6R0HQ6m2cIU4mlQjNUoLYNxs2QPjCeoRamJSpg/exec'
+  'https://script.google.com/macros/s/AKfycbzMHODCgGrMFurdNhM0T7OXvmYOQomrpHmyNE9kuLEA8qdw84J_YD5BX3Z0B9HKwtHRHw/exec'
 
 export const dynamic = 'force-dynamic'
 

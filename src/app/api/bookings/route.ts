@@ -105,15 +105,25 @@ function buildAdminWhatsAppMessage(bookingId: string, data: z.infer<typeof booki
 /** Save booking to Google Sheets via Apps Script webhook */
 async function saveToGoogleSheets(bookingId: string, data: z.infer<typeof bookingSchema>): Promise<void> {
   const DEFAULT_SHEETS_URL =
-    'https://script.google.com/macros/s/AKfycbxBR6fJaq5_9yOGh7ISdEOL1tQNvmyf6R0HQ6m2cIU4mlQjNUoLYNxs2QPjCeoRamJSpg/exec'
+    'https://script.google.com/macros/s/AKfycbzMHODCgGrMFurdNhM0T7OXvmYOQomrpHmyNE9kuLEA8qdw84J_YD5BX3Z0B9HKwtHRHw/exec'
   const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL || DEFAULT_SHEETS_URL
 
   try {
     const formattedDayDate = formatArabicDateWithDay(data.preferredDate)
     const formattedTime12 = formatTo12HourArabic(data.preferredTime)
 
-    // Send payload using active action 'add_visit'
+    // Send payload matching both root-level and nested structure
     const payload = {
+      bookingId,
+      customerName: data.customerName,
+      customerPhone: data.customerPhone,
+      patientName: data.patientName || data.customerName,
+      serviceName: data.serviceName,
+      preferredDate: data.preferredDate,
+      preferredTime: data.preferredTime,
+      city: data.city,
+      address: data.address,
+      notes: data.notes || '',
       action: 'add_visit',
       data: {
         patient_id: bookingId,
