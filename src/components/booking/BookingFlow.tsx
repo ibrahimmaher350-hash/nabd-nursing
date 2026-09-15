@@ -290,22 +290,17 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
         body: JSON.stringify(payload),
       })
 
-      const json = await res.json().catch(() => ({}))
+      const json = await res.json()
 
       if (!res.ok || !json.success) {
-        const errorMsg = json.error || (json.details?.fieldErrors ? Object.entries(json.details.fieldErrors).map(([k, v]) => `${k}: ${(v as any).join(', ')}`).join(' | ') : null) || 'حدث خطأ أثناء إرسال الطلب'
-        throw new Error(errorMsg)
+        throw new Error(json.error ?? 'حدث خطأ أثناء إرسال الطلب')
       }
 
       analytics.bookingSuccess(json.bookingId, selectedServiceId)
 
       // Auto-open WhatsApp notification
       if (json.whatsappUrl) {
-        try {
-          window.open(json.whatsappUrl, '_blank', 'noopener,noreferrer')
-        } catch (popErr) {
-          console.warn('Popup blocked:', popErr)
-        }
+        window.open(json.whatsappUrl, '_blank', 'noopener,noreferrer')
       }
 
       setSuccessData({
@@ -322,9 +317,9 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
         selectedLabTests: isLabService ? selectedLabTests : [],
         whatsappUrl:      json.whatsappUrl,
       })
-    } catch (err: any) {
+    } catch {
       setSubmitError(
-        err?.message || 'تعذر إرسال الطلب حالياً. حاول مرة أخرى أو تواصل معنا مباشرة عبر واتساب.'
+        'تعذر إرسال الطلب حالياً. حاول مرة أخرى أو تواصل معنا مباشرة عبر واتساب.'
       )
     } finally {
       setIsSubmitting(false)
