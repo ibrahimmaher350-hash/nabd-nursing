@@ -238,10 +238,44 @@ export async function POST(request: NextRequest) {
       console.warn('[Booking API] Google Calendar sync note:', gErr)
     }
 
-    // Save to Supabase appointments table
+    // 1. Upsert patient in Supabase patients table (ملفات المرضى)
+    let patientId: string | undefined
+    try {
+      const patientEmail = `${data.customerPhone}@nabd.eg`
+      const { data: existingPatient } = await supabase
+        .from('patients')
+        .select('id, visit_count')
+        .eq('email', patientEmail)
+        .maybeSingle()
+
+      const newVisitCount = (existingPatient?.visit_count || 0) + 1
+
+      const { data: savedPatient } = await supabase
+        .from('patients')
+        .upsert({
+          ...(existingPatient?.id ? { id: existingPatient.id } : {}),
+          full_name: (data.patientName || data.customerName).trim(),
+          phone: data.customerPhone,
+          email: patientEmail,
+          visit_count: newVisitCount,
+        })
+        .select('id')
+        .single()
+
+      patientId = savedPatient?.id
+    } catch (patErr) {
+      console.warn('[Booking API] Supabase patient upsert note:', patErr)
+    }
+
+    // 2. Save to Supabase appointments table (الحجوزات والمواعيد)
     try {
       await supabase.from('appointments').insert([
         {
+          patient_id: patientId || null,
+          patient_name: data.patientName || data.customerName,
+          patient_phone: data.customerPhone,
+          patient_email: `${data.customerPhone}@nabd.eg`,
+          visit_type: data.serviceId,
           title: data.serviceName,
           notes: `العميل: ${data.customerName} | هاتف: ${data.customerPhone} | ${data.notes || ''}`,
           start_at: startAtIso,
