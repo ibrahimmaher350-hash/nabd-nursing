@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 /**
  * components/sections/HeroSection.tsx — نبض للتمريض المنزلي
  * CareHub-grade cinematic hero with live nurse badge and spacious typography
@@ -47,19 +47,18 @@ export default function HeroSection() {
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-500/20 via-white/10 to-transparent border border-gold-400/40 rounded-full px-4 py-1.5 mb-6 backdrop-blur-md shadow-sm">
               <ShieldCheckIcon className="w-4 h-4 text-gold-400 shrink-0" />
               <span className="text-white/95 text-xs sm:text-sm font-bold tracking-wide">
-                المستشفى في منزلك — محافظة دمياط
+                المستشفى في بيتك — محافظة دمياط
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping shrink-0" />
             </div>
 
             {/* Giant Title */}
             <h1 className="!text-3xl sm:!text-4xl lg:!text-5xl xl:!text-[3.3rem] font-black text-white leading-[1.3] mb-6 tracking-tight">
-              الرعاية التمريضية الفائقة…{' '}
+              نبض للخدمات الطبية{' '}
               <br className="hidden sm:inline" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-amber-200 to-gold-400">
-                لحد باب بيتك
-              </span>{' '}
-              بأعلى معايير الأمان
+                والتمريض المنزلي
+              </span>
             </h1>
 
             {/* Subtitle */}
@@ -72,7 +71,7 @@ export default function HeroSection() {
               {[
                 { icon: '🛡️', text: 'تعقيم كامل ومكافحة عدوى' },
                 { icon: '👨‍⚕️', text: 'طاقم تمريضي متخصص' },
-                { icon: '🏠', text: 'رعاية تامة في منزلك' },
+                { icon: '🏠', text: 'رعاية تامة في بيتك' },
               ].map((pill) => (
                 <span
                   key={pill.text}

@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 /**
  * components/sections/QuickActions.tsx — نبض للتمريض المنزلي
  * CareHub-style spacious action cards without negative margins or collisions
@@ -49,7 +49,7 @@ export default function QuickActions() {
                 طلب زيارة ممرض
               </h3>
               <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                حدد الموعد والخدمة ونصلك لمنزلك
+                حدد الموعد والخدمة ونصلك لبيتك
               </p>
             </div>
           </Link>

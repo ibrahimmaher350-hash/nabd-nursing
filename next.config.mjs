@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://nabd-nursing.vercel.app'
+const isProduction = process.env.VERCEL_ENV === 'production'
+
 const nextConfig = {
   reactStrictMode: true,
   eslint: {
@@ -24,6 +27,7 @@ const nextConfig = {
   async headers() {
     return [
       {
+        // Security headers for all routes
         source: '/(.*)',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -33,6 +37,11 @@ const nextConfig = {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin',
           },
+          // Block indexing of Vercel preview URLs — fixes Google Search Console
+          // "نسخة طبق الأصل، لم يختر المستخدم النسخة الأساسية" (duplicate without canonical)
+          ...(isProduction
+            ? []
+            : [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }]),
         ],
       },
     ]

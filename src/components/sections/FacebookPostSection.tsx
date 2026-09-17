@@ -34,7 +34,7 @@ export default function FacebookPostSection() {
                   frameBorder="0"
                   allowFullScreen={true}
                   allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  title="منشور نبض للتمريض المنزلي على فيسبوك — رعاية صحية في منزلك"
+                  title="منشور نبض للتمريض المنزلي على فيسبوك — رعاية صحية في بيتك"
                   className="w-full max-w-[500px]"
                 />
               </div>

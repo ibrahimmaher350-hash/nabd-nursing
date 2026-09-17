@@ -23,7 +23,7 @@ const features = [
   },
   {
     icon: '🏠',
-    title: 'راحة تامة في منزلك',
+    title: 'راحة تامة في بيتك',
     desc: 'رعاية متكاملة دون الحاجة للتنقل أو المستشفى.',
   },
 ]
@@ -145,7 +145,7 @@ export default function NursePromo() {
               className="!text-2xl sm:!text-3xl lg:!text-4xl font-extrabold text-white leading-tight mb-4"
             >
               رعاية صحية{' '}
-              <span className="text-gold-300">في منزلك</span>
+              <span className="text-gold-300">في بيتك</span>
               <br />
               بأمان واحترافية
             </motion.h2>

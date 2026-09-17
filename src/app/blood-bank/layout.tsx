@@ -6,6 +6,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'بنك الدم | نبض للتمريض والرعاية المنزلية بدمياط',
   description: 'منظومة بنك الدم والتبرع الطوعي لإنقاذ الأرواح في دمياط ومحيطها بالتعاون مع نبض.',
+  alternates: { canonical: '/blood-bank' },
 };
 
 export default function BloodBankLayout({

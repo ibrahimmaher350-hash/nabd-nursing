@@ -307,7 +307,7 @@ export default function Header() {
                 </div>
                 <div>
                   <p className="text-sm font-black text-navy-900">نبض للتمريض المنزلي</p>
-                  <p className="text-xs text-slate-500">المستشفى في منزلك — دمياط</p>
+                  <p className="text-xs text-slate-500">المستشفى في بيتك — دمياط</p>
                 </div>
               </Link>
               <button
@@ -358,7 +358,7 @@ export default function Header() {
                 onClick={closeMenu}
                 className="btn-primary w-full justify-center text-sm py-3"
               >
-                احجز ممرض لمنزلك 🩺
+                احجز ممرض لبيتك 🩺
               </Link>
               <a
                 href={getWhatsAppUrl()}

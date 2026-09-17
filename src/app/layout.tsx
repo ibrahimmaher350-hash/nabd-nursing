@@ -79,9 +79,9 @@ export const metadata: Metadata = {
   // Manifest
   manifest: '/manifest.webmanifest',
 
-  // Canonical
+  // Canonical — absolute URL required to fix "duplicate without user-selected canonical" in Google Search Console
   alternates: {
-    canonical: '/',
+    canonical: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app',
   },
 
   // Search Engine Verifications (Google Search Console, Bing, Yandex)

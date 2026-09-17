@@ -113,7 +113,7 @@ export default function ReviewsPage() {
               href="/booking"
               className="btn-primary text-xs sm:text-sm px-4 py-2.5 hidden sm:inline-flex"
             >
-              احجز ممرض لمنزلك الآن 🩺
+              احجز ممرض لبيتك الآن 🩺
             </Link>
           </div>
 
