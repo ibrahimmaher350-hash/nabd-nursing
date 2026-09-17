@@ -182,31 +182,34 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         if (res.ok) {
           const json = await res.json()
           if (json.settings && isValidSettings(json.settings)) {
-            // Read current local cache so we NEVER overwrite user edits with empty server defaults!
             let cached: Partial<SiteSettings> = {}
             try {
               const c = localStorage.getItem(STORAGE_KEY)
               if (c) cached = JSON.parse(c)
             } catch {}
 
+            // If settings come from database (or server time is newer), server wins
+            const serverTime = json.settings.updatedAt ? new Date(json.settings.updatedAt).getTime() : 0
+            const cachedTime = cached.updatedAt ? new Date(cached.updatedAt).getTime() : 0
+            const serverWins = json.source === 'supabase' || serverTime >= cachedTime
+
             const merged: SiteSettings = {
               ...defaultSettings,
-              ...json.settings,
-              ...cached,
+              ...(serverWins ? cached : json.settings),
+              ...(serverWins ? json.settings : cached),
               servicesOverrides: {
                 ...(defaultSettings.servicesOverrides || {}),
-                ...(json.settings.servicesOverrides || {}),
-                ...(cached.servicesOverrides || {}),
+                ...(serverWins ? cached.servicesOverrides || {} : json.settings.servicesOverrides || {}),
+                ...(serverWins ? json.settings.servicesOverrides || {} : cached.servicesOverrides || {}),
               },
               suppliesOverrides: {
                 ...(defaultSettings.suppliesOverrides || {}),
-                ...(json.settings.suppliesOverrides || {}),
-                ...(cached.suppliesOverrides || {}),
+                ...(serverWins ? cached.suppliesOverrides || {} : json.settings.suppliesOverrides || {}),
+                ...(serverWins ? json.settings.suppliesOverrides || {} : cached.suppliesOverrides || {}),
               },
-              customProducts:
-                cached.customProducts && cached.customProducts.length > 0
-                  ? cached.customProducts
-                  : json.settings.customProducts || [],
+              customProducts: serverWins
+                ? (json.settings.customProducts || cached.customProducts || [])
+                : (cached.customProducts || json.settings.customProducts || []),
             }
             setSettings(merged)
             localStorage.setItem(STORAGE_KEY, JSON.stringify(merged))
@@ -333,7 +336,14 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify(updated),
       })
       const data = await res.json()
-      return data.success
+      if (data.success && data.settings) {
+        setSettings(data.settings)
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data.settings))
+          window.dispatchEvent(new Event(EVENT_KEY))
+        } catch {}
+      }
+      return Boolean(data.success)
     } catch (err) {
       console.error('Error saving settings to API:', err)
       return false

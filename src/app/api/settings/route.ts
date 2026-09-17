@@ -1,15 +1,19 @@
 /**
  * app/api/settings/route.ts — إعدادات المنصة الحية
- * GET /api/settings — جلب الإعدادات المحفوظة
- * POST /api/settings — حفظ وتحديث الإعدادات (Firestore + Local Store)
+ * GET /api/settings — جلب الإعدادات الحية المحفوظة في Supabase
+ * POST /api/settings — حفظ وتحديث الإعدادات في Supabase (clinic_settings)
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 import { siteConfig } from '@/data/siteConfig'
+import { supabase } from '@/lib/supabase/client'
 
-// File path for local persistent storage fallback
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+// File path for local persistent storage fallback (for offline/dev)
 const SETTINGS_FILE = path.join(process.cwd(), 'src', 'data', 'dynamicSettings.json')
 
 // Helper to detect corrupted Arabic strings (e.g. "??? ?????")
@@ -24,8 +28,8 @@ function sanitizeSettings(incoming: Record<string, unknown>, defaults: Record<st
   for (const key of Object.keys(incoming)) {
     const val = incoming[key]
     if (isCorrupted(val)) {
-      console.warn(`[Settings API] Corrupted value for "${key}", keeping default`)
-    } else {
+      console.warn('[Settings API] Corrupted value for ' + key + ', keeping default')
+    } else if (val !== undefined) {
       out[key] = val
     }
   }
@@ -52,17 +56,13 @@ function saveLocalSettings(settings: Record<string, unknown>) {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true })
     }
-    // JSON.stringify produces UTF-8 safe output; write with explicit utf-8
     fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2), { encoding: 'utf-8' })
     return true
-  } catch (err) {
-    console.warn('[Settings API] Error saving local file:', err)
+  } catch {
+    // Vercel serverless environment has read-only filesystem, safe to ignore
     return false
   }
 }
-
-// In-memory module cache across serverless requests on the same instance
-let inMemorySettings: Record<string, unknown> | null = null
 
 function getDefaultSettings(): Record<string, unknown> {
   return {
@@ -75,6 +75,9 @@ function getDefaultSettings(): Record<string, unknown> {
     facebookProfileUrl: siteConfig.social.facebookProfile || 'https://www.facebook.com/share/1BDJwJeW15/',
     facebookGroupUrl: siteConfig.social.facebookGroup,
     bloggerUrl: siteConfig.social.blogger,
+    googleBusinessUrl: siteConfig.social.googleBusiness,
+    googleReviewsUrl: siteConfig.social.googleReviews,
+    cezmaStoreUrl: siteConfig.social.cezmaStore,
     serviceAreas: siteConfig.location.serviceAreas.join('، '),
     bookingEnabled: true,
     maintenanceMode: false,
@@ -97,86 +100,73 @@ function getDefaultSettings(): Record<string, unknown> {
   }
 }
 
+const NO_CACHE_HEADERS = {
+  'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+  'Pragma': 'no-cache',
+  'Expires': '0',
+}
+
 export async function GET(request: NextRequest) {
   try {
-    // 1. Check in-memory module cache first
-    if (inMemorySettings) {
-      return NextResponse.json({
-        success: true,
-        settings: inMemorySettings,
-      })
-    }
+    const defaults = getDefaultSettings()
+    let settingsFromDb: Record<string, unknown> | null = null
 
-    // 2. Try reading from Firestore if configured
-    const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
-    if (projectId && projectId !== 'your_project_id_here' && projectId !== 'nabd-nursing') {
-      try {
-        const { initializeApp, getApps, cert } = await import('firebase-admin/app')
-        const { getFirestore } = await import('firebase-admin/firestore')
-
-        if (!getApps().length) {
-          initializeApp({
-            credential: cert({
-              projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
-              clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
-              privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-            }),
-          })
-        }
-
-        const db = getFirestore()
-        const doc = await db.collection('settings').doc('general').get()
-        if (doc.exists) {
-          const loaded = { ...getDefaultSettings(), ...doc.data() }
-          inMemorySettings = loaded
-          return NextResponse.json({
-            success: true,
-            settings: loaded,
-          })
-        }
-      } catch (firestoreErr) {
-        console.warn('[Settings API] Firestore fetch failed, falling back to local file:', firestoreErr)
-      }
-    }
-
-    // 3. Fallback to local file
-    const local = getLocalSettings()
-    let finalSettings = local ? { ...getDefaultSettings(), ...local } : getDefaultSettings()
-
-    // 4. Check for cookie sync fallback if serverless lost memory
+    // 1. Primary Source of Truth: Supabase clinic_settings table
     try {
-      const syncCookie = request.cookies.get('nabd_settings_sync')?.value
-      if (syncCookie) {
-        const parsedCookie = JSON.parse(decodeURIComponent(syncCookie))
-        if (parsedCookie && typeof parsedCookie === 'object') {
-          finalSettings = {
-            ...finalSettings,
-            ...parsedCookie,
-            servicesOverrides: {
-              ...(finalSettings.servicesOverrides as Record<string, unknown> || {}),
-              ...(parsedCookie.servicesOverrides || {}),
-            },
-            suppliesOverrides: {
-              ...(finalSettings.suppliesOverrides as Record<string, unknown> || {}),
-              ...(parsedCookie.suppliesOverrides || {}),
-            },
-          }
+      const { data, error } = await supabase
+        .from('clinic_settings')
+        .select('value, updated_at')
+        .eq('key', 'site_settings')
+        .maybeSingle()
+
+      if (!error && data?.value) {
+        const parsed = typeof data.value === 'string' ? JSON.parse(data.value) : data.value
+        if (parsed && typeof parsed === 'object') {
+          settingsFromDb = parsed as Record<string, unknown>
         }
       }
-    } catch {}
+    } catch (sbErr) {
+      console.warn('[Settings API GET] Supabase query failed:', sbErr)
+    }
 
-    inMemorySettings = finalSettings
+    // 2. If Supabase has settings, merge and return
+    if (settingsFromDb) {
+      const merged = {
+        ...defaults,
+        ...settingsFromDb,
+        servicesOverrides: {
+          ...(defaults.servicesOverrides as Record<string, unknown> || {}),
+          ...(settingsFromDb.servicesOverrides as Record<string, unknown> || {}),
+        },
+        suppliesOverrides: {
+          ...(defaults.suppliesOverrides as Record<string, unknown> || {}),
+          ...(settingsFromDb.suppliesOverrides as Record<string, unknown> || {}),
+        },
+        customProducts: Array.isArray(settingsFromDb.customProducts)
+          ? settingsFromDb.customProducts
+          : (defaults.customProducts as unknown[] || []),
+      }
 
-    return NextResponse.json({
-      success: true,
-      settings: finalSettings,
-    })
+      return NextResponse.json(
+        { success: true, settings: merged, source: 'supabase' },
+        { headers: NO_CACHE_HEADERS }
+      )
+    }
+
+    // 3. Fallback to local file or defaults
+    const local = getLocalSettings()
+    const finalSettings = local ? { ...defaults, ...local } : defaults
+
+    return NextResponse.json(
+      { success: true, settings: finalSettings, source: 'fallback' },
+      { headers: NO_CACHE_HEADERS }
+    )
   } catch (err) {
     console.error('[Settings API GET] Error:', err)
-    return NextResponse.json({
-      success: true,
-      settings: getDefaultSettings(),
-    })
+    return NextResponse.json(
+      { success: true, settings: getDefaultSettings(), source: 'default' },
+      { headers: NO_CACHE_HEADERS }
+    )
   }
 }
 
@@ -188,52 +178,60 @@ export async function POST(request: NextRequest) {
     }
 
     const defaults = getDefaultSettings()
-    // Sanitize: reject any corrupted (???) values and keep defaults instead
-    const sanitizedBody = sanitizeSettings(body as Record<string, unknown>, defaults as Record<string, unknown>)
+    // Sanitize: reject corrupted strings
+    const sanitizedBody = sanitizeSettings(body as Record<string, unknown>, defaults)
 
     const updatedSettings: Record<string, any> = {
       ...defaults,
       ...sanitizedBody,
+      servicesOverrides: {
+        ...(defaults.servicesOverrides as Record<string, unknown> || {}),
+        ...((sanitizedBody.servicesOverrides as Record<string, unknown>) || {}),
+      },
+      suppliesOverrides: {
+        ...(defaults.suppliesOverrides as Record<string, unknown> || {}),
+        ...((sanitizedBody.suppliesOverrides as Record<string, unknown>) || {}),
+      },
+      customProducts: Array.isArray(sanitizedBody.customProducts)
+        ? sanitizedBody.customProducts
+        : (defaults.customProducts as unknown[] || []),
       updatedAt: new Date().toISOString(),
     }
 
-    // 1. Save to local storage file
-    saveLocalSettings(updatedSettings)
+    // 1. Primary Persistent Storage: Save to Supabase clinic_settings table
+    let supabaseSuccess = false
+    try {
+      const { error: sbError } = await supabase
+        .from('clinic_settings')
+        .upsert({
+          key: 'site_settings',
+          value: JSON.stringify(updatedSettings),
+          updated_at: new Date().toISOString(),
+        })
 
-    // 2. Save to Firestore if configured
-    const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
-    if (projectId && projectId !== 'your_project_id_here' && projectId !== 'nabd-nursing') {
-      try {
-        const { initializeApp, getApps, cert } = await import('firebase-admin/app')
-        const { getFirestore } = await import('firebase-admin/firestore')
-
-        if (!getApps().length) {
-          initializeApp({
-            credential: cert({
-              projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
-              clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
-              privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-            }),
-          })
-        }
-
-        const db = getFirestore()
-        await db.collection('settings').doc('general').set(updatedSettings, { merge: true })
-      } catch (firestoreErr) {
-        console.warn('[Settings API] Firestore save skipped or failed:', firestoreErr)
+      if (sbError) {
+        console.error('[Settings API POST] Supabase upsert error:', sbError)
+      } else {
+        supabaseSuccess = true
       }
+    } catch (sbErr) {
+      console.error('[Settings API POST] Supabase exception:', sbErr)
     }
 
-    // 3. Update in-memory cache
-    inMemorySettings = updatedSettings
+    // 2. Also try local storage file (for offline/dev environments)
+    saveLocalSettings(updatedSettings)
 
-    const response = NextResponse.json({
-      success: true,
-      message: 'تم حفظ وتحديث الإعدادات بنجاح',
-      settings: updatedSettings,
-    })
+    const response = NextResponse.json(
+      {
+        success: true,
+        message: 'تم حفظ ونشر الإعدادات بنجاح في قاعدة البيانات',
+        settings: updatedSettings,
+        persisted: supabaseSuccess,
+      },
+      { headers: NO_CACHE_HEADERS }
+    )
 
-    // 4. Set persistence cookie for all future requests
+    // 3. Set sync cookie for immediate cross-page consistency
     try {
       response.cookies.set('nabd_settings_sync', encodeURIComponent(JSON.stringify({
         servicesOverrides: updatedSettings.servicesOverrides,
@@ -254,7 +252,7 @@ export async function POST(request: NextRequest) {
     console.error('[Settings API POST] Error:', err)
     return NextResponse.json(
       { success: false, error: 'حدث خطأ أثناء حفظ الإعدادات' },
-      { status: 500 }
+      { status: 500, headers: NO_CACHE_HEADERS }
     )
   }
 }

@@ -136,11 +136,13 @@ export default function ServicesGrid({
   showFilter = false,
   category,
 }: ServicesGridProps) {
+  const { isServiceActive } = useSettings()
+
   const displayedServices = featured
-    ? services.filter((s) => s.active).slice(0, 6)
+    ? services.filter((s) => isServiceActive(s.id, s.active)).slice(0, 6)
     : category
-    ? services.filter((s) => s.active && s.category === category)
-    : services.filter((s) => s.active)
+    ? services.filter((s) => isServiceActive(s.id, s.active) && s.category === category)
+    : services.filter((s) => isServiceActive(s.id, s.active))
 
   return (
     <section

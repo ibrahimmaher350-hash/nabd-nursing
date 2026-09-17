@@ -33,6 +33,7 @@ import {
   formatArabicDateWithDay,
 } from '@/lib/timeUtils'
 import { ALL_LAB_TEST_NAMES } from '@/data/labTestsData'
+import { useSettings } from '@/context/SettingsContext'
 import BookingSuccess from './BookingSuccess'
 
 // ── Validation schema ────────────────────────────────────────
@@ -118,6 +119,16 @@ interface BookingFlowProps {
 }
 
 export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
+  const {
+    isServiceActive,
+    isServiceBookingEnabled,
+    getServicePrice,
+    getServiceBadge,
+    settings,
+    getWhatsAppUrl,
+    getCallUrl,
+  } = useSettings()
+
   const [step, setStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -345,6 +356,41 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
     )
   }
 
+  // Check maintenance / disabled booking
+  if (settings.maintenanceMode || !settings.bookingEnabled) {
+    return (
+      <div className="max-w-xl mx-auto nabd-card p-6 sm:p-8 text-center space-y-4 shadow-card">
+        <div className="w-16 h-16 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mx-auto text-3xl">
+          ⚠️
+        </div>
+        <h2 className="text-xl font-black text-navy-800">
+          استقبال الحجوزات متوقف مؤقتاً
+        </h2>
+        <p className="text-sm text-medical-muted leading-relaxed">
+          {settings.maintenanceMode
+            ? 'الموقع حالياً في وضع التحديث والصيانة المؤقتة. يمكنك التواصل المباشر مع طاقم التمريض.'
+            : 'استقبال الحجوزات عبر الموقع الإلكتروني متوقف حالياً. يمكنك الحجز الفوري عبر الاتصال أو الواتساب.'}
+        </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          <a
+            href={getWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-whatsapp w-full sm:w-auto px-6 py-3 text-sm font-bold justify-center"
+          >
+            تواصل عبر واتساب
+          </a>
+          <a
+            href={getCallUrl()}
+            className="btn-primary w-full sm:w-auto px-6 py-3 text-sm font-bold bg-navy-700 hover:bg-navy-800 justify-center"
+          >
+            اتصال هاتفي
+          </a>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-xl mx-auto">
       {/* ── Top Navigation Bar (سهم الرجوع والتنقل العلوي) ── */}
@@ -391,34 +437,50 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
           <div className="flex flex-col gap-2 max-h-96 overflow-y-auto pr-1">
             {/* 15 Official Services */}
             {services
-              .filter((s) => s.active && s.bookingEnabled)
-              .map((service) => (
-                <label
-                  key={service.id}
-                  className={`flex items-center gap-3 p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${
-                    selectedServiceId === service.id
-                      ? 'border-navy-600 bg-navy-50/70 shadow-sm'
-                      : 'border-medical-border hover:border-navy-300 bg-white'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    value={service.id}
-                    {...register('serviceId')}
-                    className="w-4 h-4 accent-navy-600 cursor-pointer"
-                    aria-label={service.name}
-                  />
-                  <span className="text-2xl shrink-0" aria-hidden="true">
-                    {service.iconEmoji}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-bold text-navy-800 text-sm">{service.name}</p>
-                    <p className="text-medical-muted text-xs leading-tight line-clamp-1">
-                      {service.shortDescription}
-                    </p>
-                  </div>
-                </label>
-              ))}
+              .filter((s) => isServiceActive(s.id, s.active) && isServiceBookingEnabled(s.id, s.bookingEnabled))
+              .map((service) => {
+                const customPrice = getServicePrice(service.id, '')
+                const customBadge = getServiceBadge(service.id)
+                return (
+                  <label
+                    key={service.id}
+                    className={`flex items-center gap-3 p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${
+                      selectedServiceId === service.id
+                        ? 'border-navy-600 bg-navy-50/70 shadow-sm'
+                        : 'border-medical-border hover:border-navy-300 bg-white'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      value={service.id}
+                      {...register('serviceId')}
+                      className="w-4 h-4 accent-navy-600 cursor-pointer"
+                      aria-label={service.name}
+                    />
+                    <span className="text-2xl shrink-0" aria-hidden="true">
+                      {service.iconEmoji}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <p className="font-bold text-navy-800 text-sm">{service.name}</p>
+                        {customBadge && (
+                          <span className="bg-gold-100 text-gold-700 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                            {customBadge}
+                          </span>
+                        )}
+                        {customPrice && (
+                          <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
+                            {customPrice}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-medical-muted text-xs leading-tight line-clamp-1">
+                        {service.shortDescription}
+                      </p>
+                    </div>
+                  </label>
+                )
+              })}
 
             {/* ➕ "أخرى" (Custom Service) Option */}
             <label
