@@ -63,19 +63,19 @@ export default function HeroSection() {
 
             {/* Subtitle */}
             <p className="text-white/80 text-sm sm:text-base lg:text-lg leading-[1.8] mb-8 max-w-2xl mx-auto lg:mx-0 font-normal">
-              منظومة تمريض منزلي ورعاية طبية متكاملة تقدمها كوادر تمريضية مرخصة ومعقمة على مدار الساعة داخل كافة مدن وقرى محافظة دمياط، لراحة المريض وأسرته.
+              تمريض ورعاية طبية لحد باب بيتك في دمياط.. طاقم مرخص ومعقم وأجهزة حديثة 24 ساعة لراحتك وراحة أسرتك.
             </p>
 
             {/* Feature Pills */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-2.5 mb-8">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-2.5 mb-8">
               {[
                 { icon: '🛡️', text: 'تعقيم كامل ومكافحة عدوى' },
-                { icon: '👨‍⚕️', text: 'طاقم تمريضي متخصص' },
+                { icon: '👨‍⚕️', text: 'طاقم تمريض محترف' },
                 { icon: '🏠', text: 'رعاية تامة في بيتك' },
               ].map((pill) => (
                 <span
                   key={pill.text}
-                  className="inline-flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-3.5 py-1.5 text-xs sm:text-sm text-white/90 font-medium"
+                  className="inline-flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-3 sm:px-3.5 py-1.5 text-xs sm:text-sm text-white/90 font-medium"
                 >
                   <span>{pill.icon}</span>
                   <span>{pill.text}</span>
@@ -84,10 +84,10 @@ export default function HeroSection() {
             </div>
 
             {/* CTAs Row */}
-            <div className="flex flex-col xs:flex-row items-stretch xs:items-center justify-center lg:justify-start gap-3.5 mb-8">
+            <div className="flex flex-col xs:flex-row items-stretch xs:items-center justify-center lg:justify-start gap-3 sm:gap-3.5 mb-8">
               <Link
                 href="/booking"
-                className="btn-primary text-sm sm:text-base px-8 py-4 rounded-2xl shadow-[0_8px_25px_rgba(245,158,11,0.35)] bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 border border-gold-300/40 text-white font-black transition-all"
+                className="btn-primary text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl shadow-[0_8px_25px_rgba(245,158,11,0.35)] bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 border border-gold-300/40 text-white font-black transition-all"
                 onClick={() => analytics.startBooking('hero', 'general')}
               >
                 <span>احجز خدمة تمريض الآن</span>
@@ -98,7 +98,7 @@ export default function HeroSection() {
                 href={getWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-whatsapp text-sm sm:text-base px-7 py-4 rounded-2xl shadow-[0_8px_25px_rgba(37,211,102,0.35)] font-black transition-all"
+                className="btn-whatsapp text-sm sm:text-base px-5 sm:px-7 py-3.5 sm:py-4 rounded-2xl shadow-[0_8px_25px_rgba(37,211,102,0.35)] font-black transition-all"
                 onClick={() => analytics.clickWhatsApp('hero')}
               >
                 <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
@@ -109,34 +109,34 @@ export default function HeroSection() {
             </div>
 
             {/* Emergency Ribbon */}
-            <div className="flex items-center justify-between gap-3 bg-red-950/40 border border-red-500/30 rounded-2xl p-3 max-w-2xl mx-auto lg:mx-0">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col xs:flex-row items-center justify-between gap-2.5 bg-red-950/40 border border-red-500/30 rounded-2xl p-3 max-w-2xl mx-auto lg:mx-0">
+              <div className="flex items-center gap-2 text-center xs:text-start">
                 <ExclamationTriangleIcon className="w-5 h-5 text-red-400 shrink-0" />
                 <span className="text-red-200 text-xs sm:text-sm font-medium">
-                  في حالات الطوارئ الحرجة اتصل بـ <span className="font-bold text-white">123</span> أو طاقم نبض:
+                  طوارئ حرجة؟ اتصل بـ <span className="font-bold text-white">123</span> أو طاقم نبض:
                 </span>
               </div>
               <a
                 href={getCallUrl()}
-                className="bg-red-600 hover:bg-red-500 text-white text-xs font-black px-3.5 py-1.5 rounded-xl shrink-0 transition-colors shadow-sm"
+                className="bg-red-600 hover:bg-red-500 text-white text-xs font-black px-3.5 py-1.5 rounded-xl shrink-0 transition-colors shadow-sm w-full xs:w-auto text-center"
               >
                 {settings.phone} 📞
               </a>
             </div>
 
-            {/* Stats Counter Bar */}
-            <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-8 max-w-2xl mx-auto lg:mx-0">
+            {/* Stats Counter Bar — mobile optimized with no text wrapping */}
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-8 max-w-2xl mx-auto lg:mx-0">
               {[
-                { value: '15+', label: 'خدمة تمريضية معتمدة' },
-                { value: '100%', label: 'أدوات معقمة ومعايير طبية' },
-                { value: '24/7', label: 'جاهزية تغطية دمياط' },
+                { value: '15+', label: 'خدمة تمريضية' },
+                { value: '100%', label: 'أدوات معقمة' },
+                { value: '24/7', label: 'تغطية دمياط' },
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="bg-white/5 border border-white/10 rounded-2xl p-3 text-center backdrop-blur-sm"
+                  className="bg-white/5 border border-white/10 rounded-2xl p-2.5 sm:p-3 text-center backdrop-blur-sm"
                 >
-                  <p className="text-gold-300 font-black text-xl sm:text-2xl leading-none mb-1">{stat.value}</p>
-                  <p className="text-white/70 text-[11px] sm:text-xs font-medium">{stat.label}</p>
+                  <p className="text-gold-300 font-black text-lg sm:text-2xl leading-none mb-1">{stat.value}</p>
+                  <p className="text-white/70 text-[10px] sm:text-xs font-medium whitespace-nowrap">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -147,10 +147,10 @@ export default function HeroSection() {
           <div className="lg:col-span-5 flex flex-col items-center justify-center">
 
             {/* Main Card */}
-            <div className="relative w-full max-w-md rounded-[2.5rem] bg-gradient-to-b from-white/10 to-white/5 border border-white/15 p-4 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.6)]">
+            <div className="relative w-full max-w-md rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-b from-white/10 to-white/5 border border-white/15 p-3 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.6)]">
 
               {/* Main Image Container */}
-              <div className="relative rounded-[2rem] overflow-hidden aspect-[4/4.5] shadow-2xl border border-white/20">
+              <div className="relative rounded-[1.75rem] sm:rounded-[2rem] overflow-hidden aspect-[4/5.2] sm:aspect-[4/4.5] min-h-[380px] sm:min-h-0 shadow-2xl border border-white/20">
                 <Image
                   src="/nabd-hero.jpg"
                   alt="ممرض نبض المحترف — رعاية صحية منزلية معتمدة داخل دمياط"
@@ -165,36 +165,36 @@ export default function HeroSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#07132B] via-transparent to-transparent opacity-90" />
 
                 {/* Live Online Badge */}
-                <div className="absolute top-4 end-4 bg-navy-950/85 backdrop-blur-md border border-white/20 rounded-full py-1.5 px-3.5 flex items-center gap-2 shadow-lg">
+                <div className="absolute top-3 sm:top-4 end-3 sm:end-4 bg-navy-950/85 backdrop-blur-md border border-white/20 rounded-full py-1.5 px-3 sm:px-3.5 flex items-center gap-2 shadow-lg">
                   <span className="relative flex h-2.5 w-2.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                   </span>
-                  <span className="text-xs font-extrabold text-white">مباشر • طاقم متاح الآن</span>
+                  <span className="text-[11px] sm:text-xs font-extrabold text-white">مباشر • طاقم متاح الآن</span>
                 </div>
 
                 {/* Bottom Card Info */}
-                <div className="absolute bottom-4 inset-x-4">
-                  <div className="bg-navy-900/90 backdrop-blur-md border border-white/15 rounded-2xl p-4 shadow-xl">
-                    <div className="flex items-center justify-between mb-2">
+                <div className="absolute bottom-3 sm:bottom-4 inset-x-3 sm:inset-x-4">
+                  <div className="bg-navy-900/90 backdrop-blur-md border border-white/15 rounded-2xl p-3 sm:p-4 shadow-xl">
+                    <div className="flex items-center justify-between mb-1.5 sm:mb-2">
                       <div>
                         <p className="text-white font-extrabold text-sm sm:text-base">فريق نبض المتخصص</p>
-                        <p className="text-gold-300 text-xs font-medium">أخصائي تمريض ورعاية حرجة</p>
+                        <p className="text-gold-300 text-[11px] sm:text-xs font-medium">أخصائي تمريض ورعاية حرجة</p>
                       </div>
-                      <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[11px] font-black px-2.5 py-1 rounded-full">
+                      <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[10px] sm:text-[11px] font-black px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full">
                         مرخص وموثق ✓
                       </span>
                     </div>
 
-                    <p className="text-white/70 text-xs leading-relaxed mb-3">
-                      زيارات منزلية فورية مجهزة بكافة الأدوات المعقمة وأجهزة القياس المعتمدة.
+                    <p className="text-white/70 text-[11px] sm:text-xs leading-relaxed mb-2 sm:mb-3">
+                      زيارات منزلية فورية مجهزة بأحدث الأدوات المعقمة وأجهزة القياس المعتمدة.
                     </p>
 
                     <a
                       href={getWhatsAppUrl('أحتاج تمريض منزلي عاجل')}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full bg-gold-500 hover:bg-gold-600 text-navy-950 font-black text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow transition-all active:scale-95"
+                      className="w-full bg-gold-500 hover:bg-gold-600 text-navy-950 font-black text-xs py-2 sm:py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow transition-all active:scale-95"
                     >
                       <span>طلب الممرض المناوب فوراً</span>
                       <ArrowRightIcon className="w-3.5 h-3.5 text-navy-950 rotate-180" />

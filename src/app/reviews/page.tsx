@@ -54,11 +54,11 @@ export default function ReviewsPage() {
             </div>
 
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 tracking-tight">
-              آراء وتقييمات <span className="text-gold-400">مرضانا وعائلاتهم</span>
+              كلام الناس عن <span className="text-gold-400">خدمات نبض</span>
             </h1>
 
             <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto mb-8">
-              شهادات واقعية وتجارب موثقة تعكس حرصنا الدائم على توفير رعاية تمريضية آمنة، معقمة، وبأعلى معايير الإنسانية والأمانة داخل منازلكم بدمياط.
+              شهادات وتجارب حقيقية بنعتز بيها من أهالينا الكرام، ودايماً حريصين نوفرلكم رعاية تمريضية آمنة ومعقمة في بيوتكم داخل دمياط.
             </p>
 
             {/* Trust Stats Bar */}

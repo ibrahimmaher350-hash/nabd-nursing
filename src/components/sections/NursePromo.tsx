@@ -147,14 +147,14 @@ export default function NursePromo() {
               رعاية صحية{' '}
               <span className="text-gold-300">في بيتك</span>
               <br />
-              بأمان واحترافية
+              بأمان وراحة بال
             </motion.h2>
 
             <motion.p
               variants={fadeInLeft}
               className="text-white/70 text-sm sm:text-base leading-relaxed mb-6 max-w-lg mx-auto lg:mx-0"
             >
-              فريق نبض من الممرضين المتخصصين يصل إليك في المنزل، ليوفر لك أعلى مستوى من الرعاية الطبية المنزلية دون الحاجة لمغادرة راحتك.
+              فريق نبض بيوصل لحد عندك في البيت، عشان يوفرلك أفضل رعاية طبية متكاملة من غير تعب ولا مشاوير للمستشفى.
             </motion.p>
 
             {/* Feature list */}

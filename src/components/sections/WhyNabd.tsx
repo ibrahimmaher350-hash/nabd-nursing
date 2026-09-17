@@ -18,8 +18,8 @@ const stats = [
 const features = [
   {
     emoji: '🏠',
-    title: 'رعاية داخل المنزل',
-    description: 'احنا بنيجي ليك، مش محتاج تتعب وتمشي.',
+    title: 'رعاية كاملة في بيتك',
+    description: 'احنا بنجيلك لحد عندك، مش محتاج تنزل وتتبهدل.',
     color: 'from-navy-50 to-blue-50 border-navy-100',
     iconBg: 'bg-navy-100',
   },
@@ -124,7 +124,7 @@ export default function WhyNabd() {
             ليه تختار نبض؟
           </h2>
           <p className="section-subtitle">
-            خدمات تمريضية منزلية بشكل مهني وإنساني
+            عشان بنهتم بيك وبنوصلك لحد باب بيتك بأعلى معايير الأمان
           </p>
         </AnimatedSection>
 

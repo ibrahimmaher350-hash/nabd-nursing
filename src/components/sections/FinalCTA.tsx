@@ -22,12 +22,12 @@ export default function FinalCTA() {
           <span className="text-white/90 text-sm font-medium">{settings.businessName || 'نبض للتمريض المنزلي'} — دمياط</span>
         </div>
 
-        <h2 id="final-cta-heading" className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
-          محتاج خدمة تمريض في البيت؟
+        <h2 id="final-cta-heading" className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white mb-4">
+          محتاج ممرض شاطر يجيلك البيت؟
         </h2>
         <p className="text-white/75 text-base sm:text-lg max-w-xl mx-auto mb-6">
-          {settings.businessName || 'نبض للتمريض المنزلي'} جاهز لاستقبال طلبك.{' '}
-          <span className="text-gold-300 font-semibold">{settings.tagline || 'رعاية تبدأ من بيتك.'}</span>
+          طاقم نبض جاهز لخدمتك على مدار الساعة في دمياط.{' '}
+          <span className="text-gold-300 font-semibold">رعاية تبدأ من بيتك.</span>
         </p>
 
         {/* Buttons */}

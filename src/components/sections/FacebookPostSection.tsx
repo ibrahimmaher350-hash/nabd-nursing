@@ -53,12 +53,12 @@ export default function FacebookPostSection() {
               id="facebook-section-heading"
               className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-navy-700 leading-tight mb-4"
             >
-              تابع جديد نبض{' '}
+              خليك متابع جديد نبض{' '}
               <span className="text-gold-500">على فيسبوك</span>
             </h2>
 
             <p className="text-medical-muted text-sm sm:text-base leading-relaxed mb-6">
-              ننشر يومياً أهم الإرشادات والنصائح الطبية، تفاصيل الخدمات التمريضية المنزلية، وتجارب حية لرعاية المرضى وكبار السن بأمان وراحة تامة داخل دمياط.
+              بننزل كل يوم نصائح طبية مهمة وإرشادات لتمريض ورعاية كبار السن والمرضى في بيتك داخل دمياط.
             </p>
 
             {/* Feature points */}

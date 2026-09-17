@@ -117,10 +117,10 @@ export default function FAQ() {
       <div className="section-container section-padding">
         <div className="text-center mb-10">
           <h2 id="faq-heading" className="section-title">
-            أسئلة شائعة
+            أسئلة بتسألوها كتير
           </h2>
           <p className="section-subtitle">
-            إجابات على أكثر الأسئلة اللي بتتسألوها
+            كل اللي محتاج تعرفه عن خدماتنا وطريقة الحجز
           </p>
         </div>
 

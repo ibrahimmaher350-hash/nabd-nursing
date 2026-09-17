@@ -152,10 +152,10 @@ export default function ServicesGrid({
         {/* Header */}
         <AnimatedSection direction="up" className="text-center mb-10">
           <h2 id="services-heading" className="section-title">
-            {featured ? 'أهم خدمات نبض' : 'خدمات نبض للتمريض المنزلي'}
+            {featured ? 'أهم الخدمات اللي بنقدمها' : 'خدمات نبض للتمريض المنزلي'}
           </h2>
           <p className="section-subtitle">
-            خدمات تمريضية وطبية منزلية حسب احتياج المريض وحالته.
+            خدمات تمريض ورعاية طبية في بيتك حسب طلبك وحالة المريض.
           </p>
         </AnimatedSection>
 

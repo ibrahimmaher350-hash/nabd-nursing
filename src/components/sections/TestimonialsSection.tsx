@@ -30,11 +30,11 @@ export default function TestimonialsSection() {
           </div>
 
           <h2 className="section-title">
-            آراء وتقييمات <span className="text-gold-600">مرضانا وعائلاتهم</span>
+            كلام الناس عن <span className="text-gold-600">خدمات نبض</span>
           </h2>
 
           <p className="section-subtitle mt-2">
-            شهادات واقعية وتجارب موثقة تعكس حرصنا الدائم على تقديم رعاية تمريضية آمنة، معقمة، وبأعلى معايير الإنسانية داخل منازلكم بدمياط.
+            شهادات وتجارب حقيقية بنعتز بيها من أهالينا الكرام، ودايماً حريصين نوفرلكم رعاية تمريضية آمنة ومعقمة في بيوتكم داخل دمياط.
           </p>
 
           {/* Aggregate Rating Badge */}

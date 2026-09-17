@@ -28,28 +28,28 @@ export default function QuickActions() {
       aria-label="إجراءات سريعة"
     >
       <div className="section-container">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-5">
 
           {/* 1. Book Now */}
           <Link
             href="/booking"
             onClick={() => analytics.startBooking('quick_action', 'general')}
-            className="group relative bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-[0_6px_20px_rgba(11,27,61,0.06)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
+            className="group relative bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-slate-200/80 shadow-[0_4px_16px_rgba(11,27,61,0.05)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-navy-50 text-navy-800 flex items-center justify-center group-hover:scale-110 group-hover:bg-navy-700 group-hover:text-white transition-all shadow-sm">
-                <CalendarDaysIcon className="w-6 h-6" />
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-navy-50 text-navy-800 flex items-center justify-center group-hover:scale-110 group-hover:bg-navy-700 group-hover:text-white transition-all shadow-sm shrink-0">
+                <CalendarDaysIcon className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <span className="text-[11px] font-bold text-navy-600 bg-navy-50 px-2.5 py-1 rounded-full">
+              <span className="text-[10px] sm:text-[11px] font-bold text-navy-600 bg-navy-50 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full">
                 حجز فوري
               </span>
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-extrabold text-navy-900 group-hover:text-gold-600 transition-colors">
-                طلب زيارة ممرض
+              <h3 className="text-xs sm:text-sm lg:text-base font-extrabold text-navy-900 group-hover:text-gold-600 transition-colors leading-snug">
+                احجز ممرض يجيلك
               </h3>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                حدد الموعد والخدمة ونصلك لبيتك
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-relaxed line-clamp-2">
+                حدد ميعادك والخدمة ونوصلك لبيتك
               </p>
             </div>
           </Link>
@@ -60,22 +60,22 @@ export default function QuickActions() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => analytics.clickWhatsApp('quick_actions')}
-            className="group relative bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-[0_6px_20px_rgba(11,27,61,0.06)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
+            className="group relative bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-slate-200/80 shadow-[0_4px_16px_rgba(11,27,61,0.05)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all shadow-sm">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all shadow-sm shrink-0">
                 <WhatsAppIcon />
               </div>
-              <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">
+              <span className="text-[10px] sm:text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full">
                 مباشر
               </span>
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-extrabold text-navy-900 group-hover:text-emerald-600 transition-colors">
-                واتساب التمريض
+              <h3 className="text-xs sm:text-sm lg:text-base font-extrabold text-navy-900 group-hover:text-emerald-600 transition-colors leading-snug">
+                كلمنا واتساب فوري
               </h3>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                محادثة فورية مع الممرض المناوب
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-relaxed line-clamp-2">
+                محادثة مباشرة مع الممرض المناوب
               </p>
             </div>
           </a>
@@ -84,21 +84,21 @@ export default function QuickActions() {
           <a
             href={getCallUrl()}
             onClick={() => analytics.clickCall('quick_actions')}
-            className="group relative bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-[0_6px_20px_rgba(11,27,61,0.06)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
+            className="group relative bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-slate-200/80 shadow-[0_4px_16px_rgba(11,27,61,0.05)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-gold-500 group-hover:text-white transition-all shadow-sm">
-                <PhoneIcon className="w-6 h-6" />
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-gold-500 group-hover:text-white transition-all shadow-sm shrink-0">
+                <PhoneIcon className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <span className="text-[11px] font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">
+              <span className="text-[10px] sm:text-[11px] font-bold text-amber-700 bg-amber-50 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full">
                 24/7
               </span>
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-extrabold text-navy-900 group-hover:text-amber-600 transition-colors">
-                اتصال هاتفي
+              <h3 className="text-xs sm:text-sm lg:text-base font-extrabold text-navy-900 group-hover:text-amber-600 transition-colors leading-snug">
+                كلمنا تليفون
               </h3>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed" dir="ltr">
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-relaxed" dir="ltr">
                 {settings.phone}
               </p>
             </div>
@@ -107,21 +107,21 @@ export default function QuickActions() {
           {/* 4. Services List */}
           <Link
             href="/services"
-            className="group relative bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-[0_6px_20px_rgba(11,27,61,0.06)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
+            className="group relative bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-slate-200/80 shadow-[0_4px_16px_rgba(11,27,61,0.05)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center group-hover:scale-110 group-hover:bg-sky-600 group-hover:text-white transition-all shadow-sm">
-                <ListBulletIcon className="w-6 h-6" />
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center group-hover:scale-110 group-hover:bg-sky-600 group-hover:text-white transition-all shadow-sm shrink-0">
+                <ListBulletIcon className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <span className="text-[11px] font-bold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full">
+              <span className="text-[10px] sm:text-[11px] font-bold text-sky-700 bg-sky-50 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full">
                 15+ خدمة
               </span>
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-extrabold text-navy-900 group-hover:text-sky-600 transition-colors">
-                قائمة الخدمات
+              <h3 className="text-xs sm:text-sm lg:text-base font-extrabold text-navy-900 group-hover:text-sky-600 transition-colors leading-snug">
+                كل خدماتنا الطبية
               </h3>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-relaxed line-clamp-2">
                 استعرض تفاصيل وأسعار جميع الخدمات
               </p>
             </div>

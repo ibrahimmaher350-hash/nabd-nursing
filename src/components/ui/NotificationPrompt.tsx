@@ -49,7 +49,7 @@ export default function NotificationPrompt() {
 
   return (
     <div
-      className="fixed bottom-20 sm:bottom-6 end-4 sm:end-6 z-50 max-w-sm bg-white border border-medical-border rounded-2xl shadow-card-lg p-4 animate-slide-up no-print"
+      className="fixed bottom-24 sm:bottom-6 start-4 sm:start-6 z-50 max-w-sm bg-white border border-medical-border rounded-2xl shadow-card-lg p-4 animate-slide-up no-print"
       role="dialog"
       aria-label="تفعيل الإشعارات"
     >

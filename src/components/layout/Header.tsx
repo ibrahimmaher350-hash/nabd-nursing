@@ -245,13 +245,13 @@ export default function Header() {
             </div>
 
             {/* ── Mobile Action Icons (Clean & Uncrowded) ── */}
-            <div className="flex lg:hidden items-center gap-2">
+            <div className="flex lg:hidden items-center gap-1.5 sm:gap-2">
               <Link
                 href="/appointments/mine"
-                className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100 text-slate-700 border border-slate-200 shadow-xs"
+                className="relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-slate-700 border border-slate-200 shadow-xs"
                 title="المواعيد"
               >
-                <BellIcon className="w-5 h-5" />
+                <BellIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
                 {unreadNotifications > 0 && (
                   <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-black rounded-full flex items-center justify-center">
                     {unreadNotifications > 9 ? '9+' : unreadNotifications}
@@ -261,22 +261,22 @@ export default function Header() {
 
               <a
                 href={getCallUrl()}
-                className="flex items-center justify-center w-10 h-10 rounded-xl bg-gold-50 text-gold-600 border border-gold-200 shadow-xs"
+                className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold-50 text-gold-600 border border-gold-200 shadow-xs"
                 aria-label="اتصل بنا"
                 onClick={() => analytics.clickCall('header_mobile')}
               >
-                <PhoneIcon className="w-5 h-5" />
+                <PhoneIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
               </a>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100 text-navy-800 border border-slate-200 shadow-xs"
+                className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-navy-800 border border-slate-200 shadow-xs"
                 aria-label={isMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
                 aria-expanded={isMenuOpen}
               >
                 {isMenuOpen ? (
-                  <XMarkIcon className="w-6 h-6" />
+                  <XMarkIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                 ) : (
-                  <Bars3Icon className="w-6 h-6" />
+                  <Bars3Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                 )}
               </button>
             </div>
