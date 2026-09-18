@@ -121,7 +121,7 @@ firebase deploy
 - **واتساب:** 01099667065
 - **الاتصال المباشر:** 01001097896
 - **فيسبوك:** [الصفحة](https://www.facebook.com/share/1D1B1uSJMy/)
-- **المدونة:** [Blogger](https://nabd-damietta.blogspot.com/?m=1)
+- **المدونة:** [Blogger](https://nabdhomenursing.blogspot.com/)
 
 ---
 

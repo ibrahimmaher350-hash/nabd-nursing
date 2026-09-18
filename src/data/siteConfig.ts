@@ -48,7 +48,7 @@ export const siteConfig = {
     // 👥 جروب نبض على فيسبوك
     facebookGroup: 'https://www.facebook.com/share/g/1BmBygobMw/',
     // 📝 مدونة نبض – Blogger
-    blogger: 'https://nabd-damietta.blogspot.com/?m=1',
+    blogger: 'https://nabdhomenursing.blogspot.com/',
     // 📍 نبض على Google
     googleBusiness: 'https://2u.pw/AGitWm',
     // ⭐ آراؤكم وتقييمكم على Google
@@ -122,7 +122,7 @@ export const siteConfig = {
   // ─── Blog ─────────────────────────────────────────────────
   blog: {
     provider: 'blogger' as const, // Swappable: 'blogger' | 'firestore' | 'wordpress'
-    bloggerUrl: 'https://nabd-damietta.blogspot.com',
+    bloggerUrl: 'https://nabdhomenursing.blogspot.com',
     blogId: null, // Set when Blogger API key is configured
     categories: [
       'صحة عامة',

@@ -85,7 +85,7 @@ export class BloggerProvider implements BlogProvider {
       {
         id: 'placeholder-1',
         title: 'أهمية الرعاية التمريضية المنزلية لكبار السن',
-        url: 'https://nabd-damietta.blogspot.com/?m=1',
+        url: 'https://nabdhomenursing.blogspot.com/',
         summary: 'تعرف على أهمية الرعاية التمريضية المنزلية في دعم صحة كبار السن ومساعدة الأسرة.',
         publishedAt: new Date().toISOString(),
         labels: ['رعاية كبار السن', 'تمريض منزلي'],
@@ -93,7 +93,7 @@ export class BloggerProvider implements BlogProvider {
       {
         id: 'placeholder-2',
         title: 'كيف تعتني بجرح ما بعد العملية في المنزل؟',
-        url: 'https://nabd-damietta.blogspot.com/?m=1',
+        url: 'https://nabdhomenursing.blogspot.com/',
         summary: 'إرشادات للعناية بالجروح الجراحية في المنزل لضمان التعافي السريع.',
         publishedAt: new Date().toISOString(),
         labels: ['العناية بالجروح', 'بعد العملية'],

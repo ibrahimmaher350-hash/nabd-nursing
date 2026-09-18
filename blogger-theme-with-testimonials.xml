@@ -7,9 +7,9 @@
   
   <!-- SEO & Meta Tags &#8212; مدونة نبض للتمريض المنزلي &#8212; دمياط -->
   <b:if cond='data:blog.pageType == &quot;index&quot;'>
-    <title>مدونة نبض للتمريض المنزلي | نصائح ومقالات طبية وتمريضية موثوقة &#8212; دمياط</title>
+    <title>مدونة نبض للتمريض المنزلي | نصائح ومقالات طبية وتمريضية موثوقة — دمياط</title>
   <b:else/>
-    <title><data:blog.pageName/> | مدونة نبض للتمريض المنزلي</title>
+    <title><data:blog.pageName/></title>
   </b:if>
   
   <meta content='المدونة الطبية الرسمية لنبض للتمريض المنزلي بدمياط. مقالات وإرشادات صحية موثوقة في رعاية كبار السن، الجروح والقرح، القسطرة البولية، المحاليل والحقن، والإسعافات الأولية.' name='description'/>
@@ -34,21 +34,22 @@
     <meta expr:content='data:blog.pageName' property='og:title'/>
     <meta expr:content='data:blog.pageName' name='twitter:title'/>
     
-    <!-- فحص صورة المقال: إذا كانت هناك صورة للمقال تظهر في الرابط، وإلا تظهر الصورة الرسمية للمدونة -->
+    <!-- فحص صورة المقال: تظهر الصورة في المشاركة فقط إذا كان المقال يحتوي على صورة خاصة به، وإلا لا تظهر أي صورة -->
     <b:if cond='data:view.featuredImage'>
       <meta expr:content='data:view.featuredImage' property='og:image'/>
       <meta expr:content='data:view.featuredImage' property='og:image:secure_url'/>
       <meta expr:content='data:view.featuredImage' name='twitter:image'/>
+      <meta expr:content='data:blog.pageName' property='og:image:alt'/>
+      <meta content='summary_large_image' name='twitter:card'/>
     <b:elseif cond='data:blog.postImageUrl'/>
       <meta expr:content='data:blog.postImageUrl' property='og:image'/>
       <meta expr:content='data:blog.postImageUrl' property='og:image:secure_url'/>
       <meta expr:content='data:blog.postImageUrl' name='twitter:image'/>
+      <meta expr:content='data:blog.pageName' property='og:image:alt'/>
+      <meta content='summary_large_image' name='twitter:card'/>
     <b:else/>
-      <meta content='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg' property='og:image'/>
-      <meta content='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg' property='og:image:secure_url'/>
-      <meta content='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg' name='twitter:image'/>
+      <meta content='summary' name='twitter:card'/>
     </b:if>
-    <meta expr:content='data:blog.pageName' property='og:image:alt'/>
 
     <b:if cond='data:blog.metaDescription'>
       <meta expr:content='data:blog.metaDescription' property='og:description'/>
@@ -67,11 +68,8 @@
     <meta content='شعار نبض للتمريض المنزلي' property='og:image:alt'/>
     <meta content='المدونة الطبية الرسمية لنبض للتمريض المنزلي بدمياط — مقالات وإرشادات تمريضية وصحية موثوقة، وآراء وتقييمات مرضانا الكرام.' property='og:description'/>
     <meta content='المدونة الطبية الرسمية لنبض للتمريض المنزلي بدمياط — مقالات وإرشادات تمريضية وصحية موثوقة.' name='twitter:description'/>
+    <meta content='summary_large_image' name='twitter:card'/>
   </b:if>
-
-  <meta content='1200' property='og:image:width'/>
-  <meta content='630' property='og:image:height'/>
-  <meta content='summary_large_image' name='twitter:card'/>
 
   <!-- Google & AI Search Engines Schema.org Structured Data (JSON-LD) -->
   <script type='application/ld+json'>
@@ -265,12 +263,12 @@
     .brand-logo { display: flex; align-items: center; gap: 11px; min-width: 0; }
     .logo-img-wrapper {
       width: 42px; height: 42px; border-radius: 12px; overflow: hidden;
-      background: #FFFFFF; padding: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      background: #FFFFFF url('https://nabd-nursing.vercel.app/images/nabd-official-logo.jpg') center/contain no-repeat;
+      padding: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       border: 1.5px solid var(--nabd-gold); flex-shrink: 0;
       transition: transform 0.2s ease;
     }
     .brand-logo:hover .logo-img-wrapper { transform: scale(1.04); }
-    .logo-img-wrapper img { width: 100%; height: 100%; object-fit: contain; }
     
     .brand-title-group { min-width: 0; }
     .brand-title-group h1, .brand-title-group .site-title {
@@ -329,11 +327,11 @@
     .layout-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
 
     /* ── Post Cards Grid (World-Class Clean Editorial) ── */
-    .posts-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .posts-grid { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: stretch; }
     .nabd-post-card {
       background: var(--nabd-card-bg); border-radius: var(--nabd-radius);
       border: 1px solid var(--nabd-border); overflow: hidden;
-      box-shadow: var(--nabd-shadow); display: flex; flex-direction: column;
+      box-shadow: var(--nabd-shadow); display: flex; flex-direction: column; height: 100%;
       transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.28s ease;
     }
     .nabd-post-card:hover {
@@ -343,19 +341,32 @@
     }
     .post-thumb-wrap {
       position: relative; width: 100%; aspect-ratio: 16 / 9;
-      background: #0D2040; overflow: hidden;
+      background: #0D2040; overflow: hidden; flex-shrink: 0;
     }
     .post-thumb-wrap img {
       width: 100%; height: 100%; object-fit: cover;
       transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .nabd-post-card:hover .post-thumb-wrap img { transform: scale(1.04); }
+
+    /* Accent bar shown at top of text-only cards instead of image */
+    .post-no-img-accent {
+      width: 100%; height: 4px; flex-shrink: 0;
+      background: linear-gradient(90deg, var(--nabd-navy-primary), var(--nabd-gold), var(--nabd-emerald));
+    }
+
     .post-category-tag {
       position: absolute; top: 12px; right: 12px;
       background: rgba(10, 25, 47, 0.85); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
       color: var(--nabd-gold); border: 1px solid rgba(212, 175, 55, 0.35); padding: 4px 11px;
       border-radius: 20px; font-size: 11px; font-weight: 800; letter-spacing: 0.2px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+    .post-tag-pill {
+      display: inline-flex; align-items: center;
+      background: rgba(13, 32, 64, 0.06); color: var(--nabd-navy-primary);
+      border: 1px solid rgba(13, 32, 64, 0.12); padding: 3px 10px;
+      border-radius: 16px; font-size: 11px; font-weight: 800;
     }
 
     .post-body { padding: 16px 18px; display: flex; flex-direction: column; flex-grow: 1; }
@@ -367,13 +378,13 @@
     .post-title {
       font-size: 16.5px; font-weight: 800; color: var(--nabd-navy-primary);
       line-height: 1.45; margin-bottom: 8px;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
       transition: color 0.2s ease;
     }
     .nabd-post-card:hover .post-title { color: var(--nabd-navy-light); }
     .post-snippet {
       font-size: 13px; color: var(--nabd-text-secondary); line-height: 1.65; margin-bottom: 14px;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1;
     }
     .post-footer {
       display: flex; align-items: center; justify-content: space-between;
@@ -471,10 +482,10 @@
     }
     .author-avatar {
       width: 56px; height: 56px; border-radius: 50%; overflow: hidden;
-      background: #FFFFFF; border: 2px solid var(--nabd-gold); flex-shrink: 0;
+      background: #FFFFFF url('https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg') center/cover no-repeat;
+      border: 2px solid var(--nabd-gold); flex-shrink: 0;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
     .author-info h5 { font-size: 14px; font-weight: 800; color: var(--nabd-navy-primary); margin-bottom: 3px; }
     .author-info p { font-size: 11.5px; color: var(--nabd-text-muted); margin: 0; line-height: 1.6; }
 
@@ -522,10 +533,10 @@
     .supervisor-widget .widget-title::after { right: calc(50% - 18px); }
     .supervisor-img-wrap {
       width: 85px; height: 85px; border-radius: 50%; overflow: hidden;
+      background: url('https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg') center/cover no-repeat;
       margin: 0 auto 10px auto; border: 2.5px solid var(--nabd-gold);
       box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     }
-    .supervisor-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .supervisor-name { font-size: 15px; font-weight: 800; color: #FFFFFF; margin-bottom: 2px; }
     .supervisor-title { font-size: 11.5px; color: var(--nabd-gold); font-weight: 700; margin-bottom: 10px; }
 
@@ -751,9 +762,7 @@
     <div class='container'>
       <div class='header-inner'>
         <a class='brand-logo' href='/'>
-          <div class='logo-img-wrapper'>
-            <img alt='شعار نبض للتمريض المنزلي' src='https://nabd-nursing.vercel.app/images/nabd-official-logo.jpg'/>
-          </div>
+          <div aria-label='شعار نبض للتمريض المنزلي' class='logo-img-wrapper' role='img'></div>
           <div class='brand-title-group'>
             <h1 class='site-title'>نبض للتمريض المنزلي - دمياط</h1>
             <p>المدونة والمجلة الطبية</p>
@@ -832,18 +841,23 @@
                   <div class='posts-grid'>
                     <b:loop values='data:posts' var='post'>
                       <article class='nabd-post-card'>
-                        <div class='post-thumb-wrap'>
-                          <b:if cond='data:post.featuredImage'>
+                        <b:if cond='data:post.featuredImage'>
+                          <div class='post-thumb-wrap'>
                             <img expr:alt='data:post.title' expr:src='data:post.featuredImage' loading='lazy'/>
-                          <b:elseif cond='data:post.firstImageUrl'/>
+                            <b:if cond='data:post.labels and not data:post.labels.empty'>
+                              <span class='post-category-tag'><data:post.labels.first.name/></span>
+                            </b:if>
+                          </div>
+                        <b:elseif cond='data:post.firstImageUrl'/>
+                          <div class='post-thumb-wrap'>
                             <img expr:alt='data:post.title' expr:src='data:post.firstImageUrl' loading='lazy'/>
-                          <b:else/>
-                            <img expr:alt='data:post.title' loading='lazy' src='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg'/>
-                          </b:if>
-                          <b:if cond='data:post.labels and not data:post.labels.empty'>
-                            <span class='post-category-tag'><data:post.labels.first.name/></span>
-                          </b:if>
-                        </div>
+                            <b:if cond='data:post.labels and not data:post.labels.empty'>
+                              <span class='post-category-tag'><data:post.labels.first.name/></span>
+                            </b:if>
+                          </div>
+                        <b:else/>
+                          <div class='post-no-img-accent'/>
+                        </b:if>
                         <div class='post-body'>
                           <div class='post-meta-top'>
                             <span><i class='fa-regular fa-calendar'/> <data:post.date/></span>
@@ -853,7 +867,7 @@
                           <p class='post-snippet'><data:post.snippet/></p>
                           <div class='post-footer'>
                             <a class='read-more-btn' expr:href='data:post.url'>
-                              <span>اقرأ المقال كاملا&#1611;</span> <i class='fa-solid fa-arrow-left'/>
+                              <span>اقرأ المقال كاملاً</span> <i class='fa-solid fa-arrow-left'/>
                             </a>
                             <span class='post-author-name'>إبراهيم ماهر</span>
                           </div>
@@ -911,9 +925,7 @@
 
                       <!-- Author Box -->
                       <div class='author-box'>
-                        <div class='author-avatar'>
-                          <img alt='إبراهيم ماهر — المشرف العام لـ نبض' src='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg'/>
-                        </div>
+                        <div aria-label='إبراهيم ماهر — المشرف العام لـ نبض' class='author-avatar' role='img'></div>
                         <div class='author-info'>
                           <h5>إبراهيم ماهر &#8212; المشرف العام لـ نبض للتمريض المنزلي</h5>
                           <p>أخصائي تمريض ورعاية صحية منزلية بمحافظة دمياط. نسعى لتقديم خدمة تمريضية متكاملة بأمان&#1548; تعقيم فائق&#1548; وراحة تامة للمريض وأسرته داخل منازلهم. <a href='https://www.facebook.com/share/1BDJwJeW15/' rel='noopener' style='color:var(--nabd-navy-light); font-weight:700; text-decoration:underline;' target='_blank'><i class='fa-brands fa-facebook'/> الملف الشخصي للمسؤول</a></p>
@@ -993,9 +1005,7 @@
           <!-- Supervisor Widget -->
           <div class='sidebar-widget supervisor-widget'>
             <h4 class='widget-title'><i class='fa-solid fa-user-doctor'/> الإشراف التمريضي</h4>
-            <div class='supervisor-img-wrap'>
-              <img alt='إبراهيم ماهر — نبض للتمريض المنزلي' src='https://nabd-nursing.vercel.app/images/nabd-hero-poster.jpg'/>
-            </div>
+            <div aria-label='إبراهيم ماهر — نبض للتمريض المنزلي' class='supervisor-img-wrap' role='img'></div>
             <h5 class='supervisor-name'>إبراهيم ماهر</h5>
             <p class='supervisor-title'>المشرف العام لـ نبض للتمريض المنزلي</p>
             <div style='display:flex; flex-direction:column; gap:7px; margin-top:8px;'>
@@ -1594,9 +1604,7 @@
         <!-- Column 1: Brand & Official Platforms -->
         <div class='footer-brand'>
           <h3>
-            <div style='width:28px;height:28px;border-radius:6px;overflow:hidden;background:#FFF;display:inline-block;vertical-align:middle;padding:1px;'>
-              <img alt='شعار نبض' src='https://nabd-nursing.vercel.app/images/nabd-official-logo.jpg' style='width:100%;height:100%;object-fit:contain;'/>
-            </div>
+            <div aria-label='شعار نبض' role='img' style='width:28px;height:28px;border-radius:6px;overflow:hidden;background:#FFF url(&quot;https://nabd-nursing.vercel.app/images/nabd-official-logo.jpg&quot;) center/contain no-repeat;display:inline-block;vertical-align:middle;padding:1px;'></div>
             نبض للتمريض المنزلي &#8212; دمياط
           </h3>
           <p>المؤسسة المتخصصة في تقديم خدمات التمريض والرعاية الصحية المنزلية وفق أعلى معايير الجودة والتعقيم والراحة للمريض وأسرته داخل دمياط .</p>
