@@ -835,6 +835,7 @@
                 <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
                 <b:widget-setting name='showInlineAds'>false</b:widget-setting>
                 <b:widget-setting name='showReactions'>false</b:widget-setting>
+                <b:widget-setting name='showMaxPost'>15</b:widget-setting>
               </b:widget-settings>
               <b:includable id='main'>
                 <b:if cond='data:view.isMultipleItems'>
@@ -856,7 +857,7 @@
                             </b:if>
                           </div>
                         <b:else/>
-                          <div class='post-no-img-accent'/>
+                          <div class='post-no-img-accent'></div>
                         </b:if>
                         <div class='post-body'>
                           <div class='post-meta-top'>

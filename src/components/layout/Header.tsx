@@ -31,7 +31,7 @@ const navLinks: NavLinkItem[] = [
   { href: '/reviews',        label: 'آراء المرضى ⭐',         badge: '5.0' },
   { href: '/blood-bank',     label: 'بنك الدم 🩸',             badge: 'جديد' },
   { href: '/medical-guide',  label: 'الإسعافات والروشتات 🚑', badge: null },
-  { href: 'https://nabd-damietta.blogspot.com', label: 'المدونة ✍️', badge: null, isExternal: true },
+  { href: 'https://nabdhomenursing.blogspot.com/', label: 'المدونة ✍️', badge: null, isExternal: true },
   { href: '/contact',        label: 'تواصل معنا',             badge: null },
 ]
 

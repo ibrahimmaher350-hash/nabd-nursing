@@ -191,7 +191,7 @@ export default function ContactPage() {
 
                 {/* Blogger */}
                 <a
-                  href="https://nabd-damietta.blogspot.com/?m=1"
+                  href="https://nabdhomenursing.blogspot.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3.5 p-4 rounded-2xl border border-navy-100 hover:border-navy-300 hover:bg-navy-50/50 transition-all group"
