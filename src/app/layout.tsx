@@ -251,7 +251,7 @@ const aggregateRatingSchema = {
   ],
 }
 
-import NotificationPrompt from '@/components/ui/NotificationPrompt'
+
 import { SettingsProvider } from '@/context/SettingsContext'
 import MetaPixel from '@/components/analytics/MetaPixel'
 import { AuthProvider } from '@/lib/auth/useAuthStore'
@@ -360,7 +360,6 @@ export default function RootLayout({
         <SettingsProvider>
           <AuthProvider>
             {children}
-            <NotificationPrompt />
           </AuthProvider>
         </SettingsProvider>
       </body>

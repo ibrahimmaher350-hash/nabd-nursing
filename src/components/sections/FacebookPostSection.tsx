@@ -1,7 +1,7 @@
 'use client'
 /**
  * components/sections/FacebookPostSection.tsx — نبض للتمريض المنزلي
- * قسم المنشور الرسمي على فيسبوك — تفاعل حي وتوثيق رسمي للخدمات
+ * قسم التواصل الاجتماعي — روابط مباشرة بدون iframe
  */
 
 import { siteConfig } from '@/data/siteConfig'
@@ -15,100 +15,67 @@ const FacebookIcon = () => (
 export default function FacebookPostSection() {
   return (
     <section
-      className="bg-white border-y border-medical-border overflow-hidden"
+      className="bg-blue-50 border-y border-blue-100 py-10 sm:py-14"
       aria-labelledby="facebook-section-heading"
     >
-      <div className="section-container section-padding">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="section-container">
+        <div className="text-center max-w-2xl mx-auto">
 
-          {/* ── Left Column: Interactive Facebook Post Embed ── */}
-          <div className="lg:col-span-6 flex justify-center order-2 lg:order-1">
-            <div className="w-full max-w-[500px] rounded-3xl overflow-hidden shadow-card-lg border border-medical-border bg-slate-50 p-2 sm:p-3">
-              <div className="relative w-full overflow-hidden rounded-2xl flex justify-center bg-white">
-                <iframe
-                  src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid05UyzC9gPXGcyGiWVh3THNbXQToBgD7kDjxuTFTLdFwquepW6p9pqX1twpzpgtSYZl%26id%3D61593884400330&show_text=true&width=500"
-                  width="500"
-                  height="706"
-                  style={{ border: 'none', overflow: 'hidden', maxWidth: '100%' }}
-                  scrolling="no"
-                  frameBorder="0"
-                  allowFullScreen={true}
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  title="منشور نبض للتمريض المنزلي على فيسبوك — رعاية صحية في بيتك"
-                  className="w-full max-w-[500px]"
-                />
-              </div>
-            </div>
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-white border border-blue-200 text-blue-800 rounded-full px-4 py-1.5 mb-5 text-xs sm:text-sm font-bold shadow-sm">
+            <FacebookIcon />
+            <span>تابعونا على صفحتنا الرسمية</span>
           </div>
 
-          {/* ── Right Column: Marketing Copy & Direct Community Links ── */}
-          <div className="lg:col-span-6 text-center lg:text-start order-1 lg:order-2">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 text-blue-800 rounded-full px-4 py-1.5 mb-4 text-xs sm:text-sm font-bold">
-              <FacebookIcon />
-              <span>تفاعل حي على صفحتنا الرسمية</span>
-            </div>
+          <h2
+            id="facebook-section-heading"
+            className="text-2xl sm:text-3xl font-extrabold text-navy-700 leading-tight mb-3"
+          >
+            تابع <span className="text-blue-600">نبض على فيسبوك</span>
+          </h2>
 
-            <h2
-              id="facebook-section-heading"
-              className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-navy-700 leading-tight mb-4"
+          <p className="text-medical-muted text-sm sm:text-base leading-relaxed mb-8 max-w-xl mx-auto">
+            نشر يومي لنصائح طبية مفيدة وإرشادات التمريض المنزلي ورعاية كبار السن داخل دمياط.
+          </p>
+
+          {/* Features */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-start">
+            {[
+              { icon: '🩺', text: 'تغطية مستمرة لخدمات الحقن والمحاليل ورعاية الجروح' },
+              { icon: '💬', text: 'رد سريع على استفساراتكم الطبية عبر رسائل الصفحة' },
+              { icon: '⭐', text: 'آراء وتجارب حقيقية من عائلات المرضى' },
+            ].map((item, idx) => (
+              <div key={idx} className="flex items-center gap-3 bg-white rounded-2xl p-3.5 border border-blue-100 shadow-sm">
+                <span className="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center text-lg shrink-0">
+                  {item.icon}
+                </span>
+                <span className="text-xs sm:text-sm text-navy-800 font-medium leading-snug">
+                  {item.text}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center flex-wrap">
+            <a
+              href="https://www.facebook.com/profile.php?id=61593884400330"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-[#1877F2] hover:bg-[#0c65d8] text-white font-bold px-6 py-3.5 rounded-2xl text-sm shadow-md active:scale-95 transition-all"
             >
-              خليك متابع جديد نبض{' '}
-              <span className="text-gold-500">على فيسبوك</span>
-            </h2>
+              <FacebookIcon />
+              <span>زيارة صفحة نبض الرسمية</span>
+            </a>
 
-            <p className="text-medical-muted text-sm sm:text-base leading-relaxed mb-6">
-              بننزل كل يوم نصائح طبية مهمة وإرشادات لتمريض ورعاية كبار السن والمرضى في بيتك داخل دمياط.
-            </p>
-
-            {/* Feature points */}
-            <div className="flex flex-col gap-3 mb-8">
-              {[
-                { icon: '🩺', text: 'تغطية مستمرة لخدمات الحقن والمحاليل ورعاية الجروح بدمياط' },
-                { icon: '💬', text: 'رد فوري على استفساراتكم الطبية عبر رسائل الصفحة' },
-                { icon: '⭐', text: 'آراء وتجارب حقيقية لأهالي المرضى والمتابعين' },
-              ].map((item, idx) => (
-                <div key={idx} className="flex items-center gap-3 text-start justify-center lg:justify-start">
-                  <span className="w-8 h-8 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center text-base shrink-0 shadow-sm">
-                    {item.icon}
-                  </span>
-                  <span className="text-xs sm:text-sm text-navy-800 font-semibold">
-                    {item.text}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Official Facebook Platforms Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start flex-wrap">
-              <a
-                href="https://www.facebook.com/profile.php?id=61593884400330"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-[#1877F2] hover:bg-[#0c65d8] text-white font-bold px-6 py-3.5 rounded-2xl text-sm shadow-md active:scale-95 transition-all"
-              >
-                <FacebookIcon />
-                <span>زيارة صفحة نبض الرسمية</span>
-              </a>
-
-              <a
-                href="https://www.facebook.com/share/g/1BmBygobMw/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-navy-50 hover:bg-navy-100 text-navy-700 font-bold px-5 py-3.5 rounded-2xl text-sm border border-navy-200 active:scale-95 transition-all"
-              >
-                <span>جروب نبض على فيسبوك 👥</span>
-              </a>
-
-              <a
-                href="https://www.facebook.com/share/1BDJwJeW15/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold px-4 py-3 rounded-2xl text-xs border border-slate-200 active:scale-95 transition-all"
-              >
-                <span>إبراهيم ماهر (المسؤول)</span>
-              </a>
-            </div>
+            <a
+              href="https://www.facebook.com/share/g/1BmBygobMw/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-white hover:bg-navy-50 text-navy-700 font-bold px-5 py-3.5 rounded-2xl text-sm border border-navy-200 active:scale-95 transition-all"
+            >
+              <span>جروب نبض على فيسبوك 👥</span>
+            </a>
           </div>
 
         </div>
