@@ -46,10 +46,10 @@ export default function QuickActions() {
             </div>
             <div>
               <h3 className="text-xs sm:text-sm lg:text-base font-extrabold text-navy-900 group-hover:text-gold-600 transition-colors leading-snug">
-                احجز ممرض يجيلك
+                احجز ممرضاً لمنزلك
               </h3>
               <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-relaxed line-clamp-2">
-                حدد ميعادك والخدمة ونوصلك لبيتك
+                حدد موعدك والخدمة ونصل إليك في منزلك
               </p>
             </div>
           </Link>
@@ -72,7 +72,7 @@ export default function QuickActions() {
             </div>
             <div>
               <h3 className="text-xs sm:text-sm lg:text-base font-extrabold text-navy-900 group-hover:text-emerald-600 transition-colors leading-snug">
-                كلمنا واتساب فوري
+                تواصل عبر واتساب
               </h3>
               <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-relaxed line-clamp-2">
                 محادثة مباشرة مع الممرض المناوب
@@ -96,7 +96,7 @@ export default function QuickActions() {
             </div>
             <div>
               <h3 className="text-xs sm:text-sm lg:text-base font-extrabold text-navy-900 group-hover:text-amber-600 transition-colors leading-snug">
-                كلمنا تليفون
+                اتصل بنا مباشرة
               </h3>
               <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-relaxed" dir="ltr">
                 {settings.phone}
@@ -119,7 +119,7 @@ export default function QuickActions() {
             </div>
             <div>
               <h3 className="text-xs sm:text-sm lg:text-base font-extrabold text-navy-900 group-hover:text-sky-600 transition-colors leading-snug">
-                كل خدماتنا الطبية
+                جميع خدماتنا الطبية
               </h3>
               <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-relaxed line-clamp-2">
                 استعرض تفاصيل وأسعار جميع الخدمات

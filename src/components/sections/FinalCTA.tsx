@@ -23,11 +23,11 @@ export default function FinalCTA() {
         </div>
 
         <h2 id="final-cta-heading" className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white mb-4">
-          محتاج ممرض شاطر يجيلك البيت؟
+          هل تحتاج ممرضاً متخصصاً لمنزلك؟
         </h2>
         <p className="text-white/75 text-base sm:text-lg max-w-xl mx-auto mb-6">
-          طاقم نبض جاهز لخدمتك على مدار الساعة في دمياط.{' '}
-          <span className="text-gold-300 font-semibold">رعاية تبدأ من بيتك.</span>
+          فريق نبض جاهز لخدمتك على مدار الساعة في دمياط.{' '}
+          <span className="text-gold-300 font-semibold">رعاية طبية تبدأ من منزلك.</span>
         </p>
 
         {/* Buttons */}

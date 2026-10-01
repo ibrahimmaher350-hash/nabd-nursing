@@ -1,13 +1,12 @@
 'use client'
 /**
  * components/sections/HeroSection.tsx — نبض للتمريض المنزلي
- * CareHub-grade cinematic hero with live nurse badge and spacious typography
+ * CareHub-grade cinematic hero — فصيح، بدون شريط طوارئ، بدون شريط إحصاءات على الموبايل
  */
 
 import Link from 'next/link'
 import Image from 'next/image'
 import {
-  ExclamationTriangleIcon,
   CheckBadgeIcon,
   ArrowRightIcon,
   ShieldCheckIcon,
@@ -47,7 +46,7 @@ export default function HeroSection() {
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-500/20 via-white/10 to-transparent border border-gold-400/40 rounded-full px-4 py-1.5 mb-6 backdrop-blur-md shadow-sm">
               <ShieldCheckIcon className="w-4 h-4 text-gold-400 shrink-0" />
               <span className="text-white/95 text-xs sm:text-sm font-bold tracking-wide">
-                المستشفى في بيتك — محافظة دمياط
+                الرعاية الطبية في منزلك — محافظة دمياط
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping shrink-0" />
             </div>
@@ -63,15 +62,15 @@ export default function HeroSection() {
 
             {/* Subtitle */}
             <p className="text-white/80 text-sm sm:text-base lg:text-lg leading-[1.8] mb-8 max-w-2xl mx-auto lg:mx-0 font-normal">
-              تمريض ورعاية طبية لحد باب بيتك في دمياط.. طاقم مرخص ومعقم وأجهزة حديثة 24 ساعة لراحتك وراحة أسرتك.
+              خدمات تمريض ورعاية طبية منزلية متكاملة حتى باب منزلك في دمياط، بطاقم مرخص ومعتمد وأجهزة طبية حديثة.
             </p>
 
             {/* Feature Pills */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-2.5 mb-8">
               {[
-                { icon: '🛡️', text: 'تعقيم كامل ومكافحة عدوى' },
+                { icon: '🛡️', text: 'تعقيم كامل ومكافحة العدوى' },
                 { icon: '👨‍⚕️', text: 'طاقم تمريض محترف' },
-                { icon: '🏠', text: 'رعاية تامة في بيتك' },
+                { icon: '🏠', text: 'رعاية متكاملة في منزلك' },
               ].map((pill) => (
                 <span
                   key={pill.text}
@@ -104,28 +103,12 @@ export default function HeroSection() {
                 <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                 </svg>
-                <span>تواصل واتساب مباشر</span>
+                <span>تواصل عبر واتساب</span>
               </a>
             </div>
 
-            {/* Emergency Ribbon */}
-            <div className="flex flex-col xs:flex-row items-center justify-between gap-2.5 bg-red-950/40 border border-red-500/30 rounded-2xl p-3 max-w-2xl mx-auto lg:mx-0">
-              <div className="flex items-center gap-2 text-center xs:text-start">
-                <ExclamationTriangleIcon className="w-5 h-5 text-red-400 shrink-0" />
-                <span className="text-red-200 text-xs sm:text-sm font-medium">
-                  طوارئ حرجة؟ اتصل بـ <span className="font-bold text-white">123</span> أو طاقم نبض:
-                </span>
-              </div>
-              <a
-                href={getCallUrl()}
-                className="bg-red-600 hover:bg-red-500 text-white text-xs font-black px-3.5 py-1.5 rounded-xl shrink-0 transition-colors shadow-sm w-full xs:w-auto text-center"
-              >
-                {settings.phone} 📞
-              </a>
-            </div>
-
-            {/* Stats Counter Bar — mobile optimized with no text wrapping */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-8 max-w-2xl mx-auto lg:mx-0">
+            {/* Stats Counter Bar — hidden on mobile, visible on sm+ */}
+            <div className="hidden sm:grid grid-cols-3 gap-2 sm:gap-4 max-w-2xl mx-auto lg:mx-0">
               {[
                 { value: '15+', label: 'خدمة تمريضية' },
                 { value: '100%', label: 'أدوات معقمة' },
@@ -143,14 +126,14 @@ export default function HeroSection() {
 
           </div>
 
-          {/* ── Left Column: Live Nurse Card (CareHub Style) (5 cols) ── */}
-          <div className="lg:col-span-5 flex flex-col items-center justify-center">
+          {/* ── Left Column: Live Nurse Card (5 cols) — hidden on mobile ── */}
+          <div className="hidden lg:flex lg:col-span-5 flex-col items-center justify-center">
 
             {/* Main Card */}
             <div className="relative w-full max-w-md rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-b from-white/10 to-white/5 border border-white/15 p-3 sm:p-5 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.6)]">
 
               {/* Main Image Container */}
-              <div className="relative rounded-[1.75rem] sm:rounded-[2rem] overflow-hidden aspect-[4/5.2] sm:aspect-[4/4.5] min-h-[380px] sm:min-h-0 shadow-2xl border border-white/20">
+              <div className="relative rounded-[1.75rem] sm:rounded-[2rem] overflow-hidden aspect-[4/5.2] sm:aspect-[4/4.5] shadow-2xl border border-white/20">
                 <Image
                   src="/nabd-hero.jpg"
                   alt="ممرض نبض المحترف — رعاية صحية منزلية معتمدة داخل دمياط"
@@ -170,7 +153,7 @@ export default function HeroSection() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                   </span>
-                  <span className="text-[11px] sm:text-xs font-extrabold text-white">مباشر • طاقم متاح الآن</span>
+                  <span className="text-[11px] sm:text-xs font-extrabold text-white">مباشر • الطاقم متاح الآن</span>
                 </div>
 
                 {/* Bottom Card Info */}
