@@ -136,6 +136,7 @@ const organizationSchema = {
     latitude: 31.4165,
     longitude: 31.8133,
   },
+  hasMap: siteConfig.social.googleBusiness,
   areaServed: [
     {
       '@type': 'City',
