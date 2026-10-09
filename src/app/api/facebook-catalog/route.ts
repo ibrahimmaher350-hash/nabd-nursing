@@ -1,18 +1,13 @@
 /**
  * app/api/facebook-catalog/route.ts — نبض للتمريض المنزلي
- * Meta (Facebook) Services Catalog Feed.
- * 
- * Contains exclusively the 15 official services from:
- * https://nabd-nursing.vercel.app/services
- * 
+ * Meta (Facebook) Services Catalog Feed — NO PRICES (service-based pricing)
+ *
  * Supports:
- * - XML RSS 2.0 / Google Merchant & Facebook Catalog standard feed (Default)
+ * - XML RSS 2.0 / Facebook Catalog standard feed (Default)
  * - CSV format via ?format=csv
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
 import { services } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
 
@@ -29,41 +24,13 @@ function sanitizeXml(str: string): string {
     .replace(/'/g, '&apos;')
 }
 
-function getSavedSettings() {
-  try {
-    const filePath = path.join(process.cwd(), 'src', 'data', 'dynamicSettings.json')
-    if (fs.existsSync(filePath)) {
-      return JSON.parse(fs.readFileSync(filePath, 'utf-8'))
-    }
-  } catch {}
-  return null
-}
-
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const format = searchParams.get('format')
-  const dynSettings = getSavedSettings()
 
-  // ── Build the exact list of 15 services from /services ──
+  // ── Build catalog items — NO price fields ──
   const catalogItems = services.map((srv) => {
     const isSupplies = srv.id === 'medical-supplies'
-    const srvOverride = dynSettings?.servicesOverrides?.[srv.id]
-    const vivaOverride = dynSettings?.suppliesOverrides?.['vivachek-ino']
-
-    // Pricing
-    let priceStr = '150.00 EGP'
-    let salePriceStr = '150.00 EGP'
-
-    if (isSupplies) {
-      const saleNum = parseInt((vivaOverride?.price || '450').replace(/[^0-9]/g, '')) || 450
-      const regNum = parseInt((vivaOverride?.oldPrice || '650').replace(/[^0-9]/g, '')) || 650
-      priceStr = `${regNum}.00 EGP`
-      salePriceStr = `${saleNum}.00 EGP`
-    } else if (srvOverride?.price) {
-      const num = parseInt(srvOverride.price.replace(/[^0-9]/g, '')) || 150
-      priceStr = `${num}.00 EGP`
-      salePriceStr = `${num}.00 EGP`
-    }
 
     // Image link
     const imageLink = isSupplies
@@ -79,8 +46,6 @@ export async function GET(request: NextRequest) {
       brand: 'نبض للتمريض المنزلي',
       condition: 'new',
       availability: 'in stock',
-      price: priceStr,
-      sale_price: salePriceStr,
       google_product_category: isSupplies
         ? 'Health & Beauty > Health Care > Medical Supplies'
         : 'Health & Beauty > Health Care > Home Health Care Services',
@@ -101,8 +66,6 @@ export async function GET(request: NextRequest) {
       'brand',
       'condition',
       'availability',
-      'price',
-      'sale_price',
       'google_product_category',
       'product_type',
       'custom_label_0',
@@ -121,8 +84,6 @@ export async function GET(request: NextRequest) {
           `"${it.brand}"`,
           `"${it.condition}"`,
           `"${it.availability}"`,
-          `"${it.price}"`,
-          `"${it.sale_price}"`,
           `"${it.google_product_category}"`,
           `"${it.product_type}"`,
           `"${it.custom_label_0}"`,
@@ -141,7 +102,7 @@ export async function GET(request: NextRequest) {
     })
   }
 
-  // ── XML RSS 2.0 / Google Merchant Feed (Default) ──
+  // ── XML RSS 2.0 / Facebook Catalog Feed (Default) ──
   const xmlItems = catalogItems
     .map(
       (it) => `
@@ -154,8 +115,6 @@ export async function GET(request: NextRequest) {
       <g:brand>${sanitizeXml(it.brand)}</g:brand>
       <g:condition>${sanitizeXml(it.condition)}</g:condition>
       <g:availability>${sanitizeXml(it.availability)}</g:availability>
-      <g:price>${sanitizeXml(it.price)}</g:price>
-      <g:sale_price>${sanitizeXml(it.sale_price)}</g:sale_price>
       <g:google_product_category>${sanitizeXml(it.google_product_category)}</g:google_product_category>
       <g:product_type>${sanitizeXml(it.product_type)}</g:product_type>
       <g:custom_label_0>${sanitizeXml(it.custom_label_0)}</g:custom_label_0>
