@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 /**
  * components/medical-guide/FirstAidSection.tsx — نبض للتمريض المنزلي
  * قسم دليل الإسعافات الأولية التفاعلي الذكي
@@ -407,7 +407,7 @@ export default function FirstAidSection() {
                       </div>
 
                       <a
-                        href={`https://wa.me/201099667065?text=${encodeURIComponent(
+                        href={`https://wa.me/201001097896?text=${encodeURIComponent(
                           `استشارة إسعافية عاجلة بخصوص حالة: ${item.title}`
                         )}`}
                         target="_blank"

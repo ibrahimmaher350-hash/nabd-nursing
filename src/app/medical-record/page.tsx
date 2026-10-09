@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 /**
  * app/medical-record/page.tsx — نبض للتمريض المنزلي
  * ملفي الطبي — السجل الصحي الموحد للمريض مع القالب الطبي الاحترافي بهوية نبض (Navy & Gold)
@@ -352,7 +352,7 @@ export default function MedicalRecordPage() {
 
     text += `\n📄 *رابط استعراض وتصدير التقرير الطبي PDF:*\n${recordUrl}\n`
     text += `\n🏥 *نبض للتمريض المنزلي — دمياط*\n`
-    text += `📞 خط الطوارئ والحجز: 01001097896 / 01099667065`
+    text += `📞 خط الطوارئ والحجز: 01001097896 / 01001097896`
 
     return text
   }
@@ -1061,7 +1061,7 @@ export default function MedicalRecordPage() {
                       أخصائي التمريض: إبراهيم ماهر
                     </p>
                     <p className="text-[11px] text-slate-400">
-                      دمياط ومحيطها • هاتف: 01001097896 / 01099667065
+                      دمياط ومحيطها • هاتف: 01001097896 / 01001097896
                     </p>
                   </div>
 

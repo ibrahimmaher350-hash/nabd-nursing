@@ -1,4 +1,4 @@
-/**
+﻿/**
  * app/offline/page.tsx — Offline fallback
  */
 import Link from 'next/link'
@@ -18,7 +18,7 @@ export default function OfflinePage() {
         </p>
         <div className="flex flex-col gap-3">
           <a
-            href="https://wa.me/201099667065"
+            href="https://wa.me/201001097896"
             className="btn-whatsapp w-full"
           >
             واتساب

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * src/lib/email/resend.ts
  * Resend Email Integration & Branded Arabic RTL HTML Templates for Appointment Reminders.
  * 
@@ -177,7 +177,7 @@ export function render24hReminderEmail(app: AppointmentEmailData): { subject: st
       </p>
     </div>
     <div class="footer">
-      <p>نبض للتمريض المنزلي — محافظة دمياط | للاستفسارات السريعة: <strong>01099667065</strong></p>
+      <p>نبض للتمريض المنزلي — محافظة دمياط | للاستفسارات السريعة: <strong>01001097896</strong></p>
       <p class="emergency">في حالات الطوارئ القصوى والإنعاش، يرجى الاتصال بالإسعاف فوراً (123).</p>
     </div>
   </div>
@@ -251,7 +251,7 @@ export function render1hReminderEmail(app: AppointmentEmailData): { subject: str
       <a href="${manageUrl}" class="btn-manage" target="_blank">تعديل أو إلغاء الموعد أو تحديث العنوان ⚙️</a>
     </div>
     <div class="footer">
-      <p>فريق نبض جاهز لخدمتكم | للتواصل الهاتفي الفوري: <strong>01099667065</strong></p>
+      <p>فريق نبض جاهز لخدمتكم | للتواصل الهاتفي الفوري: <strong>01001097896</strong></p>
       <p>إذا طرأ أي طارئ يستدعي تأجيل الزيارة، يرجى الضغط على زر التعديل أو الاتصال بنا فوراً.</p>
     </div>
   </div>

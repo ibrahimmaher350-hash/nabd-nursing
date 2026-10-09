@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 /**
  * components/layout/Footer.tsx — نبض للتمريض المنزلي
  * Premium footer with links, social, contact, and legal.
@@ -235,7 +235,7 @@ export default function Footer() {
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/201099667065"
+                href="https://wa.me/201001097896"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-xs sm:text-sm font-semibold transition-colors"

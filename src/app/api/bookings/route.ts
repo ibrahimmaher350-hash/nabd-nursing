@@ -1,4 +1,4 @@
-/**
+﻿/**
  * app/api/bookings/route.ts — نبض للتمريض المنزلي
  * POST /api/bookings
  * 1. يُرسل بيانات الحجز لواتساب المشرف (نبض للتمريض المنزلي)
@@ -51,7 +51,7 @@ function getAdminWhatsAppNumber(): string {
   } catch {
     // ignore
   }
-  const defaultNum = process.env.ADMIN_WHATSAPP_NUMBER || siteConfig.contact.whatsapp || '201099667065'
+  const defaultNum = process.env.ADMIN_WHATSAPP_NUMBER || siteConfig.contact.whatsapp || '201001097896'
   return defaultNum.startsWith('0') ? `2${defaultNum}` : defaultNum.startsWith('+') ? defaultNum.replace('+', '') : defaultNum
 }
 

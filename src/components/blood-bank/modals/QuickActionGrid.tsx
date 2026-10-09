@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 /**
  * components/blood-bank/modals/QuickActionGrid.tsx
@@ -55,7 +55,7 @@ export default function QuickActionGrid() {
     {
       id: 'account-settings',
       label: 'إعدادات الحساب',
-      href: 'https://wa.me/201099667065?text=%D8%A5%D8%B9%D8%AF%D8%A7%D8%AF%D8%A7%D8%AA%20%D8%AD%D8%B3%D8%A7%D8%A8%20%D8%A8%D9%86%D9%83%20%D8%A7%D9%84%D8%AF%D9%85',
+      href: 'https://wa.me/201001097896?text=%D8%A5%D8%B9%D8%AF%D8%A7%D8%AF%D8%A7%D8%AA%20%D8%AD%D8%B3%D8%A7%D8%A8%20%D8%A8%D9%86%D9%83%20%D8%A7%D9%84%D8%AF%D9%85',
       icon: MessageCircle,
       iconColor: 'text-[#64748B]',
       bgColor: 'bg-[#F1F5F9]',

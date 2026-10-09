@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 /**
  * components/booking/BookingFlow.tsx — نبض للتمريض المنزلي
  * Dynamic Multi-step booking form:
@@ -41,7 +41,7 @@ const bookingSchema = z.object({
   serviceId:         z.string().min(1, 'اختر الخدمة المطلوبة'),
   customServiceName: z.string().optional(),
   customerName:      z.string().min(2, 'أدخل الاسم الكامل (حرفان على الأقل)'),
-  customerPhone:     z.string().regex(/^01[0-9]{9}$/, 'أدخل رقم هاتف مصري صحيح (مثال: 01099667065)'),
+  customerPhone:     z.string().regex(/^01[0-9]{9}$/, 'أدخل رقم هاتف مصري صحيح (مثال: 01001097896)'),
   whatsapp:          z.string().regex(/^01[0-9]{9}$/, 'أدخل رقم واتساب صحيح').optional().or(z.literal('')),
   patientName:       z.string().optional(),
   governorate:       z.literal('دمياط'),
@@ -735,7 +735,7 @@ export default function BookingFlow({ defaultServiceId }: BookingFlowProps) {
                 <input
                   id="whatsapp"
                   type="tel"
-                  placeholder="01099667065"
+                  placeholder="01001097896"
                   {...register('whatsapp')}
                   className="nabd-input"
                   dir="ltr"

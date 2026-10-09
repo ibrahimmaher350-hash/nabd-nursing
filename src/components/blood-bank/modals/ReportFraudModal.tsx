@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 /**
  * components/blood-bank/modals/ReportFraudModal.tsx
@@ -33,7 +33,7 @@ export default function ReportFraudModal({ isOpen, onClose }: ReportFraudModalPr
     )}%0A%0Aيرجى التحقق الفوري وحظر هذا الرقم حماية للمرضى.`;
 
     setTimeout(() => {
-      window.open(`https://wa.me/201099667065?text=${whatsappMessage}`, '_blank');
+      window.open(`https://wa.me/201001097896?text=${whatsappMessage}`, '_blank');
       setIsSent(false);
       onClose();
     }, 1500);

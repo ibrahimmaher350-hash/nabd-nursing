@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 /**
  * components/booking/BookingSuccess.tsx — نبض للتمريض المنزلي
  * شاشة تأكيد الحجز وإرسال التفاصيل مباشرة للواتساب
@@ -39,7 +39,7 @@ export default function BookingSuccess({
   const { settings, getCallUrl } = useSettings()
 
   // Clean WhatsApp number
-  const rawWa = settings.whatsapp || siteConfig.contact.whatsapp || '201099667065'
+  const rawWa = settings.whatsapp || siteConfig.contact.whatsapp || '201001097896'
   const cleanNumber = rawWa.startsWith('0')
     ? `2${rawWa}`
     : rawWa.startsWith('+')
@@ -163,7 +163,7 @@ export default function BookingSuccess({
           {(() => {
             const title = encodeURIComponent(`موعد تمريض منزلي — نبض (${serviceName})`)
             const details = encodeURIComponent(
-              `موعد زيارة التمريض المنزلي من نبض للتمريض المنزلي دمياط.\nالخدمة: ${serviceName}\nرقم الحجز: ${bookingId}\nللتواصل: 01001097896 - واتساب: 01099667065`
+              `موعد زيارة التمريض المنزلي من نبض للتمريض المنزلي دمياط.\nالخدمة: ${serviceName}\nرقم الحجز: ${bookingId}\nللتواصل: 01001097896 - واتساب: 01001097896`
             )
             const loc = encodeURIComponent(address || 'دمياط، مصر')
             let calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${loc}`

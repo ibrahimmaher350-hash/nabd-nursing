@@ -23,8 +23,8 @@ export const siteConfig = {
   contact: {
     phone: '01001097896',
     phoneE164: '+201001097896',
-    whatsapp: '201099667065',
-    whatsappUrl: 'https://wa.me/201099667065',
+    whatsapp: '201001097896',
+    whatsappUrl: 'https://wa.me/201001097896',
     callUrl: 'tel:+201001097896',
     telegram: 'https://t.me/Ibrahim5k',
     email: null, // Not provided — do NOT invent
@@ -58,7 +58,7 @@ export const siteConfig = {
     // ✈️ تليجرام
     telegram: 'https://t.me/Ibrahim5k',
     // 📲 واتساب
-    whatsapp: 'https://wa.me/201099667065',
+    whatsapp: 'https://wa.me/201001097896',
   },
 
   // ─── SEO ─────────────────────────────────────────────────

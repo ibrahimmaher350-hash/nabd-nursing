@@ -1,4 +1,4 @@
-/**
+﻿/**
  * app/api/patient-record/route.ts — نبض للتمريض المنزلي
  * GET /api/patient-record?phone=...
  * استعلام المريض عن ملفه الطبي وقياساته الحيوية ومواعيده المسجلة في Google Sheets
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
 
     // Fallback: If not found in Google Sheets yet (or first time testing)
     // Check if it's the admin/test phone
-    if (cleanQuery.includes('01001097896') || cleanQuery.includes('01099667065')) {
+    if (cleanQuery.includes('01001097896') || cleanQuery.includes('01001097896')) {
       return NextResponse.json({
         success: true,
         patient: {
