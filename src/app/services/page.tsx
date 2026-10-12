@@ -9,10 +9,10 @@ import ServicesFilter from '@/components/services/ServicesFilter'
 import { siteConfig } from '@/data/siteConfig'
 
 export const metadata: Metadata = {
-  title: 'جميع الخدمات التمريضية المنزلية',
+  title: 'جميع الخدمات التمريضية المنزلية | نبض للتمريض المنزلي بدمياط',
   description:
     'استعرض جميع خدمات التمريض المنزلي التي تقدمها نبض في دمياط — حقن، محاليل، جروح، قسطرة، كانيولا، قياسات، ورعاية كبار السن.',
-  alternates: { canonical: '/services' },
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/services' },
 }
 
 // Structured data for services page
@@ -21,7 +21,7 @@ const servicesPageSchema = {
   '@type': 'ItemList',
   name: 'خدمات نبض للتمريض المنزلي',
   description: 'قائمة خدمات التمريض المنزلي في دمياط',
-  url: `${process.env.NEXT_PUBLIC_SITE_URL ?? ''}/services`,
+  url: 'https://nabd-nursing.vercel.app/services',
 }
 
 export default function ServicesPage() {

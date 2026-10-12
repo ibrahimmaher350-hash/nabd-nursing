@@ -6,9 +6,9 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'إخلاء المسؤولية الطبي',
-  description: 'إخلاء المسؤولية الطبي لنبض للتمريض المنزلي.',
-  robots: { index: false },
+  title: 'إخلاء المسؤولية الطبي | نبض للتمريض المنزلي',
+  description: 'إخلاء المسؤولية الطبي والاشتراطات الصحية لخدمات نبض للتمريض المنزلي بدمياط.',
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/medical-disclaimer' },
 }
 
 export default function MedicalDisclaimerPage() {

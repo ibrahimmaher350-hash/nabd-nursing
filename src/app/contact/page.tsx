@@ -1,4 +1,4 @@
-๏ปฟimport type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -7,9 +7,9 @@ import { PhoneIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import { siteConfig } from '@/data/siteConfig'
 
 export const metadata: Metadata = {
-  title: 'ุชูุงุตู ู…ุนูุง | ูุจุถ ููุชู…ุฑูุถ ุงูู…ูุฒูู',
-  description: 'ุชูุงุตู ู…ุน ูุจุถ ููุชู…ุฑูุถ ุงูู…ูุฒูู ุนุจุฑ ุฌู…ูุน ูุณุงุฆู ุงูุงุชุตุงู ูุงูู…ูุตุงุช ุงูุฑุณู…ูุฉ.',
-  alternates: { canonical: '/contact' },
+  title: 'สๆวีแ ใฺไว | ไศึ แแสใัํึ วแใไาแํ',
+  description: 'สๆวีแ ใฺ ไศึ แแสใัํึ วแใไาแํ ฺศั ฬใํฺ ๆำวฦแ วแวสีวแ ๆวแใไีวส วแัำใํษ.',
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/contact' },
 }
 
 export default function ContactPage() {
@@ -28,25 +28,25 @@ export default function ContactPage() {
                 className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-white/80 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-1.5 rounded-xl transition-all group"
               >
                 <ArrowRightIcon className="w-4 h-4 text-gold-400 transition-transform group-hover:translate-x-1" />
-                <span>ุงูุนูุฏุฉ ููุฑุฆูุณูุฉ</span>
+                <span>วแฺๆฯษ แแัฦํำํษ</span>
               </Link>
               <Link
                 href="/booking"
                 className="text-xs font-bold text-gold-300 hover:text-gold-200 hover:underline"
               >
-                ุงุญุฌุฒ ุฎุฏู…ุฉ ุงูุขู ๐“…
+                วอฬา ฮฯใษ วแยไ ??
               </Link>
             </div>
 
             <div className="text-center">
               <span className="inline-block bg-white/10 border border-white/20 text-gold-300 text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full mb-3">
-                ๐“ ูุจุถ ููุชู…ุฑูุถ ุงูู…ูุฒูู โ€” ุฏู…ูุงุท
+                ?? ไศึ แแสใัํึ วแใไาแํ — ฯใํวุ
               </span>
               <h1 className="!text-2xl sm:!text-3xl lg:!text-4xl font-extrabold text-white mb-2">
-                ุชูุงุตู ู…ุนูุง
+                สๆวีแ ใฺไว
               </h1>
               <p className="text-slate-200 text-sm sm:text-base max-w-xl mx-auto font-medium">
-                ุฑุนุงูุชู ุงูุตุญูุฉ ุชุจุฏุฃ ู…ู ู…ูุงููุ ููุญู ุฃูุฑุจ ุฅููู.
+                ัฺวํส฿ วแีอํษ สศฯร ใไ ใ฿วไ฿ก ๆไอไ รÞัศ ลแํ฿.
               </p>
             </div>
           </div>
@@ -55,13 +55,13 @@ export default function ContactPage() {
         <div className="section-container -mt-6">
           <div className="max-w-4xl mx-auto flex flex-col gap-8">
 
-            {/* โ”€โ”€ ูุณู… ุงูุงุชุตุงู ูุงูุญุฌุฒ ุงูุณุฑูุน โ”€โ”€ */}
+            {/* ?? Þำใ วแวสีวแ ๆวแอฬา วแำัํฺ ?? */}
             <div className="nabd-card p-6 sm:p-8 bg-white border border-medical-border shadow-lg">
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-2xl">๐“ฑ</span>
+                <span className="text-2xl">??</span>
                 <div>
-                  <h2 className="text-lg sm:text-xl font-black text-navy-700">ุงูุงุชุตุงู ูุงูุญุฌุฒ</h2>
-                  <p className="text-xs text-medical-muted">ุชูุงุตู ู…ุจุงุดุฑ ูุทูุจ ุงูุฎุฏู…ุงุช ูุงูุงุณุชูุณุงุฑุงุช ุนูู ู…ุฏุงุฑ ุงูุณุงุนุฉ</p>
+                  <h2 className="text-lg sm:text-xl font-black text-navy-700">วแวสีวแ ๆวแอฬา</h2>
+                  <p className="text-xs text-medical-muted">สๆวีแ ใศวิั แุแศ วแฮฯใวส ๆวแวำสÝำวัวส ฺแ์ ใฯวั วแำวฺษ</p>
                 </div>
               </div>
 
@@ -70,13 +70,13 @@ export default function ContactPage() {
                 <a
                   href={siteConfig.contact.callUrl}
                   className="flex items-center gap-3.5 p-4 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-300/40 text-navy-800 transition-all group"
-                  aria-label="ุงุชุตุงู ูุงุชูู"
+                  aria-label="วสีวแ ๅวสÝํ"
                 >
                   <div className="w-12 h-12 rounded-xl bg-gold-500 text-white flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform">
                     <PhoneIcon className="w-6 h-6" />
                   </div>
                   <div>
-                    <span className="text-xs text-medical-muted font-bold block">ุงุชุตุงู ูุงุชูู</span>
+                    <span className="text-xs text-medical-muted font-bold block">วสีวแ ๅวสÝํ</span>
                     <span className="text-base font-black text-navy-800 tracking-wide" dir="ltr">01001097896</span>
                   </div>
                 </a>
@@ -87,7 +87,7 @@ export default function ContactPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3.5 p-4 rounded-2xl bg-emerald-50 hover:bg-emerald-100/80 border border-emerald-300 text-emerald-900 transition-all group"
-                  aria-label="ูุงุชุณุงุจ"
+                  aria-label="ๆวสำวศ"
                 >
                   <div className="w-12 h-12 rounded-xl bg-[#25D366] text-white flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform">
                     <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -95,8 +95,8 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <span className="text-xs text-emerald-700 font-bold block">ูุงุชุณุงุจ</span>
-                    <span className="text-sm font-black text-emerald-950">ู…ุฑุงุณูุฉ ุฅุจุฑุงููู… ุนุจุฑ ูุงุชุณุงุจ</span>
+                    <span className="text-xs text-emerald-700 font-bold block">ๆวสำวศ</span>
+                    <span className="text-sm font-black text-emerald-950">ใัวำแษ ลศัวๅํใ ฺศั ๆวสำวศ</span>
                   </div>
                 </a>
 
@@ -106,7 +106,7 @@ export default function ContactPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3.5 p-4 rounded-2xl bg-sky-50 hover:bg-sky-100/80 border border-sky-300 text-sky-900 transition-all group"
-                  aria-label="ุชููุฌุฑุงู…"
+                  aria-label="สแํฬัวใ"
                 >
                   <div className="w-12 h-12 rounded-xl bg-[#229ED9] text-white flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform">
                     <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -114,20 +114,20 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <span className="text-xs text-sky-700 font-bold block">ุชููุฌุฑุงู…</span>
+                    <span className="text-xs text-sky-700 font-bold block">สแํฬัวใ</span>
                     <span className="text-sm font-black text-sky-950" dir="ltr">t.me/Ibrahim5k</span>
                   </div>
                 </a>
               </div>
             </div>
 
-            {/* โ”€โ”€ ูุณู… ุงูู…ูุตุงุช ุงูุฑุณู…ูุฉ ููุณุงุฆู ุงูุชูุงุตู โ”€โ”€ */}
+            {/* ?? Þำใ วแใไีวส วแัำใํษ ๆๆำวฦแ วแสๆวีแ ?? */}
             <div className="nabd-card p-6 sm:p-8 bg-white border border-medical-border shadow-lg">
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-2xl">๐</span>
+                <span className="text-2xl">??</span>
                 <div>
-                  <h2 className="text-lg sm:text-xl font-black text-navy-700">ู…ูุตุงุช ูุจุถ ุงูุฑุณู…ูุฉ</h2>
-                  <p className="text-xs text-medical-muted">ุชุงุจุน ูุจุถ ุนุจุฑ ุฌู…ูุน ู…ูุตุงุชูุง ุงูุฑุณู…ูุฉ ููุณุงุฆู ุงูุชูุงุตู</p>
+                  <h2 className="text-lg sm:text-xl font-black text-navy-700">ใไีวส ไศึ วแัำใํษ</h2>
+                  <p className="text-xs text-medical-muted">สวศฺ ไศึ ฺศั ฬใํฺ ใไีวสไว วแัำใํษ ๆๆำวฦแ วแสๆวีแ</p>
                 </div>
               </div>
 
@@ -140,15 +140,15 @@ export default function ContactPage() {
                   className="flex items-center gap-3.5 p-4 rounded-2xl border border-navy-100 hover:border-navy-300 hover:bg-navy-50/50 transition-all group"
                 >
                   <div className="w-12 h-12 rounded-xl bg-[#1877F2] text-white flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition-transform text-xl">
-                    ๐“
+                    ??
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-bold text-sm text-navy-800 group-hover:text-navy-950">
-                      ุงูุตูุญุฉ ุงูุฑุณู…ูุฉ ูููุจุถ ููุชู…ุฑูุถ ุงูู…ูุฒูู
+                      วแีÝอษ วแัำใํษ แไ๓ศึ แแสใัํึ วแใไาแํ
                     </h3>
-                    <p className="text-xs text-medical-muted mt-0.5">ุงูุตูุญุฉ ุงูุฑุฆูุณูุฉ ุนูู ููุณุจูู</p>
+                    <p className="text-xs text-medical-muted mt-0.5">วแีÝอษ วแัฦํำํษ ฺแ์ Ýํำศๆ฿</p>
                   </div>
-                  <span className="ms-auto text-xs text-navy-600 font-bold">ูุชุญ โ</span>
+                  <span className="ms-auto text-xs text-navy-600 font-bold">Ýสอ ?</span>
                 </a>
 
                 {/* Facebook Profile - Ibrahim Maher */}
@@ -159,15 +159,15 @@ export default function ContactPage() {
                   className="flex items-center gap-3.5 p-4 rounded-2xl border border-navy-100 hover:border-navy-300 hover:bg-navy-50/50 transition-all group"
                 >
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-navy-700 to-navy-900 text-white flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition-transform text-xl">
-                    ๐”ต
+                    ??
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-bold text-sm text-navy-800 group-hover:text-navy-950">
-                      ุงูู…ูู ุงูุดุฎุตู ุงูู…ุณุคูู ุนู ูุจุถ
+                      วแใแÝ วแิฮีํ วแใำฤๆแ ฺไ ไศึ
                     </h3>
-                    <p className="text-xs text-medical-muted mt-0.5">ุฅุจุฑุงููู… ู…ุงูุฑ</p>
+                    <p className="text-xs text-medical-muted mt-0.5">ลศัวๅํใ ใวๅั</p>
                   </div>
-                  <span className="ms-auto text-xs text-navy-600 font-bold">ูุชุญ โ</span>
+                  <span className="ms-auto text-xs text-navy-600 font-bold">Ýสอ ?</span>
                 </a>
 
                 {/* Facebook Group */}
@@ -178,15 +178,15 @@ export default function ContactPage() {
                   className="flex items-center gap-3.5 p-4 rounded-2xl border border-navy-100 hover:border-navy-300 hover:bg-navy-50/50 transition-all group"
                 >
                   <div className="w-12 h-12 rounded-xl bg-navy-600 text-white flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition-transform text-xl">
-                    ๐‘ฅ
+                    ??
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-bold text-sm text-navy-800 group-hover:text-navy-950">
-                      ุฌุฑูุจ ูุจุถ ุนูู ููุณุจูู
+                      ฬัๆศ ไศึ ฺแ์ Ýํำศๆ฿
                     </h3>
-                    <p className="text-xs text-medical-muted mt-0.5">ู…ุฌุชู…ุน ูู…ุชุงุจุนู ูุจุถ</p>
+                    <p className="text-xs text-medical-muted mt-0.5">ใฬสใฺ ๆใสวศฺํ ไศึ</p>
                   </div>
-                  <span className="ms-auto text-xs text-navy-600 font-bold">ุงูุถู…ุงู… โ</span>
+                  <span className="ms-auto text-xs text-navy-600 font-bold">วไึใวใ ?</span>
                 </a>
 
                 {/* Blogger */}
@@ -197,15 +197,15 @@ export default function ContactPage() {
                   className="flex items-center gap-3.5 p-4 rounded-2xl border border-navy-100 hover:border-navy-300 hover:bg-navy-50/50 transition-all group"
                 >
                   <div className="w-12 h-12 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition-transform text-xl">
-                    ๐“
+                    ??
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-bold text-sm text-navy-800 group-hover:text-navy-950">
-                      ู…ุฏููุฉ ูุจุถ โ€“ Blogger
+                      ใฯๆไษ ไศึ – Blogger
                     </h3>
-                    <p className="text-xs text-medical-muted mt-0.5">ู…ูุงูุงุช ููุตุงุฆุญ ุทุจูุฉ ูุชู…ุฑูุถูุฉ</p>
+                    <p className="text-xs text-medical-muted mt-0.5">ใÞวแวส ๆไีวฦอ ุศํษ ๆสใัํึํษ</p>
                   </div>
-                  <span className="ms-auto text-xs text-navy-600 font-bold">ุฒูุงุฑุฉ โ</span>
+                  <span className="ms-auto text-xs text-navy-600 font-bold">าํวัษ ?</span>
                 </a>
 
                 {/* Cezma Store */}
@@ -216,26 +216,26 @@ export default function ContactPage() {
                   className="flex items-center gap-3.5 p-4 rounded-2xl border border-emerald-200 bg-emerald-50/40 hover:bg-emerald-50 hover:border-emerald-300 transition-all group sm:col-span-2"
                 >
                   <div className="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition-transform text-xl">
-                    ๐’
+                    ??
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-bold text-sm text-emerald-950 group-hover:text-emerald-900">
-                      ู…ุชุฌุฑ ูุจุถ ุนูู ุณูุฒู…ุง | Cezma
+                      ใสฬั ไศึ ฺแ์ ำําใว | Cezma
                     </h3>
-                    <p className="text-xs text-emerald-700 mt-0.5">ุงูู…ุณุชูุฒู…ุงุช ุงูุทุจูุฉ ูุงูุชู…ุฑูุถูุฉ</p>
+                    <p className="text-xs text-emerald-700 mt-0.5">วแใำสแาใวส วแุศํษ ๆวแสใัํึํษ</p>
                   </div>
-                  <span className="ms-auto text-xs text-emerald-800 font-bold">ุชุณูู ุงูุขู โ</span>
+                  <span className="ms-auto text-xs text-emerald-800 font-bold">สำๆÞ วแยไ ?</span>
                 </a>
               </div>
             </div>
 
-            {/* โ”€โ”€ ูุณู… Google ูุงูุชูููู…ุงุช โ”€โ”€ */}
+            {/* ?? Þำใ Google ๆวแสÞํํใวส ?? */}
             <div className="nabd-card p-6 sm:p-8 bg-white border border-medical-border shadow-lg">
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-2xl">โญ</span>
+                <span className="text-2xl">?</span>
                 <div>
-                  <h2 className="text-lg sm:text-xl font-black text-navy-700">ูุจุถ ุนูู Google ูุงูุชูููู…ุงุช</h2>
-                  <p className="text-xs text-medical-muted">ุดุงุฑููุง ุชุฌุฑุจุชู ูุงุทูุน ุนูู ู…ููุนูุง ูุขุฑุงุก ุงูุนู…ูุงุก ุนูู Google</p>
+                  <h2 className="text-lg sm:text-xl font-black text-navy-700">ไศึ ฺแ์ Google ๆวแสÞํํใวส</h2>
+                  <p className="text-xs text-medical-muted">ิวั฿ไว สฬัศส฿ ๆวุแฺ ฺแ์ ใๆÞฺไว ๆยัวม วแฺใแวม ฺแ์ Google</p>
                 </div>
               </div>
 
@@ -248,15 +248,15 @@ export default function ContactPage() {
                   className="flex items-center gap-3.5 p-4 rounded-2xl border border-blue-200 bg-blue-50/40 hover:bg-blue-50 hover:border-blue-300 transition-all group"
                 >
                   <div className="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition-transform text-xl">
-                    ๐“
+                    ??
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-bold text-sm text-blue-950 group-hover:text-blue-900">
-                      ูุจุถ ุนูู Google
+                      ไศึ ฺแ์ Google
                     </h3>
-                    <p className="text-xs text-blue-700 mt-0.5">ุงูู…ููุน ุงูุฌุบุฑุงูู ูุฎุฑูุทุฉ ุงูุฎุฏู…ุฉ</p>
+                    <p className="text-xs text-blue-700 mt-0.5">วแใๆÞฺ วแฬÛัวÝํ ๆฮัํุษ วแฮฯใษ</p>
                   </div>
-                  <span className="ms-auto text-xs text-blue-800 font-bold">ุนุฑุถ ุงูุฎุฑูุทุฉ โ</span>
+                  <span className="ms-auto text-xs text-blue-800 font-bold">ฺัึ วแฮัํุษ ?</span>
                 </a>
 
                 {/* Google Reviews */}
@@ -267,15 +267,15 @@ export default function ContactPage() {
                   className="flex items-center gap-3.5 p-4 rounded-2xl border border-amber-200 bg-amber-50/40 hover:bg-amber-50 hover:border-amber-300 transition-all group"
                 >
                   <div className="w-12 h-12 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition-transform text-xl">
-                    โญ
+                    ?
                   </div>
                   <div className="min-w-0">
                     <h3 className="font-bold text-sm text-amber-950 group-hover:text-amber-900">
-                      ุขุฑุงุคูู… ูุชูููู…ูู… ุนูู Google
+                      ยัวฤ฿ใ ๆสÞํํใ฿ใ ฺแ์ Google
                     </h3>
-                    <p className="text-xs text-amber-700 mt-0.5">ุงูุชุจ ุชูููู…ู ูุดุงุฑููุง ุฑุฃูู ูู ุฎุฏู…ุชูุง</p>
+                    <p className="text-xs text-amber-700 mt-0.5">ว฿สศ สÞํํใ฿ ๆิวั฿ไว ัรํ฿ Ýํ ฮฯใสไว</p>
                   </div>
-                  <span className="ms-auto text-xs text-amber-800 font-bold">ุชูููู… ุงูุฎุฏู…ุฉ โ</span>
+                  <span className="ms-auto text-xs text-amber-800 font-bold">สÞํํใ วแฮฯใษ ?</span>
                 </a>
               </div>
             </div>

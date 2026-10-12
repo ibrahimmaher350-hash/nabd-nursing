@@ -79,10 +79,9 @@ export const metadata: Metadata = {
   // Manifest
   manifest: '/manifest.webmanifest',
 
-  // Canonical — absolute URL required to fix "duplicate without user-selected canonical" in Google Search Console
-  alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app',
-  },
+  // NOTE: No root-level canonical here.
+  // Each page sets its own canonical via alternates.canonical.
+  // A root canonical pointing to homepage was causing GSC "Duplicate without user-selected canonical" errors.
 
   // Search Engine Verifications (Google Search Console, Bing, Yandex)
   verification: {
@@ -106,21 +105,23 @@ export const viewport: Viewport = {
 }
 
 // ── JSON-LD Structured Data ───────────────────────────────────
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app'
+
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': ['MedicalBusiness', 'LocalBusiness', 'HealthAndBeautyBusiness'],
-  '@id': `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app'}/#organization`,
+  '@id': `${SITE_URL}/#organization`,
   name: siteConfig.brand.name,
   alternateName: ['نبض', 'Nabd Nursing', 'نبض للتمريض المنزلي بدمياط'],
   description: siteConfig.brand.description,
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app',
+  url: SITE_URL,
   logo: {
     '@type': 'ImageObject',
-    url: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app'}/logo.jpg`,
+    url: `${SITE_URL}/logo.jpg`,
     width: '512',
     height: '512',
   },
-  image: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app'}/images/nabd-hero-poster.jpg`,
+  image: `${SITE_URL}/images/nabd-hero-poster.jpg`,
   telephone: siteConfig.contact.phoneE164,
   priceRange: '$$',
   currenciesAccepted: 'EGP',
@@ -189,45 +190,6 @@ const organizationSchema = {
       procedureType: 'NoninvasiveProcedure',
     },
   ],
-  founder: {
-    '@type': 'Person',
-    name: 'إبراهيم ماهر',
-    jobTitle: 'المشرف العام وأخصائي التمريض والرعاية الصحية المنزلية',
-    telephone: siteConfig.contact.phoneE164,
-  },
-  sameAs: [
-    siteConfig.social.facebook,
-    siteConfig.social.facebookProfile,
-    siteConfig.social.facebookGroup,
-    siteConfig.social.blogger,
-    siteConfig.social.googleBusiness,
-    siteConfig.social.googleReviews,
-    siteConfig.social.cezmaStore,
-    siteConfig.social.telegram,
-  ],
-}
-
-const websiteSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: siteConfig.brand.name,
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app',
-  inLanguage: 'ar-EG',
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: `${process.env.NEXT_PUBLIC_SITE_URL ?? ''}/services?q={search_term_string}`,
-    },
-    'query-input': 'required name=search_term_string',
-  },
-}
-
-const aggregateRatingSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'MedicalBusiness',
-  name: siteConfig.brand.name,
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nabd-nursing.vercel.app',
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '5.0',
@@ -250,6 +212,39 @@ const aggregateRatingSchema = {
       reviewBody: 'الاستجابة فورية والخدمة بجودة عالية داخل دمياط.',
     },
   ],
+  founder: {
+    '@type': 'Person',
+    name: 'إبراهيم ماهر',
+    jobTitle: 'المشرف العام وأخصائي التمريض والرعاية الصحية المنزلية',
+    telephone: siteConfig.contact.phoneE164,
+  },
+  sameAs: [
+    siteConfig.social.facebook,
+    siteConfig.social.facebookProfile,
+    siteConfig.social.facebookGroup,
+    siteConfig.social.blogger,
+    siteConfig.social.googleBusiness,
+    siteConfig.social.googleReviews,
+    siteConfig.social.cezmaStore,
+    siteConfig.social.telegram,
+  ],
+}
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE_URL}/#website`,
+  name: siteConfig.brand.name,
+  url: SITE_URL,
+  inLanguage: 'ar-EG',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${SITE_URL}/services?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
 }
 
 
@@ -284,12 +279,7 @@ export default function RootLayout({
             __html: JSON.stringify(websiteSchema),
           }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(aggregateRatingSchema),
-          }}
-        />
+
 
         {/* Google Analytics 4 */}
         {process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID && (

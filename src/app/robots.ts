@@ -8,7 +8,17 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard', '/settings', '/patients/'],
+        disallow: [
+          '/admin',
+          '/admin/',
+          '/api/',
+          '/dashboard',
+          '/dashboard/',
+          '/settings',
+          '/settings/',
+          '/patients/',
+          '/appointments/',
+        ],
       },
       // AI & LLM Search Engine Bots
       {
@@ -26,7 +36,17 @@ export default function robots(): MetadataRoute.Robots {
           'OAI-SearchBot',
         ],
         allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard', '/settings', '/patients/'],
+        disallow: [
+          '/admin',
+          '/admin/',
+          '/api/',
+          '/dashboard',
+          '/dashboard/',
+          '/settings',
+          '/settings/',
+          '/patients/',
+          '/appointments/',
+        ],
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,

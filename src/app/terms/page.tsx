@@ -7,9 +7,9 @@ import Footer from '@/components/layout/Footer'
 import { siteConfig } from '@/data/siteConfig'
 
 export const metadata: Metadata = {
-  title: 'الشروط والأحكام',
-  description: 'شروط وأحكام استخدام خدمات نبض للتمريض المنزلي.',
-  robots: { index: false },
+  title: 'الشروط والأحكام | نبض للتمريض المنزلي',
+  description: 'شروط وأحكام استخدام خدمات نبض للتمريض المنزلي في دمياط.',
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/terms' },
 }
 
 export default function TermsPage() {

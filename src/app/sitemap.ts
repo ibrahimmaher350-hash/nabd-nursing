@@ -63,22 +63,46 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${BASE_URL}/medical-guide`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/blog`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/reviews`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${BASE_URL}/blood-bank`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: `${BASE_URL}/terms`,
       lastModified: currentDate,
-      changeFrequency: 'yearly',
-      priority: 0.4,
+      changeFrequency: 'monthly',
+      priority: 0.5,
     },
     {
       url: `${BASE_URL}/privacy`,
       lastModified: currentDate,
-      changeFrequency: 'yearly',
-      priority: 0.4,
+      changeFrequency: 'monthly',
+      priority: 0.5,
     },
     {
       url: `${BASE_URL}/medical-disclaimer`,
       lastModified: currentDate,
-      changeFrequency: 'yearly',
-      priority: 0.4,
+      changeFrequency: 'monthly',
+      priority: 0.5,
     },
   ]
 

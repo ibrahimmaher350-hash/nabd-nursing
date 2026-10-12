@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     'علاج السكر',
     'تمريض منزلي دمياط',
   ],
-  alternates: { canonical: '/prescriptions' },
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/prescriptions' },
   openGraph: {
     title: 'دليل الروشتات الطبية الذكي | نبض للتمريض المنزلي — دمياط',
     description: 'ابحث عن أي شكوى طبية لتظهر لك الروشتة الإسعافية الكاملة، الجرعات، المحاذير، مع إمكانية طلب التمريض المنزلي فوراً.',

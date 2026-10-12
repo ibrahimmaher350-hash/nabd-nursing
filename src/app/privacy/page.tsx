@@ -7,9 +7,9 @@ import Footer from '@/components/layout/Footer'
 import { siteConfig } from '@/data/siteConfig'
 
 export const metadata: Metadata = {
-  title: 'سياسة الخصوصية',
-  description: 'سياسة خصوصية نبض للتمريض المنزلي — كيف نجمع ونحمي بياناتك.',
-  robots: { index: false },
+  title: 'سياسة الخصوصية | نبض للتمريض المنزلي',
+  description: 'سياسة خصوصية نبض للتمريض المنزلي — كيف نجمع ونحمي بياناتك الطبية والشخصية بأمان.',
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/privacy' },
 }
 
 export default function PrivacyPage() {

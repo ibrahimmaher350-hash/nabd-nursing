@@ -10,7 +10,7 @@ import { siteConfig, getWhatsAppUrl } from '@/data/siteConfig'
 export const metadata: Metadata = {
   title: 'من نحن | نبض للتمريض المنزلي',
   description: 'تعرف على نبض للتمريض المنزلي — خدمات التمريض والرعاية المنزلية في دمياط، مصر.',
-  alternates: { canonical: '/about' },
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/about' },
 }
 
 export default function AboutPage() {

@@ -43,11 +43,11 @@ export default function NotFound() {
 
           {/* Message */}
           <h1 className="text-2xl sm:text-3xl font-extrabold text-navy-700 mb-3">
-            الصفحة دي مش موجودة!
+            الصفحة المطلوبة غير موجودة
           </h1>
           <p className="text-medical-muted text-sm sm:text-base max-w-md mx-auto mb-8 leading-relaxed">
-            يبدو إن الرابط اللي دخلته غلط أو الصفحة اتشالت.
-            خد نفس وروح لأي صفحة من اللي تحت 👇
+            يبدو أن الرابط غير صحيح أو تم نقل الصفحة.
+            يمكنكم العودة للصفحة الرئيسية أو الانتقال إلى أحد الأقسام التالية:
           </p>
 
           {/* Quick Navigation Grid */}

@@ -22,7 +22,7 @@ import { siteConfig } from '@/data/siteConfig'
 export const metadata: Metadata = {
   title: siteConfig.seo.defaultTitle,
   description: siteConfig.seo.defaultDescription,
-  alternates: { canonical: '/' },
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/' },
 }
 
 // Revalidate every hour

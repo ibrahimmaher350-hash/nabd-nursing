@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     'متابعة العلامات الحيوية',
     'سجل المريض دمياط',
   ],
-  alternates: { canonical: '/medical-record' },
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/medical-record' },
   openGraph: {
     title: 'الملف الطبي الموحد — نبض للتمريض المنزلي بدمياط',
     description: 'سجلك الطبي الشامل: علامات حيوية، زيارات، تحاليل، وأدوية معتمدة.',

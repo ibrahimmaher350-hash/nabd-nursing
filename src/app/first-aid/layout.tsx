@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     'طوارئ دمياط',
     'تمريض طوارئ دمياط',
   ],
-  alternates: { canonical: '/first-aid' },
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/first-aid' },
   openGraph: {
     title: 'دليل الإسعافات الأولية الذكي | نبض للتمريض المنزلي',
     description: 'خطوات إنقاذ الحياة في الطوارئ المنزلية بحسب الفئات العمرية (رضع، أطفال، بالغين، كبار السن، حوامل).',

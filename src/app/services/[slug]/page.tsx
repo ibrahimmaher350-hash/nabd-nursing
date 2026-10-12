@@ -35,7 +35,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const isMedicalSupplies = slug === 'medical-supplies'
   const ogImageUrl = isMedicalSupplies ? '/vivachek.png' : '/og-image.jpg'
-  const pageUrl = `/services/${slug}`
+  const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://nabd-nursing.vercel.app'
+  const pageUrl = `${BASE_URL}/services/${slug}`
 
   return {
     title: service.seoTitle,
@@ -99,14 +100,14 @@ export default async function ServicePage({ params }: Props) {
     })),
   } : null
 
-  // Breadcrumb schema
+  const BASE_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://nabd-nursing.vercel.app'
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: `${process.env.NEXT_PUBLIC_SITE_URL ?? ''}` },
-      { '@type': 'ListItem', position: 2, name: 'الخدمات', item: `${process.env.NEXT_PUBLIC_SITE_URL ?? ''}/services` },
-      { '@type': 'ListItem', position: 3, name: service.name, item: `${process.env.NEXT_PUBLIC_SITE_URL ?? ''}/services/${slug}` },
+      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: BASE_SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'الخدمات', item: `${BASE_SITE_URL}/services` },
+      { '@type': 'ListItem', position: 3, name: service.name, item: `${BASE_SITE_URL}/services/${slug}` },
     ],
   }
 

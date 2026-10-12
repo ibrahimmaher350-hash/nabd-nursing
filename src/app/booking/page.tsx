@@ -14,7 +14,7 @@ import { siteConfig } from '@/data/siteConfig'
 export const metadata: Metadata = {
   title: 'احجز خدمة تمريضية',
   description: 'احجز خدمة التمريض المنزلي التي تحتاجها في دمياط مع نبض للتمريض المنزلي.',
-  alternates: { canonical: '/booking' },
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/booking' },
 }
 
 interface BookingPageProps {

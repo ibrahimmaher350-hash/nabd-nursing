@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: 'آراء وتقييمات مرضانا وعائلاتهم | نبض للتمريض المنزلي دمياط',
   description:
     'شهادات حقيقية وتجارب واقعية موثقة من أهالي دمياط الكرام تعكس ثقتهم في خدمات نبض للتمريض المنزلي، رعاية كبار السن، تركيب القسطرة، والمحاليل الطبية.',
-  alternates: { canonical: '/reviews' },
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/reviews' },
 }
 
 export default function ReviewsPage() {

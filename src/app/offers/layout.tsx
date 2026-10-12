@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     'باقة متابعة السكر والضغط',
     'غيار جروح مخفض',
   ],
-  alternates: { canonical: '/offers' },
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/offers' },
   openGraph: {
     title: 'عروض وباقات نبض للتمريض المنزلي — دمياط',
     description: 'وفر مع باقات نبض التمريضية المتكاملة لرعاية أهلك في المنزل.',

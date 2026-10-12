@@ -11,7 +11,7 @@ import { siteConfig } from '@/data/siteConfig'
 export const metadata: Metadata = {
   title: 'المدونة الصحية | نبض للتمريض المنزلي',
   description: 'مقالات ونصائح صحية من مدونة نبض للتمريض المنزلي في دمياط.',
-  alternates: { canonical: '/blog' },
+  alternates: { canonical: 'https://nabd-nursing.vercel.app/blog' },
 }
 
 export const revalidate = 3600
