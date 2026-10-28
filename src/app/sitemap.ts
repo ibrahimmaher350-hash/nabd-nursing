@@ -6,7 +6,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://nabd-nursing.verce
 export default function sitemap(): MetadataRoute.Sitemap {
   const currentDate = new Date()
 
-  // 1. Static Main Routes
+  // 1. Static Canonical Main Routes (Only 200 OK indexable pages, no redirects)
   const mainRoutes: MetadataRoute.Sitemap = [
     {
       url: `${BASE_URL}/`,
@@ -33,18 +33,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${BASE_URL}/prescriptions`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
-      url: `${BASE_URL}/first-aid`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
       url: `${BASE_URL}/reviews`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
@@ -52,12 +40,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/blog`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/offers`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
