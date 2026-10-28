@@ -1,66 +1,65 @@
-/**
- * components/sections/WhyNabd.tsx — نبض للتمريض المنزلي
- * تصميم محسّن بعدادات متحركة وبطاقات احترافية
- */
 'use client'
+/**
+ * components/sections/WhyNabd.tsx — مميزات نبض
+ * إحصائيات ومميزات خدمة التمريض المنزلي
+ */
 
 import { useEffect, useRef, useState } from 'react'
 import { StaggerContainer, StaggerItem, fadeInUp } from '@/components/ui/AnimatedSection'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 
 const stats = [
-  { value: 15, suffix: '+', label: 'خدمة تمريضية' },
-  { value: 100, suffix: '%', label: 'رضا العملاء' },
-  { value: 24, suffix: '/7', label: 'تواصل مستمر' },
-  { value: 5, suffix: '+', label: 'سنوات خبرة' },
+  { value: 15, suffix: '+', label: 'خدمة تمريضية متخصصة' },
+  { value: 100, suffix: '%', label: 'أدوات معقمة وتراخيص رسمية' },
+  { value: 24, suffix: '/7', label: 'تغطية مستمرة على مدار الساعة' },
+  { value: 5, suffix: '★', label: 'تقييم رضا المرضى' },
 ]
 
 const features = [
   {
-    emoji: '🏠',
-    title: 'رعاية كاملة في منزلك',
-    description: 'نصل إليك في منزلك دون الحاجة للتنقل أو مغادرة المنزل.',
+    emoji: '🩺',
+    title: 'رعاية تمريضية متكاملة',
+    description: 'من الحقن وتركيب الكانيولا إلى رعاية الجروح المعقدة والقرح السريرية.',
     color: 'from-navy-50 to-blue-50 border-navy-100',
     iconBg: 'bg-navy-100',
   },
   {
-    emoji: '📞',
-    title: 'تواصل مباشر',
-    description: 'تواصل معنا في أي وقت عبر واتساب أو المكالمة الهاتفية.',
+    emoji: '🛡️',
+    title: 'أعلى معايير الأمان',
+    description: 'تطبيق أدق معايير مكافحة العدوى والتعقيم الطبي لكل زيارة منزلية.',
     color: 'from-emerald-50 to-teal-50 border-emerald-100',
     iconBg: 'bg-emerald-100',
   },
   {
-    emoji: '🎯',
-    title: 'حسب احتياج المريض',
-    description: 'كل خدمة نقدمها وفق حالة المريض والتوجيه الطبي المناسب.',
+    emoji: '⚡',
+    title: 'سرعة في التنسيق والوصول',
+    description: 'فريق متنقل جاهز للوصول إلى منزلك وتلبية الرعاية التمريضية في أسرع وقت.',
     color: 'from-gold-50 to-amber-50 border-gold-100',
     iconBg: 'bg-gold-100',
   },
   {
-    emoji: '📋',
-    title: 'سهولة الحجز',
-    description: 'احجز خدمتك في دقيقتين من هاتفك بخطوات بسيطة.',
+    emoji: '🤝',
+    title: 'اهتمام إنساني فائق',
+    description: 'تعامل راقٍ وصبور مع كبار السن والمرضى لتخفيف آلامهم وإراحتهم.',
     color: 'from-sky-50 to-indigo-50 border-sky-100',
     iconBg: 'bg-sky-100',
   },
   {
-    emoji: '🔔',
-    title: 'متابعة المواعيد',
-    description: 'بنذكرك بموعدك ومستعدين لأي تعديل.',
+    emoji: '📋',
+    title: 'متابعة طبية دقيقة',
+    description: 'قياس العلامات الحيوية وتسجيل تطور الحالة ومشاركتها مع الطبيب المعالج.',
     color: 'from-purple-50 to-violet-50 border-purple-100',
     iconBg: 'bg-purple-100',
   },
   {
-    emoji: '🔒',
-    title: 'خصوصية المريض',
-    description: 'بياناتك وبيانات مريضك في أمان تام.',
+    emoji: '💬',
+    title: 'حجز مباشر وسهل',
+    description: 'تواصل فوري وحجز مباشر عبر واتساب دون الحاجة لملء نماذج معقدة.',
     color: 'from-rose-50 to-pink-50 border-rose-100',
     iconBg: 'bg-rose-100',
   },
 ]
 
-// Animated counter hook
 function useCounter(target: number, duration = 1200, start = false) {
   const [count, setCount] = useState(0)
   useEffect(() => {
@@ -94,10 +93,10 @@ function StatCounter({ value, suffix, label, delay = 0, active }: {
   }, [active, delay])
   return (
     <div className="text-center group">
-      <p className="text-3xl sm:text-4xl font-black text-gold-300 leading-none group-hover:text-gold-200 transition-colors">
+      <p className="text-2xl sm:text-3xl lg:text-4xl font-black text-gold-300 leading-none">
         {count}{suffix}
       </p>
-      <p className="text-white/60 text-xs sm:text-sm mt-1 font-medium">{label}</p>
+      <p className="text-white/80 text-xs sm:text-sm mt-1.5 font-medium">{label}</p>
     </div>
   )
 }
@@ -109,44 +108,44 @@ export default function WhyNabd() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setStatsVisible(true) },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     )
     if (sectionRef.current) observer.observe(sectionRef.current)
     return () => observer.disconnect()
   }, [])
 
   return (
-    <section id="why-nabd" ref={sectionRef} className="bg-gradient-section" aria-labelledby="why-heading">
-      <div className="section-container section-padding">
+    <section id="why-nabd" ref={sectionRef} className="bg-slate-50 py-10 sm:py-16" aria-labelledby="why-heading">
+      <div className="section-container">
         {/* Header */}
-        <AnimatedSection direction="up" className="text-center mb-10">
+        <AnimatedSection direction="up" className="text-center mb-8 sm:mb-10">
           <h2 id="why-heading" className="section-title">
-            ليه تختار نبض؟
+            لماذا تختار نبض؟
           </h2>
           <p className="section-subtitle">
-            عشان بنهتم بيك وبنوصلك لحد باب بيتك بأعلى معايير الأمان
+            نجمع بين الخبرة الطبية التمريضية والراحة المنزلية التامة
           </p>
         </AnimatedSection>
 
         {/* Feature Cards Grid */}
         <StaggerContainer
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4 mb-10"
           amount={0.08}
         >
           {features.map((feature) => (
             <StaggerItem key={feature.title} variants={fadeInUp}>
               <div
-                className={`rounded-2xl bg-gradient-to-br ${feature.color} border p-5 flex items-start gap-4 hover:shadow-card-md transition-all duration-300 hover:-translate-y-1 h-full`}
+                className={`rounded-2xl bg-white border border-slate-200/90 p-5 flex items-start gap-3.5 hover:shadow-card-md transition-all duration-300 hover:-translate-y-0.5 h-full`}
               >
                 <div
-                  className={`w-12 h-12 rounded-2xl ${feature.iconBg} flex items-center justify-center text-2xl shrink-0 shadow-sm`}
+                  className={`w-11 h-11 rounded-2xl ${feature.iconBg} flex items-center justify-center text-xl shrink-0 shadow-xs`}
                   aria-hidden="true"
                 >
                   {feature.emoji}
                 </div>
                 <div>
-                  <h3 className="font-bold text-navy-700 text-base mb-1">{feature.title}</h3>
-                  <p className="text-medical-muted text-sm leading-relaxed">{feature.description}</p>
+                  <h3 className="font-bold text-navy-800 text-sm sm:text-base mb-1">{feature.title}</h3>
+                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{feature.description}</p>
                 </div>
               </div>
             </StaggerItem>
@@ -154,22 +153,20 @@ export default function WhyNabd() {
         </StaggerContainer>
 
         {/* Stats strip */}
-        <AnimatedSection direction="up" delay={0.1} className="mt-10">
-          <div className="rounded-3xl bg-gradient-primary p-6 sm:p-8">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-              {stats.map((stat, i) => (
-                <StatCounter
-                  key={stat.label}
-                  value={stat.value}
-                  suffix={stat.suffix}
-                  label={stat.label}
-                  delay={i * 150}
-                  active={statsVisible}
-                />
-              ))}
-            </div>
+        <div className="rounded-3xl bg-gradient-primary p-6 sm:p-8 text-white shadow-xl">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+            {stats.map((stat, i) => (
+              <StatCounter
+                key={stat.label}
+                value={stat.value}
+                suffix={stat.suffix}
+                label={stat.label}
+                delay={i * 120}
+                active={statsVisible}
+              />
+            ))}
           </div>
-        </AnimatedSection>
+        </div>
       </div>
     </section>
   )

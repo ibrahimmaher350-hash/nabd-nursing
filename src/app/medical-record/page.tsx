@@ -469,12 +469,7 @@ export default function MedicalRecordPage() {
                     <span>المشرف الطبي نشط</span>
                   </span>
                 )}
-                <Link
-                  href="/booking"
-                  className="text-xs font-bold text-gold-300 hover:text-gold-200 hover:underline hidden sm:inline"
-                >
-                  احجز خدمة جديدة 📅
-                </Link>
+                <a href="https://wa.me/201001097896" target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-gold-300 hover:text-gold-200 hover:underline hidden sm:inline">💬 احجز خدمة جديدة عبر واتساب</a>
               </div>
             </div>
 
@@ -576,12 +571,7 @@ export default function MedicalRecordPage() {
                 <p className="text-xs text-medical-muted mb-2">
                   ليس لديك حجز مسجل بعد؟
                 </p>
-                <Link
-                  href="/booking"
-                  className="text-xs text-navy-700 font-extrabold hover:underline"
-                >
-                  احجز خدمة تمريضية الآن ←
-                </Link>
+                <a href="https://wa.me/201001097896" target="_blank" rel="noopener noreferrer" className="text-xs text-navy-700 font-extrabold hover:underline">💬 احجز خدمة تمريضية عبر واتساب ←</a>
               </div>
             </div>
           ) : (

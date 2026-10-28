@@ -161,18 +161,13 @@ export default async function ServicePage({ params }: Props) {
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3">
-                {service.bookingEnabled ? (
-                  <Link href={`/booking?service=${service.id}`} className="btn-primary px-6 py-3.5 w-full sm:w-auto bg-gold-500 hover:bg-gold-600 shadow-gold">
-                    احجز الخدمة
-                  </Link>
-                ) : null}
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-whatsapp px-6 py-3.5 w-full sm:w-auto"
+                  className="btn-whatsapp px-6 py-3.5 w-full sm:w-auto shadow-md"
                 >
-                  تواصل عبر واتساب
+                  💬 احجز الخدمة عبر واتساب
                 </a>
                 <a
                   href={siteConfig.contact.callUrl}
@@ -339,18 +334,13 @@ export default async function ServicePage({ params }: Props) {
                   </p>
 
                   <div className="flex flex-col gap-2.5">
-                    {service.bookingEnabled && (
-                      <Link href={`/booking?service=${service.id}`} className="btn-primary w-full py-3.5 text-sm">
-                        احجز الخدمة
-                      </Link>
-                    )}
                     <a
                       href={whatsappUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-whatsapp w-full py-3.5 text-sm"
                     >
-                      واتساب
+                      💬 احجز الخدمة عبر واتساب
                     </a>
                     <a
                       href={siteConfig.contact.callUrl}

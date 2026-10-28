@@ -109,12 +109,14 @@ export default function ReviewsPage() {
                 تجارب حقيقية مسجلة من مرضانا ومرافقيهم في محافظة دمياط
               </p>
             </div>
-            <Link
-              href="/booking"
-              className="btn-primary text-xs sm:text-sm px-4 py-2.5 hidden sm:inline-flex"
+            <a
+              href={siteConfig.contact.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-whatsapp text-xs sm:text-sm px-4 py-2.5 hidden sm:inline-flex"
             >
-              احجز ممرض لبيتك الآن 🩺
-            </Link>
+              💬 احجز عبر واتساب الآن
+            </a>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -184,13 +186,14 @@ export default function ReviewsPage() {
               انضم لمئات العائلات التي وضعت ثقتها في نبض للتمريض المنزلي. فريقنا جاهز لزيارة مريضك وتقديم الرعاية بأعلى معايير النظافة والتعقيم.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href="/booking"
-                className="btn-primary text-xs sm:text-sm px-6 py-3 font-bold"
+              <a
+                href={siteConfig.contact.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-whatsapp text-xs sm:text-sm px-6 py-3 font-bold shadow-md"
               >
-                <CalendarDaysIcon className="w-4 h-4" />
-                <span>احجز خدمة الآن</span>
-              </Link>
+                💬 احجز عبر واتساب الآن
+              </a>
               <a
                 href={siteConfig.contact.whatsappUrl}
                 target="_blank"

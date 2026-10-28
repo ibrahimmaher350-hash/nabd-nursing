@@ -30,9 +30,11 @@ export default function QuickActions() {
       <div className="section-container">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-5">
 
-          {/* 1. Book Now */}
-          <Link
-            href="/booking"
+          {/* 1. Book Now via WhatsApp */}
+          <a
+            href={getWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => analytics.startBooking('quick_action', 'general')}
             className="group relative bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 border border-slate-200/80 shadow-[0_4px_16px_rgba(11,27,61,0.05)] hover:shadow-[0_12px_30px_rgba(11,27,61,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
           >
@@ -52,7 +54,7 @@ export default function QuickActions() {
                 حدد موعدك والخدمة ونصل إليك في منزلك
               </p>
             </div>
-          </Link>
+          </a>
 
           {/* 2. Direct WhatsApp */}
           <a

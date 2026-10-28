@@ -45,12 +45,14 @@ export default function ServicesPage() {
                 <ArrowRightIcon className="w-4 h-4 text-gold-400 transition-transform group-hover:translate-x-1" />
                 <span>العودة للرئيسية</span>
               </Link>
-              <Link
-                href="/booking"
+              <a
+                href="https://wa.me/201001097896?text=السلام+عليكم،+أريد+حجز+خدمة+تمريضية+منزلية"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-xs font-bold text-gold-300 hover:text-gold-200 hover:underline"
               >
-                احجز خدمة الآن 📅
-              </Link>
+                💬 احجز عبر واتساب
+              </a>
             </div>
 
             <div className="text-center">

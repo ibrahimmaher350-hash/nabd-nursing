@@ -1,6 +1,6 @@
 'use client'
 /**
- * components/layout/Header.tsx — نبض للتمريض المنزلي
+ * components/layout/Header.tsx — مكوّن الرأسية الرئيسية
  * CareHub-inspired floating island header with 24/7 emergency top bar
  */
 
@@ -12,9 +12,7 @@ import {
   XMarkIcon,
   PhoneIcon,
   ShieldCheckIcon,
-  BellIcon,
 } from '@heroicons/react/24/outline'
-import { supabase } from '@/lib/supabase/client'
 import { siteConfig } from '@/data/siteConfig'
 import { analytics } from '@/lib/analytics'
 import { useSettings } from '@/context/SettingsContext'
@@ -27,34 +25,17 @@ interface NavLinkItem {
 }
 
 const navLinks: NavLinkItem[] = [
-  { href: '/#services',      label: 'خدماتنا 🩺',             badge: null },
-  { href: '/reviews',        label: 'آراء المرضى ⭐',         badge: '5.0' },
-  { href: '/blood-bank',     label: 'بنك الدم 🩸',             badge: 'جديد' },
-  { href: '/medical-guide',  label: 'الإسعافات والروشتات 🚑', badge: null },
-  { href: 'https://nabdhomenursing.blogspot.com/', label: 'المدونة ✍️', badge: null, isExternal: true },
-  { href: '/contact',        label: 'تواصل معنا',             badge: null },
+  { href: '/#services',      label: 'خدماتنا',              badge: null },
+  { href: '/reviews',        label: 'آراء العملاء',          badge: '5.0' },
+  { href: '/medical-guide',  label: 'الدليل الطبي',          badge: null },
+  { href: 'https://nabdhomenursing.blogspot.com/', label: 'المدونة', badge: null, isExternal: true },
+  { href: '/contact',        label: 'تواصل معنا',            badge: null },
 ]
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [unreadNotifications, setUnreadNotifications] = useState(0)
   const { settings, getCallUrl, getWhatsAppUrl } = useSettings()
-
-  useEffect(() => {
-    async function loadNotifications() {
-      try {
-        const { count } = await supabase
-          .from('notification_log')
-          .select('*', { count: 'exact', head: true })
-          .eq('read', false)
-        if (count) setUnreadNotifications(count)
-      } catch {
-        // ignore error
-      }
-    }
-    loadNotifications()
-  }, [])
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 20)
@@ -81,7 +62,7 @@ export default function Header() {
 
   return (
     <>
-      {/* ── 1. Top Emergency Bar (CareHub Style) ── */}
+      {/* ── 1. Top Emergency Bar ── */}
       <div className="bg-[#07132B] text-white text-xs border-b border-white/10 no-print">
         <div className="section-container">
           <div className="flex items-center justify-between h-9 px-1">
@@ -90,13 +71,13 @@ export default function Header() {
               <a
                 href={getCallUrl()}
                 className="flex items-center gap-1.5 text-gold-300 font-bold hover:text-white transition-colors"
-                title="خط الطوارئ والاستجابة الفورية"
+                title="اتصل بنا للطوارئ التمريضية الآن"
               >
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
                 </span>
-                <span className="text-white/80 font-medium hidden sm:inline">طوارئ 24/7:</span>
+                <span className="text-white/80 font-medium hidden sm:inline">خدمة 24/7:</span>
                 <span className="text-xs sm:text-sm tracking-wider font-extrabold text-gold-300">{settings.phone}</span>
               </a>
 
@@ -104,11 +85,11 @@ export default function Header() {
 
               <div className="hidden md:flex items-center gap-1.5 text-white/70">
                 <ShieldCheckIcon className="w-3.5 h-3.5 text-emerald-400" />
-                <span>رعاية معتمدة داخل محافظة دمياط بالكامل</span>
+                <span>ممرضون معتمدون · رعاية منزلية متميزة</span>
               </div>
             </div>
 
-            {/* Left: Social icons & WhatsApp */}
+            {/* Left: WhatsApp & Facebook */}
             <div className="flex items-center gap-3 text-white/70">
               <a
                 href={getWhatsAppUrl()}
@@ -146,7 +127,7 @@ export default function Header() {
         </div>
       )}
 
-      {/* ── 2. CareHub Floating Pill Header ── */}
+      {/* ── 2. Floating Pill Header ── */}
       <header
         className={`sticky top-2 z-50 w-full transition-all duration-300 px-3 sm:px-6 no-print`}
         role="banner"
@@ -160,12 +141,12 @@ export default function Header() {
         >
           <div className="flex items-center justify-between">
 
-            {/* ── Logo + Brand Name ── */}
+            {/* ── Logo Only (no text beside it on mobile) ── */}
             <Link
               href="/"
               className="flex items-center gap-2.5 shrink-0 group"
               aria-label={`${siteConfig.brand.name} — الصفحة الرئيسية`}
-              title="نبض للتمريض المنزلي"
+              title="نبض — التمريض المنزلي"
               onClick={closeMenu}
             >
               <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden shadow-md shrink-0 border-2 border-gold-400/80 group-hover:scale-105 transition-transform">
@@ -178,13 +159,14 @@ export default function Header() {
                   sizes="44px"
                 />
               </div>
-              <div className="flex flex-col min-w-0">
+              {/* Brand name — hidden on small mobile, shown on sm+ */}
+              <div className="hidden sm:flex flex-col min-w-0">
                 <div className="flex items-center gap-1.5">
                   <span className="text-base sm:text-lg font-black text-navy-900 leading-none group-hover:text-gold-600 transition-colors">
                     نبض
                   </span>
-                  <span className="badge-navy text-[10px] py-0 px-2 rounded-full font-bold hidden xs:inline-flex">
-                    دمياط
+                  <span className="badge-navy text-[10px] py-0 px-2 rounded-full font-bold">
+                    24/7
                   </span>
                 </div>
                 <span className="text-[11px] font-semibold text-slate-500 leading-tight">
@@ -235,30 +217,20 @@ export default function Header() {
                 <span dir="ltr">{settings.phone}</span>
               </a>
 
-              <Link
-                href="/appointments/new"
-                className="inline-flex items-center gap-1.5 text-xs xl:text-sm font-black text-white bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 px-5 py-2.5 rounded-full shadow-[0_4px_16px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+              <a
+                href={getWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs xl:text-sm font-black text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 px-5 py-2.5 rounded-full shadow-[0_4px_16px_rgba(16,185,129,0.35)] hover:shadow-[0_6px_20px_rgba(16,185,129,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+                onClick={() => analytics.clickWhatsApp('header')}
               >
-                <span>احجز زيارة الآن</span>
-                <span className="text-xs">🩺</span>
-              </Link>
+                <span>احجز عبر واتساب</span>
+                <span className="text-xs">💬</span>
+              </a>
             </div>
 
-            {/* ── Mobile Action Icons (Clean & Uncrowded) ── */}
+            {/* ── Mobile Action Icons ── */}
             <div className="flex lg:hidden items-center gap-1.5 sm:gap-2">
-              <Link
-                href="/appointments/mine"
-                className="relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-slate-700 border border-slate-200 shadow-xs"
-                title="المواعيد"
-              >
-                <BellIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
-                {unreadNotifications > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-black rounded-full flex items-center justify-center">
-                    {unreadNotifications > 9 ? '9+' : unreadNotifications}
-                  </span>
-                )}
-              </Link>
-
               <a
                 href={getCallUrl()}
                 className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold-50 text-gold-600 border border-gold-200 shadow-xs"
@@ -297,7 +269,7 @@ export default function Header() {
           <nav
             id="mobile-menu"
             className="fixed top-0 end-0 z-50 h-full w-80 max-w-[85vw] bg-white shadow-2xl lg:hidden flex flex-col transition-transform"
-            aria-label="القائمة المحمولة"
+            aria-label="القائمة الرئيسية المتنقلة"
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between p-4 border-b border-slate-100 bg-slate-50/50">
@@ -306,8 +278,8 @@ export default function Header() {
                   <Image src="/logo.jpg" alt={siteConfig.brand.logoAlt} fill className="object-contain" sizes="40px" />
                 </div>
                 <div>
-                  <p className="text-sm font-black text-navy-900">نبض للتمريض المنزلي</p>
-                  <p className="text-xs text-slate-500">المستشفى في بيتك — دمياط</p>
+                  <p className="text-sm font-black text-navy-900">نبض — التمريض المنزلي</p>
+                  <p className="text-xs text-slate-500">رعاية متميزة في منزلك</p>
                 </div>
               </Link>
               <button
@@ -353,26 +325,20 @@ export default function Header() {
 
             {/* Bottom Actions in Drawer */}
             <div className="p-4 border-t border-slate-100 bg-slate-50 flex flex-col gap-2">
-              <Link
-                href="/booking"
-                onClick={closeMenu}
-                className="btn-primary w-full justify-center text-sm py-3"
-              >
-                احجز ممرض لبيتك 🩺
-              </Link>
               <a
                 href={getWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={closeMenu}
                 className="btn-whatsapp w-full justify-center text-sm py-3"
               >
-                تواصل عبر واتساب 💬
+                💬 احجز عبر واتساب الآن
               </a>
               <a
                 href={getCallUrl()}
                 className="btn-call w-full justify-center text-sm py-3"
               >
-                اتصال هاتفي سريع 📞
+                📞 اتصل بنا مباشرةً
               </a>
             </div>
           </nav>

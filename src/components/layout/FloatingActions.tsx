@@ -1,12 +1,11 @@
 'use client'
 /**
- * components/layout/FloatingActions.tsx — نبض للتمريض المنزلي
- * زر واتساب العائم الذكي مع زر back-to-top وانتقال سلس عند الظهور
+ * components/layout/FloatingActions.tsx — زر الإجراءات العائم
+ * زر واتساب عائم وزر العودة للأعلى — استجابة ممتازة للهواتف الذكية
  */
 
 import { useState, useEffect, useCallback } from 'react'
-import Link from 'next/link'
-import { PhoneIcon, CalendarDaysIcon, XMarkIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
+import { PhoneIcon, XMarkIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
 import { analytics } from '@/lib/analytics'
 import { useSettings } from '@/context/SettingsContext'
 
@@ -33,7 +32,7 @@ export default function FloatingActions() {
 
   return (
     <>
-      {/* Back to Top button — appears independently */}
+      {/* Back to Top */}
       <div
         className={`fixed z-40 transition-all duration-300 no-print ${
           showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
@@ -45,15 +44,15 @@ export default function FloatingActions() {
       >
         <button
           onClick={scrollToTop}
-          className="w-10 h-10 rounded-full bg-white border border-medical-border shadow-card-md text-navy-700 flex items-center justify-center hover:bg-navy-50 hover:border-navy-200 transition-all active:scale-95"
-          aria-label="العودة لأعلى الصفحة"
-          title="العودة لأعلى الصفحة"
+          className="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-md text-navy-800 flex items-center justify-center hover:bg-slate-50 transition-all active:scale-95"
+          aria-label="الرجوع لأعلى الصفحة"
+          title="الرجوع لأعلى الصفحة"
         >
           <ChevronUpIcon className="w-5 h-5" aria-hidden="true" />
         </button>
       </div>
 
-      {/* Main FAB cluster */}
+      {/* Main WhatsApp FAB */}
       <div
         className={`fixed z-40 flex flex-col items-center gap-2.5 no-print transition-all duration-300 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
@@ -63,15 +62,15 @@ export default function FloatingActions() {
           insetInlineEnd: '1.25rem',
         }}
         role="complementary"
-        aria-label="أزرار التواصل السريع"
+        aria-label="تواصل مباشر سريع"
       >
-        {/* Expanded actions (vertical stack upward) */}
+        {/* Expanded actions stack */}
         {isExpanded && (
           <div className="flex flex-col items-center gap-2 mb-1 animate-fade-in-up">
             {/* Quick Call */}
             <a
               href={getCallUrl()}
-              className="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-white font-bold rounded-full px-4 py-2.5 shadow-lg text-xs sm:text-sm active:scale-95 transition-transform whitespace-nowrap"
+              className="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold rounded-full px-4 py-2.5 shadow-lg text-xs sm:text-sm active:scale-95 transition-transform whitespace-nowrap"
               aria-label="اتصال هاتفي"
               onClick={() => {
                 analytics.clickCall('fab')
@@ -88,36 +87,24 @@ export default function FloatingActions() {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#229ED9] hover:bg-[#1e8bc0] text-white font-bold rounded-full px-4 py-2.5 shadow-lg text-xs sm:text-sm active:scale-95 transition-transform whitespace-nowrap"
-              aria-label="تليجرام"
+              aria-label="تيليجرام"
               onClick={() => setIsExpanded(false)}
             >
               <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
               </svg>
-              تليجرام
+              تيليجرام
             </a>
-
-            {/* Quick Book */}
-            <Link
-              href="/booking"
-              className="flex items-center gap-2 bg-navy-700 hover:bg-navy-800 text-white font-bold rounded-full px-4 py-2.5 shadow-lg text-xs sm:text-sm active:scale-95 transition-transform whitespace-nowrap"
-              aria-label="احجز خدمة الآن"
-              onClick={() => setIsExpanded(false)}
-            >
-              <CalendarDaysIcon className="w-4 h-4 shrink-0" aria-hidden="true" />
-              احجز الآن
-            </Link>
           </div>
         )}
 
-        {/* Main Single FAB Cluster */}
+        {/* Main WhatsApp Button with mini expander toggle */}
         <div className="relative flex items-center justify-center">
-          {/* Toggle options button */}
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="absolute -top-2 -start-2 w-6 h-6 rounded-full bg-navy-800 text-white border-2 border-white flex items-center justify-center text-xs font-black shadow-md z-10 hover:bg-navy-900 transition-all active:scale-90"
-            aria-label={isExpanded ? 'إغلاق الخيارات' : 'خيارات إضافية'}
-            title={isExpanded ? 'إغلاق الخيارات' : 'خيارات إضافية'}
+            className="absolute -top-1.5 -start-1.5 w-6 h-6 rounded-full bg-navy-800 text-white border-2 border-white flex items-center justify-center text-xs font-black shadow-md z-10 hover:bg-navy-900 transition-all active:scale-90"
+            aria-label={isExpanded ? 'إغلاق الخيارات الإضافية' : 'خيارات اتصال إضافية'}
+            title={isExpanded ? 'إغلاق' : 'خيارات إضافية'}
           >
             {isExpanded ? (
               <XMarkIcon className="w-3.5 h-3.5" aria-hidden="true" />
@@ -126,16 +113,15 @@ export default function FloatingActions() {
             )}
           </button>
 
-          {/* WhatsApp Button */}
           <a
             href={getWhatsAppUrl()}
             target="_blank"
             rel="noopener noreferrer"
             className="w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white flex items-center justify-center shadow-[0_6px_24px_rgba(37,211,102,0.45)] active:scale-95 transition-transform"
-            aria-label="تواصل عبر واتساب"
+            aria-label="تواصل معنا عبر واتساب"
             onClick={() => analytics.clickWhatsApp('fab')}
           >
-            <span className="sr-only">تواصل عبر واتساب</span>
+            <span className="sr-only">واتساب</span>
             <svg
               className="w-7 h-7"
               viewBox="0 0 24 24"

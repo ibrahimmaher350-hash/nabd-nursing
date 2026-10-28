@@ -132,16 +132,13 @@ export default function AboutPage() {
 
               {/* CTA */}
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link href="/booking" className="btn-primary flex-1 justify-center">
-                  احجز خدمة الآن
-                </Link>
                 <a
                   href={getWhatsAppUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-whatsapp flex-1 justify-center"
+                  className="btn-whatsapp flex-1 justify-center py-3.5 text-base font-bold shadow-md"
                 >
-                  تواصل معنا
+                  💬 احجز خدمتك عبر واتساب الآن
                 </a>
               </div>
             </div>

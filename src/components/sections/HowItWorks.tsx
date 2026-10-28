@@ -1,113 +1,63 @@
 'use client'
 /**
- * components/sections/HowItWorks.tsx — نبض للتمريض المنزلي
- * Steps section with scroll-triggered stagger animations
+ * components/sections/HowItWorks.tsx — كيف نعمل؟
+ * عرض مبسط ومختصر بدون تفاصيل زائدة
  */
 
-import Link from 'next/link'
-import {
-  MagnifyingGlassIcon,
-  CalendarDaysIcon,
-  ClipboardDocumentCheckIcon,
-  HomeIcon,
-} from '@heroicons/react/24/outline'
-import { StaggerContainer, StaggerItem, fadeInUp } from '@/components/ui/AnimatedSection'
+import { useSettings } from '@/context/SettingsContext'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 
 const steps = [
-  {
-    number: 1,
-    title: 'اختار الخدمة',
-    description: 'اختار الخدمة اللي محتاجها من قائمة خدماتنا.',
-    Icon: MagnifyingGlassIcon,
-    color: 'from-blue-50 to-navy-50',
-    iconColor: 'text-navy-600',
-  },
-  {
-    number: 2,
-    title: 'حدد الموعد',
-    description: 'اختار اليوم والوقت المناسبين ليك.',
-    Icon: CalendarDaysIcon,
-    color: 'from-gold-50 to-amber-50',
-    iconColor: 'text-gold-600',
-  },
-  {
-    number: 3,
-    title: 'أكد بياناتك',
-    description: 'أدخل بيانات التواصل والعنوان بسهولة.',
-    Icon: ClipboardDocumentCheckIcon,
-    color: 'from-emerald-50 to-teal-50',
-    iconColor: 'text-emerald-600',
-  },
-  {
-    number: 4,
-    title: 'يصلك مقدم الخدمة',
-    description: 'مقدم الخدمة يوصلك في الموعد المتفق.',
-    Icon: HomeIcon,
-    color: 'from-purple-50 to-violet-50',
-    iconColor: 'text-purple-600',
-  },
+  { number: 1, emoji: '🔍', title: 'اختر الخدمة' },
+  { number: 2, emoji: '💬', title: 'تواصل عبر واتساب' },
+  { number: 3, emoji: '📋', title: 'تأكيد الموعد' },
+  { number: 4, emoji: '🏠', title: 'الممرض في منزلك' },
 ]
 
 export default function HowItWorks() {
+  const { getWhatsAppUrl } = useSettings()
+
   return (
     <section id="how-it-works" className="bg-white" aria-labelledby="how-heading">
       <div className="section-container section-padding">
-        <AnimatedSection direction="up" delay={0} className="text-center mb-10">
+        <AnimatedSection direction="up" delay={0} className="text-center mb-8">
           <h2 id="how-heading" className="section-title">
-            إزاي بتشتغل الخدمة؟
+            كيف تحجز خدمتك؟
           </h2>
-          <p className="section-subtitle">
-            4 خطوات بسيطة ووصلنالك
-          </p>
         </AnimatedSection>
 
-        {/* Steps */}
-        <StaggerContainer
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 mb-10"
-          amount={0.1}
-        >
+        {/* Steps Row */}
+        <div className="grid grid-cols-4 gap-2 sm:gap-4 mb-8">
           {steps.map((step, index) => (
-            <StaggerItem key={step.number} variants={fadeInUp}>
-              <div className={`relative flex flex-col items-center text-center gap-3 rounded-2xl bg-gradient-to-br ${step.color} border border-slate-100 p-5 hover:shadow-card-md hover:-translate-y-1 transition-all duration-300`}>
-                {/* Connector line (desktop only) */}
+            <div key={step.number} className="flex flex-col items-center text-center gap-2">
+              {/* Number + connector */}
+              <div className="relative w-full flex items-center justify-center">
                 {index < steps.length - 1 && (
-                  <div
-                    className="hidden lg:block absolute top-8 start-0 translate-x-full w-full h-0.5 bg-gradient-to-r from-gold-300 via-gold-200 to-transparent rtl:bg-gradient-to-l z-0"
-                    aria-hidden="true"
-                  />
+                  <div className="absolute top-5 start-1/2 w-full h-0.5 bg-gradient-to-r from-gold-300 to-gold-100 rtl:bg-gradient-to-l" aria-hidden="true" />
                 )}
-
-                {/* Step number circle */}
-                <div className="relative z-10 w-14 h-14 rounded-full bg-gradient-gold flex items-center justify-center shadow-gold">
-                  <span className="text-white font-extrabold text-xl">{step.number}</span>
-                </div>
-
-                {/* Icon */}
-                <div className="w-10 h-10 rounded-xl bg-white/70 flex items-center justify-center shadow-sm">
-                  <step.Icon className={`w-5 h-5 ${step.iconColor}`} aria-hidden="true" />
-                </div>
-
-                {/* Content */}
-                <div>
-                  <h3 className="font-bold text-navy-700 text-sm sm:text-base mb-1">
-                    {step.title}
-                  </h3>
-                  <p className="text-medical-muted text-xs sm:text-sm leading-relaxed">
-                    {step.description}
-                  </p>
+                <div className="relative z-10 w-10 h-10 rounded-full bg-gradient-gold flex items-center justify-center shadow-gold shrink-0">
+                  <span className="text-white font-extrabold text-sm">{step.number}</span>
                 </div>
               </div>
-            </StaggerItem>
+              {/* Emoji */}
+              <span className="text-2xl" aria-hidden="true">{step.emoji}</span>
+              {/* Title */}
+              <p className="text-xs sm:text-sm font-bold text-navy-700 leading-tight">{step.title}</p>
+            </div>
           ))}
-        </StaggerContainer>
+        </div>
 
         {/* CTA */}
-        <AnimatedSection direction="up" delay={0.1} className="text-center">
-          <Link href="/booking" className="btn-primary px-8 py-4 text-base">
-            احجز الآن
-          </Link>
-        </AnimatedSection>
+        <div className="text-center">
+          <a
+            href={getWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-whatsapp inline-flex items-center gap-2 px-8 py-4 text-base"
+          >
+            💬 احجز الآن عبر واتساب
+          </a>
+        </div>
       </div>
     </section>
   )

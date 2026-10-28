@@ -15,9 +15,7 @@ const footerLinks = {
   main: [
     { href: '/services',                        label: 'خدمات التمريض 🩺' },
     { href: '/reviews',                         label: 'آراء عملائنا ⭐' },
-    { href: '/blood-bank',                      label: 'بنك الدم والتبرع 🩸' },
-    { href: '/booking',                         label: 'طلب ممرض للمنزل 📅' },
-    { href: '/medical-guide',                   label: 'الإسعافات والروشتات 🚑💊' },
+            { href: '/medical-guide',                   label: 'الإسعافات والروشتات 🚑💊' },
     { href: 'https://nabdhomenursing.blogspot.com/', label: 'المدونة الطبية ✍️', isExternal: true },
     { href: '/medical-record',                  label: 'ملفي الطبي' },
     { href: '/contact',                         label: 'تواصل معنا' },
@@ -119,12 +117,7 @@ export default function Footer() {
             </div>
 
             <div className="flex items-center gap-3">
-              <Link
-                href="/booking"
-                className="bg-gold-500 hover:bg-gold-600 text-navy-950 font-black text-xs sm:text-sm px-6 py-3.5 rounded-2xl shadow-gold transition-all"
-              >
-                طلب زيارة ممرض 🩺
-              </Link>
+              <a href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="btn-whatsapp text-xs sm:text-sm px-6 py-3.5 rounded-2xl shadow-md transition-all">احجز عبر واتساب 💬</a>
               <a
                 href={getWhatsAppUrl()}
                 target="_blank"
