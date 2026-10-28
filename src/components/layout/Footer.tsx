@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 /**
  * components/layout/Footer.tsx — نبض للتمريض المنزلي
  * Premium footer with links, social, contact, and legal.
@@ -87,7 +87,7 @@ const StoreIcon = () => (
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
-  const { settings, getCallUrl, getWhatsAppUrl } = useSettings()
+  const { settings } = useSettings()
 
   return (
     <footer
@@ -100,34 +100,6 @@ export default function Footer() {
         <span className="text-[14vw] font-black tracking-widest text-white uppercase whitespace-nowrap">
           NABD CARE
         </span>
-      </div>
-
-      {/* CareHub-style Big Impact Counter Banner */}
-      <div className="border-b border-white/10 bg-white/5 backdrop-blur-sm">
-        <div className="section-container py-8 sm:py-10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-start">
-            <div>
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-amber-200 to-gold-400">
-                5,000+ ساعة
-              </p>
-              <p className="text-white/80 text-sm sm:text-base font-semibold mt-1">
-                رعاية تمريضية وطبية منزلية موثقة ومعقمة داخل محافظة دمياط
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <a href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="btn-whatsapp text-xs sm:text-sm px-6 py-3.5 rounded-2xl shadow-md transition-all">احجز عبر واتساب 💬</a>
-              <a
-                href={getWhatsAppUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm px-5 py-3.5 rounded-2xl transition-all border border-white/15"
-              >
-                تواصل واتساب
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* ── Main Footer ── */}
