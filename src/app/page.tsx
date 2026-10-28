@@ -6,13 +6,10 @@
 import type { Metadata } from 'next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import FloatingActions from '@/components/layout/FloatingActions'
 import HeroSection from '@/components/sections/HeroSection'
-import QuickActions from '@/components/sections/QuickActions'
 import ServicesGrid from '@/components/sections/ServicesGrid'
 import NursePromo from '@/components/sections/NursePromo'
 import WhyNabd from '@/components/sections/WhyNabd'
-import HowItWorks from '@/components/sections/HowItWorks'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import FacebookPostSection from '@/components/sections/FacebookPostSection'
 import FAQ from '@/components/sections/FAQ'
@@ -34,39 +31,32 @@ export default async function HomePage() {
       <Header />
 
       <main id="main-content">
-        {/* 1. Hero with CareHub Live Nurse Badge */}
+        {/* 1. Hero Section */}
         <HeroSection />
 
-        {/* 2. Quick Actions */}
-        <QuickActions />
-
-        {/* 3. Featured Services */}
+        {/* 2. Featured Services (Square cards) */}
         <ServicesGrid featured />
 
-        {/* 4. Nurse Promo — صورة الممرض الاحترافية */}
+        {/* 3. Nurse Promo */}
         <NursePromo />
 
-        {/* 5. Why Nabd */}
+        {/* 4. Why Nabd */}
         <WhyNabd />
 
-        {/* 6. How It Works */}
-        <HowItWorks />
-
-        {/* 7. Patient Testimonials — آراء وتقييمات مرضانا وعائلاتهم */}
+        {/* 5. Patient Testimonials */}
         <TestimonialsSection />
 
-        {/* 8. Facebook Post Section — المنشور الرسمي والتفاعل الحي */}
+        {/* 6. Facebook Post Section */}
         <FacebookPostSection />
 
-        {/* 9. FAQ */}
+        {/* 7. FAQ */}
         <FAQ />
 
-        {/* 10. Final CTA */}
+        {/* 8. Final CTA */}
         <FinalCTA />
       </main>
 
       <Footer />
-      <FloatingActions />
     </>
   )
 }

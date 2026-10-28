@@ -44,7 +44,7 @@ export const siteConfig = {
     // 📘 الصفحة الرسمية لنَبض للتمريض المنزلي
     facebook: 'https://www.facebook.com/profile.php?id=61593884400330',
     // 🔵 الملف الشخصي المسؤول عن نبض – إبراهيم ماهر
-    facebookProfile: 'https://www.facebook.com/share/1BDJwJeW15/',
+    facebookProfile: 'https://www.facebook.com/share/19gZWtCPLc/',
     // 👥 جروب نبض على فيسبوك
     facebookGroup: 'https://www.facebook.com/share/g/1BmBygobMw/',
     // 📝 مدونة نبض – Blogger

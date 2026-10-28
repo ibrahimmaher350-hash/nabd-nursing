@@ -72,7 +72,7 @@ function getDefaultSettings(): Record<string, unknown> {
     whatsapp: siteConfig.contact.whatsapp,
     telegramUrl: siteConfig.social.telegram || 'https://t.me/Ibrahim5k',
     facebookUrl: siteConfig.social.facebook,
-    facebookProfileUrl: siteConfig.social.facebookProfile || 'https://www.facebook.com/share/1BDJwJeW15/',
+    facebookProfileUrl: siteConfig.social.facebookProfile || 'https://www.facebook.com/share/19gZWtCPLc/',
     facebookGroupUrl: siteConfig.social.facebookGroup,
     bloggerUrl: siteConfig.social.blogger,
     googleBusinessUrl: siteConfig.social.googleBusiness,

@@ -17,8 +17,7 @@ const footerLinks = {
     { href: '/reviews',                         label: 'آراء عملائنا ⭐' },
             { href: '/medical-guide',                   label: 'الإسعافات والروشتات 🚑💊' },
     { href: 'https://nabdhomenursing.blogspot.com/', label: 'المدونة الطبية ✍️', isExternal: true },
-    { href: '/medical-record',                  label: 'ملفي الطبي' },
-    { href: '/contact',                         label: 'تواصل معنا' },
+        { href: '/contact',                         label: 'تواصل معنا' },
   ],
   legal: [
     { href: '/privacy',            label: 'سياسة الخصوصية' },
@@ -270,7 +269,7 @@ export default function Footer() {
 
                 {/* Responsible Profile */}
                 <a
-                  href="https://www.facebook.com/share/1BDJwJeW15/"
+                  href="https://www.facebook.com/share/19gZWtCPLc/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-colors"
