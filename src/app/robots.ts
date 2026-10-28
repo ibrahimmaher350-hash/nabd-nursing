@@ -20,7 +20,7 @@ export default function robots(): MetadataRoute.Robots {
           '/appointments/',
         ],
       },
-      // AI & LLM Search Engine Bots
+      // AI Search Bots & LLMs (Perplexity, ChatGPT, Gemini, Claude, etc.)
       {
         userAgent: [
           'GPTBot',
@@ -34,6 +34,8 @@ export default function robots(): MetadataRoute.Robots {
           'Bytespider',
           'cohere-ai',
           'OAI-SearchBot',
+          'Meta-ExternalAgent',
+          'FacebookBot',
         ],
         allow: '/',
         disallow: [

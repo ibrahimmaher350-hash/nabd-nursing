@@ -18,13 +18,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE_URL}/services`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
-      priority: 0.9,
+      priority: 0.95,
     },
     {
       url: `${BASE_URL}/booking`,
       lastModified: currentDate,
       changeFrequency: 'daily',
-      priority: 0.95,
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/medical-guide`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
     },
     {
       url: `${BASE_URL}/prescriptions`,
@@ -39,34 +45,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
-      url: `${BASE_URL}/offers`,
-      lastModified: currentDate,
-      changeFrequency: 'daily',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/contact`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.75,
-    },
-    {
-      url: `${BASE_URL}/about`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${BASE_URL}/medical-record`,
-      lastModified: currentDate,
-      changeFrequency: 'daily',
-      priority: 0.7,
-    },
-    {
-      url: `${BASE_URL}/medical-guide`,
+      url: `${BASE_URL}/reviews`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
-      priority: 0.9,
+      priority: 0.85,
     },
     {
       url: `${BASE_URL}/blog`,
@@ -75,16 +57,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/reviews`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
-      url: `${BASE_URL}/blood-bank`,
+      url: `${BASE_URL}/offers`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/about`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    },
+    {
+      url: `${BASE_URL}/contact`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.75,
     },
     {
       url: `${BASE_URL}/terms`,

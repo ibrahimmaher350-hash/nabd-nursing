@@ -152,6 +152,14 @@ const organizationSchema = {
       name: 'محافظة دمياط',
     },
   ],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '00:00',
+      closes: '23:59',
+    },
+  ],
   medicalSpecialty: [
     'Nursing',
     'Emergency',
@@ -339,6 +347,10 @@ export default function RootLayout({
         <meta name="rating" content="general" />
         <meta name="revisit-after" content="7 days" />
         <meta name="language" content="Arabic" />
+
+        {/* AI & LLM Search Engine Discovery */}
+        <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLMs.txt" />
+        <link rel="help" href="/llms.txt" />
 
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
