@@ -95,6 +95,37 @@ export const offers: NabdOffer[] = [
     whatsappMessage:
       'السلام عليكم، محتاج أطلب عرض جهاز قياس السكر فيفا تشيك بسعر 450ج (بدلاً من 650ج) مع الـ 10 شرايط من نبض بدمياط.',
   },
+  {
+    id: 'chronic-care-bundle-2026',
+    title: 'باقات الحالات المزمنة وقرح الفراش المخفضة',
+    subtitle: 'خصم خاص 10% إلى 15% على الباقات الأسبوعية والشهرية لرعاية أهالينا بمركز وبندر دمياط',
+    serviceSlug: 'chronic-care',
+    serviceName: 'رعاية الحالات المزمنة وقرح الفراش',
+    emoji: '🩺',
+    packages: [
+      {
+        label: 'باقة الغيار الأسبوعية لقرح الفراش',
+        highlight: 'خصم 10%',
+        gift: 'فحص العلامات الحيوية والسكر مجاناً في كل زيارة 🩺',
+        badge: 'باقة أسبوعية',
+        badgeColor: 'gold',
+      },
+      {
+        label: 'باقة المتابعة الشهرية أو الشيفتات المتصلة',
+        highlight: 'خصم 15%',
+        gift: 'متابعة دورية وإشراف تمريضي متكامل 📋',
+        badge: 'أعلى توفير',
+        badgeColor: 'emerald',
+      },
+    ],
+    validFrom: '2026-10-01',
+    validUntil: '2027-12-31',
+    active: true,
+    featured: true,
+    bgGradient: 'from-blue-950 via-navy-900 to-indigo-950',
+    whatsappMessage:
+      'السلام عليكم، أود الاستفسار عن باقات الحالات المزمنة وقرح الفراش المخفضة بخصم 10-15% من نبض للتمريض المنزلي بدمياط.',
+  },
 ]
 
 /** Returns only currently active offers */

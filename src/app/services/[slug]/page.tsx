@@ -152,9 +152,25 @@ export default async function ServicePage({ params }: Props) {
                 </div>
                 <span className="badge bg-white/20 text-white">{service.category}</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white mb-4">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white mb-3">
                 {service.name}
               </h1>
+
+              {/* Price & Location Badges */}
+              <div className="flex flex-wrap items-center gap-2.5 mb-4">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs sm:text-sm font-extrabold bg-gold-400/20 text-gold-300 border border-gold-400/30">
+                  <span>💰 متوسط السعر:</span>
+                  <span className="text-white font-black">{service.priceRange}</span>
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/10 text-white/90 border border-white/20">
+                  <span>📍</span>
+                  <span>{service.targetZone || 'مركز وبندر دمياط'}</span>
+                </span>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  بدون المستلزمات الطبية
+                </span>
+              </div>
+
               <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl">
                 {service.description}
               </p>
@@ -246,6 +262,38 @@ export default async function ServicePage({ params }: Props) {
                   </div>
                 )}
 
+                {/* ── Pricing & Clinical Execution Card ── */}
+                <div className="bg-gradient-to-br from-amber-50/90 via-slate-50 to-emerald-50/70 rounded-3xl p-5 sm:p-6 border border-amber-200/80 shadow-xs">
+                  <div className="flex items-center justify-between gap-3 flex-wrap mb-4 pb-3 border-b border-amber-200/60">
+                    <div>
+                      <span className="text-xs font-bold text-slate-500 block mb-0.5">متوسط السعر العادل (استرشادي)</span>
+                      <h2 className="text-xl sm:text-2xl font-black text-navy-900">{service.priceRange}</h2>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-white text-navy-800 px-3 py-1.5 rounded-xl border border-amber-200 shadow-xs">
+                      <span>📍 التغطية الأساسية:</span>
+                      <span className="text-gold-700 font-extrabold">{service.targetZone || 'مركز وبندر دمياط'}</span>
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col gap-3 text-sm">
+                    <div className="bg-white/90 p-3.5 rounded-2xl border border-slate-200/80">
+                      <strong className="text-navy-900 block mb-1 font-bold">📝 ملاحظات التنفيذ السريري:</strong>
+                      <p className="leading-relaxed text-slate-700">{service.executionNotes || service.priceNote}</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                      <div className="bg-white/70 p-3 rounded-xl border border-slate-200/70">
+                        <span className="font-bold text-navy-900 block mb-1">🩹 فصل تكلفة المستلزمات:</span>
+                        <p className="text-slate-600">السعر للخدمة المهنية والتعقيم فقط. في حال طلبت توفير المستلزمات تضاف بسعر الصيدلية الفعلي.</p>
+                      </div>
+                      <div className="bg-white/70 p-3 rounded-xl border border-slate-200/70">
+                        <span className="font-bold text-navy-900 block mb-1">🚗 رسوم الانتقال للمناطق الأبعد:</span>
+                        <p className="text-slate-600">تضاف رسوم (50 - 100 ج) للزيارات الأبعد جغرافياً كدمياط الجديدة ورأس البر وكفر البطيخ.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Who needs this */}
                 <div>
                   <h2 className="text-xl font-bold text-navy-700 mb-4">من يحتاج هذه الخدمة؟</h2>
@@ -327,11 +375,22 @@ export default async function ServicePage({ params }: Props) {
 
                 {/* Booking card */}
                 <div className="nabd-card p-5 sticky top-20">
-                  <h3 className="font-bold text-navy-700 text-base mb-4">احجز هذه الخدمة</h3>
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-bold text-navy-700 text-base">احجز هذه الخدمة</h3>
+                    <span className="text-xs font-black text-navy-950 bg-amber-50 px-2.5 py-1 rounded-xl border border-amber-300">
+                      {service.priceRange}
+                    </span>
+                  </div>
 
-                  <p className="text-medical-muted text-xs mb-4 leading-relaxed">
-                    {siteConfig.booking.pricingNote}
-                  </p>
+                  <div className="bg-slate-50 p-3 rounded-2xl border border-slate-200/90 text-xs text-slate-700 mb-4 space-y-1.5">
+                    <p className="font-bold text-navy-900 flex items-center gap-1">
+                      <span>📍</span>
+                      <span>{service.targetZone || 'مركز وبندر دمياط'}</span>
+                    </p>
+                    <p className="leading-relaxed text-[11px] text-slate-500">
+                      {service.priceNote}
+                    </p>
+                  </div>
 
                   <div className="flex flex-col gap-2.5">
                     <a

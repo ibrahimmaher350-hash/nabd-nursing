@@ -64,6 +64,29 @@ function ServiceModal({ service, onClose }: { service: NabdService; onClose: () 
             {service.description || service.shortDescription}
           </p>
 
+          {/* Pricing & Execution Card */}
+          <div className="bg-gradient-to-br from-amber-50/80 via-slate-50 to-emerald-50/60 rounded-2xl p-4 border border-amber-200/70 flex flex-col gap-2.5">
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <span className="text-xs font-bold text-navy-900">متوسط السعر العادل (الخدمة المهنية):</span>
+              <span className="text-sm font-black text-navy-950 bg-white px-2.5 py-1 rounded-xl shadow-xs border border-amber-200">
+                {service.priceRange}
+              </span>
+            </div>
+            <div className="text-xs text-slate-700 flex items-center gap-1.5 font-medium">
+              <span className="text-gold-600">📍</span>
+              <span>نطاق التغطية الأساسي: <strong>{service.targetZone || 'مركز وبندر دمياط'}</strong></span>
+            </div>
+            {service.executionNotes && (
+              <div className="text-xs text-slate-700 bg-white/90 p-2.5 rounded-xl border border-slate-200/70 leading-relaxed">
+                <strong className="text-navy-900 block mb-1">ملاحظات التنفيذ:</strong>
+                {service.executionNotes}
+              </div>
+            )}
+            <p className="text-[11px] text-slate-500 leading-normal">
+              💡 السعر للخدمة المهنية والتعقيم (بدون المستلزمات). تضاف رسوم 50-100 ج للمناطق الأبعد عن مركز وبندر دمياط، ومتاح خصم 10-15% لباقات الحالات المزمنة.
+            </p>
+          </div>
+
           {/* What we offer */}
           {service.whatWeOffer && service.whatWeOffer.length > 0 && (
             <div>
@@ -130,9 +153,16 @@ function ServiceCard({ service, onClick }: { service: NabdService; onClick: () =
         {service.name}
       </h3>
 
+      {/* Price Pill */}
+      {service.priceRange && (
+        <span className="relative z-10 text-[10px] font-extrabold text-navy-900 bg-amber-50 border border-amber-200/90 px-2 py-0.5 rounded-full shadow-xs">
+          {service.priceRange}
+        </span>
+      )}
+
       {/* Tap hint */}
-      <span className="relative z-10 text-[10px] text-slate-400 font-medium group-hover:text-emerald-500 transition-colors">
-        اضغط للتفاصيل
+      <span className="relative z-10 text-[10px] text-slate-400 font-medium group-hover:text-emerald-600 transition-colors">
+        مركز وبندر دمياط • تفاصيل
       </span>
     </button>
   )
