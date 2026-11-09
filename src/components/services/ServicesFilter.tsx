@@ -177,33 +177,35 @@ export default function ServicesFilter() {
                 setSelectedService(service)
                 analytics.viewService(service.id, service.name)
               }}
-              className="group relative bg-white rounded-2xl border border-slate-200 shadow-[0_2px_12px_rgba(11,27,61,0.05)] hover:shadow-[0_8px_24px_rgba(11,27,61,0.1)] hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-200 flex flex-col items-center justify-center gap-2 p-4 aspect-square text-center cursor-pointer overflow-hidden"
+              className="group relative bg-white rounded-2xl border border-slate-200/90 shadow-[0_2px_12px_rgba(11,27,61,0.06)] hover:shadow-[0_8px_24px_rgba(11,27,61,0.12)] hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-200 flex flex-col items-center justify-between p-3.5 sm:p-4 min-h-[175px] sm:min-h-[190px] h-full text-center cursor-pointer overflow-hidden"
               aria-label={`${service.name} — اضغط لعرض التفاصيل`}
             >
               {/* Background accent */}
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-50/50 to-white opacity-80 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-50/70 to-white opacity-80 group-hover:opacity-100 transition-opacity" />
 
-              {/* Icon */}
-              <span className="relative z-10 text-3xl sm:text-4xl leading-none" aria-hidden="true">
-                {service.iconEmoji}
-              </span>
+              {/* Icon Badge */}
+              <div className="relative z-10 w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-2xl sm:text-3xl shadow-2xs group-hover:scale-105 transition-transform shrink-0">
+                <span aria-hidden="true">{service.iconEmoji}</span>
+              </div>
 
-              {/* Title */}
-              <h3 className="relative z-10 text-xs sm:text-sm font-bold text-navy-800 leading-snug line-clamp-2 group-hover:text-gold-700 transition-colors">
-                {service.name}
-              </h3>
+              {/* Service Name (Heading) — Bold, high contrast and fully visible */}
+              <div className="relative z-10 w-full my-auto py-1">
+                <h3 className="text-xs sm:text-sm font-black text-navy-950 leading-snug line-clamp-2 group-hover:text-gold-700 transition-colors">
+                  {service.name}
+                </h3>
+              </div>
 
-              {/* Price Pill */}
-              {service.priceRange && (
-                <span className="relative z-10 text-[10px] font-extrabold text-navy-900 bg-amber-50 border border-amber-200/90 px-2 py-0.5 rounded-full shadow-xs">
-                  {service.priceRange}
+              {/* Bottom Section: Price & Location */}
+              <div className="relative z-10 w-full flex flex-col items-center gap-1 shrink-0 pt-0.5">
+                {service.priceRange && (
+                  <span className="text-[10px] sm:text-[11px] font-black text-navy-950 bg-amber-50 border border-amber-300/80 px-2 py-0.5 rounded-lg shadow-2xs max-w-full truncate">
+                    {service.priceRange}
+                  </span>
+                )}
+                <span className="text-[9.5px] sm:text-[10px] text-slate-500 font-bold group-hover:text-emerald-700 transition-colors">
+                  مركز وبندر دمياط • تفاصيل
                 </span>
-              )}
-
-              {/* Tap hint */}
-              <span className="relative z-10 text-[10px] text-slate-400 font-medium group-hover:text-emerald-600 transition-colors">
-                مركز وبندر دمياط • تفاصيل
-              </span>
+              </div>
             </button>
           ))}
         </div>

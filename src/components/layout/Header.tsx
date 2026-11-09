@@ -80,7 +80,7 @@ export default function Header() {
               href="/"
               className="flex items-center gap-2.5 shrink-0 group"
               aria-label={`${siteConfig.brand.name} — الصفحة الرئيسية`}
-              title="نبض — التمريض المنزلي"
+              title="نبض للتمريض المنزلي"
               onClick={closeMenu}
             >
               <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden shadow-md shrink-0 border-2 border-gold-400/80 group-hover:scale-105 transition-transform">
@@ -211,7 +211,7 @@ export default function Header() {
                   <Image src="/logo.jpg" alt={siteConfig.brand.logoAlt} fill className="object-contain" sizes="40px" />
                 </div>
                 <div>
-                  <p className="text-sm font-black text-navy-900">نبض — التمريض المنزلي</p>
+                  <p className="text-sm font-black text-navy-900">نبض للتمريض المنزلي</p>
                   <p className="text-xs text-slate-500">رعاية متميزة في منزلك</p>
                 </div>
               </Link>
