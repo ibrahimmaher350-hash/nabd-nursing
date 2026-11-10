@@ -254,6 +254,17 @@ export default function Header() {
                   </Link>
                 )
               )}
+              <Link
+                href="/app"
+                onClick={closeMenu}
+                className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-black text-navy-950 bg-gradient-to-r from-amber-100 to-gold-100 border border-gold-300 mt-2 shadow-xs transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <span>🩺</span>
+                  <span>بوابة إدارة العيادة والزيارات</span>
+                </div>
+                <span className="text-[10px] bg-navy-900 text-gold-400 px-2 py-0.5 rounded-full font-bold">دخول</span>
+              </Link>
             </div>
 
             {/* Bottom Actions in Drawer */}
