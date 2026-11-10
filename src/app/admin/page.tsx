@@ -258,6 +258,13 @@ export default function AdminMasterPage() {
           </button>
 
           <Link
+            href="/app"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-black shrink-0 bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-md hover:from-emerald-500 hover:to-green-500 transition-all"
+          >
+            <span>🩺 نظام إدارة العيادة والزيارات ↗</span>
+          </Link>
+
+          <Link
             href="/admin/bookings"
             className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 bg-white/5 hover:bg-white/10 text-slate-300 transition-all"
           >

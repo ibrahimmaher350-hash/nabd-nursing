@@ -72,9 +72,9 @@ const nextConfig = {
           },
         ],
       },
-      // 2. Override for Private & Internal admin/api routes: NEVER index
+      // 2. Override for Private & Internal admin/api/app routes: NEVER index
       {
-        source: '/(admin|api|dashboard|settings|patients|appointments)/:path*',
+        source: '/(admin|api|dashboard|settings|patients|appointments|app)/:path*',
         headers: [
           {
             key: 'X-Robots-Tag',
