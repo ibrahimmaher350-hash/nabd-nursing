@@ -23,7 +23,6 @@ const footerLinks = {
     { href: '/privacy',            label: 'سياسة الخصوصية' },
     { href: '/terms',              label: 'الشروط والأحكام' },
     { href: '/medical-disclaimer', label: 'إخلاء المسؤولية الطبي' },
-    { href: '/app',                label: 'بوابة إدارة العيادة والزيارات 🔒' },
   ],
 }
 
