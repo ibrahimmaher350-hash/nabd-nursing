@@ -81,7 +81,7 @@ export default function ReviewsPage() {
 
               <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-white/15 text-center">
                 <div className="text-xl sm:text-2xl font-black text-sky-400 flex items-center justify-center gap-1">
-                  <span>28+</span>
+                  <span>44+</span>
                   <HeartIcon className="w-5 h-5 text-sky-400" />
                 </div>
                 <div className="text-[11px] sm:text-xs text-slate-200 font-bold mt-1">شهادة موثقة</div>
@@ -100,23 +100,38 @@ export default function ReviewsPage() {
 
         {/* ── Testimonials Grid ── */}
         <section className="section-container max-w-6xl py-12 px-4">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-navy-800">
-                جميع التقييمات والشهادات ({testimonialsData.length})
-              </h2>
-              <p className="text-xs sm:text-sm text-medical-muted mt-1">
-                تجارب حقيقية مسجلة من مرضانا ومرافقيهم في محافظة دمياط
+              <div className="flex items-center gap-2 mb-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-navy-800">
+                  جميع التقييمات والشهادات ({testimonialsData.length})
+                </h2>
+                <span className="bg-amber-100 text-amber-900 border border-amber-300 text-[11px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <span>Google ⭐ 5.0</span>
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-medical-muted">
+                تجارب حقيقية موثقة من مرضانا ومرافقيهم في مركز وبندر دمياط وعلى خرائط Google
               </p>
             </div>
-            <a
-              href={siteConfig.contact.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-whatsapp text-xs sm:text-sm px-4 py-2.5 hidden sm:inline-flex"
-            >
-              💬 احجز عبر واتساب الآن
-            </a>
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <a
+                href="https://share.google/96tw9xO2SSfE29GLj"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 bg-white hover:bg-slate-50 text-navy-900 border border-slate-300 text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-xs transition"
+              >
+                <span>تقييمات Google الرسمية ↗</span>
+              </a>
+              <a
+                href={siteConfig.contact.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-whatsapp text-xs sm:text-sm px-4 py-2.5 hidden sm:inline-flex"
+              >
+                💬 احجز عبر واتساب الآن
+              </a>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -168,10 +183,16 @@ export default function ReviewsPage() {
                   <span className="bg-slate-100 text-navy-700 px-2.5 py-0.5 rounded-md font-semibold text-[10px]">
                     {item.serviceMentioned}
                   </span>
-                  <span className="text-[10px] text-emerald-600 font-bold flex items-center gap-1">
-                    <ShieldCheckIcon className="w-3.5 h-3.5" />
-                    تجربة معتمدة
-                  </span>
+                  {item.source === 'google' ? (
+                    <span className="text-[10px] text-blue-700 font-extrabold flex items-center gap-1 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">
+                      <span>Google ⭐ موثق</span>
+                    </span>
+                  ) : (
+                    <span className="text-[10px] text-emerald-600 font-bold flex items-center gap-1">
+                      <ShieldCheckIcon className="w-3.5 h-3.5" />
+                      تجربة معتمدة
+                    </span>
+                  )}
                 </div>
               </article>
             ))}

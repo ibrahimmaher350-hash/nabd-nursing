@@ -1,6 +1,7 @@
 /**
  * data/testimonialsData.ts — نبض للتمريض المنزلي
- * قائمة شهادات وآراء المرضى وعائلاتهم الموثقة (28 رأياً بعد التدقيق والتصحيح اللغوي)
+ * قائمة شهادات وآراء المرضى وعائلاتهم الموثقة على خرائط Google والرسائل المباشرة
+ * تشمل تقييمات ملف Google Business الرسمي (https://share.google/96tw9xO2SSfE29GLj)
  */
 
 export interface Testimonial {
@@ -11,9 +12,169 @@ export interface Testimonial {
   text: string
   rating: number
   isFeatured?: boolean
+  source?: 'google' | 'direct' | 'whatsapp'
+  date?: string
 }
 
 export const testimonialsData: Testimonial[] = [
+  // ── التقييمات الموثقة من خرائط Google (Google Reviews) ──────
+  {
+    id: 101,
+    author: 'Aya Samir (آية سمير)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'ضمير مهني، عدم البخل بأي جهد',
+    text: 'خدمة نبض للتمريض المنزلي ممتازة للغاية وأستاذ إبراهيم إنسان محترم جداً وبيراعي ضميره مع كل الناس ومش بيبخل بأي جهد أو وقت أو معلومة، جزاه الله كل خير.',
+    rating: 5,
+    isFeatured: true,
+    source: 'google',
+  },
+  {
+    id: 102,
+    author: 'Rania Samir (رانيا سمير)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'سرعة استجابة ومعاملة طيبة للمرضى',
+    text: 'ما شاء الله خدمة ممتازة وسهل الوصول ليهم في أي وقت وسرعة الاستجابة والمعاملة الطيبة للمرضى.',
+    rating: 5,
+    isFeatured: true,
+    source: 'google',
+  },
+  {
+    id: 103,
+    author: 'Asmaa Eldmak (أسماء الدماك)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'خدمة ممتازة واهتمام بالحالات',
+    text: 'ما شاء الله خدمة كويسة جداً جداً واهتمام بالحالات، ربنا يكرمك يا رب.',
+    rating: 5,
+    isFeatured: true,
+    source: 'google',
+  },
+  {
+    id: 104,
+    author: 'Sogoud Ali (سجود علي)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'خبرة سريرية وتواجد دائم',
+    text: 'ما شاء الله ممتاز جداً بأمانة وفيه خبرة كبيرة وموجود في أي وقت، مجتهد في شغلك وربنا يوفقك.',
+    rating: 5,
+    isFeatured: true,
+    source: 'google',
+  },
+  {
+    id: 105,
+    author: 'Amira Khalaf (أميرة خلف)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'اهتمام بالحالة وتوصيل المعلومة بأمانة',
+    text: 'ممتاز جداً ومهتم بحالة المريض وتوصيل المعلومة بأمانة.',
+    rating: 5,
+    isFeatured: true,
+    source: 'google',
+  },
+  {
+    id: 106,
+    author: 'donia shahin (دنيا شاهين)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'ضمير في العمل ومواعيد مضبوطة بالثانية',
+    text: 'ممتاز ما شاء الله عليه، وعنده ضمير ومواعيده مضبوطة.',
+    rating: 5,
+    isFeatured: true,
+    source: 'google',
+  },
+  {
+    id: 107,
+    author: 'Saham Wafdy Saad (سهام وفدي سعد)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'أداء ممتاز ومعاملة راقية',
+    text: 'الأداء ممتاز والمعاملة ممتازة، جزاك الله خيراً يا نبض.',
+    rating: 5,
+    isFeatured: true,
+    source: 'google',
+  },
+  {
+    id: 108,
+    author: 'Hanan Youssef (حنان يوسف)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'سحب عينات تحاليل منزلية وخلق رفيع',
+    text: 'إنسان على خلق وممتاز في سحب العينة ومحترم، ربنا يكرمه ويوفقه.',
+    rating: 5,
+    isFeatured: true,
+    source: 'google',
+  },
+  {
+    id: 109,
+    author: 'ghada Ahmed (غادة أحمد)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'أدب وذوق وخبرة مستمرة',
+    text: 'اللهم بارك، لا نتعامل إلا معه.. ربنا يبارك فيه أدب وذوق وخيرة وفي أي وقت موجود.',
+    rating: 5,
+    isFeatured: true,
+    source: 'google',
+  },
+  {
+    id: 110,
+    author: 'Rawan Eldahdouh (روان الدحدوح)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'شطارة وتمكن وإخلاص مع المريض',
+    text: 'شاطر وممتاز وبيتعب مع المرضى أوي.',
+    rating: 5,
+    isFeatured: true,
+    source: 'google',
+  },
+  {
+    id: 111,
+    author: 'أحمد الدارس (Ähmëď Ëľ Ďäŕś)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'الأمانة والالتزام والكفاءة',
+    text: 'الأمانة والالتزام وكفاءة عالية في الشغل.',
+    rating: 5,
+    isFeatured: true,
+    source: 'google',
+  },
+  {
+    id: 112,
+    author: 'o0darkeyes0o',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'رعاية وتمريض منزلي',
+    text: 'ممتاز ربنا يبارك فيه ويجزيه كل خير.',
+    rating: 5,
+    source: 'google',
+  },
+  {
+    id: 113,
+    author: 'الاء خليل',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'رعاية صحية وتمريض',
+    text: 'خدمة ممتازة، رعاية طبية متكاملة وسرعة في الوصول.',
+    rating: 5,
+    source: 'google',
+  },
+  {
+    id: 114,
+    author: 'سلمىٰ ماهر',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'تمريض منزلي متخصص',
+    text: 'أفضل خدمة تمريض منزلي في دمياط، تعامل راقي وأمانة طبية.',
+    rating: 5,
+    source: 'google',
+  },
+  {
+    id: 115,
+    author: 'Rana Mahmoud (رنا محمود)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'خدمات طبية معقمة',
+    text: 'ما شاء الله رعاية متكاملة وتعقيم عالي واهتمام كبير بالمريض.',
+    rating: 5,
+    source: 'google',
+  },
+  {
+    id: 116,
+    author: 'Alyaa Mahmoud (علياء محمود)',
+    location: 'تقييم موثق على Google Maps 📍',
+    serviceMentioned: 'رعاية صحية منزلية',
+    text: 'خدمة راقية ومواعيد مضبوطة وأسلوب مريح جداً مع المريض.',
+    rating: 5,
+    source: 'google',
+  },
+
+  // ── التقييمات والشهادات المسجلة ─────────────────────────────
   {
     id: 1,
     author: 'فارس أحمد محمد',
